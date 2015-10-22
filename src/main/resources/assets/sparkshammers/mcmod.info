@@ -1,0 +1,17 @@
+[
+{
+  "modid": "SparksHammers",
+  "name": "Spark's Hammers",
+  "description": "Adds hammers like from Tinkers Construct but using vanilla resources and in the style of vanilla tools.",
+  "version": "1.0",
+  "mcversion": "1.7.10",
+  "url": "",
+  "updateUrl": "",
+  "authorList": ["bright_spark"],
+  "credits": "Thanks to Pahimar for his amazing Lets Mod Reboot series in which I learned a lot of my basic modding!",
+  "logoFile": "",
+  "screenshots": [],
+  "parent": "",
+  "dependencies": []
+}
+]
