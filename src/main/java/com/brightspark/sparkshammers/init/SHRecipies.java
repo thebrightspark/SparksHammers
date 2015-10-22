@@ -12,7 +12,7 @@ public class SHRecipies
         //Register recipies here
         //Hammer heads
         GameRegistry.addShapedRecipe(new ItemStack(SHItems.itemHeadWood), new Object[] {"xxx", "xxx", "   ", 'x', Blocks.planks});
-        GameRegistry.addShapedRecipe(new ItemStack(SHItems.itemHeadStone), new Object[] {"xxx", "xxx", 'x', Blocks.cobblestone});
+        GameRegistry.addShapedRecipe(new ItemStack(SHItems.itemHeadStone), new Object[] {"xxx", "xxx", "   ", 'x', Blocks.cobblestone});
         GameRegistry.addShapedRecipe(new ItemStack(SHItems.itemHeadIron), new Object[] {"xxx", "xxx", 'x', Items.iron_ingot});
         GameRegistry.addShapedRecipe(new ItemStack(SHItems.itemHeadGold), new Object[] {"xxx", "xxx", 'x', Items.gold_ingot});
         GameRegistry.addShapedRecipe(new ItemStack(SHItems.itemHeadDiamond), new Object[] {"xxx", "xxx", 'x', Items.diamond});
