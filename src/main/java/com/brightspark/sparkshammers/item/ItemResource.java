@@ -8,9 +8,17 @@ public class ItemResource extends Item
 {
     public ItemResource(String name)
     {
+        this(name, null);
+    }
+
+    public ItemResource(String name, String modName)
+    {
         setUnlocalizedName(name);
-        setTextureName(Reference.ITEM_TEXTURE_DIR + name);
         setMaxStackSize(64);
         setCreativeTab(SparksHammersCreativeTab.SH_TAB);
+        if(modName == null)
+            setTextureName(Reference.ITEM_TEXTURE_DIR + name);
+        else
+            setTextureName(Reference.ITEM_TEXTURE_DIR + modName + "/" + name);
     }
 }

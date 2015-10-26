@@ -33,10 +33,18 @@ public class ItemHammer extends ItemPickaxe
 
     public ItemHammer(String name, ToolMaterial mat)
     {
+        this(name, mat, null);
+    }
+
+    public ItemHammer(String name, ToolMaterial mat, String modName)
+    {
         super(mat);
         setUnlocalizedName(name);
-        setTextureName(Reference.ITEM_TEXTURE_DIR + name);
         setCreativeTab(SparksHammersCreativeTab.SH_TAB);
+        if(modName == null)
+            setTextureName(Reference.ITEM_TEXTURE_DIR + name);
+        else
+            setTextureName(Reference.ITEM_TEXTURE_DIR + modName + "/" + name);
     }
 
     // <<<< From Tinkers Construct: HarvestTool >>>>

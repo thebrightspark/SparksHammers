@@ -1,11 +1,15 @@
 //Use '§' for text formatting
 
+// <<<< Vanilla Style Tools >>>>
+
+//Hammer Heads
 item.hammerHeadWood.name=Wooden Hammer Head
 item.hammerHeadStone.name=Stone Hammer Head
 item.hammerHeadIron.name=Iron Hammer Head
 item.hammerHeadGold.name=Gold Hammer Head
 item.hammerHeadDiamond.name=Diamond Hammer Head
 
+//Hammers
 item.hammerWood.name=Wooden Hammer
 item.hammerStone.name=Stone Hammer
 item.hammerIron.name=Iron Hammer
@@ -13,3 +17,15 @@ item.hammerGold.name=Gold Hammer
 item.hammerDiamond.name=Diamond Hammer
 
 item.hammerThor.name=Mjolnir
+
+// <<<< Mod Material Made Tools >>>>
+
+//Hammer Heads
+item.hammerHeadManasteel.name=Manasteel Hammer Head
+item.hammerHeadTerrasteel.name=Terrasteel Hammer Head
+item.hammerHeadElementium.name=Elementium Hammer Head
+
+//Hammers
+item.hammerManasteel.name=Manasteel Hammer
+item.hammerTerrasteel.name=Terrasteel Hammer
+item.hammerElementium.name=Elementium Hammer
