@@ -16,7 +16,7 @@ public class SHRecipies
         GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(SHItems.itemHeadWood), new Object[]{"xxx", "xxx", "   ", 'x', "plankWood"}));
         if(LoaderHelper.isModLoaded(Names.Mods.EXTRA_UTILITIES))
             //Make stone head recipe made of compressed cobble when Extra Utilities is installed
-            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(SHItems.itemHeadStone), new Object[]{"xxx", "xxx", "   ", 'x', "compressedCobblestone1x"}));
+            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(SHItems.itemHeadStone), new Object[]{"xxx", "xxx", "   ", 'x', Names.ModOreDicts.EXTRATUTILITIES_COMPRESSED_COBBLE_1}));
         else
             GameRegistry.addShapedRecipe(new ItemStack(SHItems.itemHeadStone), new Object[] {"xxx", "xxx", "   ", 'x', Blocks.cobblestone});
         GameRegistry.addShapedRecipe(new ItemStack(SHItems.itemHeadIron), new Object[] {"xxx", "xxx", "   ", 'x', Items.iron_ingot});

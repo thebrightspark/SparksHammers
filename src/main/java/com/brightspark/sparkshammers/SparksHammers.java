@@ -5,18 +5,13 @@ import com.brightspark.sparkshammers.init.*;
 import com.brightspark.sparkshammers.proxy.IProxy;
 import com.brightspark.sparkshammers.reference.Config;
 import com.brightspark.sparkshammers.reference.ModHammerMaterials;
-import com.brightspark.sparkshammers.reference.Names;
 import com.brightspark.sparkshammers.reference.Reference;
-import com.brightspark.sparkshammers.util.LogHelper;
 import cpw.mods.fml.common.FMLCommonHandler;
-import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
-import net.minecraft.item.Item;
-import net.minecraftforge.oredict.OreDictionary;
 
 @Mod(modid= Reference.MOD_ID, name=Reference.MOD_NAME, version=Reference.VERSION, dependencies = Reference.DEPENDENCIES)
 public class SparksHammers
@@ -33,17 +28,6 @@ public class SparksHammers
     {
         //Initialize item, blocks and configs here
 
-        LogHelper.info("Current Tool Materials!");
-        //Go through tool materials and get the other mod ones we want
-        Item.ToolMaterial[] mat = Item.ToolMaterial.values();
-        for(Item.ToolMaterial m : mat)
-        {
-            LogHelper.info("Material: " + m.name());
-            if(m.name().equals(Names.ModMaterials.MANASTEEL)) { ModHammerMaterials.MANASTEEL = m; continue; }
-            if(m.name().equals(Names.ModMaterials.TERRASTEEL)) { ModHammerMaterials.TERRASTEEL = m; continue; }
-            if(m.name().equals(Names.ModMaterials.ELEMENTIUM)) { ModHammerMaterials.ELEMENTIUM = m; }
-        }
-
         //Passes suggested configuration file into the init method
         ConfigurationHandler.init(event.getSuggestedConfigurationFile());
         FMLCommonHandler.instance().bus().register(new ConfigurationHandler());
@@ -51,8 +35,10 @@ public class SparksHammers
         SHItems.init();
         SHBlocks.init();
 
+        //Adds mod material made items if enabled in config
         if(Config.includeOtherModItems)
         {
+            ModHammerMaterials.init();
             SHModItems.init();
         }
     }
@@ -65,6 +51,7 @@ public class SparksHammers
         SHRecipies.init();
         SHTileEntities.init();
 
+        //Adds mod material made items' recipes if enabled in config
         if(Config.includeOtherModItems)
         {
             SHModRecipes.init();
@@ -76,13 +63,12 @@ public class SparksHammers
     {
         //Run stuff after mods have initialized here
 
-        LogHelper.info(Names.Mods.BOTANIA + " = " + Loader.isModLoaded(Names.Mods.BOTANIA));
-        LogHelper.info(Names.Mods.EXTRA_UTILITIES + " = " + Loader.isModLoaded(Names.Mods.EXTRA_UTILITIES));
-
-
+        //Prints out all of the items in the ore dictionary
+        /*
         for(String ore : OreDictionary.getOreNames())
         {
             LogHelper.info(ore);
         }
+        */
     }
 }

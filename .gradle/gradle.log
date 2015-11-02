@@ -12,7 +12,7 @@
 :compileJavawarning: [options] bootstrap class path not set in conjunction with -source 1.6
 1 warning
 
-:processResources
+:processResources UP-TO-DATE
 :classes
 :jar
 :compileTestJava UP-TO-DATE
@@ -30,4 +30,4 @@
 
 BUILD SUCCESSFUL
 
-Total time: 51.717 secs
+Total time: 8.74 secs

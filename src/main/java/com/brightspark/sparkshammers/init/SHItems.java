@@ -2,6 +2,7 @@ package com.brightspark.sparkshammers.init;
 
 import com.brightspark.sparkshammers.item.ItemHammer;
 import com.brightspark.sparkshammers.item.ItemHammerMjolnir;
+import com.brightspark.sparkshammers.item.ItemHammerNetherStar;
 import com.brightspark.sparkshammers.item.ItemResource;
 import com.brightspark.sparkshammers.reference.HammerMaterials;
 import com.brightspark.sparkshammers.reference.Names;
@@ -24,6 +25,8 @@ public class SHItems
     public static final ItemTool hammerGold = new ItemHammer(Names.Items.HAMMER_GOLD, HammerMaterials.HAMMER_GOLD);
     public static final ItemTool hammerDiamond = new ItemHammer(Names.Items.HAMMER_DIAMOND, HammerMaterials.HAMMER_DIAMOND);
 
+    public static final ItemTool hammerNetherStar = new ItemHammerNetherStar();
+
     public static final ItemTool hammerThor = new ItemHammerMjolnir();
 
     public static void init()
@@ -40,6 +43,8 @@ public class SHItems
         GameRegistry.registerItem(hammerIron, Names.Items.HAMMER_IRON);
         GameRegistry.registerItem(hammerGold, Names.Items.HAMMER_GOLD);
         GameRegistry.registerItem(hammerDiamond, Names.Items.HAMMER_DIAMOND);
+
+        //GameRegistry.registerItem(hammerNetherStar, Names.Items.HAMMER_NETHERSTAR);
 
         //GameRegistry.registerItem(hammerThor, Names.Items.HAMMER_THOR);
     }

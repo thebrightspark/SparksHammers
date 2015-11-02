@@ -9,7 +9,7 @@
   "updateUrl": "",
   "authorList": ["bright_spark"],
   "credits": "Thanks to Pahimar for his amazing Lets Mod Reboot series in which I learned a lot of my basic modding! Also a thanks to the creators of Tinkers Construct for providing excellent code which helped me create this mod.",
-  "logoFile": "",
+  "logoFile": "logo.png",
   "screenshots": [],
   "parent": "",
   "dependencies": []
