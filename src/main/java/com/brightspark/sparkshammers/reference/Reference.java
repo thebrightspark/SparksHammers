@@ -15,6 +15,7 @@ public class Reference
                     "after:" + Names.Mods.IC2;
 
     public static final String ITEM_TEXTURE_DIR = MOD_ID + ":";
+    public static final String GUI_TEXTURE_DIR = ITEM_TEXTURE_DIR + "textures/gui/";
 
     public static int HAMMER_RENDER_ID;
 }

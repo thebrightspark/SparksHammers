@@ -48,6 +48,7 @@ public class Names
     public static class Blocks
     {
         public static final String HAMMER = "hammer";
+        public static final String HAMMER_CRAFT = "hammerCraft";
     }
 
     public static class Mods

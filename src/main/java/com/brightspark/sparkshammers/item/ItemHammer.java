@@ -1,6 +1,6 @@
 package com.brightspark.sparkshammers.item;
 
-import com.brightspark.sparkshammers.SparksHammersCreativeTab;
+import com.brightspark.sparkshammers.SHCreativeTab;
 import com.brightspark.sparkshammers.reference.Reference;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -29,7 +29,7 @@ public class ItemHammer extends ItemPickaxe
     public ItemHammer(ToolMaterial mat)
     {
         super(mat);
-        setCreativeTab(SparksHammersCreativeTab.SH_TAB);
+        setCreativeTab(SHCreativeTab.SH_TAB);
     }
 
     public ItemHammer(String name, ToolMaterial mat)
@@ -41,7 +41,7 @@ public class ItemHammer extends ItemPickaxe
     {
         super(mat);
         setUnlocalizedName(name);
-        setCreativeTab(SparksHammersCreativeTab.SH_TAB);
+        setCreativeTab(SHCreativeTab.SH_TAB);
         if(modName == null)
             setTextureName(Reference.ITEM_TEXTURE_DIR + name);
         else

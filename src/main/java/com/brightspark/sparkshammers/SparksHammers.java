@@ -1,5 +1,6 @@
 package com.brightspark.sparkshammers;
 
+import com.brightspark.sparkshammers.gui.GuiHandler;
 import com.brightspark.sparkshammers.handlers.ConfigurationHandler;
 import com.brightspark.sparkshammers.init.*;
 import com.brightspark.sparkshammers.proxy.IProxy;
@@ -12,6 +13,7 @@ import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
+import cpw.mods.fml.common.network.NetworkRegistry;
 
 @Mod(modid= Reference.MOD_ID, name=Reference.MOD_NAME, version=Reference.VERSION, dependencies = Reference.DEPENDENCIES)
 public class SparksHammers
@@ -50,12 +52,11 @@ public class SparksHammers
 
         SHRecipies.init();
         SHTileEntities.init();
+        NetworkRegistry.INSTANCE.registerGuiHandler(this, new GuiHandler());
 
         //Adds mod material made items' recipes if enabled in config
         if(Config.includeOtherModItems)
-        {
             SHModRecipes.init();
-        }
     }
 
     @Mod.EventHandler

@@ -24,8 +24,19 @@ item.hammerThor.name=Mjolnir
 item.hammerHeadManasteel.name=Manasteel Hammer Head
 item.hammerHeadTerrasteel.name=Terrasteel Hammer Head
 item.hammerHeadElementium.name=Elementium Hammer Head
+item.hammerHeadUnstable.name=Unstable Hammer Head
+item.hammerHeadDarksteel.name=Dark Steel Hammer Head
+item.hammerHeadBronze.name=Bronze Hammer Head
 
 //Hammers
 item.hammerManasteel.name=Manasteel Hammer
 item.hammerTerrasteel.name=Terrasteel Hammer
 item.hammerElementium.name=Elementium Hammer
+item.hammerUnstable.name=Unstable Hammer
+item.hammerDarksteel.name=Dark Steel Hammer
+item.hammerBronze.name=Bronze Hammer
+
+// <<<< Misc Names >>>>
+
+//Hammer Crafting Table
+tile.hammerCraft.name=Hammer Crafting Table

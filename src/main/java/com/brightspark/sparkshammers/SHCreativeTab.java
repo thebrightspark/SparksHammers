@@ -5,7 +5,7 @@ import com.brightspark.sparkshammers.reference.Reference;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 
-public class SparksHammersCreativeTab
+public class SHCreativeTab
 {
     public static final CreativeTabs SH_TAB = new CreativeTabs(Reference.MOD_ID)
     {
