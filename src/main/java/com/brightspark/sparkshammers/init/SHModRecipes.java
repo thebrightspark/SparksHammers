@@ -1,12 +1,5 @@
 package com.brightspark.sparkshammers.init;
 
-import com.brightspark.sparkshammers.reference.Names;
-import com.brightspark.sparkshammers.util.LoaderHelper;
-import cpw.mods.fml.common.registry.GameRegistry;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraftforge.oredict.ShapedOreRecipe;
-
 public class SHModRecipes
 {
     public static void init()
@@ -18,6 +11,8 @@ public class SHModRecipes
             LogHelper.info(items.next().toString());
         */
 
+
+        /*
         //Botania
         if(LoaderHelper.isModLoaded(Names.Mods.BOTANIA))
         {
@@ -55,5 +50,6 @@ public class SHModRecipes
             GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(SHModItems.itemHeadBronze), new Object[]{"xxx", "xxx", "   ", 'x', Names.ModOreDicts.IC2_INGOT_BRONZE}));
             GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(SHModItems.hammerBronze), new Object[]{" x ", " y ", " y ", 'x', SHModItems.itemHeadBronze, 'y', "stickWood"}));
         }
+        */
     }
 }

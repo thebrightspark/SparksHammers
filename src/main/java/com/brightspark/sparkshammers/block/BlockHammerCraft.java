@@ -3,13 +3,20 @@ package com.brightspark.sparkshammers.block;
 import com.brightspark.sparkshammers.SHCreativeTab;
 import com.brightspark.sparkshammers.SparksHammers;
 import com.brightspark.sparkshammers.reference.Reference;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
+import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
 
 public class BlockHammerCraft extends Block
 {
+    //Used to save the textures fro the block
+    private IIcon textureTop, textureSide, textureBottom;
+
     public BlockHammerCraft()
     {
         super(Material.rock);
@@ -28,5 +35,38 @@ public class BlockHammerCraft extends Block
         if(!player.isSneaking())
             player.openGui(SparksHammers.instance, 0, world, x, y, z);
         return true;
+    }
+
+    @SideOnly(Side.CLIENT)
+    public void registerBlockIcons(IIconRegister registry)
+    {
+        textureTop = registry.registerIcon(this.getTextureName() + "Top");
+        textureSide = registry.registerIcon(this.getTextureName() + "Side");
+        textureBottom = registry.registerIcon(this.getTextureName() + "Bottom");
+
+    }
+
+    /**
+     * Gets the block's texture. Args: side, meta
+     */
+    @SideOnly(Side.CLIENT)
+    public IIcon getIcon(int side, int metadata)
+    {
+        switch(side)
+        {
+            case 1:
+                //Top
+                return textureTop;
+            case 2:
+            case 3:
+            case 4:
+            case 5:
+                //Sides
+                return textureSide;
+            case 0:
+            default:
+                //Bottom
+                return textureBottom;
+        }
     }
 }

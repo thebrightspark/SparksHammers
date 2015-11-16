@@ -1,7 +1,6 @@
 package com.brightspark.sparkshammers.hammerCrafting;
 
 import com.brightspark.sparkshammers.init.SHBlocks;
-import com.brightspark.sparkshammers.util.LogHelper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.*;
@@ -45,25 +44,26 @@ public class ContainerHammerCraft extends Container
         zPos = z;
 
         //Add the slots
-        this.addSlotToContainer(new SlotCrafting(invPlayer.player, this.craftMatrix, this.craftResult, numSlots, resultX, resultY));
-        numSlots++;
-        //Head - slots 1-10
-        for(int headY = 0; headY <= 1; headY++)
+        this.addSlotToContainer(new SlotCrafting(invPlayer.player, this.craftMatrix, this.craftResult, 0, resultX, resultY));
+
+        int handleXStart = gridStartX + 18 * 2;
+        int handleYStart = gridStartY + 18 * 2;
+        for(int headY = 0; headY <= 2; headY++)
         {
             for(int headX = 0; headX <= 4; headX++)
             {
                 //Slot(IInventory, Slot Index, X Position, Y Position)
-                this.addSlotToContainer(new Slot(this.craftMatrix, numSlots, gridStartX + headX * 18, gridStartY + headY * 18));
+                if(headY == 2)
+                {
+                    if(headX < 4)
+                    {
+                        this.addSlotToContainer(new Slot(this.craftMatrix, numSlots, handleXStart, handleYStart + headX * 18));
+                    }
+                }
+                else
+                    this.addSlotToContainer(new Slot(this.craftMatrix, numSlots, gridStartX + headX * 18, gridStartY + headY * 18));
                 numSlots++;
             }
-        }
-        //Handle - slots 11-14
-        int handleXStart = gridStartX + 18 * 2;
-        int handleYStart = gridStartY + 18 * 2;
-        for(int handleY = 0; handleY <= 3; handleY++)
-        {
-            this.addSlotToContainer(new Slot(this.craftMatrix, numSlots, handleXStart, handleYStart + handleY * 18));
-            numSlots++;
         }
 
         bindPlayerInventory(invPlayer);
@@ -73,8 +73,8 @@ public class ContainerHammerCraft extends Container
     {
         ItemStack stack = HammerCraftingManager.getInstance().findMatchingRecipe(this.craftMatrix, this.worldObj);
 
-        if(stack == null) LogHelper.info("Hammer Crafting Output: Null");
-        else LogHelper.info("Hammer Crafting Output: " + stack.getDisplayName());
+        //if(stack == null) LogHelper.info("Hammer Crafting Output: Null");
+        //else LogHelper.info("Hammer Crafting Output: " + stack.getDisplayName());
 
         this.craftResult.setInventorySlotContents(0, stack);
     }

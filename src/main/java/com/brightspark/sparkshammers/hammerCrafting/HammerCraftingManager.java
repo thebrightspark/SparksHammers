@@ -1,9 +1,14 @@
 package com.brightspark.sparkshammers.hammerCrafting;
 
 import com.brightspark.sparkshammers.init.SHItems;
-import com.brightspark.sparkshammers.util.LogHelper;
+import com.brightspark.sparkshammers.init.SHModItems;
+import com.brightspark.sparkshammers.reference.Config;
+import com.brightspark.sparkshammers.reference.Names;
+import com.brightspark.sparkshammers.util.LoaderHelper;
+import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.InventoryCrafting;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.world.World;
@@ -31,9 +36,41 @@ public class HammerCraftingManager
     {
         //Add recipes here
 
-        addRecipe(new ItemStack(SHItems.hammerIron), new Object[]{"IIIII", "IIIII", "SSSS ", 'I', Items.iron_ingot, 'S', Items.stick});
+        //Vanilla
+        addRecipe(new ItemStack(SHItems.hammerWood), new Object[]{"HHHHH", "HHHHH", "SSSS ", 'H', "plankWood", 'S', "stickWood"});
+        if(LoaderHelper.isModLoaded(Names.Mods.EXTRA_UTILITIES)) //Make stone head recipe made of compressed cobble when Extra Utilities is installed
+            addRecipe(new ItemStack(SHItems.hammerStone), new Object[]{"HHHHH", "HHHHH", "SSSS ", 'H', Names.ModOreDicts.COMPRESSED_COBBLE_1, 'S', "stickWood"});
+        else
+            addRecipe(new ItemStack(SHItems.hammerStone), new Object[]{"HHHHH", "HHHHH", "SSSS ", 'H', Blocks.cobblestone, 'S', "stickWood"});
+        addRecipe(new ItemStack(SHItems.hammerIron), new Object[]{"HHHHH", "HHHHH", "SSSS ", 'H', Items.iron_ingot, 'S', "stickWood"});
+        addRecipe(new ItemStack(SHItems.hammerGold), new Object[]{"HHHHH", "HHHHH", "SSSS ", 'H', Items.gold_ingot, 'S', "stickWood"});
+        addRecipe(new ItemStack(SHItems.hammerDiamond), new Object[]{"HHHHH", "HHHHH", "SSSS ", 'H', Items.diamond, 'S', "stickWood"});
 
-        LogHelper.info("HammerCraftingManager: " + recipes.size() + " recipes added.");
+        //Modded
+        if(Config.includeOtherModItems)
+        {
+            //Botania
+            if(LoaderHelper.doesOreExist(Names.ModOreDicts.INGOT_MANASTEEL))
+                addRecipe(new ItemStack(SHModItems.hammerManasteel), new Object[]{"HHHHH", "HHHHH", "SSSS ", 'H', Names.ModOreDicts.INGOT_MANASTEEL, 'S', "stickWood"});
+            if(LoaderHelper.doesOreExist(Names.ModOreDicts.INGOT_TERRASTEEL))
+                addRecipe(new ItemStack(SHModItems.hammerTerrasteel), new Object[]{"HHHHH", "HHHHH", "SSSS ", 'H', Names.ModOreDicts.INGOT_TERRASTEEL, 'S', "stickWood"});
+            if(LoaderHelper.doesOreExist(Names.ModOreDicts.INGOT_ELEMENTIUM))
+                addRecipe(new ItemStack(SHModItems.hammerElementium), new Object[]{"HHHHH", "HHHHH", "SSSS ", 'H', Names.ModOreDicts.INGOT_ELEMENTIUM, 'S', "stickWood"});
+            //EnderIO
+            if(LoaderHelper.doesOreExist(Names.ModOreDicts.INGOT_DARKSTEEL))
+                addRecipe(new ItemStack(SHModItems.hammerDarksteel), new Object[]{"HHHHH", "HHHHH", "SSSS ", 'H', Names.ModOreDicts.INGOT_DARKSTEEL, 'S', "stickWood"});
+            //Random Things
+            if(LoaderHelper.isModLoaded(Names.Mods.RANDOM_THINGS))
+            {
+                //Gets the spectre iron item for the recipes
+                Item iron = (Item) Item.itemRegistry.getObject(Names.ModItemIDs.RANDOMTHINGS_ITEM_INGREDIENT);
+                ItemStack itemSpectreIron = new ItemStack(iron, 0, 4);
+                addRecipe(new ItemStack(SHModItems.hammerSpectre), new Object[]{"HHHHH", "HHHHH", "SSSS ", 'H', itemSpectreIron, 'S', "stickWood"});
+            }
+            //Misc
+            if(LoaderHelper.doesOreExist(Names.ModOreDicts.INGOT_BRONZE))
+                addRecipe(new ItemStack(SHModItems.hammerBronze), new Object[]{"HHHHH", "HHHHH", "SSSS ", 'H', Names.ModOreDicts.INGOT_BRONZE, 'S', "stickWood"});
+        }
     }
 
     public HammerShapedOreRecipe addRecipe(ItemStack stack, Object ... recipeObj)

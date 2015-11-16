@@ -1,6 +1,5 @@
 package com.brightspark.sparkshammers.hammerCrafting;
 
-import com.brightspark.sparkshammers.util.LogHelper;
 import net.minecraft.block.Block;
 import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.Item;
@@ -16,6 +15,8 @@ import java.util.Iterator;
 /*
 This class is made mostly from the Forge code for ShapedOreRecipe.
 I have just adapted it to work for my uses of hammer recipes.
+
+The mirroring has been commented out so that it can't be used.
  */
 
 public class HammerShapedOreRecipe implements IRecipe
@@ -28,7 +29,7 @@ public class HammerShapedOreRecipe implements IRecipe
     private Object[] input = null;
     private int width = 0;
     private int height = 0;
-    private boolean mirrored = true;
+    //private boolean mirrored = true;
 
     public HammerShapedOreRecipe(Block result, Object... recipe){ this(new ItemStack(result), recipe); }
     public HammerShapedOreRecipe(Item result, Object... recipe){ this(new ItemStack(result), recipe); }
@@ -39,6 +40,7 @@ public class HammerShapedOreRecipe implements IRecipe
         String shape = "";
         int idx = 0;
 
+        /*
         if (recipe[idx] instanceof Boolean)
         {
             mirrored = (Boolean)recipe[idx];
@@ -51,6 +53,7 @@ public class HammerShapedOreRecipe implements IRecipe
                 idx = 1;
             }
         }
+        */
 
         if (recipe[idx] instanceof String[])
         {
@@ -150,59 +153,47 @@ public class HammerShapedOreRecipe implements IRecipe
     @Override
     public boolean matches(InventoryCrafting inv, World world)
     {
-        for (int x = 0; x <= MAX_CRAFT_GRID_WIDTH - width; x++)
+        if (checkMatch(inv))
         {
-            for (int y = 0; y <= MAX_CRAFT_GRID_HEIGHT - height; ++y)
-            {
-                ItemStack curItem = inv.getStackInRowAndColumn(x, y);
-                if(curItem == null)
-                    LogHelper.info("Checking recipe. Item at " + x + "," + y + " is Null");
-                else
-                    LogHelper.info("Checking recipe. Item at " + x + "," + y + " is " + curItem.getDisplayName());
-                if (checkMatch(inv, x, y, false))
-                {
-                    return true;
-                }
-
-                if (mirrored && checkMatch(inv, x, y, true))
-                {
-                    return true;
-                }
-            }
+            //LogHelper.info("Recipe Checked. We have a match!");
+            return true;
         }
 
+        /*
+        if (mirrored && checkMatch(inv, true))
+        {
+            return true;
+        }
+        */
+
+        //LogHelper.info("Recipe Checked. No match.");
         return false;
     }
 
     @SuppressWarnings("unchecked")
-    private boolean checkMatch(InventoryCrafting inv, int startX, int startY, boolean mirror)
+    private boolean checkMatch(InventoryCrafting inv) //, boolean mirror)
     {
-        for (int x = 0; x < MAX_CRAFT_GRID_WIDTH; x++)
+        for (int y = 0; y < MAX_CRAFT_GRID_HEIGHT; y++)
         {
-            for (int y = 0; y < MAX_CRAFT_GRID_HEIGHT; y++)
+            for (int x = 0; x < MAX_CRAFT_GRID_WIDTH; x++)
             {
-                int subX = x - startX;
-                int subY = y - startY;
-                Object target = null;
-
-                if (subX >= 0 && subY >= 0 && subX < width && subY < height)
-                {
-                    if (mirror)
-                    {
-                        target = input[width - subX - 1 + subY * width];
-                    }
-                    else
-                    {
-                        target = input[subX + subY * width];
-                    }
-                }
+                Object target = input[x + (y * MAX_CRAFT_GRID_WIDTH)];
 
                 ItemStack slot = inv.getStackInRowAndColumn(x, y);
+                /*
+                if(slot == null)
+                    LogHelper.info("Crafting slot " + x + "," + y + ": Null");
+                else
+                    LogHelper.info("Crafting slot " + x + "," + y + ": " + slot.getDisplayName());
+                */
 
                 if (target instanceof ItemStack)
                 {
+                    //LogHelper.info("Comparing slot to: " + ((ItemStack)target).getDisplayName());
+
                     if (!OreDictionary.itemMatches((ItemStack)target, slot, false))
                     {
+                        //LogHelper.info("Crafting slot " + x + "," + y + " doesn't match ore dictionary.");
                         return false;
                     }
                 }
@@ -231,11 +222,13 @@ public class HammerShapedOreRecipe implements IRecipe
         return true;
     }
 
+    /*
     public HammerShapedOreRecipe setMirrored(boolean mirror)
     {
         mirrored = mirror;
         return this;
     }
+    */
 
     /**
      * Returns the input for this recipe, any mod accessing this value should never

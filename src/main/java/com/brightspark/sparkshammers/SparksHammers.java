@@ -1,6 +1,7 @@
 package com.brightspark.sparkshammers;
 
 import com.brightspark.sparkshammers.gui.GuiHandler;
+import com.brightspark.sparkshammers.hammerCrafting.HammerCraftingManager;
 import com.brightspark.sparkshammers.handlers.ConfigurationHandler;
 import com.brightspark.sparkshammers.init.*;
 import com.brightspark.sparkshammers.proxy.IProxy;
@@ -15,7 +16,7 @@ import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.network.NetworkRegistry;
 
-@Mod(modid= Reference.MOD_ID, name=Reference.MOD_NAME, version=Reference.VERSION, dependencies = Reference.DEPENDENCIES)
+@Mod(modid= Reference.MOD_ID, name=Reference.MOD_NAME, version=Reference.VERSION)
 public class SparksHammers
 {
     //Instance of this mod that is safe to reference
@@ -36,13 +37,6 @@ public class SparksHammers
 
         SHItems.init();
         SHBlocks.init();
-
-        //Adds mod material made items if enabled in config
-        if(Config.includeOtherModItems)
-        {
-            ModHammerMaterials.init();
-            SHModItems.init();
-        }
     }
 
     @Mod.EventHandler
@@ -50,13 +44,18 @@ public class SparksHammers
     {
         //Initialize GUIs, tile entities, recipies, event handlers here
 
-        SHRecipies.init();
+        //Adds mod material made items if enabled in config
+        if(Config.includeOtherModItems)
+        {
+            ModHammerMaterials.init();
+            SHModItems.init();
+        }
+
+        SHRecipes.init(); //Adds vanilla crafting table recipes
+        HammerCraftingManager.getInstance(); //Calls the method so that the recipes are created.
+
         SHTileEntities.init();
         NetworkRegistry.INSTANCE.registerGuiHandler(this, new GuiHandler());
-
-        //Adds mod material made items' recipes if enabled in config
-        if(Config.includeOtherModItems)
-            SHModRecipes.init();
     }
 
     @Mod.EventHandler

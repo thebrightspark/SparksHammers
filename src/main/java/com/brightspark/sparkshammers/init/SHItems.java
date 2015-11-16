@@ -14,10 +14,6 @@ public class SHItems
 {
     //Hammer heads
     public static final Item itemHeadWood = new ItemResource(Names.Items.HEAD_WOOD);
-    public static final Item itemHeadStone = new ItemResource(Names.Items.HEAD_STONE);
-    public static final Item itemHeadIron = new ItemResource(Names.Items.HEAD_IRON);
-    public static final Item itemHeadGold = new ItemResource(Names.Items.HEAD_GOLD);
-    public static final Item itemHeadDiamond = new ItemResource(Names.Items.HEAD_DIAMOND);
     //Hammers
     public static final ItemTool hammerWood = new ItemHammer(Names.Items.HAMMER_WOOD, HammerMaterials.HAMMER_WOOD);
     public static final ItemTool hammerStone = new ItemHammer(Names.Items.HAMMER_STONE, HammerMaterials.HAMMER_STONE);
@@ -33,10 +29,6 @@ public class SHItems
     {
         //Heammer heads
         GameRegistry.registerItem(itemHeadWood, Names.Items.HEAD_WOOD);
-        GameRegistry.registerItem(itemHeadStone, Names.Items.HEAD_STONE);
-        GameRegistry.registerItem(itemHeadIron, Names.Items.HEAD_IRON);
-        GameRegistry.registerItem(itemHeadGold, Names.Items.HEAD_GOLD);
-        GameRegistry.registerItem(itemHeadDiamond, Names.Items.HEAD_DIAMOND);
         //Hammers
         GameRegistry.registerItem(hammerWood, Names.Items.HAMMER_WOOD);
         GameRegistry.registerItem(hammerStone, Names.Items.HAMMER_STONE);

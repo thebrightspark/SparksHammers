@@ -2,17 +2,16 @@ package com.brightspark.sparkshammers.util;
 
 import com.brightspark.sparkshammers.reference.Config;
 import cpw.mods.fml.common.Loader;
+import net.minecraft.item.Item.ToolMaterial;
 import net.minecraftforge.oredict.OreDictionary;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 
 public class LoaderHelper
 {
-    private static ArrayList<String> modsChecked = new ArrayList<String>();
-    private static ArrayList<String> modsLoaded = new ArrayList<String>();
-
-    private static ArrayList<String> oresChecked = new ArrayList<String>();
-    private static ArrayList<String> oresExist = new ArrayList<String>();
+    private static HashMap<String, Boolean> modsChecked = new HashMap<String, Boolean>();
+    private static HashMap<String, Boolean> oresChecked = new HashMap<String, Boolean>();
+    private static HashMap<String, Boolean> materialsChecked = new HashMap<String, Boolean>();
 
     /**
      * Uses {@link Loader} to check if a mod is loaded, but first
@@ -27,19 +26,12 @@ public class LoaderHelper
             return false;
 
         //Has mod already been checked before
-        if(modsChecked.contains(modName))
-            return modsLoaded.contains(modName);
-        else
+        if(!modsChecked.containsKey(modName))
         {
             //Check mod and add to the list for future mod checks
-            modsChecked.add(modName);
-            if(Loader.isModLoaded(modName))
-            {
-                modsLoaded.add(modName);
-                return true;
-            }
-            return false;
+            modsChecked.put(modName, Loader.isModLoaded(modName));
         }
+        return modsChecked.get(modName);
     }
 
     /**
@@ -48,25 +40,42 @@ public class LoaderHelper
      * @param oreName Name of the ore to check for
      * @return Whether the ore exists or not
      */
-    public static boolean doesOreExists(String oreName)
+    public static boolean doesOreExist(String oreName)
     {
         //Check config
         if(!Config.includeOtherModItems)
             return false;
 
-        //Has ore already been check before
-        if(oresChecked.contains(oreName))
-            return oresExist.contains(oreName);
-        else
+        //Has ore already been checked before
+        if(!oresChecked.containsKey(oreName))
         {
             //Check ore and add to the list for future ore checks
-            oresChecked.add(oreName);
-            if(OreDictionary.doesOreNameExist(oreName))
-            {
-                oresExist.add(oreName);
-                return true;
-            }
-            return false;
+            oresChecked.put(oreName, OreDictionary.doesOreNameExist(oreName));
         }
+        return oresChecked.get(oreName);
+    }
+
+    public static boolean doesToolMaterialExist(String materialName)
+    {
+        //Check config
+        if(!Config.includeOtherModItems)
+            return false;
+
+        //Has tool material already been check before
+        if(!materialsChecked.containsKey(materialName))
+        {
+            //Check tool material and add to the list for future tool material checks
+            ToolMaterial[] materials = ToolMaterial.values();
+            for(ToolMaterial mat : materials)
+            {
+                if(mat.name().equals(materialName))
+                {
+                    materialsChecked.put(materialName, true);
+                    return true;
+                }
+            }
+            materialsChecked.put(materialName, false);
+        }
+        return materialsChecked.get(materialName);
     }
 }
