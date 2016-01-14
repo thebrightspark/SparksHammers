@@ -2,7 +2,10 @@ package com.brightspark.sparkshammers.nei;
 
 import codechicken.nei.api.API;
 import codechicken.nei.api.IConfigureNEI;
+import com.brightspark.sparkshammers.init.SHModItems;
+import com.brightspark.sparkshammers.reference.Config;
 import com.brightspark.sparkshammers.reference.Reference;
+import net.minecraft.item.ItemStack;
 
 public class NEISparksHammersConfig implements IConfigureNEI
 {
@@ -12,6 +15,9 @@ public class NEISparksHammersConfig implements IConfigureNEI
         //Register handlers and hide any unwanted items in NEI here
 
         //API.hideItem();
+
+        if(!Config.useEasyUnstableHammerRecipe)
+            API.hideItem(new ItemStack(SHModItems.itemHeadUnstable));
 
         API.registerRecipeHandler(new NEIHammerCraftRecipeHandler());
         API.registerUsageHandler(new NEIHammerCraftRecipeHandler());

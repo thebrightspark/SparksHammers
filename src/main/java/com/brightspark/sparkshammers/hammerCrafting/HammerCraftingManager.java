@@ -32,6 +32,7 @@ public class HammerCraftingManager
         return instance;
     }
 
+    @SuppressWarnings("all")
     private HammerCraftingManager()
     {
         //Add recipes here
@@ -59,6 +60,9 @@ public class HammerCraftingManager
             //EnderIO
             if(LoaderHelper.doesOreExist(Names.ModOreDicts.INGOT_DARKSTEEL))
                 addRecipe(new ItemStack(SHModItems.hammerDarksteel), new Object[]{"HHHHH", "HHHHH", "SSSS ", 'H', Names.ModOreDicts.INGOT_DARKSTEEL, 'S', "stickWood"});
+            //Extra Utilities
+            if(!Config.useEasyUnstableHammerRecipe && LoaderHelper.doesOreExist(Names.ModOreDicts.INGOT_UNSTABLE))
+                addRecipe(new ItemStack(SHModItems.hammerUnstable), new Object[]{"HHHHH", "HHHHH", "SSSS ", 'H', Names.ModOreDicts.INGOT_UNSTABLE, 'S', "stickWood"});
             //Random Things
             if(LoaderHelper.isModLoaded(Names.Mods.RANDOM_THINGS))
             {
@@ -73,10 +77,11 @@ public class HammerCraftingManager
         }
     }
 
+    @SuppressWarnings("unchecked")
     public HammerShapedOreRecipe addRecipe(ItemStack stack, Object ... recipeObj)
     {
         HammerShapedOreRecipe recipe = new HammerShapedOreRecipe(stack, recipeObj);
-        this.recipes.add(recipe);
+        recipes.add(recipe);
         return recipe;
 
         //Old code
