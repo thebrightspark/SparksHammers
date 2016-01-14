@@ -21,7 +21,6 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
-//TODO: Finish NEI Integration! Use this for reference: https://github.com/SpitefulFox/Avaritia/blob/master/src/main/java/fox/spiteful/avaritia/compat/nei/ExtremeShapedRecipeHandler.java
 public class NEIHammerCraftRecipeHandler extends ShapedRecipeHandler
 {
     public class CachedHammerRecipe extends CachedRecipe
@@ -36,7 +35,6 @@ public class NEIHammerCraftRecipeHandler extends ShapedRecipeHandler
 
         public CachedHammerRecipe(int width, int height, Object[] items, ItemStack out)
         {
-            //TODO: Result position - might need some moving
             this.result = new PositionedStack(out, 138, 57);
             this.ingredients = new ArrayList<PositionedStack>();
             setIngredients(width, height, items);
@@ -116,7 +114,6 @@ public class NEIHammerCraftRecipeHandler extends ShapedRecipeHandler
 
     public void loadTransferRects()
     {
-        //TODO: loadTransferRects() - might need some fiddling
         this.transferRects.add(new RecipeTransferRect(new Rectangle(103, 56, 24, 18), "hammerCraft"));
     }
 
