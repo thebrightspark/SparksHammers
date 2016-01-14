@@ -40,3 +40,4 @@ item.hammerBronze.name=Bronze Hammer
 
 //Hammer Crafting Table
 tile.hammerCraft.name=Hammer Crafting Table
+tile.hammerCraft.nei=Hammer Crafting

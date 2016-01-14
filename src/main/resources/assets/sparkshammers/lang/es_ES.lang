@@ -1,0 +1,45 @@
+#Archivo es_ES, traducción por Jaski
+
+//Use '§' for text formatting
+
+// <<<< Vanilla Style Tools >>>>
+
+//Hammer Heads
+item.hammerHeadWood.name=Cabeza de almádena de madera
+item.hammerHeadStone.name=Cabeza de almádena de piedra
+item.hammerHeadIron.name=Cabeza de almádena de hierro
+item.hammerHeadGold.name=Cabeza de almádena de oro
+item.hammerHeadDiamond.name=Cabeza de almádena de diamante
+
+//Hammers
+item.hammerWood.name=Almádena de madera
+item.hammerStone.name=Almádena de piedra
+item.hammerIron.name=Almádena de hierro
+item.hammerGold.name=Almádena de oro
+item.hammerDiamond.name=Almádena de diamante
+
+item.hammerThor.name=Mjolnir
+
+// <<<< Mod Material Made Tools >>>>
+
+//Hammer Heads
+item.hammerHeadManasteel.name=Cabeza de almádena de manacero
+item.hammerHeadTerrasteel.name=Cabeza de almádena de terracero
+item.hammerHeadElementium.name=Cabeza de almádena de elementium
+item.hammerHeadUnstable.name=Cabeza de almádena inestable
+item.hammerHeadDarksteel.name=Cabeza de almádena de acero oscuro
+item.hammerHeadBronze.name=Cabeza de almádena de bronce
+
+//Hammers
+item.hammerManasteel.name=Almádena de manacero
+item.hammerTerrasteel.name=Almádena de terracero
+item.hammerElementium.name=Almádena de elementium
+item.hammerUnstable.name=Almádena inestable
+item.hammerDarksteel.name=Almádena de acero oscuro
+item.hammerBronze.name=Almádena de bronce
+
+// <<<< Misc Names >>>>
+
+//Hammer Crafting Table
+tile.hammerCraft.name=Mesa de trabajo de almádenas
+tile.hammerCraft.nei=Trabajo de almádenas
