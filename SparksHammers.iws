@@ -4,7 +4,26 @@
     <bookmark url="file://$PROJECT_DIR$/src/main/java/com/brightspark/sparkshammers/hammerCrafting/HammerCraftingManager.java" description="Hammer Crafting Table Recipes" line="37" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4f82e59d-c1cd-48b1-a5e7-c40b0ef40867" name="Default" comment="Why didn't these textures sync!? Oh right... yeah...&#10;Also adding some WIP bits to clean up my changes.">
+    <list default="true" id="4f82e59d-c1cd-48b1-a5e7-c40b0ef40867" name="Default" comment="Added hammer crafting table recipe for the unstable hammer and made a config to use the 'easier' recipe using a vanilla crafting table.">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/resources/assets/sparkshammers/textures/items/Misc/excavatorBronze.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/resources/assets/sparkshammers/textures/items/EnderIO/excavatorDarksteel.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/resources/assets/sparkshammers/textures/items/excavatorDiamond.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/resources/assets/sparkshammers/textures/items/Botania/excavatorElementium.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/resources/assets/sparkshammers/textures/items/excavatorGold.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/resources/assets/sparkshammers/textures/items/ExtraUtilities/excavatorHeadUnstable.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/resources/assets/sparkshammers/textures/items/excavatorHeadWood.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/resources/assets/sparkshammers/textures/items/excavatorIron.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/resources/assets/sparkshammers/textures/items/Botania/excavatorManasteel.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/resources/assets/sparkshammers/textures/items/RandomThings/excavatorSpectre.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/resources/assets/sparkshammers/textures/items/excavatorStone.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/resources/assets/sparkshammers/textures/items/Botania/excavatorTerrasteel.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/resources/assets/sparkshammers/textures/items/ExtraUtilities/excavatorUnstable.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/resources/assets/sparkshammers/textures/items/excavatorWood.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/com/brightspark/sparkshammers/block/BlockHammer.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/com/brightspark/sparkshammers/block/BlockHammerRender.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/com/brightspark/sparkshammers/item/ItemHammerMjolnir.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/com/brightspark/sparkshammers/item/ItemHammerNetherStar.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/com/brightspark/sparkshammers/tileentity/TileHammer.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/2.0/taskArtifacts/cache.properties.lock" afterPath="$PROJECT_DIR$/.gradle/2.0/taskArtifacts/cache.properties.lock" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/2.0/taskArtifacts/fileHashes.bin" afterPath="$PROJECT_DIR$/.gradle/2.0/taskArtifacts/fileHashes.bin" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/2.0/taskArtifacts/fileSnapshots.bin" afterPath="$PROJECT_DIR$/.gradle/2.0/taskArtifacts/fileSnapshots.bin" />
@@ -873,13 +892,7 @@
       <option name="project" value="LOCAL" />
       <updated>1453045558231</updated>
     </task>
-    <task id="LOCAL-00019" summary="Why didn't these textures sync!? Oh right... yeah...&#10;Also adding some WIP bits to clean up my changes.">
-      <created>1453046580496</created>
-      <option name="number" value="00019" />
-      <option name="project" value="LOCAL" />
-      <updated>1453046580496</updated>
-    </task>
-    <option name="localTasksCounter" value="20" />
+    <option name="localTasksCounter" value="19" />
     <servers />
   </component>
   <component name="TodoView">
@@ -896,7 +909,6 @@
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.21722364" sideWeight="0.31451613" order="4" side_tool="true" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.5094086" sideWeight="0.4975" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.5094086" sideWeight="0.5025" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
@@ -915,6 +927,7 @@
       <window_info id="Palette " active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.547043" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.5094086" sideWeight="0.4975" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.36962366" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Coverage" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.15938303" sideWeight="0.5" order="6" side_tool="true" content_ui="tabs" />
@@ -981,8 +994,7 @@
     <MESSAGE value="Added hammer crafting table recipe for the unstable hammer and made a config to use the 'easier' recipe using a vanilla crafting table." />
     <MESSAGE value="Added Excavators!" />
     <MESSAGE value="Updated mod version to 1.6" />
-    <MESSAGE value="Why didn't these textures sync!? Oh right... yeah...&#10;Also adding some WIP bits to clean up my changes." />
-    <option name="LAST_COMMIT_MESSAGE" value="Why didn't these textures sync!? Oh right... yeah...&#10;Also adding some WIP bits to clean up my changes." />
+    <option name="LAST_COMMIT_MESSAGE" value="Updated mod version to 1.6" />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="true" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
@@ -1225,8 +1237,8 @@
         <state vertical-scroll-proportion="0.16620111">
           <caret line="20" column="5" selection-start-line="20" selection-start-column="5" selection-end-line="20" selection-end-column="5" />
           <folding>
-            <element signature="e#987#988#0" expanded="true" />
-            <element signature="e#1019#1020#0" expanded="true" />
+            <element signature="e#1067#1068#0" expanded="true" />
+            <element signature="e#1099#1100#0" expanded="true" />
           </folding>
         </state>
       </provider>
