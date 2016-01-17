@@ -14,7 +14,7 @@ Note: C:\Users\brigh\Desktop\Projects\Minecraft Modding\1.7.10\SparksHammers\bui
 Note: Recompile with -Xlint:unchecked for details.
 1 warning
 
-:processResources
+:processResources UP-TO-DATE
 :classes
 :jar
 :compileTestJava UP-TO-DATE
@@ -32,4 +32,4 @@ Note: Recompile with -Xlint:unchecked for details.
 
 BUILD SUCCESSFUL
 
-Total time: 55.052 secs
+Total time: 9.343 secs
