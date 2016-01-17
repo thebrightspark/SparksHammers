@@ -1,0 +1,10 @@
+#IDEA files
+.idea/
+*.iml
+*.ipr
+*.iws
+
+/eclipse
+/libs
+/out
+/.gradle
