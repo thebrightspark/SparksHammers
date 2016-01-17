@@ -38,7 +38,7 @@ public class ConfigurationHandler
     {
         //testValue = configuration.getBoolean("configValue", Categories.GENERAL, false, "This is an example config value");
         Config.includeOtherModItems = configuration.getBoolean("includeOtherModItems", Categories.GENERAL, true, "Whether to add tools made from other mod materials into the game.");
-        Config.useEasyUnstableHammerRecipe = configuration.getBoolean("useEasyUnstableHammerRecipe", Categories.GENERAL, false, "If set to true, will use old 'easier' recipe using a vanilla crafting table.");
+        Config.useEasyUnstableRecipe = configuration.getBoolean("useEasyUnstableRecipe", Categories.GENERAL, false, "If set to true, will use old 'easier' recipe using a vanilla crafting table for the unstable hammer and excavator.");
         Config.toolDurabilityModifier = configuration.getFloat("toolDurabilityModifier", Categories.TOOLS, Config.toolDurabilityModifier, Config.toolDurabilityModifierMin, Config.toolDurabilityModifierMax, "Modifier for hammers and excavators made of vanilla materials to adjust durability.");
         Config.toolSpeedModifier = configuration.getFloat("toolSpeedModifier", Categories.TOOLS, Config.toolSpeedModifier, Config.toolSpeedModifierMin, Config.toolSpeedModifierMax, "Modifier for hammers and excavators made of vanilla materials to adjust mining speed.");
         //Config.netherStarHammerDurability = configuration.getInt("netherStarHammerDurability", Categories.TOOLS, Config.netherStarHammerDurability, Config.netherStarHammerDurabilityMin, Config.netherStarHammerDurabilityMax, "Durability of the Nether Star made hammer");

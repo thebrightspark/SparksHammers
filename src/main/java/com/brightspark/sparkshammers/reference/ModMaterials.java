@@ -3,10 +3,8 @@ package com.brightspark.sparkshammers.reference;
 import net.minecraft.item.Item.ToolMaterial;
 import net.minecraftforge.common.util.EnumHelper;
 
-public class ModHammerMaterials
+public class ModMaterials
 {
-    //TODO: Add more mod material made hammers!
-
     //Botania
     public static ToolMaterial HAMMER_MANASTEEL, HAMMER_TERRASTEEL, HAMMER_ELEMENTIUM;
     //Random Things

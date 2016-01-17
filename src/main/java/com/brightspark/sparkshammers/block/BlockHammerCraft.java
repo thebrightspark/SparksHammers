@@ -2,6 +2,7 @@ package com.brightspark.sparkshammers.block;
 
 import com.brightspark.sparkshammers.SHCreativeTab;
 import com.brightspark.sparkshammers.SparksHammers;
+import com.brightspark.sparkshammers.reference.Names;
 import com.brightspark.sparkshammers.reference.Reference;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -20,11 +21,11 @@ public class BlockHammerCraft extends Block
     public BlockHammerCraft()
     {
         super(Material.rock);
-        setBlockName("hammerCraft");
+        setBlockName(Names.Blocks.HAMMER_CRAFT);
         setCreativeTab(SHCreativeTab.SH_TAB);
         setHardness(2f);
         setResistance(10f);
-        setBlockTextureName(Reference.MOD_ID + ":hammerCraft");
+        setBlockTextureName(Reference.MOD_ID + ":" + Names.Blocks.HAMMER_CRAFT);
     }
 
     public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hitX, float hitY, float hitZ)
@@ -43,7 +44,6 @@ public class BlockHammerCraft extends Block
         textureTop = registry.registerIcon(this.getTextureName() + "Top");
         textureSide = registry.registerIcon(this.getTextureName() + "Side");
         textureBottom = registry.registerIcon(this.getTextureName() + "Bottom");
-
     }
 
     /**

@@ -47,22 +47,46 @@ public class HammerCraftingManager
         addRecipe(new ItemStack(SHItems.hammerGold), new Object[]{"HHHHH", "HHHHH", "SSSS ", 'H', Items.gold_ingot, 'S', "stickWood"});
         addRecipe(new ItemStack(SHItems.hammerDiamond), new Object[]{"HHHHH", "HHHHH", "SSSS ", 'H', Items.diamond, 'S', "stickWood"});
 
+        addRecipe(new ItemStack(SHItems.excavatorWood), new Object[]{" HHH ", "HHHHH", "SSSS ", 'H', "plankWood", 'S', "stickWood"});
+        if(LoaderHelper.isModLoaded(Names.Mods.EXTRA_UTILITIES)) //Make stone head recipe made of compressed cobble when Extra Utilities is installed
+            addRecipe(new ItemStack(SHItems.excavatorStone), new Object[]{" HHH ", "HHHHH", "SSSS ", 'H', Names.ModOreDicts.COMPRESSED_COBBLE_1, 'S', "stickWood"});
+        else
+            addRecipe(new ItemStack(SHItems.excavatorStone), new Object[]{" HHH ", "HHHHH", "SSSS ", 'H', Blocks.cobblestone, 'S', "stickWood"});
+        addRecipe(new ItemStack(SHItems.excavatorIron), new Object[]{" HHH ", "HHHHH", "SSSS ", 'H', Items.iron_ingot, 'S', "stickWood"});
+        addRecipe(new ItemStack(SHItems.excavatorGold), new Object[]{" HHH ", "HHHHH", "SSSS ", 'H', Items.gold_ingot, 'S', "stickWood"});
+        addRecipe(new ItemStack(SHItems.excavatorDiamond), new Object[]{" HHH ", "HHHHH", "SSSS ", 'H', Items.diamond, 'S', "stickWood"});
+
         //Modded
         if(Config.includeOtherModItems)
         {
             //Botania
             if(LoaderHelper.doesOreExist(Names.ModOreDicts.INGOT_MANASTEEL))
+            {
                 addRecipe(new ItemStack(SHModItems.hammerManasteel), new Object[]{"HHHHH", "HHHHH", "SSSS ", 'H', Names.ModOreDicts.INGOT_MANASTEEL, 'S', "stickWood"});
+                addRecipe(new ItemStack(SHModItems.excavatorManasteel), new Object[]{" HHH ", "HHHHH", "SSSS ", 'H', Names.ModOreDicts.INGOT_MANASTEEL, 'S', "stickWood"});
+            }
             if(LoaderHelper.doesOreExist(Names.ModOreDicts.INGOT_TERRASTEEL))
+            {
                 addRecipe(new ItemStack(SHModItems.hammerTerrasteel), new Object[]{"HHHHH", "HHHHH", "SSSS ", 'H', Names.ModOreDicts.INGOT_TERRASTEEL, 'S', "stickWood"});
+                addRecipe(new ItemStack(SHModItems.excavatorTerrasteel), new Object[]{" HHH ", "HHHHH", "SSSS ", 'H', Names.ModOreDicts.INGOT_TERRASTEEL, 'S', "stickWood"});
+            }
             if(LoaderHelper.doesOreExist(Names.ModOreDicts.INGOT_ELEMENTIUM))
+            {
                 addRecipe(new ItemStack(SHModItems.hammerElementium), new Object[]{"HHHHH", "HHHHH", "SSSS ", 'H', Names.ModOreDicts.INGOT_ELEMENTIUM, 'S', "stickWood"});
+                addRecipe(new ItemStack(SHModItems.excavatorElementium), new Object[]{" HHH ", "HHHHH", "SSSS ", 'H', Names.ModOreDicts.INGOT_ELEMENTIUM, 'S', "stickWood"});
+            }
             //EnderIO
             if(LoaderHelper.doesOreExist(Names.ModOreDicts.INGOT_DARKSTEEL))
+            {
                 addRecipe(new ItemStack(SHModItems.hammerDarksteel), new Object[]{"HHHHH", "HHHHH", "SSSS ", 'H', Names.ModOreDicts.INGOT_DARKSTEEL, 'S', "stickWood"});
+                addRecipe(new ItemStack(SHModItems.excavatorDarksteel), new Object[]{" HHH ", "HHHHH", "SSSS ", 'H', Names.ModOreDicts.INGOT_DARKSTEEL, 'S', "stickWood"});
+            }
             //Extra Utilities
-            if(!Config.useEasyUnstableHammerRecipe && LoaderHelper.doesOreExist(Names.ModOreDicts.INGOT_UNSTABLE))
+            if(!Config.useEasyUnstableRecipe && LoaderHelper.doesOreExist(Names.ModOreDicts.INGOT_UNSTABLE))
+            {
                 addRecipe(new ItemStack(SHModItems.hammerUnstable), new Object[]{"HHHHH", "HHHHH", "SSSS ", 'H', Names.ModOreDicts.INGOT_UNSTABLE, 'S', "stickWood"});
+                addRecipe(new ItemStack(SHModItems.excavatorUnstable), new Object[]{" HHH ", "HHHHH", "SSSS ", 'H', Names.ModOreDicts.INGOT_UNSTABLE, 'S', "stickWood"});
+            }
             //Random Things
             if(LoaderHelper.isModLoaded(Names.Mods.RANDOM_THINGS))
             {
@@ -70,10 +94,14 @@ public class HammerCraftingManager
                 Item iron = (Item) Item.itemRegistry.getObject(Names.ModItemIDs.RANDOMTHINGS_ITEM_INGREDIENT);
                 ItemStack itemSpectreIron = new ItemStack(iron, 0, 4);
                 addRecipe(new ItemStack(SHModItems.hammerSpectre), new Object[]{"HHHHH", "HHHHH", "SSSS ", 'H', itemSpectreIron, 'S', "stickWood"});
+                addRecipe(new ItemStack(SHModItems.excavatorSpectre), new Object[]{" HHH ", "HHHHH", "SSSS ", 'H', itemSpectreIron, 'S', "stickWood"});
             }
             //Misc
             if(LoaderHelper.doesOreExist(Names.ModOreDicts.INGOT_BRONZE))
+            {
                 addRecipe(new ItemStack(SHModItems.hammerBronze), new Object[]{"HHHHH", "HHHHH", "SSSS ", 'H', Names.ModOreDicts.INGOT_BRONZE, 'S', "stickWood"});
+                addRecipe(new ItemStack(SHModItems.excavatorBronze), new Object[]{" HHH ", "HHHHH", "SSSS ", 'H', Names.ModOreDicts.INGOT_BRONZE, 'S', "stickWood"});
+            }
         }
     }
 

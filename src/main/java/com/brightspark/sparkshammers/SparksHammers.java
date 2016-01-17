@@ -6,7 +6,7 @@ import com.brightspark.sparkshammers.handlers.ConfigurationHandler;
 import com.brightspark.sparkshammers.init.*;
 import com.brightspark.sparkshammers.proxy.IProxy;
 import com.brightspark.sparkshammers.reference.Config;
-import com.brightspark.sparkshammers.reference.ModHammerMaterials;
+import com.brightspark.sparkshammers.reference.ModMaterials;
 import com.brightspark.sparkshammers.reference.Reference;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.Mod;
@@ -47,7 +47,7 @@ public class SparksHammers
         //Adds mod material made items if enabled in config
         if(Config.includeOtherModItems)
         {
-            ModHammerMaterials.init();
+            ModMaterials.init();
             SHModItems.init();
         }
 
@@ -69,6 +69,13 @@ public class SparksHammers
         {
             LogHelper.info(ore);
         }
+        */
+
+        //This displays all item IDs:
+        /*
+        Iterator items = Item.itemRegistry.getKeys().iterator();
+        while(items.hasNext())
+            LogHelper.info(items.next().toString());
         */
     }
 }

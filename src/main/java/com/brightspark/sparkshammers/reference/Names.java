@@ -4,7 +4,8 @@ public class Names
 {
     public static class Items
     {
-        public static final String HEAD_WOOD = "hammerHeadWood";
+        //<<<< Hammers >>>>
+        public static final String HAMMER_HEAD_WOOD = "hammerHeadWood";
 
         //public static final String HAMMER = "hammer";
         public static final String HAMMER_WOOD = "hammerWood";
@@ -16,6 +17,15 @@ public class Names
         public static final String HAMMER_NETHERSTAR = "hammerNetherStar";
 
         public static final String HAMMER_THOR = "hammerThor";
+
+        //<<<< Excavators >>>>
+        public static final String EXCAVATOR_HEAD_WOOD = "excavatorHeadWood";
+
+        public static final String EXCAVATOR_WOOD = "excavatorWood";
+        public static final String EXCAVATOR_STONE = "excavatorStone";
+        public static final String EXCAVATOR_IRON = "excavatorIron";
+        public static final String EXCAVATOR_GOLD = "excavatorGold";
+        public static final String EXCAVATOR_DIAMOND = "excavatorDiamond";
     }
 
     public static class ModItems
@@ -24,16 +34,23 @@ public class Names
         public static final String HAMMER_MANASTEEL = "hammerManasteel";
         public static final String HAMMER_TERRASTEEL = "hammerTerrasteel";
         public static final String HAMMER_ELEMENTIUM = "hammerElementium";
+        public static final String EXCAVATOR_MANASTEEL = "excavatorManasteel";
+        public static final String EXCAVATOR_TERRASTEEL = "excavatorTerrasteel";
+        public static final String EXCAVATOR_ELEMENTIUM = "excavatorElementium";
         //Random Things
         public static final String HAMMER_SPECTRE = "hammerSpectre";
+        public static final String EXCAVATOR_SPECTRE = "excavatorSpectre";
         //Extra Utilities
-        public static final String HEAD_UNSTABLE = "hammerHeadUnstable";
+        public static final String HAMMER_HEAD_UNSTABLE = "hammerHeadUnstable";
         public static final String HAMMER_UNSTABLE = "hammerUnstable";
+        public static final String EXCAVATOR_HEAD_UNSTABLE = "excavatorHeadUnstable";
+        public static final String EXCAVATOR_UNSTABLE = "excavatorUnstable";
         //EnderIO
         public static final String HAMMER_DARKSTEEL = "hammerDarksteel";
-
+        public static final String EXCAVATOR_DARKSTEEL = "excavatorDarksteel";
         //Misc
         public static final String HAMMER_BRONZE = "hammerBronze";
+        public static final String EXCAVATOR_BRONZE = "excavatorBronze";
     }
 
     public static class Blocks

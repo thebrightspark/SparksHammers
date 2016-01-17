@@ -7,10 +7,10 @@ public class Config
      */
     public static boolean includeOtherModItems = true;
     /**
-     * If set to true, will use old 'easier' recipe using a vanilla crafting table.
+     * If set to true, will use old 'easier' recipe using a vanilla crafting table for the unstable hammer and excavator.
      * Else, set to false will keep the hammer crafting table recipe (which requires mobius ingots rather than unstable).
      */
-    public static boolean useEasyUnstableHammerRecipe = false;
+    public static boolean useEasyUnstableRecipe = false;
     /**
      * Modifier for hammers and excavators to adjust durability.
      */

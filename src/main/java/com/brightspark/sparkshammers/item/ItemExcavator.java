@@ -8,7 +8,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.item.ItemPickaxe;
+import net.minecraft.item.ItemSpade;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.play.client.C07PacketPlayerDigging;
 import net.minecraft.network.play.server.S23PacketBlockChange;
@@ -17,31 +17,31 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.event.world.BlockEvent;
 
-public class ItemHammer extends ItemPickaxe
+public class ItemExcavator extends ItemSpade
 {
     private int mineRadius = 1; //Radius around center block hit
     private int mineDepth = 0; //Depth (behind block)
     private boolean infiniteUse = false;
     //These are the material types which the hammer can mine in AOE:
-    private Material[] materials = {Material.anvil, Material.glass, Material.ice, Material.iron, Material.packedIce, Material.piston, Material.rock};
+    private Material[] materials = {Material.grass, Material.ground, Material.sand, Material.snow, Material.craftedSnow, Material.clay};
 
-    public ItemHammer(ToolMaterial mat)
+    public ItemExcavator(ToolMaterial mat)
     {
         super(mat);
         setCreativeTab(SHCreativeTab.SH_TAB);
     }
 
-    public ItemHammer(String name, ToolMaterial mat)
+    public ItemExcavator(String name, ToolMaterial mat)
     {
         this(name, mat, null, false);
     }
 
-    public ItemHammer(String name, ToolMaterial mat, String modName)
+    public ItemExcavator(String name, ToolMaterial mat, String modName)
     {
         this(name, mat, modName, false);
     }
 
-    public ItemHammer(String name, ToolMaterial mat, String modName, boolean hasInfiniteUse)
+    public ItemExcavator(String name, ToolMaterial mat, String modName, boolean hasInfiniteUse)
     {
         super(mat);
         setUnlocalizedName(name);

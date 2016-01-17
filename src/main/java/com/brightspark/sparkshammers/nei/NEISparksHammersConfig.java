@@ -16,8 +16,11 @@ public class NEISparksHammersConfig implements IConfigureNEI
 
         //API.hideItem();
 
-        if(!Config.useEasyUnstableHammerRecipe)
-            API.hideItem(new ItemStack(SHModItems.itemHeadUnstable));
+        if(!Config.useEasyUnstableRecipe)
+        {
+            API.hideItem(new ItemStack(SHModItems.hammerHeadUnstable));
+            API.hideItem(new ItemStack(SHModItems.excavatorHeadUnstable));
+        }
 
         API.registerRecipeHandler(new NEIHammerCraftRecipeHandler());
         API.registerUsageHandler(new NEIHammerCraftRecipeHandler());

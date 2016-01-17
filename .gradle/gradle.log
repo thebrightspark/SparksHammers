@@ -10,7 +10,7 @@
 :apiClasses UP-TO-DATE
 :sourceMainJava
 :compileJavawarning: [options] bootstrap class path not set in conjunction with -source 1.6
-Note: Some input files use unchecked or unsafe operations.
+Note: C:\Users\brigh\Desktop\Projects\Minecraft Modding\1.7.10\SparksHammers\build\sources\java\com\brightspark\sparkshammers\nei\NEIHammerCraftRecipeHandler.java uses unchecked or unsafe operations.
 Note: Recompile with -Xlint:unchecked for details.
 1 warning
 
@@ -32,4 +32,4 @@ Note: Recompile with -Xlint:unchecked for details.
 
 BUILD SUCCESSFUL
 
-Total time: 8.944 secs
+Total time: 9.343 secs

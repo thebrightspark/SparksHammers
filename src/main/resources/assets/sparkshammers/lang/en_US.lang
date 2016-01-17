@@ -4,10 +4,6 @@
 
 //Hammer Heads
 item.hammerHeadWood.name=Wooden Hammer Head
-item.hammerHeadStone.name=Stone Hammer Head
-item.hammerHeadIron.name=Iron Hammer Head
-item.hammerHeadGold.name=Gold Hammer Head
-item.hammerHeadDiamond.name=Diamond Hammer Head
 
 //Hammers
 item.hammerWood.name=Wooden Hammer
@@ -18,15 +14,20 @@ item.hammerDiamond.name=Diamond Hammer
 
 item.hammerThor.name=Mjolnir
 
+//Excavator Heads
+item.excavatorHeadWood.name=Wooden Excavator Head
+
+//Excavators
+item.excavatorWood.name=Wooden Excavator
+item.excavatorStone.name=Stone Excavator
+item.excavatorIron.name=Iron Excavator
+item.excavatorGold.name=Gold Excavator
+item.excavatorDiamond.name=Diamond Excavator
+
 // <<<< Mod Material Made Tools >>>>
 
 //Hammer Heads
-item.hammerHeadManasteel.name=Manasteel Hammer Head
-item.hammerHeadTerrasteel.name=Terrasteel Hammer Head
-item.hammerHeadElementium.name=Elementium Hammer Head
 item.hammerHeadUnstable.name=Unstable Hammer Head
-item.hammerHeadDarksteel.name=Dark Steel Hammer Head
-item.hammerHeadBronze.name=Bronze Hammer Head
 
 //Hammers
 item.hammerManasteel.name=Manasteel Hammer
@@ -35,6 +36,14 @@ item.hammerElementium.name=Elementium Hammer
 item.hammerUnstable.name=Unstable Hammer
 item.hammerDarksteel.name=Dark Steel Hammer
 item.hammerBronze.name=Bronze Hammer
+
+//Excavators
+item.excavatorManasteel.name=Manasteel Excavator
+item.excavatorTerrasteel.name=Terrasteel Excavator
+item.excavatorElementium.name=Elementium Excavator
+item.excavatorUnstable.name=Unstable Excavator
+item.excavatorDarksteel.name=Dark Steel Excavator
+item.excavatorBronze.name=Bronze Excavator
 
 // <<<< Misc Names >>>>
 
