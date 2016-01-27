@@ -3,38 +3,39 @@ package com.brightspark.sparkshammers.item;
 import com.brightspark.sparkshammers.reference.Config;
 import com.brightspark.sparkshammers.reference.Materials;
 import com.brightspark.sparkshammers.reference.Names;
-import com.brightspark.sparkshammers.reference.Reference;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.BlockPos;
 import net.minecraft.world.World;
 
 public class ItemHammerNetherStar extends ItemHammer
 {
-    private static boolean isMining = false;
-    private static int ticks = 0;
-    private static int tickDelay = 2;
+    private boolean isMining = false;
+    private int ticks = 0;
+    private int tickDelay = 2;
     private static int maxMine = Config.netherStarHammerDistance;
-    private static int startX, startY, startZ;
+    //private int startX, startY, startZ;
+    private BlockPos startPos;
 
     public ItemHammerNetherStar()
     {
-        super(Materials.HAMMER_NETHERSTAR);
-        setUnlocalizedName(Names.Items.HAMMER_NETHERSTAR);
-        setTextureName(Reference.ITEM_TEXTURE_DIR + Names.Items.HAMMER_IRON);
+        super(Names.Items.HAMMER_NETHERSTAR, Materials.HAMMER_NETHERSTAR);
     }
 
-    public boolean onBlockStartBreak (ItemStack stack, int x, int y, int z, EntityPlayer player)
+    public boolean onBlockStartBreak (ItemStack stack, BlockPos pos, EntityPlayer player)
     {
         if(!isMining)
         {
-            boolean toReturn = super.onBlockStartBreak(stack, x, y, z, player);
+            boolean toReturn = super.onBlockStartBreak(stack, pos, player);
             if(toReturn)
             {
+                //TODO: This should really be done when the block is broken or about to be
                 isMining = true;
-                startX = x;
-                startY = y;
-                startZ = z;
+                startPos = pos;
+                //startX = x;
+                //startY = y;
+                //startZ = z;
             }
         }
         //Prevent harvesting if mining already in progress

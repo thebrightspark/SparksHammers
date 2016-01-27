@@ -8,7 +8,6 @@ import com.brightspark.sparkshammers.util.LoaderHelper;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.InventoryCrafting;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.world.World;
@@ -26,7 +25,7 @@ public class HammerCraftingManager
     /**
      * Returns the static instance of this class
      */
-    public static final HammerCraftingManager getInstance()
+    public static HammerCraftingManager getInstance()
     {
         /** The static instance of this class */
         return instance;
@@ -86,15 +85,6 @@ public class HammerCraftingManager
             {
                 addRecipe(new ItemStack(SHModItems.hammerUnstable), new Object[]{"HHHHH", "HHHHH", "SSSS ", 'H', Names.ModOreDicts.INGOT_UNSTABLE, 'S', "stickWood"});
                 addRecipe(new ItemStack(SHModItems.excavatorUnstable), new Object[]{" HHH ", "HHHHH", "SSSS ", 'H', Names.ModOreDicts.INGOT_UNSTABLE, 'S', "stickWood"});
-            }
-            //Random Things
-            if(LoaderHelper.isModLoaded(Names.Mods.RANDOM_THINGS))
-            {
-                //Gets the spectre iron item for the recipes
-                Item iron = (Item) Item.itemRegistry.getObject(Names.ModItemIDs.RANDOMTHINGS_ITEM_INGREDIENT);
-                ItemStack itemSpectreIron = new ItemStack(iron, 0, 4);
-                addRecipe(new ItemStack(SHModItems.hammerSpectre), new Object[]{"HHHHH", "HHHHH", "SSSS ", 'H', itemSpectreIron, 'S', "stickWood"});
-                addRecipe(new ItemStack(SHModItems.excavatorSpectre), new Object[]{" HHH ", "HHHHH", "SSSS ", 'H', itemSpectreIron, 'S', "stickWood"});
             }
             //Misc
             if(LoaderHelper.doesOreExist(Names.ModOreDicts.INGOT_BRONZE))

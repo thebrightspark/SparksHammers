@@ -4,17 +4,16 @@ import com.brightspark.sparkshammers.gui.GuiHandler;
 import com.brightspark.sparkshammers.hammerCrafting.HammerCraftingManager;
 import com.brightspark.sparkshammers.handlers.ConfigurationHandler;
 import com.brightspark.sparkshammers.init.*;
-import com.brightspark.sparkshammers.proxy.IProxy;
 import com.brightspark.sparkshammers.reference.Config;
 import com.brightspark.sparkshammers.reference.ModMaterials;
 import com.brightspark.sparkshammers.reference.Reference;
-import cpw.mods.fml.common.FMLCommonHandler;
-import cpw.mods.fml.common.Mod;
-import cpw.mods.fml.common.SidedProxy;
-import cpw.mods.fml.common.event.FMLInitializationEvent;
-import cpw.mods.fml.common.event.FMLPostInitializationEvent;
-import cpw.mods.fml.common.event.FMLPreInitializationEvent;
-import cpw.mods.fml.common.network.NetworkRegistry;
+import net.minecraftforge.fml.common.FMLCommonHandler;
+import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.event.FMLInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.fml.common.network.NetworkRegistry;
+import net.minecraftforge.fml.relauncher.Side;
 
 @Mod(modid= Reference.MOD_ID, name=Reference.MOD_NAME, version=Reference.VERSION)
 public class SparksHammers
@@ -23,8 +22,8 @@ public class SparksHammers
     @Mod.Instance(Reference.MOD_ID)
     public static SparksHammers instance;
 
-    @SidedProxy(clientSide = Reference.CLIENT_PROXY_CLASS, serverSide = Reference.SERVER_PROXY_CLASS)
-    public static IProxy proxy;
+    //@SidedProxy(clientSide = Reference.CLIENT_PROXY_CLASS, serverSide = Reference.SERVER_PROXY_CLASS)
+    //public static IProxy proxy;
 
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent event)
@@ -35,20 +34,30 @@ public class SparksHammers
         ConfigurationHandler.init(event.getSuggestedConfigurationFile());
         FMLCommonHandler.instance().bus().register(new ConfigurationHandler());
 
-        SHItems.init();
-        SHBlocks.init();
+        SHItems.regItems();
+        SHBlocks.regBlocks();
     }
 
     @Mod.EventHandler
     public void init(FMLInitializationEvent event)
     {
-        //Initialize GUIs, tile entities, recipies, event handlers here
+        //Initialize textures/models, GUIs, tile entities, recipies, event handlers here
+
+        //Registers all of the item and block textures
+        if(event.getSide() == Side.CLIENT)
+        {
+            SHItems.regModels();
+            SHBlocks.regModels();
+        }
 
         //Adds mod material made items if enabled in config
         if(Config.includeOtherModItems)
         {
             ModMaterials.init();
-            SHModItems.init();
+            SHModItems.regItems();
+            //Registers mod textures
+            if(event.getSide() == Side.CLIENT)
+                SHModItems.regModels();
         }
 
         SHRecipes.init(); //Adds vanilla crafting table recipes

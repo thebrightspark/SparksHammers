@@ -2,9 +2,9 @@ package com.brightspark.sparkshammers.handlers;
 
 import com.brightspark.sparkshammers.reference.Config;
 import com.brightspark.sparkshammers.reference.Reference;
-import cpw.mods.fml.client.event.ConfigChangedEvent.OnConfigChangedEvent;
-import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.common.config.Configuration;
+import net.minecraftforge.fml.client.event.ConfigChangedEvent;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 import java.io.File;
 
@@ -65,12 +65,6 @@ public class ConfigurationHandler
         Config.terrasteelDamageVsEntity = configuration.getFloat("terrasteelDamageVsEntity", Categories.SPECIFIC_TOOLS, Config.terrasteelDamageVsEntity, Config.damageMin, Config.damageMax, "");
         Config.terrasteelEnchantability = configuration.getInt("terrasteelEnchantability", Categories.SPECIFIC_TOOLS, Config.terrasteelEnchantability, Config.enchantabilityMin, Config.enchantabilityMax, "");
 
-        Config.spectreHarvestLevel = configuration.getInt("spectreHarvestLevel", Categories.SPECIFIC_TOOLS, Config.spectreHarvestLevel, Config.harvestLevelMin, Config.harvestLevelMax, "");
-        Config.spectreMaxUses = configuration.getInt("spectreMaxUses", Categories.SPECIFIC_TOOLS, Config.spectreMaxUses, Config.maxUsesMin, Config.maxUsesMax, "");
-        Config.spectreEfficiency = configuration.getFloat("spectreEfficiency", Categories.SPECIFIC_TOOLS, Config.spectreEfficiency, Config.efficiencyMin, Config.efficiencyMax, "");
-        Config.spectreDamageVsEntity = configuration.getFloat("spectreDamageVsEntity", Categories.SPECIFIC_TOOLS, Config.spectreDamageVsEntity, Config.damageMin, Config.damageMax, "");
-        Config.spectreEnchantability = configuration.getInt("spectreEnchantability", Categories.SPECIFIC_TOOLS, Config.spectreEnchantability, Config.enchantabilityMin, Config.enchantabilityMax, "");
-
         Config.darksteelHarvestLevel = configuration.getInt("darksteelHarvestLevel", Categories.SPECIFIC_TOOLS, Config.darksteelHarvestLevel, Config.harvestLevelMin, Config.harvestLevelMax, "");
         Config.darksteelMaxUses = configuration.getInt("darksteelMaxUses", Categories.SPECIFIC_TOOLS, Config.darksteelMaxUses, Config.maxUsesMin, Config.maxUsesMax, "");
         Config.darksteelEfficiency = configuration.getFloat("darksteelEfficiency", Categories.SPECIFIC_TOOLS, Config.darksteelEfficiency, Config.efficiencyMin, Config.efficiencyMax, "");
@@ -90,7 +84,7 @@ public class ConfigurationHandler
     }
 
     @SubscribeEvent
-    public void onConfigurationChangedEvent(OnConfigChangedEvent event)
+    public void onConfigurationChangedEvent(ConfigChangedEvent.OnConfigChangedEvent event)
     {
         if(event.modID.equalsIgnoreCase(Reference.MOD_ID))
         {

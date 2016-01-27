@@ -6,6 +6,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.world.World;
+import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.oredict.OreDictionary;
 
 import java.util.ArrayList;
@@ -146,6 +147,12 @@ public class HammerShapedOreRecipe implements IRecipe
 
     @Override
     public ItemStack getRecipeOutput(){ return output; }
+
+    @Override
+    public ItemStack[] getRemainingItems(InventoryCrafting inv)
+    {
+        return ForgeHooks.defaultRecipeGetRemainingItems(inv);
+    }
 
     /**
      * Used to check if a recipe matches current crafting inventory

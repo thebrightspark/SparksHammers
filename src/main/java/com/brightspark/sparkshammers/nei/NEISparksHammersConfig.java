@@ -4,7 +4,9 @@ import codechicken.nei.api.API;
 import codechicken.nei.api.IConfigureNEI;
 import com.brightspark.sparkshammers.init.SHModItems;
 import com.brightspark.sparkshammers.reference.Config;
+import com.brightspark.sparkshammers.reference.Names;
 import com.brightspark.sparkshammers.reference.Reference;
+import com.brightspark.sparkshammers.util.LoaderHelper;
 import net.minecraft.item.ItemStack;
 
 public class NEISparksHammersConfig implements IConfigureNEI
@@ -16,7 +18,7 @@ public class NEISparksHammersConfig implements IConfigureNEI
 
         //API.hideItem();
 
-        if(!Config.useEasyUnstableRecipe)
+        if(LoaderHelper.isModLoaded(Names.Mods.EXTRA_UTILITIES) && !Config.useEasyUnstableRecipe)
         {
             API.hideItem(new ItemStack(SHModItems.hammerHeadUnstable));
             API.hideItem(new ItemStack(SHModItems.excavatorHeadUnstable));

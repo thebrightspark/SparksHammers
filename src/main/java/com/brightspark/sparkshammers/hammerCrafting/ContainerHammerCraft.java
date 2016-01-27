@@ -5,12 +5,13 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.*;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.BlockPos;
 import net.minecraft.world.World;
 
 public class ContainerHammerCraft extends Container
 {
     /*
-    Crafting mtrix:
+    Crafting matrix:
     H H H H H
     H H H H H
     S S S S X
@@ -21,7 +22,7 @@ public class ContainerHammerCraft extends Container
     public InventoryCrafting craftMatrix = new InventoryCrafting(this, 5, 3);
     public IInventory craftResult = new InventoryCraftResult();
     private World worldObj;
-    private int xPos, yPos, zPos;
+    private BlockPos pos;
     /**
      * This number is increased when the slots are added (using this as their slot ID),
      * therefore giving the number of slots in the container
@@ -38,10 +39,13 @@ public class ContainerHammerCraft extends Container
 
     public ContainerHammerCraft(InventoryPlayer invPlayer, World world, int x, int y, int z)
     {
+        this(invPlayer, world, new BlockPos(x, y, z));
+    }
+
+    public ContainerHammerCraft(InventoryPlayer invPlayer, World world, BlockPos position)
+    {
         worldObj = world;
-        xPos = x;
-        yPos = y;
-        zPos = z;
+        pos = position;
 
         //Add the slots
         this.addSlotToContainer(new SlotCrafting(invPlayer.player, this.craftMatrix, this.craftResult, 0, resultX, resultY));
@@ -82,7 +86,7 @@ public class ContainerHammerCraft extends Container
     public boolean canInteractWith(EntityPlayer player)
     {
         //Returns true if the block is the Hammer Crafting block, and is within range
-        return this.worldObj.getBlock(this.xPos, this.yPos, this.zPos) == SHBlocks.blockHammerCraft && player.getDistanceSq((double)this.xPos + 0.5D, (double)this.yPos + 0.5D, (double)this.zPos + 0.5D) <= 64.0D;
+        return this.worldObj.getBlockState(pos).getBlock() == SHBlocks.blockHammerCraft && player.getDistanceSq((double)pos.getX() + 0.5D, (double)pos.getY() + 0.5D, (double)pos.getZ() + 0.5D) <= 64.0D;
     }
 
     protected void bindPlayerInventory(InventoryPlayer inventoryPlayer)
@@ -110,7 +114,7 @@ public class ContainerHammerCraft extends Container
         {
             for (int i = 0; i < numSlots; ++i)
             {
-                ItemStack itemstack = this.craftMatrix.getStackInSlotOnClosing(i);
+                ItemStack itemstack = this.craftMatrix.getStackInSlot(i); //Used to be .getStackInSlotOnClosing(i)
 
                 if (itemstack != null)
                 {
@@ -123,7 +127,7 @@ public class ContainerHammerCraft extends Container
     public ItemStack transferStackInSlot(EntityPlayer player, int slot)
     {
         ItemStack stack = null;
-        Slot slotObject = (Slot) this.inventorySlots.get(slot);
+        Slot slotObject = this.inventorySlots.get(slot);
 
         if (slotObject != null && slotObject.getHasStack())
         {

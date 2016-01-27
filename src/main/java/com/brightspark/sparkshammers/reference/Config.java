@@ -71,12 +71,6 @@ public class Config
     public static float terrasteelDamageVsEntity = 3f;
     public static int terrasteelEnchantability = 26;
 
-    public static int spectreHarvestLevel = 3;
-    public static int spectreMaxUses = (int) (1700*toolDurabilityModifier);
-    public static float spectreEfficiency = 8.2f*toolSpeedModifier;
-    public static float spectreDamageVsEntity = 4f;
-    public static int spectreEnchantability = 16;
-
     public static int darksteelHarvestLevel = 5;
     public static int darksteelMaxUses = (int) (1561*toolDurabilityModifier);
     public static float darksteelEfficiency = 7f*toolSpeedModifier;

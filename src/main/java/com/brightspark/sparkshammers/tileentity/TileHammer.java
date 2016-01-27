@@ -1,18 +1,27 @@
 package com.brightspark.sparkshammers.tileentity;
 
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.tileentity.TileEntity;
+
+import java.util.UUID;
 
 public class TileHammer extends TileEntity
 {
-    private String owner;
+    private UUID playerUUID;
 
-    public void setOwner(String playerName)
+    public void setOwner(EntityPlayer player)
     {
-        owner = playerName;
+        playerUUID = player.getUniqueID();
     }
 
-    public String getOwner()
+    public boolean isOwner(EntityPlayer player)
     {
-        return owner;
+        return MinecraftServer.getServer().getPlayerProfileCache().getProfileByUUID(playerUUID).getId().equals(player.getUniqueID());
+    }
+
+    public String getOwnerName()
+    {
+        return MinecraftServer.getServer().getPlayerProfileCache().getProfileByUUID(playerUUID).getName();
     }
 }
