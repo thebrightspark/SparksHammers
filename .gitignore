@@ -8,3 +8,5 @@
 /libs
 /out
 /.gradle
+/build
+/run
