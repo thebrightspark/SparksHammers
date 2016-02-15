@@ -5,6 +5,7 @@ import com.brightspark.sparkshammers.init.SHModItems;
 import com.brightspark.sparkshammers.reference.Config;
 import com.brightspark.sparkshammers.reference.Names;
 import com.brightspark.sparkshammers.util.LoaderHelper;
+import com.google.common.collect.Lists;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.InventoryCrafting;
@@ -12,7 +13,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.world.World;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class HammerCraftingManager
@@ -20,7 +20,7 @@ public class HammerCraftingManager
     /** The static instance of this class */
     private static final HammerCraftingManager instance = new HammerCraftingManager();
     /** A list of all the recipes added */
-    private List recipes = new ArrayList();
+    private List<IRecipe> recipes = Lists.newArrayList();
 
     /**
      * Returns the static instance of this class
@@ -182,7 +182,7 @@ public class HammerCraftingManager
         int j;
         for (j = 0; j < this.recipes.size(); ++j)
         {
-            IRecipe irecipe = (IRecipe)this.recipes.get(j);
+            IRecipe irecipe = this.recipes.get(j);
 
             if (irecipe.matches(invCrafting, world))
             {
@@ -191,6 +191,26 @@ public class HammerCraftingManager
         }
 
         return null;
+    }
+
+    public ItemStack[] func_180303_b(InventoryCrafting p_180303_1_, World worldIn)
+    {
+        for (IRecipe irecipe : this.recipes)
+        {
+            if (irecipe.matches(p_180303_1_, worldIn))
+            {
+                return irecipe.getRemainingItems(p_180303_1_);
+            }
+        }
+
+        ItemStack[] aitemstack = new ItemStack[p_180303_1_.getSizeInventory()];
+
+        for (int i = 0; i < aitemstack.length; ++i)
+        {
+            aitemstack[i] = p_180303_1_.getStackInSlot(i);
+        }
+
+        return aitemstack;
     }
 
     /**

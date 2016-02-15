@@ -32,6 +32,7 @@ public class SparksHammers
 
         //Passes suggested configuration file into the init method
         ConfigurationHandler.init(event.getSuggestedConfigurationFile());
+        //noinspection deprecation
         FMLCommonHandler.instance().bus().register(new ConfigurationHandler());
 
         SHItems.regItems();
@@ -71,6 +72,28 @@ public class SparksHammers
     public void postInit(FMLPostInitializationEvent event)
     {
         //Run stuff after mods have initialized here
+
+        //Prints out all crafting recipes
+        /*
+        LogHelper.info("<<<<<<<<<< Sparks Hammers Crafting Recipes >>>>>>>>>>");
+        List<HammerShapedOreRecipe> recipes = HammerCraftingManager.getInstance().getRecipeList();
+        for(HammerShapedOreRecipe r : recipes)
+        {
+            String inputs = "";
+            for(Object item : r.getInput())
+            {
+                if(item instanceof ItemStack)
+                    inputs = inputs.concat(((ItemStack)item).getDisplayName() + ", ");
+                else if(item instanceof List)
+                    inputs = inputs.concat(((List)item).get(0).toString() + ", ");
+                else if(item == null)
+                    inputs = inputs.concat("Null" + ", ");
+                else
+                    inputs = inputs.concat("Unknown" + ", ");
+            }
+            LogHelper.info(r.getRecipeOutput().getDisplayName() + " ---> " + inputs);
+        }
+        */
 
         //Prints out all of the items in the ore dictionary
         /*

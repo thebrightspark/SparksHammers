@@ -12,7 +12,7 @@ item.hammerIron.name=Iron Hammer
 item.hammerGold.name=Gold Hammer
 item.hammerDiamond.name=Diamond Hammer
 
-item.hammerThor.name=Mjolnir
+item.hammerThor.name=Mjolnir (Unfinished!)
 
 //Excavator Heads
 item.excavatorHeadWood.name=Wooden Excavator Head
@@ -50,3 +50,6 @@ item.excavatorBronze.name=Bronze Excavator
 //Hammer Crafting Table
 tile.hammerCraft.name=Hammer Crafting Table
 tile.hammerCraft.nei=Hammer Crafting
+
+//Hammer Block
+tile.hammer.name=Mjolnir (Unfinished!)
