@@ -10,6 +10,7 @@ import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.resources.model.ModelResourceLocation;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -48,6 +49,21 @@ public class BlockHammer extends BlockContainer implements IHasModel
         return new TileHammer();
     }
 
+    public void onBlockPlacedBy(World world, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack)
+    {
+        //Set owner to hammer tile entity
+        TileHammer hammerTile = (TileHammer) world.getTileEntity(pos);
+        if(placer instanceof EntityPlayer)
+            hammerTile.setOwner((EntityPlayer) placer);
+        else
+            hammerTile.setNoOwner();
+        //ItemBlock.setTileEntityNBT(world, (EntityPlayer) placer, pos, stack);
+
+        //Play anvil sound
+        if(!world.isRemote)
+            world.playAuxSFX(1022, pos, 0);
+    }
+
     public boolean isOpaqueCube()
     {
         return false;
@@ -79,14 +95,21 @@ public class BlockHammer extends BlockContainer implements IHasModel
         if(player.getHeldItem() == null)
         {
             //If no item in hand
-            if(hammer.isOwner(player))
+            if(!hammer.hasOwner() || hammer.isOwner(player))
             {
-                //Player is worthy
-                player.addChatMessage(new ChatComponentText("You are my Master, " + player.getDisplayNameString()));
+                if(world.isRemote)
+                {
+                    if(hammer.hasOwner())
+                        //Player is worthy
+                        player.addChatMessage(new ChatComponentText("You are my Master, " + player.getDisplayNameString()));
+                    else
+                        //Hammer had no previous owner
+                        player.addChatMessage(new ChatComponentText("Ah! A new Master!"));
+                }
                 player.setCurrentItemOrArmor(0, new ItemStack(SHItems.hammerThor));
                 world.setBlockToAir(new BlockPos(pos));
             }
-            else if(!world.isRemote)
+            else if(world.isRemote)
             {
                 //Player is not worthy
                 player.addChatMessage(new ChatComponentText("You are not worthy to wield this!"));
