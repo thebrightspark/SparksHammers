@@ -82,4 +82,23 @@ public class Config
     public static float bronzeEfficiency = 6f*toolSpeedModifier;
     public static float bronzeDamageVsEntity = 2f;
     public static int bronzeEnchantability = 13;
+
+    /**
+     * Whether shrine structures should be generated in the world to find Mjolnir in.
+     */
+    public static boolean shouldGenerateMjolnirShrines = true;
+    public static int mjolnirShrineRarity = 50;
+    public static int mjolnirShrineMinY = 150;
+
+    /**
+     * Whether Mjolnir should be added to dungeon loot.
+     */
+    public static boolean shouldAddMjolnirToLoot = true;
+    public static int mjolnirLootRarity = 1;
+
+    /**
+     * Whether wooden and stone hammers and excavators should be added to mineshaft loot.
+     */
+    public static boolean shouldAddMineshaftLoot = true;
+    public static int mineshaftLootRarity = 1;
 }

@@ -13,6 +13,7 @@ class Categories
     public static final String GENERAL = Configuration.CATEGORY_GENERAL;
     public static final String TOOLS = "tools";
     public static final String SPECIFIC_TOOLS = "specific tools";
+    public static final String WORLD_GEN = "world generation";
 }
 
 class Descriptions
@@ -76,6 +77,16 @@ public class ConfigurationHandler
         Config.bronzeEfficiency = configuration.getFloat("bronzeEfficiency", Categories.SPECIFIC_TOOLS, Config.bronzeEfficiency, Config.efficiencyMin, Config.efficiencyMax, "");
         Config.bronzeDamageVsEntity = configuration.getFloat("bronzeDamageVsEntity", Categories.SPECIFIC_TOOLS, Config.bronzeDamageVsEntity, Config.damageMin, Config.damageMax, "");
         Config.bronzeEnchantability = configuration.getInt("bronzeEnchantability", Categories.SPECIFIC_TOOLS, Config.bronzeEnchantability, Config.enchantabilityMin, Config.enchantabilityMax, "");
+
+        /*
+         * World Generation
+         */
+        Config.shouldGenerateMjolnirShrines = configuration.getBoolean("shouldGenerateMjolnirShrines", Categories.WORLD_GEN, Config.shouldGenerateMjolnirShrines, "Whether shrine structures should be generated in the world to find Mjolnir in.");
+        Config.mjolnirShrineRarity = configuration.getInt("mjolnirShrineRarity", Categories.WORLD_GEN, Config.mjolnirShrineRarity, Config.maxUsesMin, Config.maxUsesMax, "Chance of a shrine spawning (Higher is less chance).");
+        Config.shouldAddMjolnirToLoot = configuration.getBoolean("shouldAddMjolnirToLoot", Categories.WORLD_GEN, Config.shouldAddMjolnirToLoot, "Whether Mjolnir should be added to desert pyramid loot.");
+        Config.mjolnirLootRarity = configuration.getInt("mjolnirLootRarity", Categories.WORLD_GEN, Config.mjolnirLootRarity, Config.maxUsesMin, Config.maxUsesMax, "Chance of finding Mjolnir (Lower is less chance).");
+        Config.shouldAddMineshaftLoot = configuration.getBoolean("shouldAddMineshaftLoot", Categories.WORLD_GEN, Config.shouldAddMineshaftLoot, "Whether wooden and stone hammers and excavators should be added to mineshaft loot.");
+        Config.mineshaftLootRarity = configuration.getInt("mineshaftLootRarity", Categories.WORLD_GEN, Config.mineshaftLootRarity, Config.maxUsesMin, Config.maxUsesMax, "Chance of finding loot (Lower is less chance).");
 
         if(configuration.hasChanged())
         {

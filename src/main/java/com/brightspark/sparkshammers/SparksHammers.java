@@ -7,12 +7,17 @@ import com.brightspark.sparkshammers.init.*;
 import com.brightspark.sparkshammers.reference.Config;
 import com.brightspark.sparkshammers.reference.ModMaterials;
 import com.brightspark.sparkshammers.reference.Reference;
+import com.brightspark.sparkshammers.worldgen.WorldGenMjolnirShrine;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.WeightedRandomChestContent;
+import net.minecraftforge.common.ChestGenHooks;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 
 @Mod(modid= Reference.MOD_ID, name=Reference.MOD_NAME, version=Reference.VERSION)
@@ -66,6 +71,22 @@ public class SparksHammers
 
         SHTileEntities.init();
         NetworkRegistry.INSTANCE.registerGuiHandler(this, new GuiHandler());
+
+        //Add Wooden and Stone hammers and excavators to Mineshaft chests
+        if(Config.shouldAddMineshaftLoot)
+        {
+            ChestGenHooks.addItem(ChestGenHooks.MINESHAFT_CORRIDOR, new WeightedRandomChestContent(new ItemStack(SHItems.hammerWood), 1, 1, Config.mineshaftLootRarity));
+            ChestGenHooks.addItem(ChestGenHooks.MINESHAFT_CORRIDOR, new WeightedRandomChestContent(new ItemStack(SHItems.hammerStone), 1, 1, Config.mineshaftLootRarity));
+            ChestGenHooks.addItem(ChestGenHooks.MINESHAFT_CORRIDOR, new WeightedRandomChestContent(new ItemStack(SHItems.excavatorWood), 1, 1, Config.mineshaftLootRarity));
+            ChestGenHooks.addItem(ChestGenHooks.MINESHAFT_CORRIDOR, new WeightedRandomChestContent(new ItemStack(SHItems.excavatorStone), 1, 1, Config.mineshaftLootRarity));
+        }
+        //Add Mjolnir to Desert Pyramid chests if enabled in config
+        if(Config.shouldAddMjolnirToLoot)
+            ChestGenHooks.addItem(ChestGenHooks.PYRAMID_DESERT_CHEST, new WeightedRandomChestContent(new ItemStack(SHItems.hammerThor), 1, 1, Config.mjolnirLootRarity));
+
+        //Register world generation for Mjolnir Shrine
+        if(Config.shouldGenerateMjolnirShrines)
+            GameRegistry.registerWorldGenerator(new WorldGenMjolnirShrine(), 10);
     }
 
     @Mod.EventHandler
