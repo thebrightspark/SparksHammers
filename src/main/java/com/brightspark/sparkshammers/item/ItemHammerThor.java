@@ -15,9 +15,9 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class temHammerThor extends ItemHammer
+public class ItemHammerThor extends ItemHammer
 {
-    public temHammerThor()
+    public ItemHammerThor()
     {
         super(Names.Items.HAMMER_THOR, Materials.HAMMER_DIAMOND, true);
     }

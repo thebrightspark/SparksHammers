@@ -9,8 +9,10 @@ import com.google.common.collect.Lists;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.InventoryCrafting;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 
 import java.util.List;
@@ -50,8 +52,10 @@ public class HammerCraftingManager
         //Make stone recipes made of compressed cobble when Extra Utilities is installed
         if(LoaderHelper.isModLoaded(Names.Mods.EXTRA_UTILITIES))
         {
-            addRecipe(new ItemStack(SHItems.hammerStone), new Object[]{"HHHHH", "HHHHH", "SSSS ", 'H', Names.ModOreDicts.COMPRESSED_COBBLE_1, 'S', "stickWood"});
-            addRecipe(new ItemStack(SHItems.excavatorStone), new Object[]{" HHH ", "HHHHH", "SSSS ", 'H', Names.ModOreDicts.COMPRESSED_COBBLE_1, 'S', "stickWood"});
+            Item compressedCobble = (Item) Item.itemRegistry.getObject(new ResourceLocation(Names.ModItemIds.COMPRESSED_COBBLE));
+            ItemStack cobble1x = new ItemStack(compressedCobble, 1, 0);
+            addRecipe(new ItemStack(SHItems.hammerStone), new Object[]{"HHHHH", "HHHHH", "SSSS ", 'H', cobble1x, 'S', "stickWood"});
+            addRecipe(new ItemStack(SHItems.excavatorStone), new Object[]{" HHH ", "HHHHH", "SSSS ", 'H', cobble1x, 'S', "stickWood"});
         }
         else
         {

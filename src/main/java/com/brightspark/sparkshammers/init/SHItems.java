@@ -17,7 +17,7 @@ public class SHItems
     public static final ItemHammer hammerGold = new ItemHammer(Names.Items.HAMMER_GOLD, Materials.HAMMER_GOLD);
     public static final ItemHammer hammerDiamond = new ItemHammer(Names.Items.HAMMER_DIAMOND, Materials.HAMMER_DIAMOND);
 
-    public static final ItemHammer hammerThor = new temHammerThor();
+    public static final ItemHammer hammerThor = new ItemHammerThor();
     public static final ItemHammer hammerNetherStar = new ItemHammerNetherStar();
 
     //Excavator Heads
