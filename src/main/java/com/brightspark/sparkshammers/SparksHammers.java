@@ -8,6 +8,8 @@ import com.brightspark.sparkshammers.reference.Config;
 import com.brightspark.sparkshammers.reference.ModMaterials;
 import com.brightspark.sparkshammers.reference.Reference;
 import com.brightspark.sparkshammers.worldgen.WorldGenMjolnirShrine;
+import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.WeightedRandomChestContent;
 import net.minecraftforge.common.ChestGenHooks;
@@ -20,7 +22,7 @@ import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 
-@Mod(modid= Reference.MOD_ID, name=Reference.MOD_NAME, version=Reference.VERSION)
+@Mod(modid=Reference.MOD_ID, name=Reference.MOD_NAME, version=Reference.VERSION)
 public class SparksHammers
 {
     //Instance of this mod that is safe to reference
@@ -29,6 +31,21 @@ public class SparksHammers
 
     //@SidedProxy(clientSide = Reference.CLIENT_PROXY_CLASS, serverSide = Reference.SERVER_PROXY_CLASS)
     //public static IProxy proxy;
+
+    public static final CreativeTabs SH_TAB = new CreativeTabs(Reference.MOD_ID)
+    {
+        @Override
+        public Item getTabIconItem()
+        {
+            return SHItems.hammerDiamond;
+        }
+
+        @Override
+        public String getTranslatedTabLabel()
+        {
+            return Reference.MOD_NAME;
+        }
+    };
 
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent event)

@@ -38,22 +38,26 @@ public class HammerCraftingManager
 
         //Vanilla
         addRecipe(new ItemStack(SHItems.hammerWood), new Object[]{"HHHHH", "HHHHH", "SSSS ", 'H', "plankWood", 'S', "stickWood"});
-        if(LoaderHelper.isModLoaded(Names.Mods.EXTRA_UTILITIES)) //Make stone head recipe made of compressed cobble when Extra Utilities is installed
-            addRecipe(new ItemStack(SHItems.hammerStone), new Object[]{"HHHHH", "HHHHH", "SSSS ", 'H', Names.ModOreDicts.COMPRESSED_COBBLE_1, 'S', "stickWood"});
-        else
-            addRecipe(new ItemStack(SHItems.hammerStone), new Object[]{"HHHHH", "HHHHH", "SSSS ", 'H', Blocks.cobblestone, 'S', "stickWood"});
         addRecipe(new ItemStack(SHItems.hammerIron), new Object[]{"HHHHH", "HHHHH", "SSSS ", 'H', Items.iron_ingot, 'S', "stickWood"});
         addRecipe(new ItemStack(SHItems.hammerGold), new Object[]{"HHHHH", "HHHHH", "SSSS ", 'H', Items.gold_ingot, 'S', "stickWood"});
         addRecipe(new ItemStack(SHItems.hammerDiamond), new Object[]{"HHHHH", "HHHHH", "SSSS ", 'H', Items.diamond, 'S', "stickWood"});
 
         addRecipe(new ItemStack(SHItems.excavatorWood), new Object[]{" HHH ", "HHHHH", "SSSS ", 'H', "plankWood", 'S', "stickWood"});
-        if(LoaderHelper.isModLoaded(Names.Mods.EXTRA_UTILITIES)) //Make stone head recipe made of compressed cobble when Extra Utilities is installed
-            addRecipe(new ItemStack(SHItems.excavatorStone), new Object[]{" HHH ", "HHHHH", "SSSS ", 'H', Names.ModOreDicts.COMPRESSED_COBBLE_1, 'S', "stickWood"});
-        else
-            addRecipe(new ItemStack(SHItems.excavatorStone), new Object[]{" HHH ", "HHHHH", "SSSS ", 'H', Blocks.cobblestone, 'S', "stickWood"});
         addRecipe(new ItemStack(SHItems.excavatorIron), new Object[]{" HHH ", "HHHHH", "SSSS ", 'H', Items.iron_ingot, 'S', "stickWood"});
         addRecipe(new ItemStack(SHItems.excavatorGold), new Object[]{" HHH ", "HHHHH", "SSSS ", 'H', Items.gold_ingot, 'S', "stickWood"});
         addRecipe(new ItemStack(SHItems.excavatorDiamond), new Object[]{" HHH ", "HHHHH", "SSSS ", 'H', Items.diamond, 'S', "stickWood"});
+
+        //Make stone recipes made of compressed cobble when Extra Utilities is installed
+        if(LoaderHelper.isModLoaded(Names.Mods.EXTRA_UTILITIES))
+        {
+            addRecipe(new ItemStack(SHItems.hammerStone), new Object[]{"HHHHH", "HHHHH", "SSSS ", 'H', Names.ModOreDicts.COMPRESSED_COBBLE_1, 'S', "stickWood"});
+            addRecipe(new ItemStack(SHItems.excavatorStone), new Object[]{" HHH ", "HHHHH", "SSSS ", 'H', Names.ModOreDicts.COMPRESSED_COBBLE_1, 'S', "stickWood"});
+        }
+        else
+        {
+            addRecipe(new ItemStack(SHItems.hammerStone), new Object[]{"HHHHH", "HHHHH", "SSSS ", 'H', Blocks.cobblestone, 'S', "stickWood"});
+            addRecipe(new ItemStack(SHItems.excavatorStone), new Object[]{" HHH ", "HHHHH", "SSSS ", 'H', Blocks.cobblestone, 'S', "stickWood"});
+        }
 
         //Modded
         if(Config.includeOtherModItems)
@@ -81,11 +85,13 @@ public class HammerCraftingManager
                 addRecipe(new ItemStack(SHModItems.excavatorDarksteel), new Object[]{" HHH ", "HHHHH", "SSSS ", 'H', Names.ModOreDicts.INGOT_DARKSTEEL, 'S', "stickWood"});
             }
             //Extra Utilities
+            /*
             if(!Config.useEasyUnstableRecipe && LoaderHelper.doesOreExist(Names.ModOreDicts.INGOT_UNSTABLE))
             {
                 addRecipe(new ItemStack(SHModItems.hammerUnstable), new Object[]{"HHHHH", "HHHHH", "SSSS ", 'H', Names.ModOreDicts.INGOT_UNSTABLE, 'S', "stickWood"});
                 addRecipe(new ItemStack(SHModItems.excavatorUnstable), new Object[]{" HHH ", "HHHHH", "SSSS ", 'H', Names.ModOreDicts.INGOT_UNSTABLE, 'S', "stickWood"});
             }
+            */
             //Misc
             if(LoaderHelper.doesOreExist(Names.ModOreDicts.INGOT_BRONZE))
             {

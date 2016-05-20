@@ -1,13 +1,11 @@
 package com.brightspark.sparkshammers.item;
 
-import com.brightspark.sparkshammers.SHCreativeTab;
-import com.brightspark.sparkshammers.util.Common;
-import com.brightspark.sparkshammers.util.SHModelResourceLocation;
+import com.brightspark.sparkshammers.SparksHammers;
+import com.brightspark.sparkshammers.util.LogHelper;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -24,10 +22,8 @@ import net.minecraftforge.common.ForgeHooks;
 
 import java.util.Set;
 
-public class ItemAOE extends ItemTool implements IHasModel
+public class ItemAOE extends ItemTool
 {
-    private ModelResourceLocation model;
-
     private int mineRadius = 1; //Radius around center block hit
     private int mineDepth = 0; //Depth (behind block)
     private boolean infiniteUse = false;
@@ -35,31 +31,12 @@ public class ItemAOE extends ItemTool implements IHasModel
     //The material types which the tool can mine in AOE:
     private Set<Material> materials;
 
-    public ItemAOE(float attackDamage, ToolMaterial material, Set<Block> effectiveBlocks, Set<Material> effectiveMats)
+    public ItemAOE(String name, float attackDamage, ToolMaterial material, Set<Block> effectiveBlocks, Set<Material> effectiveMats)
     {
         super(attackDamage, material, effectiveBlocks);
-        setCreativeTab(SHCreativeTab.SH_TAB);
-        materials = effectiveMats;
-    }
-
-    public ItemAOE(String name, String modName, float attackDamage, ToolMaterial material, Set<Block> effectiveBlocks, Set<Material> effectiveMats)
-    {
-        this(attackDamage, material, effectiveBlocks, effectiveMats);
         setUnlocalizedName(name);
-        if(modName == null)
-            model = new SHModelResourceLocation(name);
-        else
-            model = new SHModelResourceLocation(modName + "/" + name);
-    }
-
-    public void setModel(ModelResourceLocation newModel)
-    {
-        model = newModel;
-    }
-
-    public ModelResourceLocation getModel()
-    {
-        return model;
+        setCreativeTab(SparksHammers.SH_TAB);
+        materials = effectiveMats;
     }
 
     /**
@@ -114,14 +91,10 @@ public class ItemAOE extends ItemTool implements IHasModel
     }
 
     // <<<< From Tinkers Construct: HarvestTool >>>>
-    protected void breakExtraBlock(ItemStack stack, World world, BlockPos blockPos, EnumFacing sidehit, EntityPlayer player, BlockPos refBlockPos)
+    protected void breakExtraBlock(ItemStack stack, World world, EntityPlayer player, BlockPos blockPos, BlockPos refBlockPos)
     {
         // prevent calling that stuff for air blocks, could lead to unexpected behaviour since it fires events
         if(world.isAirBlock(blockPos)) return;
-
-        // what?
-        //if(! (playerEntity instanceof EntityPlayerMP)) return;
-        //EntityPlayerMP player = (EntityPlayerMP) playerEntity;
 
         // check if the block can be broken, since extra block breaks shouldn't instantly break stuff like obsidian
         // or precious ores you can't harvest while mining stone
@@ -147,10 +120,8 @@ public class ItemAOE extends ItemTool implements IHasModel
                 block.onBlockDestroyedByPlayer(world, blockPos, blockState);
 
             // send update to client
-            if(! world.isRemote)
-            {
+            if(!world.isRemote)
                 ((EntityPlayerMP)player).playerNetServerHandler.sendPacket(new S23PacketBlockChange(world, blockPos));
-            }
             return;
         }
 
@@ -171,7 +142,10 @@ public class ItemAOE extends ItemTool implements IHasModel
             // ItemInWorldManager.removeBlock
             block.onBlockHarvested(world, blockPos, blockState, player);
 
-            if(block.removedByPlayer(world, blockPos, player, true)) // boolean is if block can be harvested, checked above
+            boolean isDestroyed = block.removedByPlayer(world, blockPos, player, true);
+            LogHelper.info("Is block destroyed: " + isDestroyed);
+
+            if(isDestroyed) // boolean is if block can be harvested, checked above
             {
                 block.onBlockDestroyedByPlayer(world, blockPos, blockState);
                 block.harvestBlock(world, player, blockPos, blockState, world.getTileEntity(blockPos));
@@ -184,26 +158,20 @@ public class ItemAOE extends ItemTool implements IHasModel
         // client sided handling
         else
         {
-            //PlayerControllerMP pcmp = Minecraft.getMinecraft().playerController;
-            // clientside we do a "this clock has been clicked on long enough to be broken" call. This should not send any new packets
+            // clientside we do a "this block has been clicked on long enough to be broken" call. This should not send any new packets
             // the code above, executed on the server, sends a block-updates that give us the correct state of the block we destroy.
 
             // following code can be found in PlayerControllerMP.onPlayerDestroyBlock
             world.playAuxSFX(2001, blockPos, Block.getStateId(blockState));
             if(block.removedByPlayer(world, blockPos, player, true))
-            {
                 block.onBlockDestroyedByPlayer(world, blockPos, blockState);
-            }
             // callback to the tool
-            stack.onBlockDestroyed(world, block, blockPos, player); //TODO: Does this need to be done twice??
+            stack.onBlockDestroyed(world, block, blockPos, player);
 
             if(stack.stackSize == 0 && stack == player.getCurrentEquippedItem())
-            {
                 player.destroyCurrentEquippedItem();
-            }
 
             // send an update to the server, so we get an update back
-            //if(PHConstruct.extraBlockUpdates)
             Minecraft.getMinecraft().getNetHandler().addToSendQueue(new C07PacketPlayerDigging(C07PacketPlayerDigging.Action.STOP_DESTROY_BLOCK, blockPos, Minecraft.getMinecraft().objectMouseOver.sideHit));
         }
     }
@@ -213,7 +181,7 @@ public class ItemAOE extends ItemTool implements IHasModel
     {
         //Block being mined
         Block block = player.worldObj.getBlockState(pos).getBlock();
-        MovingObjectPosition mop = Common.raytraceFromEntity(player.worldObj, player, false, 4.5d);
+        MovingObjectPosition mop = super.getMovingObjectPositionFromPlayer(player.worldObj, player, false);
         if(mop == null)
             return super.onBlockStartBreak(stack, pos, player);
         EnumFacing sideHit = mop.sideHit;
@@ -227,20 +195,17 @@ public class ItemAOE extends ItemTool implements IHasModel
         int zDist = mineRadius;
 
         //Block destroyed, now for AOE
-        switch (sideHit.getIndex()) {
-            case 0:
-            case 1:
-                //Facing up/down
+        switch (sideHit) {
+            case DOWN:
+            case UP:
                 yDist = mineDepth;
                 break;
-            case 2:
-            case 3:
-                //Facing along z axis
+            case NORTH:
+            case SOUTH:
                 zDist = mineDepth;
                 break;
-            case 4:
-            case 5:
-                //Facing along x axis
+            case WEST:
+            case EAST:
                 xDist = mineDepth;
                 break;
         }
@@ -253,7 +218,7 @@ public class ItemAOE extends ItemTool implements IHasModel
                         continue;
 
                     if(!super.onBlockStartBreak(stack, new BlockPos(xPos, yPos, zPos), player))
-                        breakExtraBlock(stack, player.worldObj, new BlockPos(xPos, yPos, zPos), sideHit, player, pos);
+                        breakExtraBlock(stack, player.worldObj, player, new BlockPos(xPos, yPos, zPos), pos);
                 }
 
         return super.onBlockStartBreak(stack, pos, player);

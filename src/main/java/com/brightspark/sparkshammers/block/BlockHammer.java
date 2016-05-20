@@ -1,15 +1,12 @@
 package com.brightspark.sparkshammers.block;
 
-import com.brightspark.sparkshammers.SHCreativeTab;
+import com.brightspark.sparkshammers.SparksHammers;
 import com.brightspark.sparkshammers.init.SHItems;
-import com.brightspark.sparkshammers.item.IHasModel;
 import com.brightspark.sparkshammers.reference.Names;
 import com.brightspark.sparkshammers.tileentity.TileHammer;
-import com.brightspark.sparkshammers.util.SHModelResourceLocation;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
@@ -22,25 +19,16 @@ import net.minecraft.world.World;
 
 import java.util.Random;
 
-public class BlockHammer extends BlockContainer implements IHasModel
+public class BlockHammer extends BlockContainer
 {
-    private ModelResourceLocation model;
-
     public BlockHammer()
     {
         super(Material.anvil);
-        setCreativeTab(SHCreativeTab.SH_TAB);
+        setCreativeTab(SparksHammers.SH_TAB);
         setUnlocalizedName(Names.Blocks.HAMMER);
         setBlockUnbreakable();
         setLightOpacity(0);
-        model = new SHModelResourceLocation(Names.Blocks.HAMMER);
         setBlockBounds(0.25F, 0.0F, 0.0625F, 0.75F, 1.0F, 0.9375F);
-    }
-
-    @Override
-    public ModelResourceLocation getModel()
-    {
-        return model;
     }
 
     @Override

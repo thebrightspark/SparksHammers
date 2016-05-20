@@ -33,10 +33,8 @@ public class LoaderHelper
 
         //Has mod already been checked before
         if(!modsChecked.containsKey(modName))
-        {
             //Check mod and add to the list for future mod checks
             modsChecked.put(modName, Loader.isModLoaded(modName));
-        }
         return modsChecked.get(modName);
     }
 
@@ -54,10 +52,8 @@ public class LoaderHelper
 
         //Has ore already been checked before
         if(!oresChecked.containsKey(oreName))
-        {
             //Check ore and add to the list for future ore checks
             oresChecked.put(oreName, oreDict.contains(oreName));
-        }
         return oresChecked.get(oreName);
     }
 

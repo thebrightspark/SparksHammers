@@ -26,7 +26,7 @@ public class GuiHandler implements IGuiHandler
     {
         Block block = world.getBlockState(new BlockPos(x, y, z)).getBlock();
 
-        //Client side - returns intance of the gui
+        //Client side - returns instance of the gui
         if(block == SHBlocks.blockHammerCraft)
             return new GuiHammerCraft(player.inventory, world, x, y, z);
         return null;

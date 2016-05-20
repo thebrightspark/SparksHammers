@@ -14,28 +14,14 @@ public class ItemHammer extends ItemAOE
     private static final Set<Material> PickaxeMats = Sets.newHashSet(new Material[]{Material.anvil, Material.glass, Material.ice, Material.iron, Material.packedIce, Material.piston, Material.rock});
     //private static final Material[] PickaxeMats = {Material.anvil, Material.glass, Material.ice, Material.iron, Material.packedIce, Material.piston, Material.rock};
 
-    /**
-     * Constructor which does not set anything other than the creative tab.
-     * @param mat Tool Material
-     */
-    public ItemHammer(ToolMaterial mat)
-    {
-        super(2.0f, mat, PickaxeBlocks, PickaxeMats);
-    }
-
     public ItemHammer(String name, ToolMaterial mat)
     {
-        this(name, mat, null, false);
+        this(name, mat, false);
     }
 
-    public ItemHammer(String name, ToolMaterial mat, String modName)
+    public ItemHammer(String name, ToolMaterial mat, boolean hasInfiniteUse)
     {
-        this(name, mat, modName, false);
-    }
-
-    public ItemHammer(String name, ToolMaterial mat, String modName, boolean hasInfiniteUse)
-    {
-        super(name, modName, 2.0f, mat, PickaxeBlocks, PickaxeMats);
+        super(name, 2.0f, mat, PickaxeBlocks, PickaxeMats);
         setInfinite(hasInfiniteUse);
     }
 }

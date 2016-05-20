@@ -15,11 +15,11 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class itemHammerThor extends ItemHammer
+public class temHammerThor extends ItemHammer
 {
-    public itemHammerThor()
+    public temHammerThor()
     {
-        super(Names.Items.HAMMER_THOR, Materials.HAMMER_DIAMOND, null, true);
+        super(Names.Items.HAMMER_THOR, Materials.HAMMER_DIAMOND, true);
     }
 
     @SideOnly(Side.CLIENT)

@@ -1,37 +1,24 @@
 package com.brightspark.sparkshammers.block;
 
-import com.brightspark.sparkshammers.SHCreativeTab;
 import com.brightspark.sparkshammers.SparksHammers;
-import com.brightspark.sparkshammers.item.IHasModel;
 import com.brightspark.sparkshammers.reference.Names;
-import com.brightspark.sparkshammers.util.SHModelResourceLocation;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.world.World;
 
-public class BlockHammerCraft extends Block implements IHasModel
+public class BlockHammerCraft extends Block
 {
-    private ModelResourceLocation model;
-
     public BlockHammerCraft()
     {
         super(Material.rock);
         setUnlocalizedName(Names.Blocks.HAMMER_CRAFT);
-        setCreativeTab(SHCreativeTab.SH_TAB);
+        setCreativeTab(SparksHammers.SH_TAB);
         setHardness(2f);
         setResistance(10f);
-        model = new SHModelResourceLocation(Names.Blocks.HAMMER_CRAFT);
-    }
-
-    @Override
-    public ModelResourceLocation getModel()
-    {
-        return model;
     }
 
     //Return 3 for standard block models

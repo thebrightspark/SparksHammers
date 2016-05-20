@@ -7,8 +7,6 @@ public class ModMaterials
 {
     //Botania
     public static ToolMaterial HAMMER_MANASTEEL, HAMMER_TERRASTEEL, HAMMER_ELEMENTIUM;
-    //Random Things
-    public static ToolMaterial HAMMER_SPECTRE;
     //EnderIO
     public static ToolMaterial HAMMER_DARKSTEEL;
     //Misc
