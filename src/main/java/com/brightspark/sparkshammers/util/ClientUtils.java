@@ -10,7 +10,7 @@ import net.minecraftforge.client.ItemModelMesherForge;
 /**
  * Using this class to collect methods which are common across at least 2 classes to help repetitive code.
  */
-public class Common
+public class ClientUtils
 {
     private static ItemModelMesherForge m = (ItemModelMesherForge) Minecraft.getMinecraft().getRenderItem().getItemModelMesher();
     //Register a model

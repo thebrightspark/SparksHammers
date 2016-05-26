@@ -1,0 +1,180 @@
+package com.brightspark.sparkshammers.entity;
+
+import com.brightspark.sparkshammers.SparksHammers;
+import com.brightspark.sparkshammers.block.BlockHammer;
+import com.brightspark.sparkshammers.tileentity.TileHammer;
+import com.google.common.collect.Lists;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockFalling;
+import net.minecraft.block.material.Material;
+import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.item.EntityFallingBlock;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTBase;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.BlockPos;
+import net.minecraft.util.DamageSource;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.MathHelper;
+import net.minecraft.world.World;
+
+import java.util.List;
+import java.util.UUID;
+
+/**
+ * Created by Mark on 25/05/2016.
+ */
+public class EntityFallingHammer extends EntityFallingBlock
+{
+    private IBlockState fallTile;
+    private int fallHurtMax = 80;
+    private float fallHurtAmount = 2.0F;
+
+    private UUID playerUUID;
+
+    public EntityFallingHammer(World worldIn, double x, double y, double z, IBlockState state, UUID playerUUID)
+    {
+        super(worldIn, x, y, z, state);
+        fallTile = state;
+        this.playerUUID = playerUUID;
+    }
+
+    /**
+     * Called to update the entity's position/logic.
+     */
+    public void onUpdate()
+    {
+        Block block = this.fallTile.getBlock();
+
+        if (block.getMaterial() == Material.air)
+        {
+            this.setDead();
+        }
+        else
+        {
+            this.prevPosX = this.posX;
+            this.prevPosY = this.posY;
+            this.prevPosZ = this.posZ;
+
+            if (this.fallTime++ == 0)
+            {
+                BlockPos blockpos = new BlockPos(this);
+
+                if (this.worldObj.getBlockState(blockpos).getBlock() == block)
+                {
+                    this.worldObj.setBlockToAir(blockpos);
+                }
+                else if (!this.worldObj.isRemote)
+                {
+                    this.setDead();
+                    return;
+                }
+            }
+
+            this.motionY -= 0.03999999910593033D;
+            this.moveEntity(this.motionX, this.motionY, this.motionZ);
+            this.motionX *= 0.9800000190734863D;
+            this.motionY *= 0.9800000190734863D;
+            this.motionZ *= 0.9800000190734863D;
+
+            if (!this.worldObj.isRemote)
+            {
+                BlockPos blockpos1 = new BlockPos(this);
+
+                if (this.onGround)
+                {
+                    this.motionX *= 0.699999988079071D;
+                    this.motionZ *= 0.699999988079071D;
+                    this.motionY *= -0.5D;
+                    this.setDead();
+
+                    if (this.worldObj.canBlockBePlaced(block, blockpos1, true, EnumFacing.UP, null, null) && ! BlockFalling.canFallInto(this.worldObj, blockpos1.down()) && this.worldObj.setBlockState(blockpos1, this.fallTile, 3))
+                    {
+                        if (block instanceof BlockHammer)
+                        {
+                            ((BlockHammer)block).onEndFalling(this.worldObj, blockpos1);
+                        }
+
+                        TileHammer tileentity = (TileHammer) this.worldObj.getTileEntity(blockpos1);
+                        if(tileentity != null)
+                            tileentity.setOwner(playerUUID);
+
+                        if (this.tileEntityData != null)
+                        {
+                            if (tileentity != null)
+                            {
+                                NBTTagCompound nbttagcompound = new NBTTagCompound();
+                                tileentity.writeToNBT(nbttagcompound);
+
+                                for (String s : this.tileEntityData.getKeySet())
+                                {
+                                    NBTBase nbtbase = this.tileEntityData.getTag(s);
+
+                                    if (!s.equals("x") && !s.equals("y") && !s.equals("z"))
+                                    {
+                                        nbttagcompound.setTag(s, nbtbase.copy());
+                                    }
+
+                                }
+
+                                tileentity.readFromNBT(nbttagcompound);
+                                tileentity.markDirty();
+                            }
+                        }
+                    }
+                    else if (this.shouldDropItem && this.worldObj.getGameRules().getBoolean("doEntityDrops"))
+                    {
+                        this.entityDropItem(new ItemStack(block, 1, block.damageDropped(this.fallTile)), 0.0F);
+                    }
+                }
+                else if (this.fallTime > 100 && !this.worldObj.isRemote && (blockpos1.getY() < 1 || blockpos1.getY() > 256) || this.fallTime > 600)
+                {
+                    if (this.shouldDropItem && this.worldObj.getGameRules().getBoolean("doEntityDrops"))
+                    {
+                        this.entityDropItem(new ItemStack(block, 1, block.damageDropped(this.fallTile)), 0.0F);
+                    }
+
+                    this.setDead();
+                }
+            }
+        }
+    }
+
+    public void fall(float distance, float damageMultiplier)
+    {
+        int i = MathHelper.ceiling_float_int(distance - 1.0F);
+
+        if (i > 0)
+        {
+            List<Entity> list = Lists.newArrayList(this.worldObj.getEntitiesWithinAABBExcludingEntity(this, this.getEntityBoundingBox()));
+            DamageSource damagesource = SparksHammers.fallingHammer;
+
+            for (Entity entity : list)
+            {
+                entity.attackEntityFrom(damagesource, (float)Math.min(MathHelper.floor_float((float)i * this.fallHurtAmount), this.fallHurtMax));
+            }
+        }
+        if(i > 10)
+        {
+            //TODO: Create hammer falling explosion
+            //Create explosion (no block damage) which scales with height
+        }
+    }
+
+    protected void writeEntityToNBT(NBTTagCompound tag)
+    {
+        tag.setLong("uuidLeastSig", playerUUID.getLeastSignificantBits());
+        tag.setLong("uuidMostSig", playerUUID.getMostSignificantBits());
+        super.writeEntityToNBT(tag);
+    }
+
+    protected void readEntityFromNBT(NBTTagCompound tag)
+    {
+        if(tag.hasKey("uuidMostSig"))
+            playerUUID = new UUID(tag.getLong("uuidMostSig"), tag.getLong("uuidLeastSig"));
+        else
+            playerUUID = null;
+        super.readEntityFromNBT(tag);
+    }
+}

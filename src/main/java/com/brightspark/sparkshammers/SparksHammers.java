@@ -11,6 +11,7 @@ import com.brightspark.sparkshammers.worldgen.WorldGenMjolnirShrine;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.DamageSource;
 import net.minecraft.util.WeightedRandomChestContent;
 import net.minecraftforge.common.ChestGenHooks;
 import net.minecraftforge.fml.common.FMLCommonHandler;
@@ -46,6 +47,8 @@ public class SparksHammers
             return Reference.MOD_NAME;
         }
     };
+
+    public static DamageSource fallingHammer = new DamageSource("fallingHammer");
 
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent event)

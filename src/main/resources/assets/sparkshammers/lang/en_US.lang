@@ -1,5 +1,3 @@
-//Use '§' for text formatting
-
 // <<<< Vanilla Style Tools >>>>
 
 //Hammer Heads
@@ -12,7 +10,9 @@ item.hammerIron.name=Iron Hammer
 item.hammerGold.name=Gold Hammer
 item.hammerDiamond.name=Diamond Hammer
 
-item.hammerThor.name=Mjolnir (Unfinished!)
+item.hammerThor.name=Mjolnir
+item.hammerThor.tooltip=Owner:
+item.hammerMini.name=Mini Hammer
 
 //Excavator Heads
 item.excavatorHeadWood.name=Wooden Excavator Head
@@ -52,4 +52,5 @@ tile.hammerCraft.name=Hammer Crafting Table
 tile.hammerCraft.nei=Hammer Crafting
 
 //Hammer Block
-tile.hammer.name=Mjolnir (Unfinished!)
+tile.hammer.name=Mjolnir
+death.attack.fallingHammer=%1$s was crushed by Mjolnir

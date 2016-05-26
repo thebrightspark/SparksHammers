@@ -1,7 +1,5 @@
 #Archivo es_ES, traducción por Jaski
 
-//Use '§' for text formatting
-
 // <<<< Vanilla Style Tools >>>>
 
 //Hammer Heads
@@ -18,7 +16,7 @@ item.hammerIron.name=Almádena de hierro
 item.hammerGold.name=Almádena de oro
 item.hammerDiamond.name=Almádena de diamante
 
-item.hammerThor.name=Mjolnir (¡Inconcluso!)
+item.hammerThor.name=Mjolnir
 
 // <<<< Mod Material Made Tools >>>>
 
@@ -45,4 +43,4 @@ tile.hammerCraft.name=Mesa de trabajo de almádenas
 tile.hammerCraft.nei=Trabajo de almádenas
 
 //Hammer Block
-tile.hammer.name=Mjolnir (¡Inconcluso!)
+tile.hammer.name=Mjolnir

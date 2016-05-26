@@ -1,7 +1,6 @@
 package com.brightspark.sparkshammers.item;
 
 import com.brightspark.sparkshammers.SparksHammers;
-import com.brightspark.sparkshammers.util.LogHelper;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -24,7 +23,8 @@ import java.util.Set;
 
 public class ItemAOE extends ItemTool
 {
-    private int mineRadius = 1; //Radius around center block hit
+    private int mineWidth = 1;
+    private int mineHeight = 1;
     private int mineDepth = 0; //Depth (behind block)
     private boolean infiniteUse = false;
 
@@ -142,10 +142,7 @@ public class ItemAOE extends ItemTool
             // ItemInWorldManager.removeBlock
             block.onBlockHarvested(world, blockPos, blockState, player);
 
-            boolean isDestroyed = block.removedByPlayer(world, blockPos, player, true);
-            LogHelper.info("Is block destroyed: " + isDestroyed);
-
-            if(isDestroyed) // boolean is if block can be harvested, checked above
+            if(block.removedByPlayer(world, blockPos, player, true)) // boolean is if block can be harvested, checked above
             {
                 block.onBlockDestroyedByPlayer(world, blockPos, blockState);
                 block.harvestBlock(world, player, blockPos, blockState, world.getTileEntity(blockPos));
@@ -176,6 +173,20 @@ public class ItemAOE extends ItemTool
         }
     }
 
+    protected void breakArea(ItemStack stack, EntityPlayer player, BlockPos posHit, BlockPos posStart, BlockPos posEnd)
+    {
+        for (int xPos = posStart.getX(); xPos <= posEnd.getX(); xPos++)
+            for (int yPos = posStart.getY(); yPos <= posEnd.getY(); yPos++)
+                for (int zPos = posStart.getZ(); zPos <= posEnd.getZ(); zPos++) {
+                    // don't break the originally already broken block, duh
+                    if (xPos == posHit.getX() && yPos == posHit.getY() && zPos == posHit.getZ())
+                        continue;
+
+                    if(!super.onBlockStartBreak(stack, new BlockPos(xPos, yPos, zPos), player))
+                        breakExtraBlock(stack, player.worldObj, player, new BlockPos(xPos, yPos, zPos), posHit);
+                }
+    }
+
     // <<<< Also made with some help from Tinkers Construct >>>>
     public boolean onBlockStartBreak (ItemStack stack, BlockPos pos, EntityPlayer player)
     {
@@ -190,37 +201,55 @@ public class ItemAOE extends ItemTool
         if(!isEffective(block))
             return super.onBlockStartBreak(stack, pos, player);
 
-        int yDist = mineRadius;
-        int xDist = mineRadius;
-        int zDist = mineRadius;
+        BlockPos start = pos.offset(sideHit, mineDepth);
+        BlockPos end = pos.offset(sideHit, mineDepth);
 
         //Block destroyed, now for AOE
         switch (sideHit) {
             case DOWN:
             case UP:
-                yDist = mineDepth;
+                EnumFacing facing = EnumFacing.fromAngle(player.getRotationYawHead());
+                switch(facing)
+                {
+                    case WEST:
+                    case EAST:
+                        start = start.add(-mineHeight, 0, -mineWidth);
+                        end = end.add(mineHeight, 0, mineWidth);
+                        break;
+                    case NORTH:
+                    case SOUTH:
+                    default:
+                        start = start.add(-mineWidth, 0, -mineHeight);
+                        end = end.add(mineWidth, 0, mineHeight);
+                        break;
+                }
                 break;
             case NORTH:
             case SOUTH:
-                zDist = mineDepth;
+                //Z axis
+                start = start.add(-mineWidth, -mineHeight, 0);
+                end = end.add(mineWidth, mineHeight, 0);
                 break;
             case WEST:
             case EAST:
-                xDist = mineDepth;
+                //X axis
+                start = start.add(0, -mineHeight, -mineWidth);
+                end = end.add(0, mineHeight, mineWidth);
                 break;
         }
 
-        for (int xPos = pos.getX() - xDist; xPos <= pos.getX() + xDist; xPos++)
-            for (int yPos = pos.getY() - yDist; yPos <= pos.getY() + yDist; yPos++)
-                for (int zPos = pos.getZ() - zDist; zPos <= pos.getZ() + zDist; zPos++) {
-                    // don't break the originally already broken block, duh
-                    if (xPos == pos.getX() && yPos == pos.getY() && zPos == pos.getZ())
-                        continue;
-
-                    if(!super.onBlockStartBreak(stack, new BlockPos(xPos, yPos, zPos), player))
-                        breakExtraBlock(stack, player.worldObj, player, new BlockPos(xPos, yPos, zPos), pos);
-                }
+        breakArea(stack, player, pos, start, end);
 
         return super.onBlockStartBreak(stack, pos, player);
+    }
+
+    protected void setMineWidth(int width)
+    {
+        this.mineWidth = width;
+    }
+
+    protected void setMineHeight(int height)
+    {
+        this.mineHeight = height;
     }
 }

@@ -14,9 +14,9 @@ public class Names
         public static final String HAMMER_GOLD = "hammerGold";
         public static final String HAMMER_DIAMOND = "hammerDiamond";
 
-        public static final String HAMMER_NETHERSTAR = "hammerNetherStar";
-
         public static final String HAMMER_THOR = "hammerThor";
+        public static final String HAMMER_MINI = "hammerMini";
+        public static final String HAMMER_NETHERSTAR = "hammerNetherStar";
 
         //<<<< Excavators >>>>
         public static final String EXCAVATOR_HEAD_WOOD = "excavatorHeadWood";

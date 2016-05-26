@@ -3,7 +3,7 @@ package com.brightspark.sparkshammers.init;
 import com.brightspark.sparkshammers.block.BlockHammer;
 import com.brightspark.sparkshammers.block.BlockHammerCraft;
 import com.brightspark.sparkshammers.reference.Names;
-import com.brightspark.sparkshammers.util.Common;
+import com.brightspark.sparkshammers.util.ClientUtils;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class SHBlocks
@@ -22,7 +22,7 @@ public class SHBlocks
     public static void regModels()
     {
         //Blocks
-        Common.regModel(SHBlocks.blockHammer);
-        Common.regModel(SHBlocks.blockHammerCraft);
+        ClientUtils.regModel(SHBlocks.blockHammer);
+        ClientUtils.regModel(SHBlocks.blockHammerCraft);
     }
 }

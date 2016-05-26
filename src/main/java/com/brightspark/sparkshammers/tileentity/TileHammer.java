@@ -11,14 +11,15 @@ import java.util.UUID;
 
 public class TileHammer extends TileEntity
 {
-    private UUID ownerUUID;
+    private UUID ownerUUID = null;
+    private boolean hasNoOwner = false;
 
     /**
      * Sets the hammer to have no owner.
      */
     public void setNoOwner()
     {
-        ownerUUID = null;
+        hasNoOwner = true;
         markDirty();
     }
 
@@ -28,6 +29,12 @@ public class TileHammer extends TileEntity
     public void setOwner(EntityPlayer owner)
     {
         ownerUUID = owner.getUniqueID();
+        markDirty();
+    }
+
+    public void setOwner(UUID uuid)
+    {
+        ownerUUID = uuid;
         markDirty();
     }
 
@@ -56,11 +63,16 @@ public class TileHammer extends TileEntity
         return ownerUUID == null ? "Null" : MinecraftServer.getServer().getPlayerProfileCache().getProfileByUUID(ownerUUID).getName();
     }
 
+    public UUID getOwnerUUID()
+    {
+        return ownerUUID;
+    }
+
     public void readFromNBT(NBTTagCompound tag)
     {
         super.readFromNBT(tag);
         //Get the owner's UUID from the NBT
-        if(tag.hasKey("uuidMostSig") && tag.hasKey("uuidLeastSig"))
+        if(tag.hasKey("uuidMostSig"))
             ownerUUID = new UUID(tag.getLong("uuidMostSig"), tag.getLong("uuidLeastSig"));
         else
             ownerUUID = null;
@@ -75,7 +87,7 @@ public class TileHammer extends TileEntity
             tag.setLong("uuidLeastSig", ownerUUID.getLeastSignificantBits());
             tag.setLong("uuidMostSig", ownerUUID.getMostSignificantBits());
         }
-        else
+        else if(hasNoOwner)
         {
             tag.removeTag("uuidLeastSig");
             tag.removeTag("uuidMostSig");

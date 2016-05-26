@@ -3,7 +3,7 @@ package com.brightspark.sparkshammers.init;
 import com.brightspark.sparkshammers.item.*;
 import com.brightspark.sparkshammers.reference.Materials;
 import com.brightspark.sparkshammers.reference.Names;
-import com.brightspark.sparkshammers.util.Common;
+import com.brightspark.sparkshammers.util.ClientUtils;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class SHItems
@@ -18,6 +18,7 @@ public class SHItems
     public static final ItemHammer hammerDiamond = new ItemHammer(Names.Items.HAMMER_DIAMOND, Materials.HAMMER_DIAMOND);
 
     public static final ItemHammer hammerThor = new ItemHammerThor();
+    public static final ItemHammerMini hammerMini = new ItemHammerMini();
     public static final ItemHammer hammerNetherStar = new ItemHammerNetherStar();
 
     //Excavator Heads
@@ -40,9 +41,9 @@ public class SHItems
         GameRegistry.registerItem(hammerGold, Names.Items.HAMMER_GOLD);
         GameRegistry.registerItem(hammerDiamond, Names.Items.HAMMER_DIAMOND);
 
-        //GameRegistry.registerItem(hammerNetherStar, Names.Items.HAMMER_NETHERSTAR);
-
         GameRegistry.registerItem(hammerThor, Names.Items.HAMMER_THOR);
+        GameRegistry.registerItem(hammerMini, Names.Items.HAMMER_MINI);
+        //GameRegistry.registerItem(hammerNetherStar, Names.Items.HAMMER_NETHERSTAR);
 
         //Excavator Heads
         GameRegistry.registerItem(excavatorHeadWood, Names.Items.EXCAVATOR_HEAD_WOOD);
@@ -57,22 +58,23 @@ public class SHItems
     public static void regModels()
     {
         //Hammers
-        Common.regModel(hammerHeadWood);
-        Common.regModel(hammerWood);
-        Common.regModel(hammerStone);
-        Common.regModel(hammerIron);
-        Common.regModel(hammerGold);
-        Common.regModel(hammerDiamond);
+        ClientUtils.regModel(hammerHeadWood);
+        ClientUtils.regModel(hammerWood);
+        ClientUtils.regModel(hammerStone);
+        ClientUtils.regModel(hammerIron);
+        ClientUtils.regModel(hammerGold);
+        ClientUtils.regModel(hammerDiamond);
 
-        Common.regModel(hammerThor);
+        ClientUtils.regModel(hammerThor);
+        ClientUtils.regModel(hammerMini);
         //Common.regModel(hammerNetherStar);
 
         //Excavators
-        Common.regModel(excavatorHeadWood);
-        Common.regModel(excavatorWood);
-        Common.regModel(excavatorStone);
-        Common.regModel(excavatorIron);
-        Common.regModel(excavatorGold);
-        Common.regModel(excavatorDiamond);
+        ClientUtils.regModel(excavatorHeadWood);
+        ClientUtils.regModel(excavatorWood);
+        ClientUtils.regModel(excavatorStone);
+        ClientUtils.regModel(excavatorIron);
+        ClientUtils.regModel(excavatorGold);
+        ClientUtils.regModel(excavatorDiamond);
     }
 }

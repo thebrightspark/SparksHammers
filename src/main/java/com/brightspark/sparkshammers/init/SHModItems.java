@@ -4,7 +4,7 @@ import com.brightspark.sparkshammers.item.ItemExcavator;
 import com.brightspark.sparkshammers.item.ItemHammer;
 import com.brightspark.sparkshammers.reference.ModMaterials;
 import com.brightspark.sparkshammers.reference.Names;
-import com.brightspark.sparkshammers.util.Common;
+import com.brightspark.sparkshammers.util.ClientUtils;
 import com.brightspark.sparkshammers.util.LoaderHelper;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
@@ -90,18 +90,18 @@ public class SHModItems
         //Botania
         if(LoaderHelper.doesOreExist(Names.ModOreDicts.INGOT_MANASTEEL))
         {
-            Common.regModel(SHModItems.hammerManasteel);
-            Common.regModel(SHModItems.excavatorManasteel);
+            ClientUtils.regModel(SHModItems.hammerManasteel);
+            ClientUtils.regModel(SHModItems.excavatorManasteel);
         }
         if(LoaderHelper.doesOreExist(Names.ModOreDicts.INGOT_TERRASTEEL))
         {
-            Common.regModel(SHModItems.hammerTerrasteel);
-            Common.regModel(SHModItems.excavatorTerrasteel);
+            ClientUtils.regModel(SHModItems.hammerTerrasteel);
+            ClientUtils.regModel(SHModItems.excavatorTerrasteel);
         }
         if(LoaderHelper.doesOreExist(Names.ModOreDicts.INGOT_ELEMENTIUM))
         {
-            Common.regModel(SHModItems.hammerElementium);
-            Common.regModel(SHModItems.excavatorElementium);
+            ClientUtils.regModel(SHModItems.hammerElementium);
+            ClientUtils.regModel(SHModItems.excavatorElementium);
         }
         //Extra Utilities
         /*
@@ -116,14 +116,14 @@ public class SHModItems
         //EnderIO
         if(LoaderHelper.doesOreExist(Names.ModOreDicts.INGOT_DARKSTEEL))
         {
-            Common.regModel(SHModItems.hammerDarksteel);
-            Common.regModel(SHModItems.excavatorDarksteel);
+            ClientUtils.regModel(SHModItems.hammerDarksteel);
+            ClientUtils.regModel(SHModItems.excavatorDarksteel);
         }
         //Misc
         if(LoaderHelper.doesOreExist(Names.ModOreDicts.INGOT_BRONZE))
         {
-            Common.regModel(SHModItems.hammerBronze);
-            Common.regModel(SHModItems.excavatorBronze);
+            ClientUtils.regModel(SHModItems.hammerBronze);
+            ClientUtils.regModel(SHModItems.excavatorBronze);
         }
     }
 }
