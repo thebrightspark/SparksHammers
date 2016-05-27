@@ -1,9 +1,15 @@
 package com.brightspark.sparkshammers.item;
 
+import com.brightspark.sparkshammers.init.SHItems;
 import com.google.common.collect.Sets;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.util.StatCollector;
+import net.minecraft.world.World;
 
 import java.util.Set;
 
@@ -38,5 +44,15 @@ public class ItemHammer extends ItemAOE
     public ItemHammer setShiftRotating(boolean bool)
     {
         return (ItemHammer) super.setShiftRotating(bool);
+    }
+
+    /**
+     * Called when item is crafted/smelted. Used only by maps so far.
+     */
+    public void onCreated(ItemStack stack, World worldIn, EntityPlayer playerIn)
+    {
+        //Sets the name to Jason's custom name if he crafts the giant hammer.
+        if(stack.getItem().equals(SHItems.hammerGiant) && playerIn.getDisplayNameString().equals("8BrickDMG"))
+            stack.setStackDisplayName(EnumChatFormatting.LIGHT_PURPLE + StatCollector.translateToLocal(getUnlocalizedName(stack) + ".8brickdmg"));
     }
 }

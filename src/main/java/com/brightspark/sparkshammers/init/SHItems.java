@@ -19,7 +19,7 @@ public class SHItems
 
     public static final ItemHammer hammerThor = new ItemHammerThor();
     public static final ItemHammer hammerMini = new ItemHammer(Names.Items.HAMMER_MINI, Materials.HAMMER_MINI).setMineWidth(0).setShiftRotating(true);
-    public static final ItemHammer hammerGiant = new ItemHammer(Names.Items.HAMMER_GIANT, Materials.HAMMER_IRON).setMineWidth(4).setMineHeight(4);
+    public static final ItemHammer hammerGiant = new ItemHammer(Names.Items.HAMMER_GIANT, Materials.HAMMER_GIANT).setMineWidth(4).setMineHeight(4);
     public static final ItemHammer hammerNetherStar = new ItemHammerNetherStar();
 
     //Excavator Heads

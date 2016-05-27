@@ -213,6 +213,13 @@ public class ItemAOE extends ItemTool
         BlockPos start = pos.offset(sideHit, mineDepth);
         BlockPos end = pos.offset(sideHit, mineDepth);
 
+        //Offset destroyed area if standing on ground and mining horizontally
+        if(!player.capabilities.isFlying && sideHit != EnumFacing.UP && sideHit != EnumFacing.DOWN && this.mineHeight > 1)
+        {
+            start = start.up(this.mineHeight - 1);
+            end = end.up(this.mineHeight - 1);
+        }
+
         //Block destroyed, now for AOE
         switch (sideHit) {
             case DOWN:

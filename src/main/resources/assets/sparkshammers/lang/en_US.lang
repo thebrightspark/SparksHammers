@@ -14,6 +14,7 @@ item.hammerThor.name=Mjolnir
 item.hammerThor.tooltip=Owner:
 item.hammerMini.name=Mini Hammer
 item.hammerGiant.name=Giant Hammer
+item.hammerGiant.8brickdmg=8BrickDMG's BFH
 
 //Excavator Heads
 item.excavatorHeadWood.name=Wooden Excavator Head
