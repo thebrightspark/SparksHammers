@@ -2,6 +2,7 @@ package com.brightspark.sparkshammers;
 
 import com.brightspark.sparkshammers.gui.GuiHandler;
 import com.brightspark.sparkshammers.hammerCrafting.HammerCraftingManager;
+import com.brightspark.sparkshammers.handlers.BlockEventHandler;
 import com.brightspark.sparkshammers.handlers.ConfigurationHandler;
 import com.brightspark.sparkshammers.init.*;
 import com.brightspark.sparkshammers.reference.Config;
@@ -14,7 +15,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.WeightedRandomChestContent;
 import net.minecraftforge.common.ChestGenHooks;
-import net.minecraftforge.fml.common.FMLCommonHandler;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
@@ -57,8 +58,7 @@ public class SparksHammers
 
         //Passes suggested configuration file into the init method
         ConfigurationHandler.init(event.getSuggestedConfigurationFile());
-        //noinspection deprecation
-        FMLCommonHandler.instance().bus().register(new ConfigurationHandler());
+        MinecraftForge.EVENT_BUS.register(new ConfigurationHandler());
 
         SHItems.regItems();
         SHBlocks.regBlocks();
@@ -91,6 +91,7 @@ public class SparksHammers
 
         SHTileEntities.init();
         NetworkRegistry.INSTANCE.registerGuiHandler(this, new GuiHandler());
+        MinecraftForge.EVENT_BUS.register(new BlockEventHandler());
 
         //Add Wooden and Stone hammers and excavators to Mineshaft chests
         if(Config.shouldAddMineshaftLoot)

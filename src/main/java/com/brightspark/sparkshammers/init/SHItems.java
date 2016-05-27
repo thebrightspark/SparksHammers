@@ -45,7 +45,7 @@ public class SHItems
         GameRegistry.registerItem(hammerThor, Names.Items.HAMMER_THOR);
         GameRegistry.registerItem(hammerMini, Names.Items.HAMMER_MINI);
         GameRegistry.registerItem(hammerGiant, Names.Items.HAMMER_GIANT);
-        //GameRegistry.registerItem(hammerNetherStar, Names.Items.HAMMER_NETHERSTAR);
+        GameRegistry.registerItem(hammerNetherStar, Names.Items.HAMMER_NETHERSTAR);
 
         //Excavator Heads
         GameRegistry.registerItem(excavatorHeadWood, Names.Items.EXCAVATOR_HEAD_WOOD);
@@ -70,7 +70,7 @@ public class SHItems
         ClientUtils.regModel(hammerThor);
         ClientUtils.regModel(hammerMini);
         ClientUtils.regModel(hammerGiant);
-        //Common.regModel(hammerNetherStar);
+        ClientUtils.regModel(hammerNetherStar);
 
         //Excavators
         ClientUtils.regModel(excavatorHeadWood);
