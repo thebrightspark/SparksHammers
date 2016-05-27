@@ -24,4 +24,19 @@ public class ItemHammer extends ItemAOE
         super(name, 2.0f, mat, PickaxeBlocks, PickaxeMats);
         setInfinite(hasInfiniteUse);
     }
+
+    public ItemHammer setMineWidth(int width)
+    {
+        return (ItemHammer) super.setMineWidth(width);
+    }
+
+    public ItemHammer setMineHeight(int height)
+    {
+        return (ItemHammer) super.setMineHeight(height);
+    }
+
+    public ItemHammer setShiftRotating(boolean bool)
+    {
+        return (ItemHammer) super.setShiftRotating(bool);
+    }
 }

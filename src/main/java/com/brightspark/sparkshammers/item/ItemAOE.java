@@ -27,6 +27,7 @@ public class ItemAOE extends ItemTool
     private int mineHeight = 1;
     private int mineDepth = 0; //Depth (behind block)
     private boolean infiniteUse = false;
+    private boolean shiftRotating = false;
 
     //The material types which the tool can mine in AOE:
     private Set<Material> materials;
@@ -201,6 +202,14 @@ public class ItemAOE extends ItemTool
         if(!isEffective(block))
             return super.onBlockStartBreak(stack, pos, player);
 
+        //Rotate if player is holding shift
+        if(shiftRotating && player.isSneaking())
+        {
+            int tempW = this.mineWidth;
+            this.mineWidth = this.mineHeight;
+            this.mineHeight = tempW;
+        }
+
         BlockPos start = pos.offset(sideHit, mineDepth);
         BlockPos end = pos.offset(sideHit, mineDepth);
 
@@ -240,16 +249,32 @@ public class ItemAOE extends ItemTool
 
         breakArea(stack, player, pos, start, end);
 
+        //Rotate back to normal if player is holding shift
+        if(shiftRotating && player.isSneaking())
+        {
+            int tempW = this.mineWidth;
+            this.mineWidth = this.mineHeight;
+            this.mineHeight = tempW;
+        }
+
         return super.onBlockStartBreak(stack, pos, player);
     }
 
-    protected void setMineWidth(int width)
+    public ItemAOE setMineWidth(int width)
     {
         this.mineWidth = width;
+        return this;
     }
 
-    protected void setMineHeight(int height)
+    public ItemAOE setMineHeight(int height)
     {
         this.mineHeight = height;
+        return this;
+    }
+
+    public ItemAOE setShiftRotating(boolean bool)
+    {
+        this.shiftRotating = bool;
+        return this;
     }
 }

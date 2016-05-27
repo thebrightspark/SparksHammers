@@ -18,7 +18,8 @@ public class SHItems
     public static final ItemHammer hammerDiamond = new ItemHammer(Names.Items.HAMMER_DIAMOND, Materials.HAMMER_DIAMOND);
 
     public static final ItemHammer hammerThor = new ItemHammerThor();
-    public static final ItemHammerMini hammerMini = new ItemHammerMini();
+    public static final ItemHammer hammerMini = new ItemHammer(Names.Items.HAMMER_MINI, Materials.HAMMER_MINI).setMineWidth(0).setShiftRotating(true);
+    public static final ItemHammer hammerGiant = new ItemHammer(Names.Items.HAMMER_GIANT, Materials.HAMMER_IRON).setMineWidth(4).setMineHeight(4);
     public static final ItemHammer hammerNetherStar = new ItemHammerNetherStar();
 
     //Excavator Heads
@@ -43,6 +44,7 @@ public class SHItems
 
         GameRegistry.registerItem(hammerThor, Names.Items.HAMMER_THOR);
         GameRegistry.registerItem(hammerMini, Names.Items.HAMMER_MINI);
+        GameRegistry.registerItem(hammerGiant, Names.Items.HAMMER_GIANT);
         //GameRegistry.registerItem(hammerNetherStar, Names.Items.HAMMER_NETHERSTAR);
 
         //Excavator Heads
@@ -67,6 +69,7 @@ public class SHItems
 
         ClientUtils.regModel(hammerThor);
         ClientUtils.regModel(hammerMini);
+        ClientUtils.regModel(hammerGiant);
         //Common.regModel(hammerNetherStar);
 
         //Excavators

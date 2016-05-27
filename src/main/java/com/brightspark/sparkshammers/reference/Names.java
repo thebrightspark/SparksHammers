@@ -16,6 +16,7 @@ public class Names
 
         public static final String HAMMER_THOR = "hammerThor";
         public static final String HAMMER_MINI = "hammerMini";
+        public static final String HAMMER_GIANT = "hammerGiant";
         public static final String HAMMER_NETHERSTAR = "hammerNetherStar";
 
         //<<<< Excavators >>>>

@@ -60,7 +60,7 @@ public class ItemHammerThor extends ItemHammer
 
     private boolean isOwner(ItemStack stack, Entity entity)
     {
-        return entity instanceof EntityPlayer && getOwner(stack).equals(entity.getUniqueID());
+        return getOwner(stack) != null && (entity instanceof EntityPlayer && getOwner(stack).equals(entity.getUniqueID()));
     }
 
     /**
@@ -158,7 +158,6 @@ public class ItemHammerThor extends ItemHammer
         else if(!world.isRemote && !player.isSneaking() && getCooldown(stack) <= 0)
         {
             //Spawn lightning at cursor
-            //TODO: Add cooldown to lightning (unless I'm using it ;D ... or something not so OP)
             MovingObjectPosition mop = raytrace(player.worldObj, player, false);
             if(mop != null)
             {
@@ -181,7 +180,7 @@ public class ItemHammerThor extends ItemHammer
             int cooldown = getCooldown(stack);
             if(cooldown > 0) NBTHelper.setInteger(stack, "cooldown", --cooldown);
         }
-        else
+        else if(!getOwnerName(stack).equals("None"))
         {
             if(entityIn instanceof EntityPlayer)
             {
