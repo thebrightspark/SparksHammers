@@ -1,7 +1,5 @@
 package com.brightspark.sparkshammers.item;
 
-import com.brightspark.sparkshammers.SparksHammers;
-import com.brightspark.sparkshammers.reference.Config;
 import com.brightspark.sparkshammers.reference.Materials;
 import com.brightspark.sparkshammers.reference.Names;
 import net.minecraft.block.Block;
@@ -9,19 +7,12 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.BlockPos;
-import net.minecraft.util.EnumFacing;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ItemHammerNetherStar extends ItemHammer
 {
-    private final int tickDelay = 2;
-    private static int maxMine = Config.netherStarHammerDistance;
-    //private int startX, startY, startZ;
-    private BlockPos startPos;
-    private EnumFacing mineDir;
-
     public ItemHammerNetherStar()
     {
         super(Names.Items.HAMMER_NETHERSTAR, Materials.HAMMER_NETHERSTAR);
@@ -41,7 +32,7 @@ public class ItemHammerNetherStar extends ItemHammer
         return true;
     }
 
-    //Overriding this to stop item damage which is handled
+    //Overriding this to stop item damage which is handled elsewhere
     public boolean onBlockDestroyed(ItemStack stack, World world, Block block, BlockPos pos, EntityLivingBase player)
     {
         return true;
@@ -49,6 +40,6 @@ public class ItemHammerNetherStar extends ItemHammer
 
     public boolean onBlockStartBreak(ItemStack stack, BlockPos pos, EntityPlayer player)
     {
-        return !SparksHammers.blockEV.canPlayerMine(player) || super.onBlockStartBreak(stack, pos, player);
+        return super.onBlockStartBreak(stack, pos, player);
     }
 }

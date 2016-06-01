@@ -4,6 +4,7 @@ import com.brightspark.sparkshammers.item.ItemHammerNetherStar;
 import com.brightspark.sparkshammers.reference.Config;
 import com.brightspark.sparkshammers.util.CommonUtils;
 import com.brightspark.sparkshammers.util.LogHelper;
+import com.brightspark.sparkshammers.util.NBTHelper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -32,12 +33,21 @@ public class BlockEventHandler
      * 5: Integer -> current iteration
      * 6: Byte -> used to make sure iteration happens on client and server
      */
-    private ArrayList<Object[]> miningSchedule = new ArrayList<Object[]>();
-    private static final int tickDelay = 2;
+    private ArrayList<Object[]> miningSchedule;
+    private boolean isMining;
+    private int tickDelay;
+    private static final int tickDelayMax = 5;
+
+    public BlockEventHandler()
+    {
+        isMining = false;
+        tickDelay = 0;
+        miningSchedule = new ArrayList<Object[]>();
+    }
 
     public boolean canPlayerMine(EntityPlayer player)
     {
-        return getPlayerMining(player) != null;
+        return getPlayerMining(player) == null;
     }
 
     private Object[] getPlayerMining(EntityPlayer player)
@@ -58,7 +68,8 @@ public class BlockEventHandler
     @SubscribeEvent
     public void onBlockBreak(BreakEvent event)
     {
-        Item heldItem = event.getPlayer().getHeldItem().getItem();
+        ItemStack heldStack = event.getPlayer().getHeldItem();
+        Item heldItem = heldStack.getItem();
         if(heldItem instanceof ItemHammerNetherStar)
         {
             Object[] playerMining = getPlayerMining(event.getPlayer());
@@ -67,29 +78,40 @@ public class BlockEventHandler
                 LogHelper.info("Starting new mining!");
                 //Player isn't mining yet, so we'll start mining
                 EntityPlayer player = event.getPlayer();
+                //Add a NBT tag to the hammer for future checks
+                NBTHelper.setBoolean(heldStack, "mining", true);
                 miningSchedule.add(new Object[] {
                         player,
-                        player.getHeldItem(),
-                        ((ItemHammerNetherStar) heldItem).getMovingObjectPositionFromPlayer(event.world, player, false).sideHit,
+                        ItemStack.copyItemStack(heldStack),
+                        ((ItemHammerNetherStar) heldItem).getMovingObjectPositionFromPlayer(event.world, player, false).sideHit.getOpposite(),
                         event.pos,
                         new Float(ForgeHooks.blockStrength(event.state, player, player.worldObj, event.pos)),
                         new Integer(1),
                         new Byte((byte)2)});
+                heldStack.damageItem(1, player);
                 return;
             }
-
-            LogHelper.info("Already mining! Cancelling block break.");
-            //At this point, player is currently mining, so we'll cancel the block breaking
-            event.setCanceled(true);
+            else if(!NBTHelper.hasTag(heldStack, "mining"))
+            {
+                //LogHelper.info("Already mining! Cancelling block break.");
+                event.setCanceled(true);
+                return;
+            }
         }
     }
 
     //Iterates through the mining schedule and digs as necessary
     @SubscribeEvent
-    public void onTick(TickEvent event) //TODO: Fix this not actually breaking blocks
+    public void onTick(TickEvent event)
     {
-        if(miningSchedule.size() > 0 && (event.type == TickEvent.Type.CLIENT || event.type == TickEvent.Type.SERVER) && event.phase == TickEvent.Phase.END)
+        //Counts up the tick delay
+        //if(miningSchedule.size() > 0 && event.type == TickEvent.Type.SERVER && event.phase == TickEvent.Phase.END)
+        //    tickDelay++;
+        //Mines if possible
+        if(!isMining && miningSchedule.size() > 0 && (event.type == TickEvent.Type.CLIENT || event.type == TickEvent.Type.SERVER) && event.phase == TickEvent.Phase.END)
         {
+            isMining = true;
+            //tickDelay = 0;
             for(int i = 0; i < miningSchedule.size(); i++)
             {
                 Object[] o = miningSchedule.get(i);
@@ -114,14 +136,18 @@ public class BlockEventHandler
 
                 //Break the blocks
                 //LogHelper.info("Breaking from " + start.toString() + " to " + end.toString());
-                //TODO: Blocks still not breaking, but for some reason blocks are being broken multiple times
                 CommonUtils.breakArea(stack, (EntityPlayer) o[0], ((Float) o[4]).floatValue(), start, end);
+
+                //LogHelper.info("Finished mining");
 
                 //Make sure block breaking has happened on client and server first
                 if(num <= 0)
                 {
                     if(++iteration > Config.netherStarHammerDistance)
+                    {
+                        NBTHelper.removeTag(stack, "mining");
                         miningSchedule.remove(o);
+                    }
                     else
                     {
                         //Increase the iteration
@@ -131,6 +157,7 @@ public class BlockEventHandler
                     }
                 }
             }
+            isMining = false;
         }
     }
 

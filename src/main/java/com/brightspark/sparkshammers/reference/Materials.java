@@ -14,5 +14,5 @@ public class Materials
     public static final ToolMaterial HAMMER_MJOLNIR = EnumHelper.addToolMaterial("HammerMjolnir", Config.mjolnirHarvestLevel, 1, Config.mjolnirEfficiency, Config.mjolnirDamageVsEntity, 0);
     public static final ToolMaterial HAMMER_MINI = EnumHelper.addToolMaterial("HammerMini", HAMMER_IRON.getHarvestLevel(), (int) (HAMMER_IRON.getMaxUses() * 0.5), HAMMER_IRON.getEfficiencyOnProperMaterial(), HAMMER_IRON.getDamageVsEntity() * 0.75f, HAMMER_IRON.getEnchantability());
     public static final ToolMaterial HAMMER_GIANT = EnumHelper.addToolMaterial("HammerGiant", HAMMER_IRON.getHarvestLevel(), (int) (HAMMER_IRON.getMaxUses() * 6), HAMMER_IRON.getEfficiencyOnProperMaterial() * 0.5f, HAMMER_IRON.getDamageVsEntity() * 1.25f, HAMMER_IRON.getEnchantability());
-    public static final ToolMaterial HAMMER_NETHERSTAR = EnumHelper.addToolMaterial("HammerNetherStar", ToolMaterial.EMERALD.getHarvestLevel(), Config.netherStarHammerDurability, ToolMaterial.EMERALD.getEfficiencyOnProperMaterial(), 10.0f, 0);
+    public static final ToolMaterial HAMMER_NETHERSTAR = EnumHelper.addToolMaterial("HammerNetherStar", ToolMaterial.EMERALD.getHarvestLevel(), Config.netherStarHammerDurability, ToolMaterial.EMERALD.getEfficiencyOnProperMaterial(), 20.0f, 0);
 }

@@ -1,6 +1,7 @@
 package com.brightspark.sparkshammers.util;
 
 import com.brightspark.sparkshammers.item.ItemAOE;
+import com.brightspark.sparkshammers.item.ItemHammer;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
@@ -103,13 +104,15 @@ public class CommonUtils
         return new BlockPos[] {start, end};
     }
 
+    /**
+     * Used mainly for Nether Star Hammer. Doesn't call stack.onBlockStartBreak()
+     */
     public static void breakArea(ItemStack stack, EntityPlayer player, float blockStrength, BlockPos posStart, BlockPos posEnd)
     {
         for (int xPos = posStart.getX(); xPos <= posEnd.getX(); xPos++)
             for (int yPos = posStart.getY(); yPos <= posEnd.getY(); yPos++)
                 for (int zPos = posStart.getZ(); zPos <= posEnd.getZ(); zPos++)
-                    if(!stack.getItem().onBlockStartBreak(stack, new BlockPos(xPos, yPos, zPos), player))
-                        breakBlock(stack, player.worldObj, player, new BlockPos(xPos, yPos, zPos), blockStrength);
+                    breakBlock(stack, player.worldObj, player, new BlockPos(xPos, yPos, zPos), blockStrength);
     }
 
     public static void breakArea(ItemStack stack, EntityPlayer player, BlockPos posHit, BlockPos posStart, BlockPos posEnd)
@@ -121,6 +124,9 @@ public class CommonUtils
                         breakBlock(stack, player.worldObj, player, new BlockPos(xPos, yPos, zPos), posHit);
     }
 
+    /**
+     * Used mainly for the Nether Star hammer so I can pass a previously saved reference block strength to the method
+     */
     public static void breakBlock(ItemStack stack, World world, EntityPlayer player, BlockPos blockPos, float refBlockStrength)
     {
         IBlockState blockState = world.getBlockState(blockPos);
@@ -129,13 +135,10 @@ public class CommonUtils
         if(!breakBlockChecks(stack, world, blockPos, block))
             return;
 
-        LogHelper.info("Passed block checks");
-
         float strength = ForgeHooks.blockStrength(blockState, player, world, blockPos);
 
         // only harvestable blocks that aren't impossibly slow to harvest
         if(!ForgeHooks.canHarvestBlock(block, player, world, blockPos) || refBlockStrength / strength > 10f) return;
-        LogHelper.info("Definitely breaking block");
 
         breakBlockAction(stack, world, player, blockPos, block, blockState);
     }
@@ -154,24 +157,19 @@ public class CommonUtils
 
         // only harvestable blocks that aren't impossibly slow to harvest
         if(!ForgeHooks.canHarvestBlock(block, player, world, blockPos) || refStrength / strength > 10f) return;
-        LogHelper.info("Definitely breaking block");
 
         breakBlockAction(stack, world, player, blockPos, block, blockState);
     }
 
     private static boolean breakBlockChecks(ItemStack stack, World world, BlockPos blockPos, Block block)
     {
-        LogHelper.info("Breaking block at: " + blockPos.toString());
-
         // prevent calling that stuff for air blocks, could lead to unexpected behaviour since it fires events
         if(world.isAirBlock(blockPos)) return false;
-        LogHelper.info("Block is not air");
 
         // check if the block can be broken, since extra block breaks shouldn't instantly break stuff like obsidian
         // or precious ores you can't harvest while mining stone
         // only effective materials
-        if(!((ItemAOE)stack.getItem()).isEffective(block)) return false;
-        LogHelper.info("Hammer is effective");
+        if(!((ItemHammer)stack.getItem()).isEffective(block)) return false;
 
         return true;
     }
