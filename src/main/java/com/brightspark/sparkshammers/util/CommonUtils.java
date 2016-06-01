@@ -10,6 +10,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.network.play.client.C07PacketPlayerDigging;
 import net.minecraft.network.play.server.S23PacketBlockChange;
 import net.minecraft.util.BlockPos;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeHooks;
 import org.lwjgl.input.Keyboard;
@@ -34,30 +35,118 @@ public class CommonUtils
         return Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_RSHIFT);
     }
 
+    public static BlockPos[] getBreakArea(ItemAOE hammerItem, BlockPos pos, EnumFacing sideHit, EntityPlayer player)
+    {
+        //Rotate if player is holding shift
+        if(hammerItem.getShiftRotating() && player.isSneaking())
+        {
+            int tempW = hammerItem.getMineWidth();
+            hammerItem.setMineWidth(hammerItem.getMineHeight());
+            hammerItem.setMineHeight(tempW);
+        }
+
+        int mineWidth = hammerItem.getMineWidth();
+        int mineHeight = hammerItem.getMineHeight();
+
+        BlockPos start = pos.offset(sideHit, hammerItem.getMineDepth());
+        BlockPos end = pos.offset(sideHit, hammerItem.getMineDepth());
+
+        //Offset destroyed area if standing on ground and mining horizontally
+        if(!player.capabilities.isFlying && sideHit != EnumFacing.UP && sideHit != EnumFacing.DOWN && mineHeight > 1)
+        {
+            start = start.up(mineHeight - 1);
+            end = end.up(mineHeight - 1);
+        }
+
+        //Block destroyed, now for AOE
+        switch (sideHit) {
+            case DOWN:
+            case UP:
+                EnumFacing facing = EnumFacing.fromAngle(player.getRotationYawHead());
+                switch(facing)
+                {
+                    case WEST:
+                    case EAST:
+                        start = start.add(-mineHeight, 0, -mineWidth);
+                        end = end.add(mineHeight, 0, mineWidth);
+                        break;
+                    case NORTH:
+                    case SOUTH:
+                    default:
+                        start = start.add(-mineWidth, 0, -mineHeight);
+                        end = end.add(mineWidth, 0, mineHeight);
+                        break;
+                }
+                break;
+            case NORTH:
+            case SOUTH:
+                //Z axis
+                start = start.add(-mineWidth, -mineHeight, 0);
+                end = end.add(mineWidth, mineHeight, 0);
+                break;
+            case WEST:
+            case EAST:
+                //X axis
+                start = start.add(0, -mineHeight, -mineWidth);
+                end = end.add(0, mineHeight, mineWidth);
+                break;
+        }
+
+        //Rotate back to normal if player is holding shift
+        if(hammerItem.getShiftRotating() && player.isSneaking())
+        {
+            int tempW = hammerItem.getMineWidth();
+            hammerItem.setMineWidth(hammerItem.getMineHeight());
+            hammerItem.setMineHeight(tempW);
+        }
+
+        return new BlockPos[] {start, end};
+    }
+
+    public static void breakArea(ItemStack stack, EntityPlayer player, float blockStrength, BlockPos posStart, BlockPos posEnd)
+    {
+        for (int xPos = posStart.getX(); xPos <= posEnd.getX(); xPos++)
+            for (int yPos = posStart.getY(); yPos <= posEnd.getY(); yPos++)
+                for (int zPos = posStart.getZ(); zPos <= posEnd.getZ(); zPos++)
+                    if(!stack.getItem().onBlockStartBreak(stack, new BlockPos(xPos, yPos, zPos), player))
+                        breakBlock(stack, player.worldObj, player, new BlockPos(xPos, yPos, zPos), blockStrength);
+    }
+
     public static void breakArea(ItemStack stack, EntityPlayer player, BlockPos posHit, BlockPos posStart, BlockPos posEnd)
     {
         for (int xPos = posStart.getX(); xPos <= posEnd.getX(); xPos++)
             for (int yPos = posStart.getY(); yPos <= posEnd.getY(); yPos++)
                 for (int zPos = posStart.getZ(); zPos <= posEnd.getZ(); zPos++)
                     if(!stack.getItem().onBlockStartBreak(stack, new BlockPos(xPos, yPos, zPos), player))
-                        CommonUtils.breakBlock(stack, player.worldObj, player, new BlockPos(xPos, yPos, zPos), posHit);
+                        breakBlock(stack, player.worldObj, player, new BlockPos(xPos, yPos, zPos), posHit);
     }
 
-    // <<<< Adapted Tinkers Construct >>>>
-    public static void breakBlock(ItemStack stack, World world, EntityPlayer player, BlockPos blockPos, BlockPos refBlockPos)
+    public static void breakBlock(ItemStack stack, World world, EntityPlayer player, BlockPos blockPos, float refBlockStrength)
     {
-        LogHelper.info("Breaking block at: " + blockPos.toString());
-
-        // prevent calling that stuff for air blocks, could lead to unexpected behaviour since it fires events
-        if(world.isAirBlock(blockPos)) return;
-
-        // check if the block can be broken, since extra block breaks shouldn't instantly break stuff like obsidian
-        // or precious ores you can't harvest while mining stone
         IBlockState blockState = world.getBlockState(blockPos);
         Block block = blockState.getBlock();
 
-        // only effective materials
-        if(!((ItemAOE)stack.getItem()).isEffective(block)) return;
+        if(!breakBlockChecks(stack, world, blockPos, block))
+            return;
+
+        LogHelper.info("Passed block checks");
+
+        float strength = ForgeHooks.blockStrength(blockState, player, world, blockPos);
+
+        // only harvestable blocks that aren't impossibly slow to harvest
+        if(!ForgeHooks.canHarvestBlock(block, player, world, blockPos) || refBlockStrength / strength > 10f) return;
+        LogHelper.info("Definitely breaking block");
+
+        breakBlockAction(stack, world, player, blockPos, block, blockState);
+    }
+
+    public static void breakBlock(ItemStack stack, World world, EntityPlayer player, BlockPos blockPos, BlockPos refBlockPos)
+    {
+        IBlockState blockState = world.getBlockState(blockPos);
+        Block block = blockState.getBlock();
+
+        if(!breakBlockChecks(stack, world, blockPos, block))
+            return;
 
         IBlockState refBlockState = world.getBlockState(refBlockPos);
         float refStrength = ForgeHooks.blockStrength(refBlockState, player, world, refBlockPos);
@@ -65,7 +154,30 @@ public class CommonUtils
 
         // only harvestable blocks that aren't impossibly slow to harvest
         if(!ForgeHooks.canHarvestBlock(block, player, world, blockPos) || refStrength / strength > 10f) return;
+        LogHelper.info("Definitely breaking block");
 
+        breakBlockAction(stack, world, player, blockPos, block, blockState);
+    }
+
+    private static boolean breakBlockChecks(ItemStack stack, World world, BlockPos blockPos, Block block)
+    {
+        LogHelper.info("Breaking block at: " + blockPos.toString());
+
+        // prevent calling that stuff for air blocks, could lead to unexpected behaviour since it fires events
+        if(world.isAirBlock(blockPos)) return false;
+        LogHelper.info("Block is not air");
+
+        // check if the block can be broken, since extra block breaks shouldn't instantly break stuff like obsidian
+        // or precious ores you can't harvest while mining stone
+        // only effective materials
+        if(!((ItemAOE)stack.getItem()).isEffective(block)) return false;
+        LogHelper.info("Hammer is effective");
+
+        return true;
+    }
+
+    private static void breakBlockAction(ItemStack stack, World world, EntityPlayer player, BlockPos blockPos, Block block, IBlockState blockState)
+    {
         // From this point on it's clear that the player CAN break the block
 
         if(player.capabilities.isCreativeMode)

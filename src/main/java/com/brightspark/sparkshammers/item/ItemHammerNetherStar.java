@@ -1,5 +1,6 @@
 package com.brightspark.sparkshammers.item;
 
+import com.brightspark.sparkshammers.SparksHammers;
 import com.brightspark.sparkshammers.reference.Config;
 import com.brightspark.sparkshammers.reference.Materials;
 import com.brightspark.sparkshammers.reference.Names;
@@ -48,9 +49,6 @@ public class ItemHammerNetherStar extends ItemHammer
 
     public boolean onBlockStartBreak(ItemStack stack, BlockPos pos, EntityPlayer player)
     {
-        stack.damageItem(1, player);
-
-        //Prevent harvesting if mining already in progress
-        return true;
+        return !SparksHammers.blockEV.canPlayerMine(player) || super.onBlockStartBreak(stack, pos, player);
     }
 }

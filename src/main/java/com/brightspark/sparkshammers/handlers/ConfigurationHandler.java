@@ -39,7 +39,7 @@ public class ConfigurationHandler
     {
         //testValue = configuration.getBoolean("configValue", Categories.GENERAL, false, "This is an example config value");
         Config.includeOtherModItems = configuration.getBoolean("includeOtherModItems", Categories.GENERAL, true, "Whether to add tools made from other mod materials into the game.");
-        Config.useEasyUnstableRecipe = configuration.getBoolean("useEasyUnstableRecipe", Categories.GENERAL, false, "If set to true, will use old 'easier' recipe using a vanilla crafting table for the unstable hammer and excavator.");
+        //Config.useEasyUnstableRecipe = configuration.getBoolean("useEasyUnstableRecipe", Categories.GENERAL, false, "If set to true, will use old 'easier' recipe using a vanilla crafting table for the unstable hammer and excavator.");
         Config.toolDurabilityModifier = configuration.getFloat("toolDurabilityModifier", Categories.TOOLS, Config.toolDurabilityModifier, Config.toolDurabilityModifierMin, Config.toolDurabilityModifierMax, "Modifier for hammers and excavators made of vanilla materials to adjust durability.");
         Config.toolSpeedModifier = configuration.getFloat("toolSpeedModifier", Categories.TOOLS, Config.toolSpeedModifier, Config.toolSpeedModifierMin, Config.toolSpeedModifierMax, "Modifier for hammers and excavators made of vanilla materials to adjust mining speed.");
         //Config.netherStarHammerDurability = configuration.getInt("netherStarHammerDurability", Categories.TOOLS, Config.netherStarHammerDurability, Config.netherStarHammerDurabilityMin, Config.netherStarHammerDurabilityMax, "Durability of the Nether Star made hammer");
@@ -77,6 +77,13 @@ public class ConfigurationHandler
         Config.bronzeEfficiency = configuration.getFloat("bronzeEfficiency", Categories.SPECIFIC_TOOLS, Config.bronzeEfficiency, Config.efficiencyMin, Config.efficiencyMax, "");
         Config.bronzeDamageVsEntity = configuration.getFloat("bronzeDamageVsEntity", Categories.SPECIFIC_TOOLS, Config.bronzeDamageVsEntity, Config.damageMin, Config.damageMax, "");
         Config.bronzeEnchantability = configuration.getInt("bronzeEnchantability", Categories.SPECIFIC_TOOLS, Config.bronzeEnchantability, Config.enchantabilityMin, Config.enchantabilityMax, "");
+
+        /*
+         * Mjolnir Hammer
+         */
+        Config.mjolnirHarvestLevel = configuration.getInt("mjolnirHarvestLevel", Categories.SPECIFIC_TOOLS, Config.mjolnirHarvestLevel, Config.harvestLevelMin, Config.harvestLevelMax, "");
+        Config.mjolnirEfficiency = configuration.getFloat("mjolnirEfficiency", Categories.SPECIFIC_TOOLS, Config.mjolnirEfficiency, Config.efficiencyMin, Config.efficiencyMax, "");
+        Config.mjolnirDamageVsEntity = configuration.getFloat("mjolnirDamageVsEntity", Categories.SPECIFIC_TOOLS, Config.mjolnirDamageVsEntity, Config.damageMin, Config.damageMax, "");
 
         /*
          * World Generation

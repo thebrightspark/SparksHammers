@@ -2,7 +2,6 @@ package com.brightspark.sparkshammers.item;
 
 import com.brightspark.sparkshammers.SparksHammers;
 import com.brightspark.sparkshammers.util.CommonUtils;
-import com.brightspark.sparkshammers.util.LogHelper;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.EntityLivingBase;
@@ -11,7 +10,6 @@ import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemTool;
 import net.minecraft.util.BlockPos;
-import net.minecraft.util.EnumFacing;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
 
@@ -113,85 +111,18 @@ public class ItemAOE extends ItemTool
     // <<<< Also made with some help from Tinkers Construct >>>>
     public boolean onBlockStartBreak (ItemStack stack, BlockPos pos, EntityPlayer player)
     {
-        LogHelper.info("Breaking First Block!");
-
         //Block being mined
-        Block block = player.worldObj.getBlockState(pos).getBlock();
         MovingObjectPosition mop = super.getMovingObjectPositionFromPlayer(player.worldObj, player, false);
         if(mop == null)
             return super.onBlockStartBreak(stack, pos, player);
-        EnumFacing sideHit = mop.sideHit;
 
-        LogHelper.info("Got MOP");
+        //Calculate area to break
+        BlockPos[] positions = CommonUtils.getBreakArea((ItemAOE) stack.getItem(), pos, mop.sideHit, player);
+        BlockPos start = positions[0];
+        BlockPos end = positions[1];
 
-        //If not effective, then use normal pickaxe block breaking
-        if(!isEffective(block))
-            return super.onBlockStartBreak(stack, pos, player);
-
-        LogHelper.info("Is effective on block");
-
-        //Rotate if player is holding shift
-        if(shiftRotating && player.isSneaking())
-        {
-            int tempW = this.mineWidth;
-            this.mineWidth = this.mineHeight;
-            this.mineHeight = tempW;
-        }
-
-        BlockPos start = pos.offset(sideHit, mineDepth);
-        BlockPos end = pos.offset(sideHit, mineDepth);
-
-        //Offset destroyed area if standing on ground and mining horizontally
-        if(!player.capabilities.isFlying && sideHit != EnumFacing.UP && sideHit != EnumFacing.DOWN && this.mineHeight > 1)
-        {
-            start = start.up(this.mineHeight - 1);
-            end = end.up(this.mineHeight - 1);
-        }
-
-        //Block destroyed, now for AOE
-        switch (sideHit) {
-            case DOWN:
-            case UP:
-                EnumFacing facing = EnumFacing.fromAngle(player.getRotationYawHead());
-                switch(facing)
-                {
-                    case WEST:
-                    case EAST:
-                        start = start.add(-mineHeight, 0, -mineWidth);
-                        end = end.add(mineHeight, 0, mineWidth);
-                        break;
-                    case NORTH:
-                    case SOUTH:
-                    default:
-                        start = start.add(-mineWidth, 0, -mineHeight);
-                        end = end.add(mineWidth, 0, mineHeight);
-                        break;
-                }
-                break;
-            case NORTH:
-            case SOUTH:
-                //Z axis
-                start = start.add(-mineWidth, -mineHeight, 0);
-                end = end.add(mineWidth, mineHeight, 0);
-                break;
-            case WEST:
-            case EAST:
-                //X axis
-                start = start.add(0, -mineHeight, -mineWidth);
-                end = end.add(0, mineHeight, mineWidth);
-                break;
-        }
-
-        LogHelper.info("Breaking blocks from " + start.toString() + " to " + end.toString());
+        //LogHelper.info("Breaking blocks from " + start.toString() + " to " + end.toString());
         breakArea(stack, player, pos, start, end);
-
-        //Rotate back to normal if player is holding shift
-        if(shiftRotating && player.isSneaking())
-        {
-            int tempW = this.mineWidth;
-            this.mineWidth = this.mineHeight;
-            this.mineHeight = tempW;
-        }
 
         return super.onBlockStartBreak(stack, pos, player);
     }
@@ -227,5 +158,10 @@ public class ItemAOE extends ItemTool
     public int getMineDepth()
     {
         return this.mineDepth;
+    }
+
+    public boolean getShiftRotating()
+    {
+        return this.shiftRotating;
     }
 }

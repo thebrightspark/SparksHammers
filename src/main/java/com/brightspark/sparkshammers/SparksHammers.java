@@ -50,6 +50,7 @@ public class SparksHammers
     };
 
     public static DamageSource fallingHammer = new DamageSource("fallingHammer");
+    public static BlockEventHandler blockEV = new BlockEventHandler();
 
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent event)
@@ -91,7 +92,7 @@ public class SparksHammers
 
         SHTileEntities.init();
         NetworkRegistry.INSTANCE.registerGuiHandler(this, new GuiHandler());
-        MinecraftForge.EVENT_BUS.register(new BlockEventHandler());
+        MinecraftForge.EVENT_BUS.register(blockEV);
 
         //Add Wooden and Stone hammers and excavators to Mineshaft chests
         if(Config.shouldAddMineshaftLoot)

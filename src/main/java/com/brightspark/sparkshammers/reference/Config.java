@@ -10,7 +10,7 @@ public class Config
      * If set to true, will use old 'easier' recipe using a vanilla crafting table for the unstable hammer and excavator.
      * Else, set to false will keep the hammer crafting table recipe (which requires mobius ingots rather than unstable).
      */
-    public static boolean useEasyUnstableRecipe = false;
+    //public static boolean useEasyUnstableRecipe = false;
     /**
      * Modifier for hammers and excavators to adjust durability.
      */
@@ -43,7 +43,7 @@ public class Config
      *  and update these values against it. Otherwise, it will keep what's already saved.
      */
     public static int harvestLevelMin = 0;
-    public static int harvestLevelMax = 6;
+    public static int harvestLevelMax = Integer.MAX_VALUE;
     public static int maxUsesMin = 1;
     public static int maxUsesMax = Integer.MAX_VALUE;
     public static float efficiencyMin = 0f;
@@ -82,6 +82,13 @@ public class Config
     public static float bronzeEfficiency = 6f*toolSpeedModifier;
     public static float bronzeDamageVsEntity = 2f;
     public static int bronzeEnchantability = 13;
+
+    /**
+     * Mjolnir
+     */
+    public static int mjolnirHarvestLevel = harvestLevelMax;
+    public static float mjolnirEfficiency = 10f;
+    public static float mjolnirDamageVsEntity = 10f;
 
     /**
      * Whether shrine structures should be generated in the world to find Mjolnir in.

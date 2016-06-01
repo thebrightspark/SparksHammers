@@ -3,15 +3,17 @@ package com.brightspark.sparkshammers.handlers;
 import com.brightspark.sparkshammers.item.ItemHammerNetherStar;
 import com.brightspark.sparkshammers.reference.Config;
 import com.brightspark.sparkshammers.util.CommonUtils;
+import com.brightspark.sparkshammers.util.LogHelper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
+import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.event.world.BlockEvent.BreakEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerLoggedOutEvent;
-import net.minecraftforge.fml.common.gameevent.TickEvent.WorldTickEvent;
+import net.minecraftforge.fml.common.gameevent.TickEvent;
 
 import java.util.ArrayList;
 
@@ -26,10 +28,17 @@ public class BlockEventHandler
      * 1: ItemStack -> hammer being used
      * 2: EnumFacing -> mining direction
      * 3: BlockPos -> hit block position
-     * 4: Integer -> current iteration
+     * 4: Float -> block strength
+     * 5: Integer -> current iteration
+     * 6: Byte -> used to make sure iteration happens on client and server
      */
     private ArrayList<Object[]> miningSchedule = new ArrayList<Object[]>();
     private static final int tickDelay = 2;
+
+    public boolean canPlayerMine(EntityPlayer player)
+    {
+        return getPlayerMining(player) != null;
+    }
 
     private Object[] getPlayerMining(EntityPlayer player)
     {
@@ -55,6 +64,7 @@ public class BlockEventHandler
             Object[] playerMining = getPlayerMining(event.getPlayer());
             if(playerMining == null)
             {
+                LogHelper.info("Starting new mining!");
                 //Player isn't mining yet, so we'll start mining
                 EntityPlayer player = event.getPlayer();
                 miningSchedule.add(new Object[] {
@@ -62,10 +72,13 @@ public class BlockEventHandler
                         player.getHeldItem(),
                         ((ItemHammerNetherStar) heldItem).getMovingObjectPositionFromPlayer(event.world, player, false).sideHit,
                         event.pos,
-                        new Integer(0)});
+                        new Float(ForgeHooks.blockStrength(event.state, player, player.worldObj, event.pos)),
+                        new Integer(1),
+                        new Byte((byte)2)});
                 return;
             }
 
+            LogHelper.info("Already mining! Cancelling block break.");
             //At this point, player is currently mining, so we'll cancel the block breaking
             event.setCanceled(true);
         }
@@ -73,50 +86,50 @@ public class BlockEventHandler
 
     //Iterates through the mining schedule and digs as necessary
     @SubscribeEvent
-    public void onWorldTick(WorldTickEvent event)
+    public void onTick(TickEvent event) //TODO: Fix this not actually breaking blocks
     {
-        if(miningSchedule.size() > 0)
+        if(miningSchedule.size() > 0 && (event.type == TickEvent.Type.CLIENT || event.type == TickEvent.Type.SERVER) && event.phase == TickEvent.Phase.END)
         {
-            for(Object[] o : miningSchedule) //TODO: Getting error here: java.util.ConcurrentModificationException
+            for(int i = 0; i < miningSchedule.size(); i++)
             {
+                Object[] o = miningSchedule.get(i);
+                byte num = ((Byte) o[6]).byteValue();
+                if(num == 2 && event.type == TickEvent.Type.CLIENT)
+                    num--;
+                else if(num == 1 && event.type == TickEvent.Type.SERVER)
+                    num--;
+                else
+                    continue;
+                o[6] = num;
+
                 ItemStack stack = (ItemStack) o[1];
                 ItemHammerNetherStar hammer = (ItemHammerNetherStar) stack.getItem();
-                int mineWidth = hammer.getMineWidth();
-                int mineHeight = hammer.getMineHeight();
                 EnumFacing miningDir = (EnumFacing) o[2];
-                int iteration = ((Integer) o[4]).intValue();
+                int iteration = ((Integer) o[5]).intValue();
+                LogHelper.info("Mining iteration " + iteration + " for hole " + i);
                 BlockPos centerPos = ((BlockPos) o[3]).offset(miningDir, iteration);
-                BlockPos start, end;
-
-                //Block destroyed, now for AOE
-                switch (miningDir) {
-                    case DOWN:
-                    case UP:
-                        start = centerPos.add(-mineHeight, 0, -mineWidth);
-                        end = centerPos.add(mineHeight, 0, mineWidth);
-                    case NORTH:
-                    case SOUTH:
-                        //Z axis
-                        start = centerPos.add(-mineWidth, -mineHeight, 0);
-                        end = centerPos.add(mineWidth, mineHeight, 0);
-                        break;
-                    case WEST:
-                    case EAST:
-                    default:
-                        //X axis
-                        start = centerPos.add(0, -mineHeight, -mineWidth);
-                        end = centerPos.add(0, mineHeight, mineWidth);
-                        break;
-                }
+                BlockPos[] positions = CommonUtils.getBreakArea(hammer, centerPos, miningDir.getOpposite(), (EntityPlayer) o[0]);
+                BlockPos start = positions[0];
+                BlockPos end = positions[1];
 
                 //Break the blocks
-                CommonUtils.breakArea(stack, (EntityPlayer) o[0], centerPos, start, end);
+                //LogHelper.info("Breaking from " + start.toString() + " to " + end.toString());
+                //TODO: Blocks still not breaking, but for some reason blocks are being broken multiple times
+                CommonUtils.breakArea(stack, (EntityPlayer) o[0], ((Float) o[4]).floatValue(), start, end);
 
-                if(++iteration > Config.netherStarHammerDistance)
-                    miningSchedule.remove(o);
-                else
-                    //Increase the iteration
-                    o[4] = iteration;
+                //Make sure block breaking has happened on client and server first
+                if(num <= 0)
+                {
+                    if(++iteration > Config.netherStarHammerDistance)
+                        miningSchedule.remove(o);
+                    else
+                    {
+                        //Increase the iteration
+                        o[5] = iteration;
+                        o[6] = (byte) 2;
+                        miningSchedule.set(i, o);
+                    }
+                }
             }
         }
     }
