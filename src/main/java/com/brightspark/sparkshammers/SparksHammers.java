@@ -93,10 +93,10 @@ public class SparksHammers
         SHTileEntities.init();
 
         NetworkRegistry.INSTANCE.registerGuiHandler(this, new GuiHandler());
-        MinecraftForge.EVENT_BUS.register(blockEH);
-        MinecraftForge.EVENT_BUS.register(new AchieveEventHandler());
+        MinecraftForge.EVENT_BUS.register(blockEH); //Block Event Handler for the Nether Star Hammer
+        MinecraftForge.EVENT_BUS.register(new AchieveEventHandler()); //Event handlers for Achievements
 
-        SHAchievements.init();
+        SHAchievements.init(); //Adds achievements
 
         //Add Wooden and Stone hammers and excavators to Mineshaft chests
         if(Config.shouldAddMineshaftLoot)

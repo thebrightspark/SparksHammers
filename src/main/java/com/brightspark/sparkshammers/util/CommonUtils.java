@@ -7,6 +7,7 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.play.client.C07PacketPlayerDigging;
 import net.minecraft.network.play.server.S23PacketBlockChange;
@@ -107,12 +108,22 @@ public class CommonUtils
     /**
      * Used mainly for Nether Star Hammer. Doesn't call stack.onBlockStartBreak()
      */
-    public static void breakArea(ItemStack stack, EntityPlayer player, float blockStrength, BlockPos posStart, BlockPos posEnd)
+    public static void breakArea(ItemStack stack, World world, EntityPlayer player, float blockStrength, BlockPos posStart, BlockPos center, BlockPos posEnd)
     {
+        boolean brokeSomething = false;
         for (int xPos = posStart.getX(); xPos <= posEnd.getX(); xPos++)
             for (int yPos = posStart.getY(); yPos <= posEnd.getY(); yPos++)
                 for (int zPos = posStart.getZ(); zPos <= posEnd.getZ(); zPos++)
-                    breakBlock(stack, player.worldObj, player, new BlockPos(xPos, yPos, zPos), blockStrength);
+                {
+                    BlockPos pos = new BlockPos(xPos, yPos, zPos);
+                    if(breakBlock(stack, world, player, pos, blockStrength) && !brokeSomething)
+                    {
+                        //Play break sound at center only once
+                        LogHelper.info("Playing break sound");
+                        brokeSomething = true;
+                        world.playAuxSFX(2001, center, Block.getStateId(Blocks.stone.getDefaultState()));
+                    }
+                }
     }
 
     public static void breakArea(ItemStack stack, EntityPlayer player, BlockPos posHit, BlockPos posStart, BlockPos posEnd)
@@ -127,20 +138,21 @@ public class CommonUtils
     /**
      * Used mainly for the Nether Star hammer so I can pass a previously saved reference block strength to the method
      */
-    public static void breakBlock(ItemStack stack, World world, EntityPlayer player, BlockPos blockPos, float refBlockStrength)
+    public static boolean breakBlock(ItemStack stack, World world, EntityPlayer player, BlockPos blockPos, float refBlockStrength)
     {
         IBlockState blockState = world.getBlockState(blockPos);
         Block block = blockState.getBlock();
 
         if(!breakBlockChecks(stack, world, blockPos, block))
-            return;
+            return false;
 
         float strength = ForgeHooks.blockStrength(blockState, player, world, blockPos);
 
         // only harvestable blocks that aren't impossibly slow to harvest
-        if(!ForgeHooks.canHarvestBlock(block, player, world, blockPos) || refBlockStrength / strength > 10f) return;
+        if(!ForgeHooks.canHarvestBlock(block, player, world, blockPos) || refBlockStrength / strength > 10f) return false;
 
         breakBlockAction(stack, world, player, blockPos, block, blockState);
+        return true;
     }
 
     public static void breakBlock(ItemStack stack, World world, EntityPlayer player, BlockPos blockPos, BlockPos refBlockPos)

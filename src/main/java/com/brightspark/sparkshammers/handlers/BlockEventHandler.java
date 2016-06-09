@@ -10,6 +10,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.event.world.BlockEvent.BreakEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -25,18 +26,18 @@ public class BlockEventHandler
 {
     /**
      * Object content:
-     * 0: EntityPlayer -> player which mined the blocks
-     * 1: ItemStack -> hammer being used
-     * 2: EnumFacing -> mining direction
-     * 3: BlockPos -> hit block position
-     * 4: Float -> block strength
-     * 5: Integer -> current iteration
-     * 6: Byte -> used to make sure iteration happens on client and server
+     * 0: World -> the world
+     * 1: EntityPlayer -> player which mined the blocks
+     * 2: ItemStack -> hammer being used
+     * 3: EnumFacing -> mining direction
+     * 4: BlockPos -> hit block position
+     * 5: Float -> block strength
+     * 6: Integer -> current iteration
      */
     private ArrayList<Object[]> miningSchedule;
     private boolean isMining;
     private int tickDelay;
-    private static final int tickDelayMax = 5;
+    private static final int tickDelayMax = 2;
 
     public BlockEventHandler()
     {
@@ -53,7 +54,7 @@ public class BlockEventHandler
     private Object[] getPlayerMining(EntityPlayer player)
     {
         for(Object[] o : miningSchedule)
-            if(((EntityPlayer)o[0]).equals(player))
+            if(((EntityPlayer)o[1]).equals(player))
                 return o;
         return null;
     }
@@ -81,6 +82,7 @@ public class BlockEventHandler
                 //Add a NBT tag to the hammer for future checks
                 NBTHelper.setBoolean(heldStack, "mining", true);
                 miningSchedule.add(new Object[] {
+                        player.worldObj,
                         player,
                         ItemStack.copyItemStack(heldStack),
                         ((ItemHammerNetherStar) heldItem).getMovingObjectPositionFromPlayer(event.world, player, false).sideHit.getOpposite(),
@@ -89,13 +91,11 @@ public class BlockEventHandler
                         new Integer(1),
                         new Byte((byte)2)});
                 heldStack.damageItem(1, player);
-                return;
             }
             else if(!NBTHelper.hasTag(heldStack, "mining"))
             {
                 //LogHelper.info("Already mining! Cancelling block break.");
                 event.setCanceled(true);
-                return;
             }
         }
     }
@@ -104,61 +104,42 @@ public class BlockEventHandler
     @SubscribeEvent
     public void onTick(TickEvent event)
     {
-        //Counts up the tick delay
-        //if(miningSchedule.size() > 0 && event.type == TickEvent.Type.SERVER && event.phase == TickEvent.Phase.END)
-        //    tickDelay++;
-
-        //if(event.phase == TickEvent.Phase.END && (event.type == TickEvent.Type.CLIENT || event.type == TickEvent.Type.SERVER))
-        //    LogHelper.info(event.type.name());
-
         //Mines if possible
-        if(!isMining && miningSchedule.size() > 0 && (event.type == TickEvent.Type.CLIENT || event.type == TickEvent.Type.SERVER) && event.phase == TickEvent.Phase.END)
+        if(!isMining && miningSchedule.size() > 0 && event.type == TickEvent.Type.SERVER && event.phase == TickEvent.Phase.END)
         {
+            //Count up the delay. If it's less than the max, then don't mine yet.
+            if(tickDelay++ < tickDelayMax)
+                return;
             isMining = true;
-            //tickDelay = 0;
+            tickDelay = 0;
             for(int i = 0; i < miningSchedule.size(); i++)
             {
                 Object[] o = miningSchedule.get(i);
-                byte num = ((Byte) o[6]).byteValue();
-                if(num == 2 && event.type == TickEvent.Type.CLIENT)
-                    num--;
-                else if(num == 1 && event.type == TickEvent.Type.SERVER)
-                    num--;
-                else
-                    continue;
-                o[6] = num;
 
-                ItemStack stack = (ItemStack) o[1];
+                ItemStack stack = (ItemStack) o[2];
                 ItemHammerNetherStar hammer = (ItemHammerNetherStar) stack.getItem();
-                EnumFacing miningDir = (EnumFacing) o[2];
-                int iteration = ((Integer) o[5]).intValue();
+                EnumFacing miningDir = (EnumFacing) o[3];
+                int iteration = ((Integer) o[6]).intValue();
                 LogHelper.info("Mining iteration " + iteration + " for hole " + i);
-                BlockPos centerPos = ((BlockPos) o[3]).offset(miningDir, iteration);
-                BlockPos[] positions = CommonUtils.getBreakArea(hammer, centerPos, miningDir.getOpposite(), (EntityPlayer) o[0]);
+                BlockPos centerPos = ((BlockPos) o[4]).offset(miningDir, iteration);
+                BlockPos[] positions = CommonUtils.getBreakArea(hammer, centerPos, miningDir.getOpposite(), (EntityPlayer) o[1]);
                 BlockPos start = positions[0];
                 BlockPos end = positions[1];
 
                 //Break the blocks
-                //LogHelper.info("Breaking from " + start.toString() + " to " + end.toString());
-                CommonUtils.breakArea(stack, (EntityPlayer) o[0], ((Float) o[4]).floatValue(), start, end);
+                CommonUtils.breakArea(stack, (World) o[0], (EntityPlayer) o[1], ((Float) o[5]).floatValue(), start, centerPos, end);
 
-                //LogHelper.info("Finished mining");
-
-                //Make sure block breaking has happened on client and server first
-                if(num <= 0)
+                if(++iteration > Config.netherStarHammerDistance)
                 {
-                    if(++iteration > Config.netherStarHammerDistance)
-                    {
-                        NBTHelper.removeTag(stack, "mining");
-                        miningSchedule.remove(o);
-                    }
-                    else
-                    {
-                        //Increase the iteration
-                        o[5] = iteration;
-                        o[6] = (byte) 2;
-                        miningSchedule.set(i, o);
-                    }
+                    //If reached end of mining, then remove from mining schedule
+                    NBTHelper.removeTag(stack, "mining");
+                    miningSchedule.remove(o);
+                }
+                else
+                {
+                    //Increase the iteration
+                    o[6] = iteration;
+                    miningSchedule.set(i, o);
                 }
             }
             isMining = false;
