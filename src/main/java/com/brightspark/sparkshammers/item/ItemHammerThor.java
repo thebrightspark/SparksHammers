@@ -58,7 +58,7 @@ public class ItemHammerThor extends ItemHammer
         return "None";
     }
 
-    private boolean isOwner(ItemStack stack, Entity entity)
+    public static boolean isOwner(ItemStack stack, Entity entity)
     {
         return getOwner(stack) != null && (entity instanceof EntityPlayer && getOwner(stack).equals(entity.getUniqueID()));
     }

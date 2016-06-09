@@ -2,6 +2,7 @@ package com.brightspark.sparkshammers.block;
 
 import com.brightspark.sparkshammers.SparksHammers;
 import com.brightspark.sparkshammers.entity.EntityFallingHammer;
+import com.brightspark.sparkshammers.init.SHAchievements;
 import com.brightspark.sparkshammers.init.SHItems;
 import com.brightspark.sparkshammers.item.ItemHammerThor;
 import com.brightspark.sparkshammers.reference.Names;
@@ -83,6 +84,8 @@ public class BlockHammer extends BlockContainer
         if(player.getHeldItem() == null)
         {
             //If no item in hand
+            if(!hammer.hasOwner())
+                player.triggerAchievement(SHAchievements.mjolnir);
             if(!hammer.hasOwner() || hammer.isOwner(player))
             {
                 //Player is worthy
@@ -90,12 +93,16 @@ public class BlockHammer extends BlockContainer
                 ItemHammerThor.setOwner(player.getHeldItem(), player);
                 world.setBlockToAir(new BlockPos(pos));
             }
-            else if(world.isRemote)
+            else
             {
                 //Player is not worthy
-                player.addChatMessage(new ChatComponentText("You are not worthy to wield me!"));
-                player.addChatMessage(new ChatComponentText(EnumChatFormatting.GOLD + hammer.getOwnerName() + EnumChatFormatting.RESET + " is my true Master!"));
+                player.triggerAchievement(SHAchievements.mjolnirNope);
                 player.addPotionEffect(new PotionEffect(Potion.weakness.getId(), 200, 1));
+                if(world.isRemote)
+                {
+                    player.addChatMessage(new ChatComponentText("You are not worthy to wield me!"));
+                    player.addChatMessage(new ChatComponentText(EnumChatFormatting.GOLD + hammer.getOwnerName() + EnumChatFormatting.RESET + " is my true Master!"));
+                }
             }
         }
         return false;

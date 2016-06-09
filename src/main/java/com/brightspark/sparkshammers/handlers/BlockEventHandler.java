@@ -107,6 +107,10 @@ public class BlockEventHandler
         //Counts up the tick delay
         //if(miningSchedule.size() > 0 && event.type == TickEvent.Type.SERVER && event.phase == TickEvent.Phase.END)
         //    tickDelay++;
+
+        //if(event.phase == TickEvent.Phase.END && (event.type == TickEvent.Type.CLIENT || event.type == TickEvent.Type.SERVER))
+        //    LogHelper.info(event.type.name());
+
         //Mines if possible
         if(!isMining && miningSchedule.size() > 0 && (event.type == TickEvent.Type.CLIENT || event.type == TickEvent.Type.SERVER) && event.phase == TickEvent.Phase.END)
         {

@@ -2,6 +2,7 @@ package com.brightspark.sparkshammers;
 
 import com.brightspark.sparkshammers.gui.GuiHandler;
 import com.brightspark.sparkshammers.hammerCrafting.HammerCraftingManager;
+import com.brightspark.sparkshammers.handlers.AchieveEventHandler;
 import com.brightspark.sparkshammers.handlers.BlockEventHandler;
 import com.brightspark.sparkshammers.handlers.ConfigurationHandler;
 import com.brightspark.sparkshammers.init.*;
@@ -89,10 +90,13 @@ public class SparksHammers
 
         SHRecipes.init(); //Adds vanilla crafting table recipes
         HammerCraftingManager.getInstance(); //Calls the method so that the recipes are created.
-
         SHTileEntities.init();
+
         NetworkRegistry.INSTANCE.registerGuiHandler(this, new GuiHandler());
         MinecraftForge.EVENT_BUS.register(blockEH);
+        MinecraftForge.EVENT_BUS.register(new AchieveEventHandler());
+
+        SHAchievements.init();
 
         //Add Wooden and Stone hammers and excavators to Mineshaft chests
         if(Config.shouldAddMineshaftLoot)
