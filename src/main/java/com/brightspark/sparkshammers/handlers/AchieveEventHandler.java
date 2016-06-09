@@ -27,6 +27,8 @@ public class AchieveEventHandler
                 event.player.triggerAchievement(SHAchievements.woodHammer);
             else if(item.equals(SHItems.hammerDiamond))
                 event.player.triggerAchievement(SHAchievements.diamondHammer);
+            else if(item.equals(SHItems.hammerNetherStar))
+                event.player.triggerAchievement(SHAchievements.netherStarHammer);
         }
         else if(item.equals(Item.getItemFromBlock(SHBlocks.blockHammerCraft)))
             event.player.triggerAchievement(SHAchievements.craftingTable);

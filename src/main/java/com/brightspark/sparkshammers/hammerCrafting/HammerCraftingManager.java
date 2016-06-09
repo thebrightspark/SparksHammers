@@ -46,6 +46,7 @@ public class HammerCraftingManager
 
         addRecipe(new ItemStack(SHItems.hammerMini), new Object[]{" HHH ", " HHH ", "SSSS ", 'H', Items.iron_ingot, 'S', "stickWood"});
         addRecipe(new ItemStack(SHItems.hammerGiant), new Object[]{"HHHHH", "HHDHH", "SSSS ", 'H', Blocks.iron_block, 'S', "stickWood", 'D', new ItemStack(Items.dye, 1, 5)});
+        addRecipe(new ItemStack(SHItems.hammerNetherStar), new Object[]{"HHBHH", "HBNBH", "SSSS ", 'H', Items.diamond, 'B', Blocks.gold_block, 'N', Items.nether_star, 'S', "stickWood"});
 
         addRecipe(new ItemStack(SHItems.excavatorWood), new Object[]{" HHH ", "HHHHH", "SSSS ", 'H', "plankWood", 'S', "stickWood"});
         addRecipe(new ItemStack(SHItems.excavatorIron), new Object[]{" HHH ", "HHHHH", "SSSS ", 'H', Items.iron_ingot, 'S', "stickWood"});

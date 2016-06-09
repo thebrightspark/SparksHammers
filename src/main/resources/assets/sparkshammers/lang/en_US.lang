@@ -15,6 +15,7 @@ item.hammerThor.tooltip=Owner:
 item.hammerMini.name=Mini Hammer
 item.hammerGiant.name=Giant Hammer
 item.hammerGiant.8brickdmg=8BrickDMG's BFH
+item.hammerNetherStar.name=Nether Star Hammer
 
 //Excavator Heads
 item.excavatorHeadWood.name=Wooden Excavator Head
@@ -55,6 +56,8 @@ achievement.craftingTable=Bigger And Better
 achievement.craftingTable.desc=Make a Hammer Crafting Table.
 achievement.diamondHammer=Dig Big Holes In All The Things!
 achievement.diamondHammer.desc=Make a Diamond Hammer.
+achievement.netherStarHammer=Focusing Energy
+achievement.netherStarHammer.desc=Make a Nether Star Hammer.
 achievement.mjolnir=Odin Will Not Be Pleased About This...
 achievement.mjolnir.desc=Find yourself the legendary Mjolnir.
 achievement.mjolnirNope=You Are Not Worthy!
