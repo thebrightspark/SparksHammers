@@ -3,7 +3,6 @@ package com.brightspark.sparkshammers.handlers;
 import com.brightspark.sparkshammers.item.ItemHammerNetherStar;
 import com.brightspark.sparkshammers.reference.Config;
 import com.brightspark.sparkshammers.util.CommonUtils;
-import com.brightspark.sparkshammers.util.LogHelper;
 import com.brightspark.sparkshammers.util.NBTHelper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
@@ -76,7 +75,7 @@ public class BlockEventHandler
             Object[] playerMining = getPlayerMining(event.getPlayer());
             if(playerMining == null)
             {
-                LogHelper.info("Starting new mining!");
+                //LogHelper.info("Starting new mining!");
                 //Player isn't mining yet, so we'll start mining
                 EntityPlayer player = event.getPlayer();
                 //Add a NBT tag to the hammer for future checks
@@ -120,7 +119,7 @@ public class BlockEventHandler
                 ItemHammerNetherStar hammer = (ItemHammerNetherStar) stack.getItem();
                 EnumFacing miningDir = (EnumFacing) o[3];
                 int iteration = ((Integer) o[6]).intValue();
-                LogHelper.info("Mining iteration " + iteration + " for hole " + i);
+                //LogHelper.info("Mining iteration " + iteration + " for hole " + i);
                 BlockPos centerPos = ((BlockPos) o[4]).offset(miningDir, iteration);
                 BlockPos[] positions = CommonUtils.getBreakArea(hammer, centerPos, miningDir.getOpposite(), (EntityPlayer) o[1]);
                 BlockPos start = positions[0];

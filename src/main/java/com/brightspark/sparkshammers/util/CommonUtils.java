@@ -119,7 +119,7 @@ public class CommonUtils
                     if(breakBlock(stack, world, player, pos, blockStrength) && !brokeSomething)
                     {
                         //Play break sound at center only once
-                        LogHelper.info("Playing break sound");
+                        //LogHelper.info("Playing break sound");
                         brokeSomething = true;
                         world.playAuxSFX(2001, center, Block.getStateId(Blocks.stone.getDefaultState()));
                     }

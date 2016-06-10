@@ -90,6 +90,9 @@ public class ConfigurationHandler
          */
         Config.shouldGenerateMjolnirShrines = configuration.getBoolean("shouldGenerateMjolnirShrines", Categories.WORLD_GEN, Config.shouldGenerateMjolnirShrines, "Whether shrine structures should be generated in the world to find Mjolnir in.");
         Config.mjolnirShrineRarity = configuration.getInt("mjolnirShrineRarity", Categories.WORLD_GEN, Config.mjolnirShrineRarity, Config.maxUsesMin, Config.maxUsesMax, "Chance of a shrine spawning (Higher is less chance).");
+        Config.mjolnirShrineMinY = configuration.getInt("mjolnirShrineMinY", Categories.WORLD_GEN, Config.mjolnirShrineMinY, 0, 245, "Minimum Y coordinate value for the shrine to spawn at.");
+        Config.mjolnirShrineDebug = configuration.getBoolean("mjolnirShrineDebug", Categories.WORLD_GEN, Config.mjolnirShrineDebug, "When true, a log will be printed in the console every time a shrine is generated with it's coordinates.");
+
         Config.shouldAddMjolnirToLoot = configuration.getBoolean("shouldAddMjolnirToLoot", Categories.WORLD_GEN, Config.shouldAddMjolnirToLoot, "Whether Mjolnir should be added to desert pyramid loot.");
         Config.mjolnirLootRarity = configuration.getInt("mjolnirLootRarity", Categories.WORLD_GEN, Config.mjolnirLootRarity, Config.maxUsesMin, Config.maxUsesMax, "Chance of finding Mjolnir (Lower is less chance).");
         Config.shouldAddMineshaftLoot = configuration.getBoolean("shouldAddMineshaftLoot", Categories.WORLD_GEN, Config.shouldAddMineshaftLoot, "Whether wooden and stone hammers and excavators should be added to mineshaft loot.");

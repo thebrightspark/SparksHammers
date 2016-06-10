@@ -34,7 +34,8 @@ public class WorldGenMjolnirShrine implements IWorldGenerator
                 //Generate the shrine
                 generateShrine(world, pos);
 
-                LogHelper.info("Mjolnir Shrine generated at: " + pos.add(5, 0, 5).toString());
+                if(Config.mjolnirShrineDebug)
+                    LogHelper.info("Mjolnir Shrine generated at: " + pos.add(5, 0, 5).toString());
             }
         }
     }

@@ -96,6 +96,7 @@ public class Config
     public static boolean shouldGenerateMjolnirShrines = true;
     public static int mjolnirShrineRarity = 50;
     public static int mjolnirShrineMinY = 150;
+    public static boolean mjolnirShrineDebug = false;
 
     /**
      * Whether Mjolnir should be added to dungeon loot.
