@@ -18,7 +18,6 @@ public class ItemHammerNetherStar extends ItemHammer
         super(Names.Items.HAMMER_NETHERSTAR, Materials.HAMMER_NETHERSTAR);
     }
 
-    //TODO: Temp until have it's own texture!
     @SideOnly(Side.CLIENT)
     public boolean hasEffect(ItemStack stack)
     {
