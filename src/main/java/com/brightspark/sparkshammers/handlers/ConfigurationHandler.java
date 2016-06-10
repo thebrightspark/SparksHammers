@@ -2,9 +2,9 @@ package com.brightspark.sparkshammers.handlers;
 
 import com.brightspark.sparkshammers.reference.Config;
 import com.brightspark.sparkshammers.reference.Reference;
-import cpw.mods.fml.client.event.ConfigChangedEvent.OnConfigChangedEvent;
-import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.common.config.Configuration;
+import net.minecraftforge.fml.client.event.ConfigChangedEvent;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 import java.io.File;
 
@@ -13,6 +13,7 @@ class Categories
     public static final String GENERAL = Configuration.CATEGORY_GENERAL;
     public static final String TOOLS = "tools";
     public static final String SPECIFIC_TOOLS = "specific tools";
+    public static final String WORLD_GEN = "world generation";
 }
 
 class Descriptions
@@ -38,7 +39,7 @@ public class ConfigurationHandler
     {
         //testValue = configuration.getBoolean("configValue", Categories.GENERAL, false, "This is an example config value");
         Config.includeOtherModItems = configuration.getBoolean("includeOtherModItems", Categories.GENERAL, true, "Whether to add tools made from other mod materials into the game.");
-        Config.useEasyUnstableRecipe = configuration.getBoolean("useEasyUnstableRecipe", Categories.GENERAL, false, "If set to true, will use old 'easier' recipe using a vanilla crafting table for the unstable hammer and excavator.");
+        //Config.useEasyUnstableRecipe = configuration.getBoolean("useEasyUnstableRecipe", Categories.GENERAL, false, "If set to true, will use old 'easier' recipe using a vanilla crafting table for the unstable hammer and excavator.");
         Config.toolDurabilityModifier = configuration.getFloat("toolDurabilityModifier", Categories.TOOLS, Config.toolDurabilityModifier, Config.toolDurabilityModifierMin, Config.toolDurabilityModifierMax, "Modifier for hammers and excavators made of vanilla materials to adjust durability.");
         Config.toolSpeedModifier = configuration.getFloat("toolSpeedModifier", Categories.TOOLS, Config.toolSpeedModifier, Config.toolSpeedModifierMin, Config.toolSpeedModifierMax, "Modifier for hammers and excavators made of vanilla materials to adjust mining speed.");
         //Config.netherStarHammerDurability = configuration.getInt("netherStarHammerDurability", Categories.TOOLS, Config.netherStarHammerDurability, Config.netherStarHammerDurabilityMin, Config.netherStarHammerDurabilityMax, "Durability of the Nether Star made hammer");
@@ -65,12 +66,6 @@ public class ConfigurationHandler
         Config.terrasteelDamageVsEntity = configuration.getFloat("terrasteelDamageVsEntity", Categories.SPECIFIC_TOOLS, Config.terrasteelDamageVsEntity, Config.damageMin, Config.damageMax, "");
         Config.terrasteelEnchantability = configuration.getInt("terrasteelEnchantability", Categories.SPECIFIC_TOOLS, Config.terrasteelEnchantability, Config.enchantabilityMin, Config.enchantabilityMax, "");
 
-        Config.spectreHarvestLevel = configuration.getInt("spectreHarvestLevel", Categories.SPECIFIC_TOOLS, Config.spectreHarvestLevel, Config.harvestLevelMin, Config.harvestLevelMax, "");
-        Config.spectreMaxUses = configuration.getInt("spectreMaxUses", Categories.SPECIFIC_TOOLS, Config.spectreMaxUses, Config.maxUsesMin, Config.maxUsesMax, "");
-        Config.spectreEfficiency = configuration.getFloat("spectreEfficiency", Categories.SPECIFIC_TOOLS, Config.spectreEfficiency, Config.efficiencyMin, Config.efficiencyMax, "");
-        Config.spectreDamageVsEntity = configuration.getFloat("spectreDamageVsEntity", Categories.SPECIFIC_TOOLS, Config.spectreDamageVsEntity, Config.damageMin, Config.damageMax, "");
-        Config.spectreEnchantability = configuration.getInt("spectreEnchantability", Categories.SPECIFIC_TOOLS, Config.spectreEnchantability, Config.enchantabilityMin, Config.enchantabilityMax, "");
-
         Config.darksteelHarvestLevel = configuration.getInt("darksteelHarvestLevel", Categories.SPECIFIC_TOOLS, Config.darksteelHarvestLevel, Config.harvestLevelMin, Config.harvestLevelMax, "");
         Config.darksteelMaxUses = configuration.getInt("darksteelMaxUses", Categories.SPECIFIC_TOOLS, Config.darksteelMaxUses, Config.maxUsesMin, Config.maxUsesMax, "");
         Config.darksteelEfficiency = configuration.getFloat("darksteelEfficiency", Categories.SPECIFIC_TOOLS, Config.darksteelEfficiency, Config.efficiencyMin, Config.efficiencyMax, "");
@@ -83,6 +78,26 @@ public class ConfigurationHandler
         Config.bronzeDamageVsEntity = configuration.getFloat("bronzeDamageVsEntity", Categories.SPECIFIC_TOOLS, Config.bronzeDamageVsEntity, Config.damageMin, Config.damageMax, "");
         Config.bronzeEnchantability = configuration.getInt("bronzeEnchantability", Categories.SPECIFIC_TOOLS, Config.bronzeEnchantability, Config.enchantabilityMin, Config.enchantabilityMax, "");
 
+        /*
+         * Mjolnir Hammer
+         */
+        Config.mjolnirHarvestLevel = configuration.getInt("mjolnirHarvestLevel", Categories.SPECIFIC_TOOLS, Config.mjolnirHarvestLevel, Config.harvestLevelMin, Config.harvestLevelMax, "");
+        Config.mjolnirEfficiency = configuration.getFloat("mjolnirEfficiency", Categories.SPECIFIC_TOOLS, Config.mjolnirEfficiency, Config.efficiencyMin, Config.efficiencyMax, "");
+        Config.mjolnirDamageVsEntity = configuration.getFloat("mjolnirDamageVsEntity", Categories.SPECIFIC_TOOLS, Config.mjolnirDamageVsEntity, Config.damageMin, Config.damageMax, "");
+
+        /*
+         * World Generation
+         */
+        Config.shouldGenerateMjolnirShrines = configuration.getBoolean("shouldGenerateMjolnirShrines", Categories.WORLD_GEN, Config.shouldGenerateMjolnirShrines, "Whether shrine structures should be generated in the world to find Mjolnir in.");
+        Config.mjolnirShrineRarity = configuration.getInt("mjolnirShrineRarity", Categories.WORLD_GEN, Config.mjolnirShrineRarity, Config.maxUsesMin, Config.maxUsesMax, "Chance of a shrine spawning (Higher is less chance).");
+        Config.mjolnirShrineMinY = configuration.getInt("mjolnirShrineMinY", Categories.WORLD_GEN, Config.mjolnirShrineMinY, 0, 245, "Minimum Y coordinate value for the shrine to spawn at.");
+        Config.mjolnirShrineDebug = configuration.getBoolean("mjolnirShrineDebug", Categories.WORLD_GEN, Config.mjolnirShrineDebug, "When true, a log will be printed in the console every time a shrine is generated with it's coordinates.");
+
+        Config.shouldAddMjolnirToLoot = configuration.getBoolean("shouldAddMjolnirToLoot", Categories.WORLD_GEN, Config.shouldAddMjolnirToLoot, "Whether Mjolnir should be added to desert pyramid loot.");
+        Config.mjolnirLootRarity = configuration.getInt("mjolnirLootRarity", Categories.WORLD_GEN, Config.mjolnirLootRarity, Config.maxUsesMin, Config.maxUsesMax, "Chance of finding Mjolnir (Lower is less chance).");
+        Config.shouldAddMineshaftLoot = configuration.getBoolean("shouldAddMineshaftLoot", Categories.WORLD_GEN, Config.shouldAddMineshaftLoot, "Whether wooden and stone hammers and excavators should be added to mineshaft loot.");
+        Config.mineshaftLootRarity = configuration.getInt("mineshaftLootRarity", Categories.WORLD_GEN, Config.mineshaftLootRarity, Config.maxUsesMin, Config.maxUsesMax, "Chance of finding loot (Lower is less chance).");
+
         if(configuration.hasChanged())
         {
             configuration.save();
@@ -90,7 +105,7 @@ public class ConfigurationHandler
     }
 
     @SubscribeEvent
-    public void onConfigurationChangedEvent(OnConfigChangedEvent event)
+    public void onConfigurationChangedEvent(ConfigChangedEvent.OnConfigChangedEvent event)
     {
         if(event.modID.equalsIgnoreCase(Reference.MOD_ID))
         {

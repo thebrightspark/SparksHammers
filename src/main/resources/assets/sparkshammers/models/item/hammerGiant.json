@@ -1,0 +1,18 @@
+{
+	"parent": "sparkshammers:item/itemToolDefault",
+	"textures": {
+		"layer0": "SparksHammers:items/hammerGiant"
+	},
+	"display": {
+		"thirdperson": {
+            "rotation": [0, 90, -35],
+			"translation": [0, 1.25, -7.5],
+			"scale": [3, 3, 3]
+		},
+		"firstperson": {
+            "rotation": [0, -135, 25],
+			"translation": [0, 8, 2],
+			"scale": [5, 5, 5]
+		}
+	}
+}

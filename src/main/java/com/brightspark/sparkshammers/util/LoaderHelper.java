@@ -1,10 +1,12 @@
 package com.brightspark.sparkshammers.util;
 
 import com.brightspark.sparkshammers.reference.Config;
-import cpw.mods.fml.common.Loader;
 import net.minecraft.item.Item.ToolMaterial;
+import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.oredict.OreDictionary;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 
 public class LoaderHelper
@@ -12,6 +14,9 @@ public class LoaderHelper
     private static HashMap<String, Boolean> modsChecked = new HashMap<String, Boolean>();
     private static HashMap<String, Boolean> oresChecked = new HashMap<String, Boolean>();
     private static HashMap<String, Boolean> materialsChecked = new HashMap<String, Boolean>();
+
+    //Ore Dictionary
+    private static ArrayList<String> oreDict = new ArrayList<String>(Arrays.asList(OreDictionary.getOreNames()));
 
     /**
      * Uses {@link Loader} to check if a mod is loaded, but first
@@ -21,16 +26,15 @@ public class LoaderHelper
      */
     public static boolean isModLoaded(String modName)
     {
+
         //Check config
         if(!Config.includeOtherModItems)
             return false;
 
         //Has mod already been checked before
         if(!modsChecked.containsKey(modName))
-        {
             //Check mod and add to the list for future mod checks
             modsChecked.put(modName, Loader.isModLoaded(modName));
-        }
         return modsChecked.get(modName);
     }
 
@@ -48,10 +52,8 @@ public class LoaderHelper
 
         //Has ore already been checked before
         if(!oresChecked.containsKey(oreName))
-        {
             //Check ore and add to the list for future ore checks
-            oresChecked.put(oreName, OreDictionary.doesOreNameExist(oreName));
-        }
+            oresChecked.put(oreName, oreDict.contains(oreName));
         return oresChecked.get(oreName);
     }
 

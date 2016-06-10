@@ -1,11 +1,8 @@
 package com.brightspark.sparkshammers.init;
 
-import com.brightspark.sparkshammers.reference.Config;
-import com.brightspark.sparkshammers.reference.Names;
-import com.brightspark.sparkshammers.util.LoaderHelper;
-import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 
@@ -26,6 +23,7 @@ public class SHRecipes
         GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(SHItems.excavatorWood), new Object[]{" x ", " s ", " s ", 'x', SHItems.excavatorHeadWood, 's', "plankWood"}));
 
         //'Easy' Unstable Hammer Recipe
+        /*
         if(Config.useEasyUnstableRecipe && LoaderHelper.isModLoaded(Names.Mods.EXTRA_UTILITIES))
         {
             GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(SHModItems.hammerHeadUnstable), new Object[]{"xxx", "xxx", "   ", 'x', Names.ModOreDicts.INGOT_UNSTABLE}));
@@ -33,5 +31,6 @@ public class SHRecipes
             GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(SHModItems.excavatorHeadUnstable), new Object[]{" x ", "xxx", "   ", 'x', Names.ModOreDicts.INGOT_UNSTABLE}));
             GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(SHModItems.excavatorUnstable), new Object[]{" x ", " y ", " y ", 'x', SHModItems.excavatorHeadUnstable, 'y', "stickWood"}));
         }
+        */
     }
 }

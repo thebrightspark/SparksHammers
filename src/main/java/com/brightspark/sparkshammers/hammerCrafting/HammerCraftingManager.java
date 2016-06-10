@@ -5,15 +5,16 @@ import com.brightspark.sparkshammers.init.SHModItems;
 import com.brightspark.sparkshammers.reference.Config;
 import com.brightspark.sparkshammers.reference.Names;
 import com.brightspark.sparkshammers.util.LoaderHelper;
+import com.google.common.collect.Lists;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class HammerCraftingManager
@@ -21,12 +22,12 @@ public class HammerCraftingManager
     /** The static instance of this class */
     private static final HammerCraftingManager instance = new HammerCraftingManager();
     /** A list of all the recipes added */
-    private List recipes = new ArrayList();
+    private List<IRecipe> recipes = Lists.newArrayList();
 
     /**
      * Returns the static instance of this class
      */
-    public static final HammerCraftingManager getInstance()
+    public static HammerCraftingManager getInstance()
     {
         /** The static instance of this class */
         return instance;
@@ -39,22 +40,32 @@ public class HammerCraftingManager
 
         //Vanilla
         addRecipe(new ItemStack(SHItems.hammerWood), new Object[]{"HHHHH", "HHHHH", "SSSS ", 'H', "plankWood", 'S', "stickWood"});
-        if(LoaderHelper.isModLoaded(Names.Mods.EXTRA_UTILITIES)) //Make stone head recipe made of compressed cobble when Extra Utilities is installed
-            addRecipe(new ItemStack(SHItems.hammerStone), new Object[]{"HHHHH", "HHHHH", "SSSS ", 'H', Names.ModOreDicts.COMPRESSED_COBBLE_1, 'S', "stickWood"});
-        else
-            addRecipe(new ItemStack(SHItems.hammerStone), new Object[]{"HHHHH", "HHHHH", "SSSS ", 'H', Blocks.cobblestone, 'S', "stickWood"});
         addRecipe(new ItemStack(SHItems.hammerIron), new Object[]{"HHHHH", "HHHHH", "SSSS ", 'H', Items.iron_ingot, 'S', "stickWood"});
         addRecipe(new ItemStack(SHItems.hammerGold), new Object[]{"HHHHH", "HHHHH", "SSSS ", 'H', Items.gold_ingot, 'S', "stickWood"});
         addRecipe(new ItemStack(SHItems.hammerDiamond), new Object[]{"HHHHH", "HHHHH", "SSSS ", 'H', Items.diamond, 'S', "stickWood"});
 
+        addRecipe(new ItemStack(SHItems.hammerMini), new Object[]{" HHH ", " HHH ", "SSSS ", 'H', Items.iron_ingot, 'S', "stickWood"});
+        addRecipe(new ItemStack(SHItems.hammerGiant), new Object[]{"HHHHH", "HHDHH", "SSSS ", 'H', Blocks.iron_block, 'S', "stickWood", 'D', new ItemStack(Items.dye, 1, 5)});
+        addRecipe(new ItemStack(SHItems.hammerNetherStar), new Object[]{"HHBHH", "HBNBH", "SSSS ", 'H', Items.diamond, 'B', Blocks.gold_block, 'N', Items.nether_star, 'S', "stickWood"});
+
         addRecipe(new ItemStack(SHItems.excavatorWood), new Object[]{" HHH ", "HHHHH", "SSSS ", 'H', "plankWood", 'S', "stickWood"});
-        if(LoaderHelper.isModLoaded(Names.Mods.EXTRA_UTILITIES)) //Make stone head recipe made of compressed cobble when Extra Utilities is installed
-            addRecipe(new ItemStack(SHItems.excavatorStone), new Object[]{" HHH ", "HHHHH", "SSSS ", 'H', Names.ModOreDicts.COMPRESSED_COBBLE_1, 'S', "stickWood"});
-        else
-            addRecipe(new ItemStack(SHItems.excavatorStone), new Object[]{" HHH ", "HHHHH", "SSSS ", 'H', Blocks.cobblestone, 'S', "stickWood"});
         addRecipe(new ItemStack(SHItems.excavatorIron), new Object[]{" HHH ", "HHHHH", "SSSS ", 'H', Items.iron_ingot, 'S', "stickWood"});
         addRecipe(new ItemStack(SHItems.excavatorGold), new Object[]{" HHH ", "HHHHH", "SSSS ", 'H', Items.gold_ingot, 'S', "stickWood"});
         addRecipe(new ItemStack(SHItems.excavatorDiamond), new Object[]{" HHH ", "HHHHH", "SSSS ", 'H', Items.diamond, 'S', "stickWood"});
+
+        //Make stone recipes made of compressed cobble when Extra Utilities is installed
+        if(LoaderHelper.isModLoaded(Names.Mods.EXTRA_UTILITIES))
+        {
+            Item compressedCobble = (Item) Item.itemRegistry.getObject(new ResourceLocation(Names.ModItemIds.COMPRESSED_COBBLE));
+            ItemStack cobble1x = new ItemStack(compressedCobble, 1, 0);
+            addRecipe(new ItemStack(SHItems.hammerStone), new Object[]{"HHHHH", "HHHHH", "SSSS ", 'H', cobble1x, 'S', "stickWood"});
+            addRecipe(new ItemStack(SHItems.excavatorStone), new Object[]{" HHH ", "HHHHH", "SSSS ", 'H', cobble1x, 'S', "stickWood"});
+        }
+        else
+        {
+            addRecipe(new ItemStack(SHItems.hammerStone), new Object[]{"HHHHH", "HHHHH", "SSSS ", 'H', Blocks.cobblestone, 'S', "stickWood"});
+            addRecipe(new ItemStack(SHItems.excavatorStone), new Object[]{" HHH ", "HHHHH", "SSSS ", 'H', Blocks.cobblestone, 'S', "stickWood"});
+        }
 
         //Modded
         if(Config.includeOtherModItems)
@@ -82,20 +93,13 @@ public class HammerCraftingManager
                 addRecipe(new ItemStack(SHModItems.excavatorDarksteel), new Object[]{" HHH ", "HHHHH", "SSSS ", 'H', Names.ModOreDicts.INGOT_DARKSTEEL, 'S', "stickWood"});
             }
             //Extra Utilities
+            /*
             if(!Config.useEasyUnstableRecipe && LoaderHelper.doesOreExist(Names.ModOreDicts.INGOT_UNSTABLE))
             {
                 addRecipe(new ItemStack(SHModItems.hammerUnstable), new Object[]{"HHHHH", "HHHHH", "SSSS ", 'H', Names.ModOreDicts.INGOT_UNSTABLE, 'S', "stickWood"});
                 addRecipe(new ItemStack(SHModItems.excavatorUnstable), new Object[]{" HHH ", "HHHHH", "SSSS ", 'H', Names.ModOreDicts.INGOT_UNSTABLE, 'S', "stickWood"});
             }
-            //Random Things
-            if(LoaderHelper.isModLoaded(Names.Mods.RANDOM_THINGS))
-            {
-                //Gets the spectre iron item for the recipes
-                Item iron = (Item) Item.itemRegistry.getObject(Names.ModItemIDs.RANDOMTHINGS_ITEM_INGREDIENT);
-                ItemStack itemSpectreIron = new ItemStack(iron, 0, 4);
-                addRecipe(new ItemStack(SHModItems.hammerSpectre), new Object[]{"HHHHH", "HHHHH", "SSSS ", 'H', itemSpectreIron, 'S', "stickWood"});
-                addRecipe(new ItemStack(SHModItems.excavatorSpectre), new Object[]{" HHH ", "HHHHH", "SSSS ", 'H', itemSpectreIron, 'S', "stickWood"});
-            }
+            */
             //Misc
             if(LoaderHelper.doesOreExist(Names.ModOreDicts.INGOT_BRONZE))
             {
@@ -192,7 +196,7 @@ public class HammerCraftingManager
         int j;
         for (j = 0; j < this.recipes.size(); ++j)
         {
-            IRecipe irecipe = (IRecipe)this.recipes.get(j);
+            IRecipe irecipe = this.recipes.get(j);
 
             if (irecipe.matches(invCrafting, world))
             {
@@ -201,6 +205,26 @@ public class HammerCraftingManager
         }
 
         return null;
+    }
+
+    public ItemStack[] func_180303_b(InventoryCrafting p_180303_1_, World worldIn)
+    {
+        for (IRecipe irecipe : this.recipes)
+        {
+            if (irecipe.matches(p_180303_1_, worldIn))
+            {
+                return irecipe.getRemainingItems(p_180303_1_);
+            }
+        }
+
+        ItemStack[] aitemstack = new ItemStack[p_180303_1_.getSizeInventory()];
+
+        for (int i = 0; i < aitemstack.length; ++i)
+        {
+            aitemstack[i] = p_180303_1_.getStackInSlot(i);
+        }
+
+        return aitemstack;
     }
 
     /**

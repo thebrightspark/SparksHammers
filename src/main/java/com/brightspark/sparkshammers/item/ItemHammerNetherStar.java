@@ -1,59 +1,44 @@
 package com.brightspark.sparkshammers.item;
 
-import com.brightspark.sparkshammers.reference.Config;
 import com.brightspark.sparkshammers.reference.Materials;
 import com.brightspark.sparkshammers.reference.Names;
-import com.brightspark.sparkshammers.reference.Reference;
-import net.minecraft.entity.Entity;
+import net.minecraft.block.Block;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ItemHammerNetherStar extends ItemHammer
 {
-    private static boolean isMining = false;
-    private static int ticks = 0;
-    private static int tickDelay = 2;
-    private static int maxMine = Config.netherStarHammerDistance;
-    private static int startX, startY, startZ;
-
     public ItemHammerNetherStar()
     {
-        super(Materials.HAMMER_NETHERSTAR);
-        setUnlocalizedName(Names.Items.HAMMER_NETHERSTAR);
-        setTextureName(Reference.ITEM_TEXTURE_DIR + Names.Items.HAMMER_IRON);
+        super(Names.Items.HAMMER_NETHERSTAR, Materials.HAMMER_NETHERSTAR);
     }
 
-    public boolean onBlockStartBreak (ItemStack stack, int x, int y, int z, EntityPlayer player)
+    @SideOnly(Side.CLIENT)
+    public boolean hasEffect(ItemStack stack)
     {
-        if(!isMining)
-        {
-            boolean toReturn = super.onBlockStartBreak(stack, x, y, z, player);
-            if(toReturn)
-            {
-                isMining = true;
-                startX = x;
-                startY = y;
-                startZ = z;
-            }
-        }
-        //Prevent harvesting if mining already in progress
         return true;
     }
 
-    public void onUpdate(ItemStack stack, World world, Entity entity, int par4, boolean par5)
+    public boolean hitEntity(ItemStack stack, EntityLivingBase entityHit, EntityLivingBase player)
     {
-        //Check if mining and ticks is even
-        if((ticks/2) == maxMine)
-        {
-            isMining = false;
-            ticks = 0;
-        }
-        if(isMining && ticks > 0 && (ticks%tickDelay == 0))
-        {
-            //TODO: Finish Nether Star Hammer
-            int i = ticks/tickDelay;
-            //Mine blocks!
-        }
+        //Damages hammer for 1 tunnel mining use
+        stack.damageItem(1, entityHit);
+        return true;
+    }
+
+    //Overriding this to stop item damage which is handled elsewhere
+    public boolean onBlockDestroyed(ItemStack stack, World world, Block block, BlockPos pos, EntityLivingBase player)
+    {
+        return true;
+    }
+
+    public boolean onBlockStartBreak(ItemStack stack, BlockPos pos, EntityPlayer player)
+    {
+        return super.onBlockStartBreak(stack, pos, player);
     }
 }

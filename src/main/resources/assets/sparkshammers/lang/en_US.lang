@@ -1,5 +1,3 @@
-//Use '§' for text formatting
-
 // <<<< Vanilla Style Tools >>>>
 
 //Hammer Heads
@@ -13,6 +11,11 @@ item.hammerGold.name=Gold Hammer
 item.hammerDiamond.name=Diamond Hammer
 
 item.hammerThor.name=Mjolnir
+item.hammerThor.tooltip=Owner:
+item.hammerMini.name=Mini Hammer
+item.hammerGiant.name=Giant Hammer
+item.hammerGiant.8brickdmg=8BrickDMG's BFH
+item.hammerNetherStar.name=Nether Star Hammer
 
 //Excavator Heads
 item.excavatorHeadWood.name=Wooden Excavator Head
@@ -45,8 +48,29 @@ item.excavatorUnstable.name=Unstable Excavator
 item.excavatorDarksteel.name=Dark Steel Excavator
 item.excavatorBronze.name=Bronze Excavator
 
+// <<<< Achievements >>>>
+
+achievement.woodHammer=It's Hammer Time!
+achievement.woodHammer.desc=Make a Wooden Hammer.
+achievement.craftingTable=Bigger And Better
+achievement.craftingTable.desc=Make a Hammer Crafting Table.
+achievement.diamondHammer=Dig Big Holes In All The Things!
+achievement.diamondHammer.desc=Make a Diamond Hammer.
+achievement.netherStarHammer=Focusing Energy
+achievement.netherStarHammer.desc=Make a Nether Star Hammer.
+achievement.mjolnir=Odin Will Not Be Pleased About This...
+achievement.mjolnir.desc=Find yourself the legendary Mjolnir.
+achievement.mjolnirNope=You Are Not Worthy!
+achievement.mjolnirNope.desc=Try to pickup a Mjolnir when it does not belong to you.
+achievement.mjolnirFallDeath=Crushed By Unworthyness
+achievement.mjolnirFallDeath.desc=Die from being hit by a falling Mjolnir.
+
 // <<<< Misc Names >>>>
 
 //Hammer Crafting Table
 tile.hammerCraft.name=Hammer Crafting Table
 tile.hammerCraft.nei=Hammer Crafting
+
+//Hammer Block
+tile.hammer.name=Mjolnir
+death.attack.fallingHammer=%1$s was crushed by Mjolnir

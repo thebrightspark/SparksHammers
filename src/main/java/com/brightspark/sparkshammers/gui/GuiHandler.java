@@ -2,17 +2,21 @@ package com.brightspark.sparkshammers.gui;
 
 import com.brightspark.sparkshammers.hammerCrafting.ContainerHammerCraft;
 import com.brightspark.sparkshammers.init.SHBlocks;
-import cpw.mods.fml.common.network.IGuiHandler;
+import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.util.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.common.network.IGuiHandler;
 
 public class GuiHandler implements IGuiHandler
 {
     @Override
     public Object getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z)
     {
+        Block block = world.getBlockState(new BlockPos(x, y, z)).getBlock();
+
         //Server side - returns instance of the container
-        if(world.getBlock(x, y, z) == SHBlocks.blockHammerCraft)
+        if(block == SHBlocks.blockHammerCraft)
             return new ContainerHammerCraft(player.inventory, world, x, y, z);
         return null;
     }
@@ -20,8 +24,10 @@ public class GuiHandler implements IGuiHandler
     @Override
     public Object getClientGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z)
     {
-        //Client side - returns intance of the gui
-        if(world.getBlock(x, y, z) == SHBlocks.blockHammerCraft)
+        Block block = world.getBlockState(new BlockPos(x, y, z)).getBlock();
+
+        //Client side - returns instance of the gui
+        if(block == SHBlocks.blockHammerCraft)
             return new GuiHammerCraft(player.inventory, world, x, y, z);
         return null;
     }
