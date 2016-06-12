@@ -9,9 +9,9 @@ import java.util.Set;
 
 public class ItemExcavator extends ItemAOE
 {
-    private static final Set<Block> ShovelBlocks = Sets.newHashSet(new Block[]{Blocks.clay, Blocks.dirt, Blocks.farmland, Blocks.grass, Blocks.gravel, Blocks.mycelium, Blocks.sand, Blocks.snow, Blocks.snow_layer, Blocks.soul_sand});
+    private static final Set<Block> ShovelBlocks = Sets.newHashSet(new Block[] {Blocks.CLAY, Blocks.DIRT, Blocks.FARMLAND, Blocks.GRASS, Blocks.GRAVEL, Blocks.MYCELIUM, Blocks.SAND, Blocks.SNOW, Blocks.SNOW_LAYER, Blocks.SOUL_SAND, Blocks.GRASS_PATH});
     //These are the material types which the hammer can mine in AOE:
-    private static final Set<Material> ShovelMats = Sets.newHashSet(new Material[]{Material.grass, Material.ground, Material.sand, Material.snow, Material.craftedSnow, Material.clay});
+    private static final Set<Material> ShovelMats = Sets.newHashSet(new Material[]{Material.GRASS, Material.GROUND, Material.SAND, Material.SNOW, Material.CRAFTED_SNOW, Material.CLAY});
     //private static final Material[] ShovelMats = {Material.grass, Material.ground, Material.sand, Material.snow, Material.craftedSnow, Material.clay};
 
     public ItemExcavator(String name, ToolMaterial mat)

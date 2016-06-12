@@ -33,22 +33,22 @@ public class SHModItems
         {
             hammerManasteel = new ItemHammer(Names.ModItems.HAMMER_MANASTEEL, ModMaterials.HAMMER_MANASTEEL);
             excavatorManasteel = new ItemExcavator(Names.ModItems.EXCAVATOR_MANASTEEL, ModMaterials.HAMMER_MANASTEEL);
-            GameRegistry.registerItem(hammerManasteel, Names.ModItems.HAMMER_MANASTEEL);
-            GameRegistry.registerItem(excavatorManasteel, Names.ModItems.EXCAVATOR_MANASTEEL);
+            GameRegistry.register(hammerManasteel);
+            GameRegistry.register(excavatorManasteel);
         }
         if(LoaderHelper.doesOreExist(Names.ModOreDicts.INGOT_TERRASTEEL))
         {
             hammerTerrasteel = new ItemHammer(Names.ModItems.HAMMER_TERRASTEEL, ModMaterials.HAMMER_TERRASTEEL);
             excavatorTerrasteel = new ItemExcavator(Names.ModItems.EXCAVATOR_TERRASTEEL, ModMaterials.HAMMER_TERRASTEEL);
-            GameRegistry.registerItem(hammerTerrasteel, Names.ModItems.HAMMER_TERRASTEEL);
-            GameRegistry.registerItem(excavatorTerrasteel, Names.ModItems.EXCAVATOR_TERRASTEEL);
+            GameRegistry.register(hammerTerrasteel);
+            GameRegistry.register(excavatorTerrasteel);
         }
         if(LoaderHelper.doesOreExist(Names.ModOreDicts.INGOT_ELEMENTIUM))
         {
             hammerElementium = new ItemHammer(Names.ModItems.HAMMER_ELEMENTIUM, ModMaterials.HAMMER_ELEMENTIUM);
             excavatorElementium = new ItemExcavator(Names.ModItems.EXCAVATOR_ELEMENTIUM, ModMaterials.HAMMER_ELEMENTIUM);
-            GameRegistry.registerItem(hammerElementium, Names.ModItems.HAMMER_ELEMENTIUM);
-            GameRegistry.registerItem(excavatorElementium, Names.ModItems.EXCAVATOR_ELEMENTIUM);
+            GameRegistry.register(hammerElementium);
+            GameRegistry.register(excavatorElementium);
         }
 
         //Extra Utilities
@@ -71,8 +71,8 @@ public class SHModItems
         {
             hammerDarksteel = new ItemHammer(Names.ModItems.HAMMER_DARKSTEEL, ModMaterials.HAMMER_DARKSTEEL);
             excavatorDarksteel = new ItemExcavator(Names.ModItems.EXCAVATOR_DARKSTEEL, ModMaterials.HAMMER_DARKSTEEL);
-            GameRegistry.registerItem(hammerDarksteel, Names.ModItems.HAMMER_DARKSTEEL);
-            GameRegistry.registerItem(excavatorDarksteel, Names.ModItems.EXCAVATOR_DARKSTEEL);
+            GameRegistry.register(hammerDarksteel);
+            GameRegistry.register(excavatorDarksteel);
         }
 
         //Misc
@@ -80,8 +80,8 @@ public class SHModItems
         {
             hammerBronze = new ItemHammer(Names.ModItems.HAMMER_BRONZE, ModMaterials.HAMMER_BRONZE);
             excavatorBronze = new ItemExcavator(Names.ModItems.EXCAVATOR_BRONZE, ModMaterials.HAMMER_BRONZE);
-            GameRegistry.registerItem(hammerBronze, Names.ModItems.HAMMER_BRONZE);
-            GameRegistry.registerItem(excavatorBronze, Names.ModItems.EXCAVATOR_BRONZE);
+            GameRegistry.register(hammerBronze);
+            GameRegistry.register(excavatorBronze);
         }
     }
 

@@ -5,6 +5,7 @@ import com.brightspark.sparkshammers.hammerCrafting.HammerCraftingManager;
 import com.brightspark.sparkshammers.handlers.AchieveEventHandler;
 import com.brightspark.sparkshammers.handlers.BlockEventHandler;
 import com.brightspark.sparkshammers.handlers.ConfigurationHandler;
+import com.brightspark.sparkshammers.handlers.LootEventHandler;
 import com.brightspark.sparkshammers.init.*;
 import com.brightspark.sparkshammers.reference.Config;
 import com.brightspark.sparkshammers.reference.ModMaterials;
@@ -14,8 +15,6 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
-import net.minecraft.util.WeightedRandomChestContent;
-import net.minecraftforge.common.ChestGenHooks;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
@@ -95,20 +94,9 @@ public class SparksHammers
         NetworkRegistry.INSTANCE.registerGuiHandler(this, new GuiHandler());
         MinecraftForge.EVENT_BUS.register(blockEH); //Block Event Handler for the Nether Star Hammer
         MinecraftForge.EVENT_BUS.register(new AchieveEventHandler()); //Event handlers for Achievements
+        MinecraftForge.EVENT_BUS.register(new LootEventHandler()); //Event handler to add loot to chests
 
         SHAchievements.init(); //Adds achievements
-
-        //Add Wooden and Stone hammers and excavators to Mineshaft chests
-        if(Config.shouldAddMineshaftLoot)
-        {
-            ChestGenHooks.addItem(ChestGenHooks.MINESHAFT_CORRIDOR, new WeightedRandomChestContent(new ItemStack(SHItems.hammerWood), 1, 1, Config.mineshaftLootRarity));
-            ChestGenHooks.addItem(ChestGenHooks.MINESHAFT_CORRIDOR, new WeightedRandomChestContent(new ItemStack(SHItems.hammerStone), 1, 1, Config.mineshaftLootRarity));
-            ChestGenHooks.addItem(ChestGenHooks.MINESHAFT_CORRIDOR, new WeightedRandomChestContent(new ItemStack(SHItems.excavatorWood), 1, 1, Config.mineshaftLootRarity));
-            ChestGenHooks.addItem(ChestGenHooks.MINESHAFT_CORRIDOR, new WeightedRandomChestContent(new ItemStack(SHItems.excavatorStone), 1, 1, Config.mineshaftLootRarity));
-        }
-        //Add Mjolnir to Desert Pyramid chests if enabled in config
-        if(Config.shouldAddMjolnirToLoot)
-            ChestGenHooks.addItem(ChestGenHooks.PYRAMID_DESERT_CHEST, new WeightedRandomChestContent(new ItemStack(SHItems.hammerThor), 1, 1, Config.mjolnirLootRarity));
 
         //Register world generation for Mjolnir Shrine
         if(Config.shouldGenerateMjolnirShrines)

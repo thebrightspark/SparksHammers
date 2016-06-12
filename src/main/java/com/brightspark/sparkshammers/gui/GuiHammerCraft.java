@@ -7,7 +7,6 @@ import com.brightspark.sparkshammers.util.Lang;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 import org.lwjgl.opengl.GL11;
 
@@ -37,7 +36,7 @@ public class GuiHammerCraft extends GuiContainer
     protected void drawGuiContainerForegroundLayer(int p_146979_1_, int p_146979_2_)
     {
         //Draw text
-        this.fontRendererObj.drawString(Lang.localize(SHBlocks.blockHammerCraft.getUnlocalizedName() + ".name", false), 12, 6, 4210752);
-        this.fontRendererObj.drawString(StatCollector.translateToLocal("container.inventory"), 12, this.ySize - 92, 4210752);
+        this.fontRendererObj.drawString(Lang.localize(SHBlocks.blockHammerCraft.getUnlocalizedName() + ".name"), 12, 6, 4210752);
+        this.fontRendererObj.drawString(Lang.localize("container.inventory"), 12, this.ySize - 92, 4210752);
     }
 }

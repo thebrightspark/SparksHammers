@@ -4,13 +4,14 @@ import com.brightspark.sparkshammers.SparksHammers;
 import com.brightspark.sparkshammers.util.CommonUtils;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemTool;
-import net.minecraft.util.BlockPos;
-import net.minecraft.util.MovingObjectPosition;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
 
 import java.util.Set;
@@ -28,32 +29,35 @@ public class ItemAOE extends ItemTool
 
     public ItemAOE(String name, float attackDamage, ToolMaterial material, Set<Block> effectiveBlocks, Set<Material> effectiveMats)
     {
-        super(attackDamage, material, effectiveBlocks);
+        super(attackDamage, -3f, material, effectiveBlocks);
         setUnlocalizedName(name);
         setCreativeTab(SparksHammers.SH_TAB);
         materials = effectiveMats;
+        setRegistryName(name);
     }
 
     /**
      * Check whether this Item can harvest the given Block
      */
-    public boolean canHarvestBlock(Block blockIn)
+    public boolean canHarvestBlock(IBlockState state)
     {
+        Block block = state.getBlock();
+
         if(this instanceof ItemHammer)
-            return blockIn == Blocks.obsidian ? this.toolMaterial.getHarvestLevel() == 3 : (blockIn != Blocks.diamond_block && blockIn != Blocks.diamond_ore ? (blockIn != Blocks.emerald_ore && blockIn != Blocks.emerald_block ? (blockIn != Blocks.gold_block && blockIn != Blocks.gold_ore ? (blockIn != Blocks.iron_block && blockIn != Blocks.iron_ore ? (blockIn != Blocks.lapis_block && blockIn != Blocks.lapis_ore ? (blockIn != Blocks.redstone_ore && blockIn != Blocks.lit_redstone_ore ? (blockIn.getMaterial() == Material.rock ? true : (blockIn.getMaterial() == Material.iron ? true : blockIn.getMaterial() == Material.anvil)) : this.toolMaterial.getHarvestLevel() >= 2) : this.toolMaterial.getHarvestLevel() >= 1) : this.toolMaterial.getHarvestLevel() >= 1) : this.toolMaterial.getHarvestLevel() >= 2) : this.toolMaterial.getHarvestLevel() >= 2) : this.toolMaterial.getHarvestLevel() >= 2);
+            return block == Blocks.OBSIDIAN ? this.toolMaterial.getHarvestLevel() == 3 : (block != Blocks.DIAMOND_BLOCK && block != Blocks.DIAMOND_ORE ? (block != Blocks.EMERALD_ORE && block != Blocks.EMERALD_BLOCK ? (block != Blocks.GOLD_BLOCK && block != Blocks.GOLD_ORE ? (block != Blocks.IRON_BLOCK && block != Blocks.IRON_ORE ? (block != Blocks.LAPIS_BLOCK && block != Blocks.LAPIS_ORE ? (block != Blocks.REDSTONE_ORE && block != Blocks.LIT_REDSTONE_ORE ? (state.getMaterial() == Material.ROCK ? true : (state.getMaterial() == Material.IRON ? true : state.getMaterial() == Material.ANVIL)) : this.toolMaterial.getHarvestLevel() >= 2) : this.toolMaterial.getHarvestLevel() >= 1) : this.toolMaterial.getHarvestLevel() >= 1) : this.toolMaterial.getHarvestLevel() >= 2) : this.toolMaterial.getHarvestLevel() >= 2) : this.toolMaterial.getHarvestLevel() >= 2);
         else
-            return blockIn == Blocks.snow_layer ? true : blockIn == Blocks.snow;
+            return block == Blocks.SNOW_LAYER ? true : block == Blocks.SNOW;
     }
 
     /**
      * Used in vanilla code for the pickaxe, but not the shovel
      */
-    public float getStrVsBlock(ItemStack stack, Block block)
+    public float getStrVsBlock(ItemStack stack, IBlockState state)
     {
         if(this instanceof ItemHammer)
-            return block.getMaterial() != Material.iron && block.getMaterial() != Material.anvil && block.getMaterial() != Material.rock ? super.getStrVsBlock(stack, block) : this.efficiencyOnProperMaterial;
+            return state.getMaterial() != Material.IRON && state.getMaterial() != Material.ANVIL && state.getMaterial() != Material.ROCK ? super.getStrVsBlock(stack, state) : this.efficiencyOnProperMaterial;
         else
-            return super.getStrVsBlock(stack, block);
+            return super.getStrVsBlock(stack, state);
     }
 
     /**
@@ -72,22 +76,22 @@ public class ItemAOE extends ItemTool
         return !infiniteUse && super.hitEntity(stack, entityHit, player);
     }
 
-    public MovingObjectPosition getMovingObjectPositionFromPlayer(World worldIn, EntityPlayer playerIn, boolean useLiquids)
+    public RayTraceResult rayTrace(World worldIn, EntityPlayer playerIn, boolean useLiquids)
     {
-        return super.getMovingObjectPositionFromPlayer(worldIn, playerIn, useLiquids);
+        return super.rayTrace(worldIn, playerIn, useLiquids);
     }
 
     //Override method from ItemTool to stop durability loss
-    public boolean onBlockDestroyed(ItemStack stack, World world, Block block, BlockPos pos, EntityLivingBase player)
+    public boolean onBlockDestroyed(ItemStack stack, World world, IBlockState state, BlockPos pos, EntityLivingBase player)
     {
         //Does not decrease durability if has infinite use
-        return !infiniteUse && super.onBlockDestroyed(stack, world, block, pos, player);
+        return !infiniteUse && super.onBlockDestroyed(stack, world, state, pos, player);
     }
 
     // <<<< From Tinkers Construct: HarvestTool >>>>
-    public boolean isEffective(Block block)
+    public boolean isEffective(IBlockState state)
     {
-        return materials.contains(block.getMaterial());
+        return materials.contains(state.getMaterial());
     }
 
     /**
@@ -112,12 +116,12 @@ public class ItemAOE extends ItemTool
     public boolean onBlockStartBreak (ItemStack stack, BlockPos pos, EntityPlayer player)
     {
         //Block being mined
-        MovingObjectPosition mop = super.getMovingObjectPositionFromPlayer(player.worldObj, player, false);
-        if(mop == null)
+        RayTraceResult ray = rayTrace(player.worldObj, player, false);
+        if(ray == null)
             return super.onBlockStartBreak(stack, pos, player);
 
         //Calculate area to break
-        BlockPos[] positions = CommonUtils.getBreakArea((ItemAOE) stack.getItem(), pos, mop.sideHit, player);
+        BlockPos[] positions = CommonUtils.getBreakArea((ItemAOE) stack.getItem(), pos, ray.sideHit, player);
         BlockPos start = positions[0];
         BlockPos end = positions[1];
 

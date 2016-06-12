@@ -12,7 +12,7 @@ public class SHRecipes
     public static void init()
     {
         //Hammer Crafting Table
-        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(SHBlocks.blockHammerCraft), new Object[]{"scs", "chc", "scs", 's', "stone", 'c', Blocks.crafting_table, 'h', new ItemStack(SHItems.hammerWood, 1, OreDictionary.WILDCARD_VALUE)}));
+        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(SHBlocks.blockHammerCraft), new Object[]{"scs", "chc", "scs", 's', "stone", 'c', Blocks.CRAFTING_TABLE, 'h', new ItemStack(SHItems.hammerWood, 1, OreDictionary.WILDCARD_VALUE)}));
 
         //Wooden Hammer
         GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(SHItems.hammerHeadWood), new Object[]{"xxx", "xxx", "   ", 'x', "logWood"}));

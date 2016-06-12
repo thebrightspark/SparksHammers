@@ -1,11 +1,11 @@
 package com.brightspark.sparkshammers.tileentity;
 
+import com.mojang.authlib.GameProfile;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.network.Packet;
-import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
-import net.minecraft.server.MinecraftServer;
+import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraftforge.fml.common.FMLCommonHandler;
 
 import java.util.UUID;
 
@@ -46,12 +46,19 @@ public class TileHammer extends TileEntity
         return ownerUUID != null;
     }
 
+    private static GameProfile getGameProfile(UUID uuid)
+    {
+        if(uuid == null) return null;
+        return FMLCommonHandler.instance().getMinecraftServerInstance().getPlayerProfileCache().getProfileByUUID(uuid);
+    }
+
     /**
      * Returns whether the given player is the owner of the hammer.
      */
     public boolean isOwner(EntityPlayer player)
     {
-        return ownerUUID != null && MinecraftServer.getServer().getPlayerProfileCache().getProfileByUUID(ownerUUID).getId().equals(player.getUniqueID());
+        GameProfile gp = getGameProfile(ownerUUID);
+        return gp != null && ownerUUID != null && gp.getId().equals(player.getUniqueID());
     }
 
     /**
@@ -60,7 +67,8 @@ public class TileHammer extends TileEntity
      */
     public String getOwnerName()
     {
-        return ownerUUID == null ? "Null" : MinecraftServer.getServer().getPlayerProfileCache().getProfileByUUID(ownerUUID).getName();
+        GameProfile gp = getGameProfile(ownerUUID);
+        return gp == null ? "Null" : gp.getName();
     }
 
     public UUID getOwnerUUID()
@@ -78,36 +86,37 @@ public class TileHammer extends TileEntity
             ownerUUID = null;
     }
 
-    public void writeToNBT(NBTTagCompound tag)
+    public NBTTagCompound writeToNBT(NBTTagCompound tag)
     {
-        super.writeToNBT(tag);
+        NBTTagCompound compound = super.writeToNBT(tag);
         //Sets the owner's UUID to the NBT
         if(ownerUUID != null)
         {
-            tag.setLong("uuidLeastSig", ownerUUID.getLeastSignificantBits());
-            tag.setLong("uuidMostSig", ownerUUID.getMostSignificantBits());
+            compound.setLong("uuidLeastSig", ownerUUID.getLeastSignificantBits());
+            compound.setLong("uuidMostSig", ownerUUID.getMostSignificantBits());
         }
         else if(hasNoOwner)
         {
-            tag.removeTag("uuidLeastSig");
-            tag.removeTag("uuidMostSig");
+            compound.removeTag("uuidLeastSig");
+            compound.removeTag("uuidMostSig");
         }
+        return compound;
     }
 
     /**
      * Use this to send data about the block. In this case, the owner's UUID in the NBTTagCompound.
      */
-    public Packet getDescriptionPacket()
+    public SPacketUpdateTileEntity getUpdatePacket()
     {
         NBTTagCompound nbt = new NBTTagCompound();
         writeToNBT(nbt);
-        return new S35PacketUpdateTileEntity(pos, 0, nbt);
+        return new SPacketUpdateTileEntity(pos, 0, nbt);
     }
 
     /**
      * Use this to update the hammer when a packet is received.
      */
-    public void onDataPacket(net.minecraft.network.NetworkManager net, net.minecraft.network.play.server.S35PacketUpdateTileEntity pkt)
+    public void onDataPacket(net.minecraft.network.NetworkManager net, net.minecraft.network.play.server.SPacketUpdateTileEntity pkt)
     {
         readFromNBT(pkt.getNbtCompound());
     }

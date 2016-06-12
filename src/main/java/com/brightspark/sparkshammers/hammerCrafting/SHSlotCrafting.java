@@ -1,13 +1,13 @@
 package com.brightspark.sparkshammers.hammerCrafting;
 
+import com.brightspark.sparkshammers.init.SHAchievements;
+import com.brightspark.sparkshammers.init.SHItems;
+import com.brightspark.sparkshammers.item.ItemHammer;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Blocks;
-import net.minecraft.init.Items;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.*;
-import net.minecraft.stats.AchievementList;
 
 public class SHSlotCrafting extends Slot
 {
@@ -69,59 +69,16 @@ public class SHSlotCrafting extends Slot
 
         this.amountCrafted = 0;
 
-        if (stack.getItem() == Item.getItemFromBlock(Blocks.crafting_table))
+        //Achievements for crafting
+        Item item = stack.getItem();
+        if(item instanceof ItemHammer)
         {
-            this.thePlayer.triggerAchievement(AchievementList.buildWorkBench);
-        }
-
-        if (stack.getItem() instanceof ItemPickaxe)
-        {
-            this.thePlayer.triggerAchievement(AchievementList.buildPickaxe);
-        }
-
-        if (stack.getItem() == Item.getItemFromBlock(Blocks.furnace))
-        {
-            this.thePlayer.triggerAchievement(AchievementList.buildFurnace);
-        }
-
-        if (stack.getItem() instanceof ItemHoe)
-        {
-            this.thePlayer.triggerAchievement(AchievementList.buildHoe);
-        }
-
-        if (stack.getItem() == Items.bread)
-        {
-            this.thePlayer.triggerAchievement(AchievementList.makeBread);
-        }
-
-        if (stack.getItem() == Items.cake)
-        {
-            this.thePlayer.triggerAchievement(AchievementList.bakeCake);
-        }
-
-        if (stack.getItem() instanceof ItemPickaxe && ((ItemPickaxe)stack.getItem()).getToolMaterial() != Item.ToolMaterial.WOOD)
-        {
-            this.thePlayer.triggerAchievement(AchievementList.buildBetterPickaxe);
-        }
-
-        if (stack.getItem() instanceof ItemSword)
-        {
-            this.thePlayer.triggerAchievement(AchievementList.buildSword);
-        }
-
-        if (stack.getItem() == Item.getItemFromBlock(Blocks.enchanting_table))
-        {
-            this.thePlayer.triggerAchievement(AchievementList.enchantments);
-        }
-
-        if (stack.getItem() == Item.getItemFromBlock(Blocks.bookshelf))
-        {
-            this.thePlayer.triggerAchievement(AchievementList.bookcase);
-        }
-
-        if (stack.getItem() == Items.golden_apple && stack.getMetadata() == 1)
-        {
-            this.thePlayer.triggerAchievement(AchievementList.overpowered);
+            if(item.equals(SHItems.hammerWood))
+                this.thePlayer.addStat(SHAchievements.woodHammer);
+            else if(item.equals(SHItems.hammerDiamond))
+                this.thePlayer.addStat(SHAchievements.diamondHammer);
+            else if(item.equals(SHItems.hammerNetherStar))
+                this.thePlayer.addStat(SHAchievements.netherStarHammer);
         }
     }
 
@@ -151,7 +108,7 @@ public class SHSlotCrafting extends Slot
                 }
                 else if (!this.thePlayer.inventory.addItemStackToInventory(itemstack1))
                 {
-                    this.thePlayer.dropPlayerItemWithRandomChoice(itemstack1, false);
+                    this.thePlayer.dropItem(itemstack1, false);
                 }
             }
         }

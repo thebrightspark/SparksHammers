@@ -34,27 +34,27 @@ public class SHItems
     public static void regItems()
     {
         //Heammer Heads
-        GameRegistry.registerItem(hammerHeadWood, Names.Items.HAMMER_HEAD_WOOD);
+        GameRegistry.register(hammerHeadWood);
         //Hammers
-        GameRegistry.registerItem(hammerWood, Names.Items.HAMMER_WOOD);
-        GameRegistry.registerItem(hammerStone, Names.Items.HAMMER_STONE);
-        GameRegistry.registerItem(hammerIron, Names.Items.HAMMER_IRON);
-        GameRegistry.registerItem(hammerGold, Names.Items.HAMMER_GOLD);
-        GameRegistry.registerItem(hammerDiamond, Names.Items.HAMMER_DIAMOND);
+        GameRegistry.register(hammerWood);
+        GameRegistry.register(hammerStone);
+        GameRegistry.register(hammerIron);
+        GameRegistry.register(hammerGold);
+        GameRegistry.register(hammerDiamond);
 
-        GameRegistry.registerItem(hammerThor, Names.Items.HAMMER_THOR);
-        GameRegistry.registerItem(hammerMini, Names.Items.HAMMER_MINI);
-        GameRegistry.registerItem(hammerGiant, Names.Items.HAMMER_GIANT);
-        GameRegistry.registerItem(hammerNetherStar, Names.Items.HAMMER_NETHERSTAR);
+        GameRegistry.register(hammerThor);
+        GameRegistry.register(hammerMini);
+        GameRegistry.register(hammerGiant);
+        GameRegistry.register(hammerNetherStar);
 
         //Excavator Heads
-        GameRegistry.registerItem(excavatorHeadWood, Names.Items.EXCAVATOR_HEAD_WOOD);
+        GameRegistry.register(excavatorHeadWood);
         //Excavators
-        GameRegistry.registerItem(excavatorWood, Names.Items.EXCAVATOR_WOOD);
-        GameRegistry.registerItem(excavatorStone, Names.Items.EXCAVATOR_STONE);
-        GameRegistry.registerItem(excavatorIron, Names.Items.EXCAVATOR_IRON);
-        GameRegistry.registerItem(excavatorGold, Names.Items.EXCAVATOR_GOLD);
-        GameRegistry.registerItem(excavatorDiamond, Names.Items.EXCAVATOR_DIAMOND);
+        GameRegistry.register(excavatorWood);
+        GameRegistry.register(excavatorStone);
+        GameRegistry.register(excavatorIron);
+        GameRegistry.register(excavatorGold);
+        GameRegistry.register(excavatorDiamond);
     }
 
     public static void regModels()

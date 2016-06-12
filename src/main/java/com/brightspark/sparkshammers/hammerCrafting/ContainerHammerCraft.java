@@ -5,7 +5,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.*;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.BlockPos;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 public class ContainerHammerCraft extends Container
@@ -114,11 +114,11 @@ public class ContainerHammerCraft extends Container
         {
             for (int i = 0; i < numSlots; ++i)
             {
-                ItemStack itemstack = this.craftMatrix.getStackInSlot(i); //Used to be .getStackInSlotOnClosing(i)
+                ItemStack itemstack = this.craftMatrix.removeStackFromSlot(i); //Used to be .getStackInSlotOnClosing(i)
 
                 if (itemstack != null)
                 {
-                    player.dropPlayerItemWithRandomChoice(itemstack, false);
+                    player.dropItem(itemstack, false);
                 }
             }
         }
@@ -172,5 +172,14 @@ public class ContainerHammerCraft extends Container
         }
 
         return stack;
+    }
+
+    /**
+     * Called to determine if the current slot is valid for the stack merging (double-click) code. The stack passed in
+     * is null for the initial slot that was double-clicked.
+     */
+    public boolean canMergeSlot(ItemStack stack, Slot slotIn)
+    {
+        return slotIn.inventory != this.craftResult && super.canMergeSlot(stack, slotIn);
     }
 }

@@ -6,28 +6,34 @@ import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.util.BlockPos;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+
+import javax.annotation.Nullable;
 
 public class BlockHammerCraft extends Block
 {
     public BlockHammerCraft()
     {
-        super(Material.rock);
+        super(Material.ROCK);
         setUnlocalizedName(Names.Blocks.HAMMER_CRAFT);
         setCreativeTab(SparksHammers.SH_TAB);
         setHardness(2f);
         setResistance(10f);
+        setRegistryName(Names.Blocks.HAMMER_CRAFT);
     }
 
     //Return 3 for standard block models
-    public int getRenderType()
+    public EnumBlockRenderType getRenderType(IBlockState state)
     {
-        return 3;
+        return EnumBlockRenderType.MODEL;
     }
 
-    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumFacing side, float hitX, float hitY, float hitZ)
+    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, @Nullable ItemStack heldItem, EnumFacing side, float hitX, float hitY, float hitZ)
     {
         if(world.isRemote)
             return true;
