@@ -85,7 +85,7 @@ public class EntityFallingHammer extends EntityFallingBlock
                     this.motionY *= -0.5D;
                     this.setDead();
 
-                    if (this.worldObj.canBlockBePlaced(block, blockpos1, true, EnumFacing.UP, null, null) && !BlockFalling.canFallThrough(this.worldObj.getBlockState(blockpos1.down())))
+                    if (this.worldObj.canBlockBePlaced(block, blockpos1, true, EnumFacing.UP, null, null) && !BlockFalling.canFallThrough(this.worldObj.getBlockState(blockpos1.down())) && this.worldObj.setBlockState(blockpos1, this.fallTile))
                     {
                         if (block instanceof BlockHammer)
                             ((BlockHammer)block).onEndFalling(this.worldObj, blockpos1);
@@ -119,17 +119,12 @@ public class EntityFallingHammer extends EntityFallingBlock
                         }
                     }
                     else if (this.shouldDropItem && this.worldObj.getGameRules().getBoolean("doEntityDrops"))
-                    {
                         this.entityDropItem(new ItemStack(block, 1, block.damageDropped(this.fallTile)), 0.0F);
-                    }
                 }
                 else if (this.fallTime > 100 && !this.worldObj.isRemote && (blockpos1.getY() < 1 || blockpos1.getY() > 256) || this.fallTime > 600)
                 {
                     if (this.shouldDropItem && this.worldObj.getGameRules().getBoolean("doEntityDrops"))
-                    {
                         this.entityDropItem(new ItemStack(block, 1, block.damageDropped(this.fallTile)), 0.0F);
-                    }
-
                     this.setDead();
                 }
             }

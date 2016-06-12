@@ -67,6 +67,7 @@ public class BlockEventHandler
     public void onBlockBreak(BreakEvent event)
     {
         ItemStack heldStack = event.getPlayer().getHeldItem(EnumHand.MAIN_HAND);
+        if(heldStack == null) return;
         Item heldItem = heldStack.getItem();
         if(heldItem instanceof ItemHammerNetherStar)
         {

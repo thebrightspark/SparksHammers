@@ -8,6 +8,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.play.client.CPacketPlayerDigging;
 import net.minecraft.network.play.server.SPacketBlockChange;
@@ -179,7 +180,7 @@ public class CommonUtils
         // check if the block can be broken, since extra block breaks shouldn't instantly break stuff like obsidian
         // or precious ores you can't harvest while mining stone
         // only effective materials
-        if(!((ItemHammer)stack.getItem()).isEffective(block)) return false;
+        if(!((ItemAOE)stack.getItem()).isEffective(block)) return false;
 
         return true;
     }

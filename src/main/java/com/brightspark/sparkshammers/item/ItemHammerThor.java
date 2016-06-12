@@ -18,7 +18,9 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.RayTraceResult;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
@@ -89,7 +91,7 @@ public class ItemHammerThor extends ItemHammer
         return true;
     }
 
-    public boolean onItemUse(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ)
+    public EnumActionResult onItemUse(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ)
     {
         if(player.isSneaking() && getOwner(stack) != null)
         {
@@ -101,22 +103,14 @@ public class ItemHammerThor extends ItemHammer
             //Most of the following general stuff is taken from ItemReed.java
             //noinspection all
             if(blockHit == Blocks.SNOW_LAYER && blockHitState.getValue(BlockSnow.LAYERS).intValue() < 1)
-            {
                 side = EnumFacing.UP;
-            }
             else if(! blockHit.isReplaceable(world, pos))
-            {
                 pos = pos.offset(side);
-            }
 
-            if(! player.canPlayerEdit(pos, side, stack))
-            {
-                return false;
-            }
+            if(!player.canPlayerEdit(pos, side, stack))
+                return EnumActionResult.PASS;
             else if(stack.stackSize == 0)
-            {
-                return false;
-            }
+                return EnumActionResult.PASS;
             else if(world.canBlockBePlaced(SHBlocks.blockHammer, pos, false, side, null, stack))
             {
                 //Place hammer block
@@ -128,12 +122,35 @@ public class ItemHammerThor extends ItemHammer
                     te.setOwner(player);
 
                     //Remove hammer item from inventory if not in Creative
-                    if(! player.capabilities.isCreativeMode) -- stack.stackSize;
-                    return true;
+                    if(!player.capabilities.isCreativeMode)
+                        --stack.stackSize;
+                    return EnumActionResult.FAIL;
                 }
             }
         }
-        return false;
+        return EnumActionResult.PASS;
+    }
+
+    /**
+     * Ray traces 64 blocks (The one in Item goes only 5 blocks)
+     */
+    protected RayTraceResult rayTraceLong(World worldIn, EntityPlayer playerIn, boolean useLiquids)
+    {
+        float f = playerIn.rotationPitch;
+        float f1 = playerIn.rotationYaw;
+        double d0 = playerIn.posX;
+        double d1 = playerIn.posY + (double)playerIn.getEyeHeight();
+        double d2 = playerIn.posZ;
+        Vec3d vec3 = new Vec3d(d0, d1, d2);
+        float f2 = MathHelper.cos(-f1 * 0.017453292F - (float)Math.PI);
+        float f3 = MathHelper.sin(-f1 * 0.017453292F - (float)Math.PI);
+        float f4 = -MathHelper.cos(-f * 0.017453292F);
+        float f5 = MathHelper.sin(-f * 0.017453292F);
+        float f6 = f3 * f4;
+        float f7 = f2 * f4;
+        double d3 = 64d; //Range limit
+        Vec3d vec31 = vec3.addVector((double)f6 * d3, (double)f5 * d3, (double)f7 * d3);
+        return worldIn.rayTraceBlocks(vec3, vec31, useLiquids, !useLiquids, false);
     }
 
     public ActionResult<ItemStack> onItemRightClick(ItemStack stack, World world, EntityPlayer player, EnumHand hand)
@@ -143,7 +160,7 @@ public class ItemHammerThor extends ItemHammer
         else if(!world.isRemote && !player.isSneaking() && getCooldown(stack) <= 0)
         {
             //Spawn lightning at cursor
-            RayTraceResult ray = rayTrace(player.worldObj, player, false);
+            RayTraceResult ray = rayTraceLong(player.worldObj, player, false);
             if(ray != null)
             {
                 BlockPos pos = ray.getBlockPos();

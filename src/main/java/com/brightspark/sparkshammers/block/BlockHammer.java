@@ -7,6 +7,7 @@ import com.brightspark.sparkshammers.init.SHItems;
 import com.brightspark.sparkshammers.item.ItemHammerThor;
 import com.brightspark.sparkshammers.reference.Names;
 import com.brightspark.sparkshammers.tileentity.TileHammer;
+import com.brightspark.sparkshammers.util.LogHelper;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
@@ -93,16 +94,19 @@ public class BlockHammer extends BlockContainer
 
         //Get the owner from the tile entity
         TileHammer hammer = (TileHammer) world.getTileEntity(pos);
-        if(heldItem == null)
+        if(hand == EnumHand.MAIN_HAND && heldItem == null)
         {
             //If no item in hand
             if(!hammer.hasOwner())
+            {
                 player.addStat(SHAchievements.mjolnir);
+                LogHelper.info("Hammer has no owner");
+            }
             if(!hammer.hasOwner() || hammer.isOwner(player))
             {
                 //Player is worthy
-                player.setHeldItem(EnumHand.MAIN_HAND, new ItemStack(SHItems.hammerThor));
-                ItemHammerThor.setOwner(heldItem, player);
+                player.setHeldItem(hand, new ItemStack(SHItems.hammerThor));
+                ItemHammerThor.setOwner(player.getHeldItem(hand), player);
                 world.setBlockToAir(new BlockPos(pos));
             }
             else
@@ -116,6 +120,7 @@ public class BlockHammer extends BlockContainer
                     player.addChatMessage(new TextComponentString(TextFormatting.GOLD + hammer.getOwnerName() + TextFormatting.RESET + " is my true Master!"));
                 }
             }
+            return true;
         }
         return false;
     }
