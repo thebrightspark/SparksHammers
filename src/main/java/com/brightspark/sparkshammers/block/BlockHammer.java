@@ -100,7 +100,7 @@ public class BlockHammer extends BlockContainer
             if(!hammer.hasOwner())
             {
                 player.addStat(SHAchievements.mjolnir);
-                LogHelper.info("Hammer has no owner");
+                //LogHelper.info("Hammer has no owner");
             }
             if(!hammer.hasOwner() || hammer.isOwner(player))
             {

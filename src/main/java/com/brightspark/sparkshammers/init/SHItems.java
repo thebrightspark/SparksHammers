@@ -31,6 +31,9 @@ public class SHItems
     public static final ItemExcavator excavatorGold = new ItemExcavator(Names.Items.EXCAVATOR_GOLD, Materials.HAMMER_GOLD);
     public static final ItemExcavator excavatorDiamond = new ItemExcavator(Names.Items.EXCAVATOR_DIAMOND, Materials.HAMMER_DIAMOND);
 
+    //Debug
+    public static final ItemDebug debug = new ItemDebug();
+
     public static void regItems()
     {
         //Heammer Heads
@@ -55,6 +58,9 @@ public class SHItems
         GameRegistry.register(excavatorIron);
         GameRegistry.register(excavatorGold);
         GameRegistry.register(excavatorDiamond);
+
+        //Debug
+        GameRegistry.register(debug);
     }
 
     public static void regModels()
@@ -79,5 +85,8 @@ public class SHItems
         ClientUtils.regModel(excavatorIron);
         ClientUtils.regModel(excavatorGold);
         ClientUtils.regModel(excavatorDiamond);
+
+        //Debug
+        ClientUtils.regModel(debug);
     }
 }

@@ -121,7 +121,7 @@ public class WorldGenMjolnirShrine implements IWorldGenerator
     /**
      * Generates the Shrine structure at the given position.
      */
-    private void generateShrine(World world, BlockPos pos)
+    public static void generateShrine(World world, BlockPos pos)
     {
         //Space around main center part
         for(int x = 0; x <= 10; x++)
@@ -290,6 +290,13 @@ public class WorldGenMjolnirShrine implements IWorldGenerator
         //Center Walls
         for(int y2 = 1; y2 <= 3; y2++)
         {
+            for(int x = 2; x <= 8; x++)
+            {
+                world.setBlockToAir(pos.add(x, y2, 2));
+                world.setBlockToAir(pos.add(x, y2, 8));
+                world.setBlockToAir(pos.add(2, y2, x));
+                world.setBlockToAir(pos.add(8, y2, x));
+            }
             world.setBlockState(pos.add(3, y2, 3), Blocks.QUARTZ_BLOCK.getDefaultState().withProperty(BlockQuartz.VARIANT, BlockQuartz.EnumType.LINES_Y));
             world.setBlockState(pos.add(4, y2, 3), Blocks.STAINED_GLASS_PANE.getDefaultState().withProperty(BlockStainedGlassPane.COLOR, EnumDyeColor.WHITE).withProperty(BlockPane.EAST, true).withProperty(BlockPane.WEST, true));
             world.setBlockState(pos.add(5, y2, 3), Blocks.STAINED_GLASS_PANE.getDefaultState().withProperty(BlockStainedGlassPane.COLOR, EnumDyeColor.YELLOW).withProperty(BlockPane.EAST, true).withProperty(BlockPane.WEST, true));

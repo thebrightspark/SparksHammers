@@ -27,6 +27,9 @@ public class Names
         public static final String EXCAVATOR_IRON = "excavatorIron";
         public static final String EXCAVATOR_GOLD = "excavatorGold";
         public static final String EXCAVATOR_DIAMOND = "excavatorDiamond";
+
+        //<<<< Debug >>>>
+        public static final String DEBUG = "debug";
     }
 
     public static class ModItems

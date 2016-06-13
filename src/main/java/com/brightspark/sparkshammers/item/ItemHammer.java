@@ -20,6 +20,8 @@ public class ItemHammer extends ItemAOE
     private static final Set<Material> PickaxeMats = Sets.newHashSet(new Material[]{Material.ANVIL, Material.GLASS, Material.ICE, Material.IRON, Material.PACKED_ICE, Material.PISTON, Material.ROCK});
     //private static final Material[] PickaxeMats = {Material.anvil, Material.glass, Material.ice, Material.iron, Material.packedIce, Material.piston, Material.rock};
 
+    //TODO: Try add knockback to hammers
+
     public ItemHammer(String name, ToolMaterial mat)
     {
         this(name, mat, false);

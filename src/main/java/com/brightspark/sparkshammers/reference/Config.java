@@ -95,7 +95,7 @@ public class Config
      */
     public static boolean shouldGenerateMjolnirShrines = true;
     public static int mjolnirShrineRarity = 50;
-    public static int mjolnirShrineMinY = 150;
+    public static int mjolnirShrineMinY = 125;
     public static boolean mjolnirShrineDebug = false;
 
     /**
