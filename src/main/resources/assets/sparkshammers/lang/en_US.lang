@@ -70,6 +70,7 @@ achievement.mjolnirFallDeath.desc=Die from being hit by a falling Mjolnir.
 //Hammer Crafting Table
 tile.hammerCraft.name=Hammer Crafting Table
 tile.hammerCraft.nei=Hammer Crafting
+jei.recipe.hammerCraftingTable=Hammer Crafting Table
 
 //Hammer Block
 tile.hammer.name=Mjolnir

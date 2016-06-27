@@ -7,7 +7,6 @@ import com.brightspark.sparkshammers.init.SHItems;
 import com.brightspark.sparkshammers.item.ItemHammerThor;
 import com.brightspark.sparkshammers.reference.Names;
 import com.brightspark.sparkshammers.tileentity.TileHammer;
-import com.brightspark.sparkshammers.util.LogHelper;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;

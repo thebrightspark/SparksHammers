@@ -13,7 +13,6 @@ import com.brightspark.sparkshammers.reference.Reference;
 import com.brightspark.sparkshammers.worldgen.WorldGenMjolnirShrine;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
