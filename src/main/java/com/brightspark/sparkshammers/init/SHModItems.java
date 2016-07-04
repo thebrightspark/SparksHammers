@@ -22,6 +22,9 @@ public class SHModItems
     //EnderIO
     public static ItemHammer hammerDarksteel;
     public static ItemExcavator excavatorDarksteel;
+    //MobHunter
+    public static ItemHammer hammerMachalite, hammerDragonite, hammerGossamite;
+    public static ItemExcavator excavatorMachalite, excavatorDragonite, excavatorGossamite;
     //Misc
     public static ItemHammer hammerBronze;
     public static ItemExcavator excavatorBronze;
@@ -75,6 +78,29 @@ public class SHModItems
             GameRegistry.register(excavatorDarksteel);
         }
 
+        //MobHunter
+        if(LoaderHelper.doesOreExist(Names.ModOreDicts.INGOT_MACHALITE))
+        {
+            hammerMachalite = new ItemHammer(Names.ModItems.HAMMER_MACHALITE, ModMaterials.HAMMER_MACHALITE);
+            excavatorMachalite = new ItemExcavator(Names.ModItems.EXCAVATOR_MACHALITE, ModMaterials.HAMMER_MACHALITE);
+            GameRegistry.register(hammerMachalite);
+            GameRegistry.register(excavatorMachalite);
+        }
+        if(LoaderHelper.doesOreExist(Names.ModOreDicts.INGOT_DRAGONITE))
+        {
+            hammerDragonite = new ItemHammer(Names.ModItems.HAMMER_DRAGONITE, ModMaterials.HAMMER_DRAGONITE);
+            excavatorDragonite = new ItemExcavator(Names.ModItems.EXCAVATOR_DRAGONITE, ModMaterials.HAMMER_DRAGONITE);
+            GameRegistry.register(hammerDragonite);
+            GameRegistry.register(excavatorDragonite);
+        }
+        if(LoaderHelper.doesOreExist(Names.ModOreDicts.INGOT_GOSSAMITE))
+        {
+            hammerGossamite = new ItemHammer(Names.ModItems.HAMMER_GOSSAMITE, ModMaterials.HAMMER_GOSSAMITE);
+            excavatorGossamite = new ItemExcavator(Names.ModItems.EXCAVATOR_GOSSAMITE, ModMaterials.HAMMER_GOSSAMITE);
+            GameRegistry.register(hammerGossamite);
+            GameRegistry.register(excavatorGossamite);
+        }
+
         //Misc
         if(LoaderHelper.doesOreExist(Names.ModOreDicts.INGOT_BRONZE))
         {
@@ -90,40 +116,60 @@ public class SHModItems
         //Botania
         if(LoaderHelper.doesOreExist(Names.ModOreDicts.INGOT_MANASTEEL))
         {
-            ClientUtils.regModel(SHModItems.hammerManasteel);
-            ClientUtils.regModel(SHModItems.excavatorManasteel);
+            ClientUtils.regModel(hammerManasteel);
+            ClientUtils.regModel(excavatorManasteel);
         }
         if(LoaderHelper.doesOreExist(Names.ModOreDicts.INGOT_TERRASTEEL))
         {
-            ClientUtils.regModel(SHModItems.hammerTerrasteel);
-            ClientUtils.regModel(SHModItems.excavatorTerrasteel);
+            ClientUtils.regModel(hammerTerrasteel);
+            ClientUtils.regModel(excavatorTerrasteel);
         }
         if(LoaderHelper.doesOreExist(Names.ModOreDicts.INGOT_ELEMENTIUM))
         {
-            ClientUtils.regModel(SHModItems.hammerElementium);
-            ClientUtils.regModel(SHModItems.excavatorElementium);
+            ClientUtils.regModel(hammerElementium);
+            ClientUtils.regModel(excavatorElementium);
         }
+
         //Extra Utilities
         /*
         if(LoaderHelper.doesOreExist(Names.ModOreDicts.INGOT_UNSTABLE))
         {
-            Common.regModel(SHModItems.hammerHeadUnstable);
-            Common.regModel(SHModItems.hammerUnstable);
-            Common.regModel(SHModItems.excavatorHeadUnstable);
-            Common.regModel(SHModItems.excavatorUnstable);
+            Common.regModel(hammerHeadUnstable);
+            Common.regModel(hammerUnstable);
+            Common.regModel(excavatorHeadUnstable);
+            Common.regModel(excavatorUnstable);
         }
         */
+
         //EnderIO
         if(LoaderHelper.doesOreExist(Names.ModOreDicts.INGOT_DARKSTEEL))
         {
-            ClientUtils.regModel(SHModItems.hammerDarksteel);
-            ClientUtils.regModel(SHModItems.excavatorDarksteel);
+            ClientUtils.regModel(hammerDarksteel);
+            ClientUtils.regModel(excavatorDarksteel);
         }
+
+        //MobHunter
+        if(LoaderHelper.doesOreExist(Names.ModOreDicts.INGOT_MACHALITE))
+        {
+            ClientUtils.regModel(hammerMachalite);
+            ClientUtils.regModel(excavatorMachalite);
+        }
+        if(LoaderHelper.doesOreExist(Names.ModOreDicts.INGOT_DRAGONITE))
+        {
+            ClientUtils.regModel(hammerDragonite);
+            ClientUtils.regModel(excavatorDragonite);
+        }
+        if(LoaderHelper.doesOreExist(Names.ModOreDicts.INGOT_GOSSAMITE))
+        {
+            ClientUtils.regModel(hammerGossamite);
+            ClientUtils.regModel(excavatorGossamite);
+        }
+
         //Misc
         if(LoaderHelper.doesOreExist(Names.ModOreDicts.INGOT_BRONZE))
         {
-            ClientUtils.regModel(SHModItems.hammerBronze);
-            ClientUtils.regModel(SHModItems.excavatorBronze);
+            ClientUtils.regModel(hammerBronze);
+            ClientUtils.regModel(excavatorBronze);
         }
     }
 }

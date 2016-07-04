@@ -27,7 +27,6 @@ public class SHBlocks
 
     public static void regModels()
     {
-        //TODO: Register models for ItemBlocks?
         //Blocks
         ClientUtils.regModel(SHBlocks.blockHammer);
         ClientUtils.regModel(SHBlocks.blockHammerCraft);

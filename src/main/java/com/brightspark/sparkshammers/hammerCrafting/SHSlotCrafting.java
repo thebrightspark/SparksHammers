@@ -1,8 +1,5 @@
 package com.brightspark.sparkshammers.hammerCrafting;
 
-import com.brightspark.sparkshammers.init.SHAchievements;
-import com.brightspark.sparkshammers.init.SHItems;
-import com.brightspark.sparkshammers.item.ItemHammer;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.InventoryCrafting;
@@ -68,18 +65,6 @@ public class SHSlotCrafting extends Slot
         }
 
         this.amountCrafted = 0;
-
-        //Achievements for crafting
-        Item item = stack.getItem();
-        if(item instanceof ItemHammer)
-        {
-            if(item.equals(SHItems.hammerWood))
-                this.thePlayer.addStat(SHAchievements.woodHammer);
-            else if(item.equals(SHItems.hammerDiamond))
-                this.thePlayer.addStat(SHAchievements.diamondHammer);
-            else if(item.equals(SHItems.hammerNetherStar))
-                this.thePlayer.addStat(SHAchievements.netherStarHammer);
-        }
     }
 
     public void onPickupFromSlot(EntityPlayer playerIn, ItemStack stack)

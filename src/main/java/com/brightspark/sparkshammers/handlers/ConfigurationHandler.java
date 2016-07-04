@@ -78,6 +78,24 @@ public class ConfigurationHandler
         Config.bronzeDamageVsEntity = configuration.getFloat("bronzeDamageVsEntity", Categories.SPECIFIC_TOOLS, Config.bronzeDamageVsEntity, Config.damageMin, Config.damageMax, "");
         Config.bronzeEnchantability = configuration.getInt("bronzeEnchantability", Categories.SPECIFIC_TOOLS, Config.bronzeEnchantability, Config.enchantabilityMin, Config.enchantabilityMax, "");
 
+        Config.machaliteHarvestLevel = configuration.getInt("machaliteHarvestLevel", Categories.SPECIFIC_TOOLS, Config.machaliteHarvestLevel, Config.harvestLevelMin, Config.harvestLevelMax, "");
+        Config.machaliteMaxUses = configuration.getInt("machaliteMaxUses", Categories.SPECIFIC_TOOLS, Config.machaliteMaxUses, Config.maxUsesMin, Config.maxUsesMax, "");
+        Config.machaliteEfficiency = configuration.getFloat("machaliteEfficiency", Categories.SPECIFIC_TOOLS, Config.machaliteEfficiency, Config.efficiencyMin, Config.efficiencyMax, "");
+        Config.machaliteDamageVsEntity = configuration.getFloat("machaliteDamageVsEntity", Categories.SPECIFIC_TOOLS, Config.machaliteDamageVsEntity, Config.damageMin, Config.damageMax, "");
+        Config.machaliteEnchantability = configuration.getInt("machaliteEnchantability", Categories.SPECIFIC_TOOLS, Config.machaliteEnchantability, Config.enchantabilityMin, Config.enchantabilityMax, "");
+
+        Config.dragoniteHarvestLevel = configuration.getInt("dragoniteHarvestLevel", Categories.SPECIFIC_TOOLS, Config.dragoniteHarvestLevel, Config.harvestLevelMin, Config.harvestLevelMax, "");
+        Config.dragoniteMaxUses = configuration.getInt("dragoniteMaxUses", Categories.SPECIFIC_TOOLS, Config.dragoniteMaxUses, Config.maxUsesMin, Config.maxUsesMax, "");
+        Config.dragoniteEfficiency = configuration.getFloat("dragoniteEfficiency", Categories.SPECIFIC_TOOLS, Config.dragoniteEfficiency, Config.efficiencyMin, Config.efficiencyMax, "");
+        Config.dragoniteDamageVsEntity = configuration.getFloat("dragoniteDamageVsEntity", Categories.SPECIFIC_TOOLS, Config.dragoniteDamageVsEntity, Config.damageMin, Config.damageMax, "");
+        Config.dragoniteEnchantability = configuration.getInt("dragoniteEnchantability", Categories.SPECIFIC_TOOLS, Config.dragoniteEnchantability, Config.enchantabilityMin, Config.enchantabilityMax, "");
+
+        Config.gossamiteHarvestLevel = configuration.getInt("gossamiteHarvestLevel", Categories.SPECIFIC_TOOLS, Config.gossamiteHarvestLevel, Config.harvestLevelMin, Config.harvestLevelMax, "");
+        Config.gossamiteMaxUses = configuration.getInt("gossamiteMaxUses", Categories.SPECIFIC_TOOLS, Config.gossamiteMaxUses, Config.maxUsesMin, Config.maxUsesMax, "");
+        Config.gossamiteEfficiency = configuration.getFloat("gossamiteEfficiency", Categories.SPECIFIC_TOOLS, Config.gossamiteEfficiency, Config.efficiencyMin, Config.efficiencyMax, "");
+        Config.gossamiteDamageVsEntity = configuration.getFloat("gossamiteDamageVsEntity", Categories.SPECIFIC_TOOLS, Config.gossamiteDamageVsEntity, Config.damageMin, Config.damageMax, "");
+        Config.gossamiteEnchantability = configuration.getInt("gossamiteEnchantability", Categories.SPECIFIC_TOOLS, Config.gossamiteEnchantability, Config.enchantabilityMin, Config.enchantabilityMax, "");
+
         /*
          * Mjolnir Hammer
          */

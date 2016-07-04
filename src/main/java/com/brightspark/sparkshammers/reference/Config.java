@@ -83,6 +83,24 @@ public class Config
     public static float bronzeDamageVsEntity = 2f;
     public static int bronzeEnchantability = 13;
 
+    public static int machaliteHarvestLevel = 2;
+    public static int machaliteMaxUses = (int) (500*toolDurabilityModifier);
+    public static float machaliteEfficiency = 7f*toolSpeedModifier;
+    public static float machaliteDamageVsEntity = 3f;
+    public static int machaliteEnchantability = 15;
+
+    public static int dragoniteHarvestLevel = 3;
+    public static int dragoniteMaxUses = (int) (750*toolDurabilityModifier);
+    public static float dragoniteEfficiency = 7f*toolSpeedModifier;
+    public static float dragoniteDamageVsEntity = 4f;
+    public static int dragoniteEnchantability = 15;
+
+    public static int gossamiteHarvestLevel = 3;
+    public static int gossamiteMaxUses = (int) (1000*toolDurabilityModifier);
+    public static float gossamiteEfficiency = 8f*toolSpeedModifier;
+    public static float gossamiteDamageVsEntity = 5f;
+    public static int gossamiteEnchantability = 15;
+
     /**
      * Mjolnir
      */
