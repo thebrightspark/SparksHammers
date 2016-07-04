@@ -100,6 +100,22 @@ public class HammerCraftingManager
                 addRecipe(new ItemStack(SHModItems.excavatorUnstable), new Object[]{" HHH ", "HHHHH", "SSSS ", 'H', Names.ModOreDicts.INGOT_UNSTABLE, 'S', "stickWood"});
             }
             */
+            //MobHunter
+            if(LoaderHelper.doesOreExist(Names.ModOreDicts.INGOT_MACHALITE))
+            {
+                addRecipe(new ItemStack(SHModItems.hammerMachalite), new Object[]{"HHHHH", "HHHHH", "SSSS ", 'H', Names.ModOreDicts.INGOT_MACHALITE, 'S', "stickWood"});
+                addRecipe(new ItemStack(SHModItems.excavatorMachalite), new Object[]{" HHH ", "HHHHH", "SSSS ", 'H', Names.ModOreDicts.INGOT_MACHALITE, 'S', "stickWood"});
+            }
+            if(LoaderHelper.doesOreExist(Names.ModOreDicts.INGOT_DRAGONITE))
+            {
+                addRecipe(new ItemStack(SHModItems.hammerDragonite), new Object[]{"HHHHH", "HHHHH", "SSSS ", 'H', Names.ModOreDicts.INGOT_DRAGONITE, 'S', "stickWood"});
+                addRecipe(new ItemStack(SHModItems.excavatorDragonite), new Object[]{" HHH ", "HHHHH", "SSSS ", 'H', Names.ModOreDicts.INGOT_DRAGONITE, 'S', "stickWood"});
+            }
+            if(LoaderHelper.doesOreExist(Names.ModOreDicts.INGOT_GOSSAMITE))
+            {
+                addRecipe(new ItemStack(SHModItems.hammerGossamite), new Object[]{"HHHHH", "HHHHH", "SSSS ", 'H', Names.ModOreDicts.INGOT_GOSSAMITE, 'S', "stickWood"});
+                addRecipe(new ItemStack(SHModItems.excavatorGossamite), new Object[]{" HHH ", "HHHHH", "SSSS ", 'H', Names.ModOreDicts.INGOT_GOSSAMITE, 'S', "stickWood"});
+            }
             //Misc
             if(LoaderHelper.doesOreExist(Names.ModOreDicts.INGOT_BRONZE))
             {
