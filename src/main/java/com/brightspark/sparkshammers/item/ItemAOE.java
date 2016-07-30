@@ -50,7 +50,7 @@ public class ItemAOE extends ItemTool
 
     public ItemAOE(String name, ToolMaterial material, boolean isExcavator, boolean isInfiniteUse)
     {
-        super(isExcavator ? 1.5f : 2f, isExcavator ? -3.5f : -3.8f, material, isExcavator ? ShovelBlocks : PickaxeBlocks);
+        super(isExcavator ? 1.5f : 2f, isExcavator ? -3f : -3.2f, material, isExcavator ? ShovelBlocks : PickaxeBlocks);
         this.isExcavator = isExcavator;
         infiniteUse = isInfiniteUse;
         setUnlocalizedName(name);
