@@ -1,6 +1,6 @@
 package com.brightspark.sparkshammers.gui;
 
-import com.brightspark.sparkshammers.hammerCrafting.ContainerHammerCraft;
+import com.brightspark.sparkshammers.container.ContainerHammerCraft;
 import com.brightspark.sparkshammers.init.SHBlocks;
 import com.brightspark.sparkshammers.reference.Reference;
 import com.brightspark.sparkshammers.util.Lang;
@@ -12,7 +12,7 @@ import org.lwjgl.opengl.GL11;
 
 public class GuiHammerCraft extends GuiContainer
 {
-    public static final ResourceLocation guiImage = new ResourceLocation(Reference.MOD_ID, Reference.GUI_TEXTURE_DIR + "guiHammerCraft.png");
+    private static final ResourceLocation guiImage = new ResourceLocation(Reference.MOD_ID, Reference.GUI_TEXTURE_DIR + "guiHammerCraft.png");
 
     public GuiHammerCraft(InventoryPlayer invPlayer, World world, int x, int y, int z)
     {

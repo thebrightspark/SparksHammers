@@ -1,5 +1,7 @@
-package com.brightspark.sparkshammers.hammerCrafting;
+package com.brightspark.sparkshammers.container;
 
+import com.brightspark.sparkshammers.hammerCrafting.HammerCraftingManager;
+import com.brightspark.sparkshammers.hammerCrafting.SHSlotCrafting;
 import com.brightspark.sparkshammers.init.SHBlocks;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;

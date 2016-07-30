@@ -132,16 +132,9 @@ public class HammerCraftingManager
 
     public ItemStack findMatchingRecipe(InventoryCrafting invCrafting, World world)
     {
-        int j;
-        for (j = 0; j < this.recipes.size(); ++j)
-        {
-            IRecipe irecipe = this.recipes.get(j);
-
-            if (irecipe.matches(invCrafting, world))
-            {
+        for(IRecipe irecipe : recipes)
+            if(irecipe.matches(invCrafting, world))
                 return irecipe.getCraftingResult(invCrafting);
-            }
-        }
 
         return null;
     }
@@ -167,7 +160,7 @@ public class HammerCraftingManager
     }
 
     /**
-     * returns the List<> of all recipes
+     * Returns the List<> of all recipes
      */
     public List getRecipeList()
     {

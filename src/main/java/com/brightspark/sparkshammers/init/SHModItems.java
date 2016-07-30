@@ -2,6 +2,7 @@ package com.brightspark.sparkshammers.init;
 
 import com.brightspark.sparkshammers.item.ItemExcavator;
 import com.brightspark.sparkshammers.item.ItemHammer;
+import com.brightspark.sparkshammers.item.ItemHammerDarkSteel;
 import com.brightspark.sparkshammers.reference.ModMaterials;
 import com.brightspark.sparkshammers.reference.Names;
 import com.brightspark.sparkshammers.util.ClientUtils;
@@ -72,7 +73,7 @@ public class SHModItems
         //EnderIO
         if(LoaderHelper.doesOreExist(Names.ModOreDicts.INGOT_DARKSTEEL))
         {
-            hammerDarksteel = new ItemHammer(Names.ModItems.HAMMER_DARKSTEEL, ModMaterials.HAMMER_DARKSTEEL);
+            hammerDarksteel = new ItemHammerDarkSteel();
             excavatorDarksteel = new ItemExcavator(Names.ModItems.EXCAVATOR_DARKSTEEL, ModMaterials.HAMMER_DARKSTEEL);
             GameRegistry.register(hammerDarksteel);
             GameRegistry.register(excavatorDarksteel);
