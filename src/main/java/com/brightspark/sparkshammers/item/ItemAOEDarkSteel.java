@@ -22,11 +22,16 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.List;
 
-public class ItemHammerDarkSteel extends ItemHammer implements IDarkSteelItem, IEnergyContainerItem, EnderCoreMethods.IOverlayRenderAware, IAdvancedTooltipProvider
+public class ItemAOEDarkSteel extends ItemAOE implements IDarkSteelItem, IEnergyContainerItem, EnderCoreMethods.IOverlayRenderAware, IAdvancedTooltipProvider
 {
-    public ItemHammerDarkSteel()
+    public ItemAOEDarkSteel()
     {
-        super(Names.ModItems.HAMMER_DARKSTEEL, ModMaterials.HAMMER_DARKSTEEL);
+        this(false);
+    }
+
+    public ItemAOEDarkSteel(boolean isExcavator)
+    {
+        super(isExcavator ? Names.ModItems.EXCAVATOR_DARKSTEEL : Names.ModItems.HAMMER_DARKSTEEL, ModMaterials.HAMMER_DARKSTEEL, isExcavator);
     }
 
     @Override
@@ -49,27 +54,16 @@ public class ItemHammerDarkSteel extends ItemHammer implements IDarkSteelItem, I
         return super.onBlockDestroyed(stack, world, state, pos, player);
     }
 
-    @Override
-    public int getIngotsRequiredForFullRepair()
+    public void setDamage(ItemStack stack, int newDamage)
     {
-        return 10;
-    }
-
-    @Override
-    public String getItemName()
-    {
-        return Names.ModItems.HAMMER_DARKSTEEL;
-    }
-
-    public void setDamage(ItemStack stack, int newDamage) {
         int oldDamage = this.getDamage(stack);
-        if(newDamage <= oldDamage) {
+        if(newDamage <= oldDamage)
             super.setDamage(stack, newDamage);
-        } else {
+        else
+        {
             int damage = newDamage - oldDamage;
-            if(!this.absorbDamageWithEnergy(stack, damage * 750)) {
+            if(!this.absorbDamageWithEnergy(stack, damage * 750))
                 super.setDamage(stack, newDamage);
-            }
         }
     }
 
@@ -110,12 +104,6 @@ public class ItemHammerDarkSteel extends ItemHammer implements IDarkSteelItem, I
     }
 
     @Override
-    public void renderItemOverlayIntoGUI(ItemStack stack, int xPosition, int yPosition)
-    {
-        PowerBarOverlayRenderHelper.instance_upgradeable.render(stack, xPosition, yPosition);
-    }
-
-    @Override
     public void addCommonEntries(ItemStack itemStack, EntityPlayer entityPlayer, List<String> list, boolean b)
     {
         DarkSteelRecipeManager.instance.addCommonTooltipEntries(itemStack, entityPlayer, list, b);
@@ -134,5 +122,23 @@ public class ItemHammerDarkSteel extends ItemHammer implements IDarkSteelItem, I
         if(energy != null)
             list.add(energy);
         DarkSteelRecipeManager.instance.addAdvancedTooltipEntries(itemStack, entityPlayer, list, b);
+    }
+
+    @Override
+    public void renderItemOverlayIntoGUI(ItemStack stack, int xPos, int yPos)
+    {
+        PowerBarOverlayRenderHelper.instance_upgradeable.render(stack, xPos, yPos);
+    }
+
+    @Override
+    public int getIngotsRequiredForFullRepair()
+    {
+        return 10;
+    }
+
+    @Override
+    public String getItemName()
+    {
+        return getRegistryName().getResourcePath();
     }
 }

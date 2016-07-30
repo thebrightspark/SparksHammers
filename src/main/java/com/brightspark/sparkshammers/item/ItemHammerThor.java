@@ -29,13 +29,13 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import java.util.List;
 import java.util.UUID;
 
-public class ItemHammerThor extends ItemHammer
+public class ItemHammerThor extends ItemAOE
 {
     private static int cooldownMax = 200; //10 secs
 
     public ItemHammerThor()
     {
-        super(Names.Items.HAMMER_THOR, Materials.HAMMER_MJOLNIR, true);
+        super(Names.Items.HAMMER_THOR, Materials.HAMMER_MJOLNIR, false, true);
     }
 
     /**

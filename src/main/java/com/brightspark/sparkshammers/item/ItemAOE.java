@@ -1,7 +1,10 @@
 package com.brightspark.sparkshammers.item;
 
 import com.brightspark.sparkshammers.SparksHammers;
+import com.brightspark.sparkshammers.init.SHItems;
 import com.brightspark.sparkshammers.util.CommonUtils;
+import com.brightspark.sparkshammers.util.Lang;
+import com.google.common.collect.Sets;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -12,27 +15,47 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemTool;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 
 import java.util.Set;
 
 public class ItemAOE extends ItemTool
 {
-    protected int mineWidth = 1;
-    protected int mineHeight = 1;
-    protected int mineDepth = 0; //Depth (behind block)
-    private boolean infiniteUse = false;
+    private static final Set<Block> PickaxeBlocks = Sets.newHashSet(new Block[] {Blocks.ACTIVATOR_RAIL, Blocks.COAL_ORE, Blocks.COBBLESTONE, Blocks.DETECTOR_RAIL, Blocks.DIAMOND_BLOCK, Blocks.DIAMOND_ORE, Blocks.DOUBLE_STONE_SLAB, Blocks.GOLDEN_RAIL, Blocks.GOLD_BLOCK, Blocks.GOLD_ORE, Blocks.ICE, Blocks.IRON_BLOCK, Blocks.IRON_ORE, Blocks.LAPIS_BLOCK, Blocks.LAPIS_ORE, Blocks.LIT_REDSTONE_ORE, Blocks.MOSSY_COBBLESTONE, Blocks.NETHERRACK, Blocks.PACKED_ICE, Blocks.RAIL, Blocks.REDSTONE_ORE, Blocks.SANDSTONE, Blocks.RED_SANDSTONE, Blocks.STONE, Blocks.STONE_SLAB, Blocks.STONE_BUTTON, Blocks.STONE_PRESSURE_PLATE});
+    private static final Set<Material> PickaxeMats = Sets.newHashSet(new Material[]{Material.ANVIL, Material.GLASS, Material.ICE, Material.IRON, Material.PACKED_ICE, Material.PISTON, Material.ROCK});
+    private static final Set<Block> ShovelBlocks = Sets.newHashSet(new Block[] {Blocks.CLAY, Blocks.DIRT, Blocks.FARMLAND, Blocks.GRASS, Blocks.GRAVEL, Blocks.MYCELIUM, Blocks.SAND, Blocks.SNOW, Blocks.SNOW_LAYER, Blocks.SOUL_SAND, Blocks.GRASS_PATH});
+    private static final Set<Material> ShovelMats = Sets.newHashSet(new Material[]{Material.GRASS, Material.GROUND, Material.SAND, Material.SNOW, Material.CRAFTED_SNOW, Material.CLAY});
+
+    //True if a hammer, false if an excavator
+    private boolean isExcavator;
+    private int mineWidth = 1;
+    private int mineHeight = 1;
+    private int mineDepth = 0; //Depth (behind block)
+    private boolean infiniteUse;
     private boolean shiftRotating = false;
 
     //The material types which the tool can mine in AOE:
     private Set<Material> materials;
 
-    public ItemAOE(String name, float attackDamage, ToolMaterial material, Set<Block> effectiveBlocks, Set<Material> effectiveMats)
+    public ItemAOE(String name, ToolMaterial material)
     {
-        super(attackDamage, -3f, material, effectiveBlocks);
+        this(name, material, false);
+    }
+
+    public ItemAOE(String name, ToolMaterial material, boolean isExcavator)
+    {
+        this(name, material, isExcavator, false);
+    }
+
+    public ItemAOE(String name, ToolMaterial material, boolean isExcavator, boolean isInfiniteUse)
+    {
+        super(isExcavator ? 1.5f : 2f, isExcavator ? -3.5f : -3.8f, material, isExcavator ? ShovelBlocks : PickaxeBlocks);
+        this.isExcavator = isExcavator;
+        infiniteUse = isInfiniteUse;
         setUnlocalizedName(name);
         setCreativeTab(SparksHammers.SH_TAB);
-        materials = effectiveMats;
+        materials = isExcavator ? ShovelMats : PickaxeMats;
         setRegistryName(name);
     }
 
@@ -43,7 +66,7 @@ public class ItemAOE extends ItemTool
     {
         Block block = state.getBlock();
 
-        if(this instanceof ItemHammer)
+        if(!isExcavator)
             return block == Blocks.OBSIDIAN ? this.toolMaterial.getHarvestLevel() == 3 : (block != Blocks.DIAMOND_BLOCK && block != Blocks.DIAMOND_ORE ? (block != Blocks.EMERALD_ORE && block != Blocks.EMERALD_BLOCK ? (block != Blocks.GOLD_BLOCK && block != Blocks.GOLD_ORE ? (block != Blocks.IRON_BLOCK && block != Blocks.IRON_ORE ? (block != Blocks.LAPIS_BLOCK && block != Blocks.LAPIS_ORE ? (block != Blocks.REDSTONE_ORE && block != Blocks.LIT_REDSTONE_ORE ? (state.getMaterial() == Material.ROCK ? true : (state.getMaterial() == Material.IRON ? true : state.getMaterial() == Material.ANVIL)) : this.toolMaterial.getHarvestLevel() >= 2) : this.toolMaterial.getHarvestLevel() >= 1) : this.toolMaterial.getHarvestLevel() >= 1) : this.toolMaterial.getHarvestLevel() >= 2) : this.toolMaterial.getHarvestLevel() >= 2) : this.toolMaterial.getHarvestLevel() >= 2);
         else
             return block == Blocks.SNOW_LAYER ? true : block == Blocks.SNOW;
@@ -54,7 +77,7 @@ public class ItemAOE extends ItemTool
      */
     public float getStrVsBlock(ItemStack stack, IBlockState state)
     {
-        if(this instanceof ItemHammer)
+        if(!isExcavator)
             return state.getMaterial() != Material.IRON && state.getMaterial() != Material.ANVIL && state.getMaterial() != Material.ROCK ? super.getStrVsBlock(stack, state) : this.efficiencyOnProperMaterial;
         else
             return super.getStrVsBlock(stack, state);
@@ -167,5 +190,15 @@ public class ItemAOE extends ItemTool
     public boolean getShiftRotating()
     {
         return this.shiftRotating;
+    }
+
+    /**
+     * Called when item is crafted/smelted. Used only by maps so far.
+     */
+    public void onCreated(ItemStack stack, World worldIn, EntityPlayer playerIn)
+    {
+        //Sets the name to Jason's custom name if he crafts the giant hammer.
+        if(stack.getItem().equals(SHItems.hammerGiant) && playerIn.getDisplayNameString().equals("8BrickDMG"))
+            stack.setStackDisplayName(TextFormatting.LIGHT_PURPLE + Lang.localize(getUnlocalizedName(stack) + ".8brickdmg"));
     }
 }

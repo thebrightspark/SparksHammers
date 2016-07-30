@@ -11,7 +11,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class ItemHammerNetherStar extends ItemHammer
+public class ItemHammerNetherStar extends ItemAOE
 {
     public ItemHammerNetherStar()
     {
