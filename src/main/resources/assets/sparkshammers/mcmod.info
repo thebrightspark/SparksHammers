@@ -16,7 +16,7 @@
           "screenshots": [],
           "parent": "",
           "dependants": [],
-          "dependencies": [],
+          "dependencies": ["EnderIO", "MobHunter", "JEI"],
           "requiredMods": [],
           "useDependencyInformation": true
         }

@@ -46,7 +46,7 @@ repositories {
 }
 
 dependencies {
-    deobfCompile "mezz.jei:jei_1.9.4:3.6.3.212"
+    deobfProvided "mezz.jei:jei_1.9.4:3.6.3.212"
 
     // you may put jars on which you depend on in ./libs
     // or you may define them like so..
