@@ -20,12 +20,12 @@ plugins {
     id "net.minecraftforge.gradle.forge" version "2.0.2"
 }
 */
-version = "1.9.4-1.3.1"
+version = "1.10.2-1.0"
 group= "com.brightspark.sparkshammers" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = "SparksHammers"
 
 minecraft {
-    version = "1.9.4-12.17.0.1959"
+    version = "1.10.2-12.18.1.2011"
     runDir = "run"
     
     // the mappings can be changed at any time, and must be in the following format.
