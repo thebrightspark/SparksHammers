@@ -27,6 +27,9 @@ public class Names
         public static final String EXCAVATOR_IRON = "excavatorIron";
         public static final String EXCAVATOR_GOLD = "excavatorGold";
         public static final String EXCAVATOR_DIAMOND = "excavatorDiamond";
+
+        //<<<< Debug >>>>
+        public static final String DEBUG = "debug";
     }
 
     public static class ModItems
@@ -46,6 +49,13 @@ public class Names
         //EnderIO
         public static final String HAMMER_DARKSTEEL = "hammerDarksteel";
         public static final String EXCAVATOR_DARKSTEEL = "excavatorDarksteel";
+        //MobHunter
+        public static final String HAMMER_MACHALITE = "hammerMachalite";
+        public static final String HAMMER_DRAGONITE = "hammerDragonite";
+        public static final String HAMMER_GOSSAMITE = "hammerGossamite";
+        public static final String EXCAVATOR_MACHALITE = "excavatorMachalite";
+        public static final String EXCAVATOR_DRAGONITE = "excavatorDragonite";
+        public static final String EXCAVATOR_GOSSAMITE = "excavatorGossamite";
         //Misc
         public static final String HAMMER_BRONZE = "hammerBronze";
         public static final String EXCAVATOR_BRONZE = "excavatorBronze";
@@ -73,6 +83,9 @@ public class Names
         public static final String INGOT_UNSTABLE = "ingotUnstable";
         public static final String INGOT_DARKSTEEL = "ingotDarkSteel";
         public static final String INGOT_BRONZE = "ingotBronze";
+        public static final String INGOT_MACHALITE = "ingotMachalite";
+        public static final String INGOT_DRAGONITE = "ingotDragonite";
+        public static final String INGOT_GOSSAMITE = "ingotGossamite";
     }
 
     public static class ModItemIds

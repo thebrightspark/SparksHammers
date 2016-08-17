@@ -10,5 +10,6 @@ public class ItemResource extends Item
         setUnlocalizedName(name);
         setMaxStackSize(64);
         setCreativeTab(SparksHammers.SH_TAB);
+        setRegistryName(name);
     }
 }

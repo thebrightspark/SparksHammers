@@ -1,10 +1,10 @@
 package com.brightspark.sparkshammers.gui;
 
-import com.brightspark.sparkshammers.hammerCrafting.ContainerHammerCraft;
+import com.brightspark.sparkshammers.container.ContainerHammerCraft;
 import com.brightspark.sparkshammers.init.SHBlocks;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.util.BlockPos;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.network.IGuiHandler;
 

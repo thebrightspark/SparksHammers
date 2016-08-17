@@ -15,29 +15,41 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityFallingBlock;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
+import net.minecraft.init.MobEffects;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.BlockPos;
-import net.minecraft.util.ChatComponentText;
-import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
+import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.TextComponentString;
+import net.minecraft.util.text.TextFormatting;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
+import javax.annotation.Nullable;
 import java.util.Random;
 
 public class BlockHammer extends BlockContainer
 {
+    private static final AxisAlignedBB HAMMER_BOUNDS = new AxisAlignedBB(0.25F, 0.0F, 0.0625F, 0.75F, 1.0F, 0.9375F);
+
     public BlockHammer()
     {
-        super(Material.anvil);
+        super(Material.ANVIL);
         setCreativeTab(SparksHammers.SH_TAB);
         setUnlocalizedName(Names.Blocks.HAMMER);
         setBlockUnbreakable();
         setLightOpacity(0);
-        setBlockBounds(0.25F, 0.0F, 0.0625F, 0.75F, 1.0F, 0.9375F);
+        setRegistryName(Names.Blocks.HAMMER);
+    }
+
+    public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos)
+    {
+        return HAMMER_BOUNDS;
     }
 
     @Override
@@ -50,23 +62,23 @@ public class BlockHammer extends BlockContainer
     {
         //Play anvil sound
         if(!world.isRemote)
-            world.playAuxSFX(1022, pos, 0);
+            world.playEvent(1031, pos, 0);
     }
 
-    public boolean isOpaqueCube()
+    public boolean isOpaqueCube(IBlockState state)
     {
         return false;
     }
 
-    public boolean isFullCube()
+    public boolean isFullCube(IBlockState state)
     {
         return false;
     }
 
     //Return 3 for standard block models
-    public int getRenderType()
+    public EnumBlockRenderType getRenderType(IBlockState state)
     {
-        return 3;
+        return EnumBlockRenderType.MODEL;
     }
 
     //Will return no item when destroyed, since the block is unbreakable anyway, there's no need.
@@ -75,35 +87,39 @@ public class BlockHammer extends BlockContainer
         return null;
     }
 
-    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumFacing side, float hitX, float hitY, float hitZ)
+    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, @Nullable ItemStack heldItem, EnumFacing side, float hitX, float hitY, float hitZ)
     {
         //When the player right clicks on this block
 
         //Get the owner from the tile entity
         TileHammer hammer = (TileHammer) world.getTileEntity(pos);
-        if(player.getHeldItem() == null)
+        if(hand == EnumHand.MAIN_HAND && heldItem == null)
         {
             //If no item in hand
             if(!hammer.hasOwner())
-                player.triggerAchievement(SHAchievements.mjolnir);
+            {
+                player.addStat(SHAchievements.mjolnir);
+                //LogHelper.info("Hammer has no owner");
+            }
             if(!hammer.hasOwner() || hammer.isOwner(player))
             {
                 //Player is worthy
-                player.setCurrentItemOrArmor(0, new ItemStack(SHItems.hammerThor));
-                ItemHammerThor.setOwner(player.getHeldItem(), player);
+                player.setHeldItem(hand, new ItemStack(SHItems.hammerThor));
+                ItemHammerThor.setOwner(player.getHeldItem(hand), player);
                 world.setBlockToAir(new BlockPos(pos));
             }
             else
             {
                 //Player is not worthy
-                player.triggerAchievement(SHAchievements.mjolnirNope);
-                player.addPotionEffect(new PotionEffect(Potion.weakness.getId(), 200, 1));
+                player.addStat(SHAchievements.mjolnirNope);
+                player.addPotionEffect(new PotionEffect(MobEffects.WEAKNESS, 200, 1));
                 if(world.isRemote)
                 {
-                    player.addChatMessage(new ChatComponentText("You are not worthy to wield me!"));
-                    player.addChatMessage(new ChatComponentText(EnumChatFormatting.GOLD + hammer.getOwnerName() + EnumChatFormatting.RESET + " is my true Master!"));
+                    player.addChatMessage(new TextComponentString("You are not worthy to wield me!"));
+                    player.addChatMessage(new TextComponentString(TextFormatting.GOLD + hammer.getOwnerName() + TextFormatting.RESET + " is my true Master!"));
                 }
             }
+            return true;
         }
         return false;
     }
@@ -116,10 +132,28 @@ public class BlockHammer extends BlockContainer
         worldIn.scheduleUpdate(pos, this, this.tickRate(worldIn));
     }
 
-    public void onNeighborBlockChange(World worldIn, BlockPos pos, IBlockState state, Block neighborBlock)
+    /**
+     * Called when a neighboring block was changed and marks that this state should perform any checks during a neighbor
+     * change. Cases may include when redstone power is updated, cactus blocks popping off due to a neighboring solid
+     * block, etc.
+     */
+    public void neighborChanged(IBlockState state, World worldIn, BlockPos pos, Block blockIn)
     {
         worldIn.scheduleUpdate(pos, this, this.tickRate(worldIn));
     }
+
+    /*
+    /**
+     * Called when a tile entity on a side of this block changes is created or is destroyed.
+     * @param world The world
+     * @param pos Block position in world
+     * @param neighbor Block position of neighbor
+
+    public void onNeighborChange(IBlockAccess world, BlockPos pos, BlockPos neighbor)
+    {
+        ((World)world).scheduleUpdate(pos, this, this.tickRate((World) world));
+    }
+    */
 
     public void updateTick(World worldIn, BlockPos pos, IBlockState state, Random rand)
     {
@@ -169,9 +203,9 @@ public class BlockHammer extends BlockContainer
     public static boolean canFallInto(World worldIn, BlockPos pos)
     {
         if (worldIn.isAirBlock(pos)) return true;
-        Block block = worldIn.getBlockState(pos).getBlock();
+        IBlockState block = worldIn.getBlockState(pos);
         Material material = block.getMaterial();
-        return block == Blocks.fire || material == Material.air || material == Material.water || material == Material.lava;
+        return block == Blocks.FIRE || material == Material.AIR || material == Material.WATER || material == Material.LAVA;
     }
 
     protected void onStartFalling(EntityFallingBlock fallingEntity)
@@ -181,6 +215,6 @@ public class BlockHammer extends BlockContainer
 
     public void onEndFalling(World worldIn, BlockPos pos)
     {
-        worldIn.playAuxSFX(1022, pos, 0);
+        worldIn.playEvent(1031, pos, 0);
     }
 }

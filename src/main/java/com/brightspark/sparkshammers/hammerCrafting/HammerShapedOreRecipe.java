@@ -256,4 +256,28 @@ public class HammerShapedOreRecipe implements IRecipe
     {
         return height;
     }
+
+    @Override
+    public String toString()
+    {
+        String str = "Output: " + output.getUnlocalizedName() + ", Inputs: ";
+        for(Object o : input)
+        {
+            if(o instanceof ItemStack)
+                str += ((ItemStack)o).getUnlocalizedName();
+            else if(o instanceof Item)
+                str += ((Item)o).getUnlocalizedName();
+            else if(o instanceof Block)
+                str += ((Block)o).getUnlocalizedName();
+            else if(o instanceof String)
+                str += (String)o;
+            else if(o instanceof List)
+                str += "List of " + ((List)o).size();
+            else
+                str += "<UNKNOWN>";
+            str += ", ";
+        }
+        str = str.substring(0, str.length()-2);
+        return str;
+    }
 }

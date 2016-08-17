@@ -1,7 +1,7 @@
 package com.brightspark.sparkshammers.util;
 
 import com.brightspark.sparkshammers.reference.Reference;
-import net.minecraft.util.StatCollector;
+import net.minecraft.client.resources.I18n;
 
 public class Lang
 {
@@ -9,15 +9,13 @@ public class Lang
 
     public static String localize(String s)
     {
-        return localize(s, true);
+        return localize(s, false);
     }
 
     public static String localize(String s, boolean appendPre)
     {
         if(appendPre)
-        {
             s = prefix + s;
-        }
-        return StatCollector.translateToLocal(s);
+        return I18n.format(s);
     }
 }

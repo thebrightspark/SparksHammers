@@ -13,18 +13,15 @@ import net.minecraft.entity.item.EntityFallingBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.BlockPos;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.util.MathHelper;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 
 import java.util.List;
 import java.util.UUID;
 
-/**
- * Created by Mark on 25/05/2016.
- */
 public class EntityFallingHammer extends EntityFallingBlock
 {
     private IBlockState fallTile;
@@ -45,12 +42,11 @@ public class EntityFallingHammer extends EntityFallingBlock
      */
     public void onUpdate()
     {
-        Block block = this.fallTile.getBlock();
+        IBlockState state = this.fallTile;
+        Block block = state.getBlock();
 
-        if (block.getMaterial() == Material.air)
-        {
+        if (state.getMaterial() == Material.AIR)
             this.setDead();
-        }
         else
         {
             this.prevPosX = this.posX;
@@ -89,13 +85,12 @@ public class EntityFallingHammer extends EntityFallingBlock
                     this.motionY *= -0.5D;
                     this.setDead();
 
-                    if (this.worldObj.canBlockBePlaced(block, blockpos1, true, EnumFacing.UP, null, null) && ! BlockFalling.canFallInto(this.worldObj, blockpos1.down()) && this.worldObj.setBlockState(blockpos1, this.fallTile, 3))
+                    if (this.worldObj.canBlockBePlaced(block, blockpos1, true, EnumFacing.UP, null, null) && !BlockFalling.canFallThrough(this.worldObj.getBlockState(blockpos1.down())) && this.worldObj.setBlockState(blockpos1, this.fallTile))
                     {
                         if (block instanceof BlockHammer)
-                        {
                             ((BlockHammer)block).onEndFalling(this.worldObj, blockpos1);
-                        }
 
+                        //Set the owner to the hammer block from this entity
                         TileHammer tileentity = (TileHammer) this.worldObj.getTileEntity(blockpos1);
                         if(tileentity != null)
                             tileentity.setOwner(playerUUID);
@@ -124,17 +119,12 @@ public class EntityFallingHammer extends EntityFallingBlock
                         }
                     }
                     else if (this.shouldDropItem && this.worldObj.getGameRules().getBoolean("doEntityDrops"))
-                    {
                         this.entityDropItem(new ItemStack(block, 1, block.damageDropped(this.fallTile)), 0.0F);
-                    }
                 }
                 else if (this.fallTime > 100 && !this.worldObj.isRemote && (blockpos1.getY() < 1 || blockpos1.getY() > 256) || this.fallTime > 600)
                 {
                     if (this.shouldDropItem && this.worldObj.getGameRules().getBoolean("doEntityDrops"))
-                    {
                         this.entityDropItem(new ItemStack(block, 1, block.damageDropped(this.fallTile)), 0.0F);
-                    }
-
                     this.setDead();
                 }
             }

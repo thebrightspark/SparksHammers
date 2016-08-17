@@ -1,17 +1,24 @@
-[
 {
-  "modid": "SparksHammers",
-  "name": "Spark's Hammers",
-  "description": "Adds hammers like from Tinkers Construct but using vanilla resources and in the style of vanilla tools.",
-  "version": "$version",
-  "mcversion": "$mcversion",
-  "url": "",
-  "updateUrl": "",
-  "authorList": ["bright_spark"],
-  "credits": "Thanks to Pahimar for his amazing Lets Mod Reboot series in which I learned a lot of my basic modding! Also a thanks to the creators of Tinkers Construct for providing excellent code which helped me create this mod.",
-  "logoFile": "logo.png",
-  "screenshots": [],
-  "parent": "",
-  "dependencies": []
+    "modListVersion": 2,
+    "modList":
+    [
+        {
+          "modid": "SparksHammers",
+          "name": "Spark's Hammers",
+          "description": "Adds hammers like from Tinkers Construct but using vanilla resources and in the style of vanilla tools.",
+          "version": "$version",
+          "mcversion": "$mcversion",
+          "url": "http://minecraft.curseforge.com/projects/sparks-hammers",
+          "updateUrl": "",
+          "authorList": ["bright_spark"],
+          "credits": "Thanks to Pahimar for his amazing Lets Mod Reboot series in which I learned a lot of my basic modding! Also a thanks to the creators of Tinkers Construct for providing excellent code which helped me create this mod.",
+          "logoFile": "assets/sparkshammers/logo.png",
+          "screenshots": [],
+          "parent": "",
+          "dependants": [],
+          "dependencies": ["EnderIO", "MobHunter", "JEI"],
+          "requiredMods": [],
+          "useDependencyInformation": true
+        }
+    ]
 }
-]

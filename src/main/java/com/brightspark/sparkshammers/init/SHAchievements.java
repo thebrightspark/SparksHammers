@@ -4,9 +4,6 @@ import com.brightspark.sparkshammers.reference.Reference;
 import net.minecraft.stats.Achievement;
 import net.minecraftforge.common.AchievementPage;
 
-/**
- * Created by Mark on 09/06/2016.
- */
 public class SHAchievements
 {
     public static Achievement woodHammer = new Achievement("achievement.woodHammer", "woodHammer", 0, -2, SHItems.hammerWood, null);

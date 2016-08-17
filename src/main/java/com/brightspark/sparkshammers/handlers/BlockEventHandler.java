@@ -7,8 +7,9 @@ import com.brightspark.sparkshammers.util.NBTHelper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.event.world.BlockEvent.BreakEvent;
@@ -18,9 +19,6 @@ import net.minecraftforge.fml.common.gameevent.TickEvent;
 
 import java.util.ArrayList;
 
-/**
- * Created by Mark on 27/05/2016.
- */
 public class BlockEventHandler
 {
     /**
@@ -68,7 +66,8 @@ public class BlockEventHandler
     @SubscribeEvent
     public void onBlockBreak(BreakEvent event)
     {
-        ItemStack heldStack = event.getPlayer().getHeldItem();
+        ItemStack heldStack = event.getPlayer().getHeldItem(EnumHand.MAIN_HAND);
+        if(heldStack == null) return;
         Item heldItem = heldStack.getItem();
         if(heldItem instanceof ItemHammerNetherStar)
         {
@@ -84,9 +83,9 @@ public class BlockEventHandler
                         player.worldObj,
                         player,
                         ItemStack.copyItemStack(heldStack),
-                        ((ItemHammerNetherStar) heldItem).getMovingObjectPositionFromPlayer(event.world, player, false).sideHit.getOpposite(),
-                        event.pos,
-                        new Float(ForgeHooks.blockStrength(event.state, player, player.worldObj, event.pos)),
+                        ((ItemHammerNetherStar) heldItem).rayTrace(event.getWorld(), player, false).sideHit.getOpposite(),
+                        event.getPos(),
+                        new Float(ForgeHooks.blockStrength(event.getState(), player, player.worldObj, event.getPos())),
                         new Integer(1),
                         new Byte((byte)2)});
                 heldStack.damageItem(1, player);

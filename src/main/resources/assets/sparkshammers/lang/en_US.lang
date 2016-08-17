@@ -39,6 +39,9 @@ item.hammerElementium.name=Elementium Hammer
 item.hammerUnstable.name=Unstable Hammer
 item.hammerDarksteel.name=Dark Steel Hammer
 item.hammerBronze.name=Bronze Hammer
+item.hammerMachalite.name=Machalite Hammer
+item.hammerDragonite.name=Dragonite Hammer
+item.hammerGossamite.name=Gossamite Hammer
 
 //Excavators
 item.excavatorManasteel.name=Manasteel Excavator
@@ -47,6 +50,9 @@ item.excavatorElementium.name=Elementium Excavator
 item.excavatorUnstable.name=Unstable Excavator
 item.excavatorDarksteel.name=Dark Steel Excavator
 item.excavatorBronze.name=Bronze Excavator
+item.excavatorMachalite.name=Machalite Excavator
+item.excavatorDragonite.name=Dragonite Excavator
+item.excavatorGossamite.name=Gossamite Excavator
 
 // <<<< Achievements >>>>
 
@@ -70,6 +76,7 @@ achievement.mjolnirFallDeath.desc=Die from being hit by a falling Mjolnir.
 //Hammer Crafting Table
 tile.hammerCraft.name=Hammer Crafting Table
 tile.hammerCraft.nei=Hammer Crafting
+jei.recipe.hammerCraftingTable=Hammer Crafting Table
 
 //Hammer Block
 tile.hammer.name=Mjolnir

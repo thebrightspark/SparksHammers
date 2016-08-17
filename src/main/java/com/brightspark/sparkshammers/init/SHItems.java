@@ -11,50 +11,56 @@ public class SHItems
     //Hammer Heads
     public static final ItemResource hammerHeadWood = new ItemResource(Names.Items.HAMMER_HEAD_WOOD);
     //Hammers
-    public static final ItemHammer hammerWood = new ItemHammer(Names.Items.HAMMER_WOOD, Materials.HAMMER_WOOD);
-    public static final ItemHammer hammerStone = new ItemHammer(Names.Items.HAMMER_STONE, Materials.HAMMER_STONE);
-    public static final ItemHammer hammerIron = new ItemHammer(Names.Items.HAMMER_IRON, Materials.HAMMER_IRON);
-    public static final ItemHammer hammerGold = new ItemHammer(Names.Items.HAMMER_GOLD, Materials.HAMMER_GOLD);
-    public static final ItemHammer hammerDiamond = new ItemHammer(Names.Items.HAMMER_DIAMOND, Materials.HAMMER_DIAMOND);
+    public static final ItemAOE hammerWood = new ItemAOE(Names.Items.HAMMER_WOOD, Materials.HAMMER_WOOD);
+    public static final ItemAOE hammerStone = new ItemAOE(Names.Items.HAMMER_STONE, Materials.HAMMER_STONE);
+    public static final ItemAOE hammerIron = new ItemAOE(Names.Items.HAMMER_IRON, Materials.HAMMER_IRON);
+    public static final ItemAOE hammerGold = new ItemAOE(Names.Items.HAMMER_GOLD, Materials.HAMMER_GOLD);
+    public static final ItemAOE hammerDiamond = new ItemAOE(Names.Items.HAMMER_DIAMOND, Materials.HAMMER_DIAMOND);
 
-    public static final ItemHammer hammerThor = new ItemHammerThor();
-    public static final ItemHammer hammerMini = new ItemHammer(Names.Items.HAMMER_MINI, Materials.HAMMER_MINI).setMineWidth(0).setShiftRotating(true);
-    public static final ItemHammer hammerGiant = new ItemHammer(Names.Items.HAMMER_GIANT, Materials.HAMMER_GIANT).setMineWidth(4).setMineHeight(4);
-    public static final ItemHammer hammerNetherStar = new ItemHammerNetherStar();
+    public static final ItemAOE hammerThor = new ItemHammerThor();
+    public static final ItemAOE hammerMini = new ItemAOE(Names.Items.HAMMER_MINI, Materials.HAMMER_MINI).setMineWidth(0).setShiftRotating(true);
+    public static final ItemAOE hammerGiant = new ItemAOE(Names.Items.HAMMER_GIANT, Materials.HAMMER_GIANT).setMineWidth(4).setMineHeight(4);
+    public static final ItemAOE hammerNetherStar = new ItemHammerNetherStar();
 
     //Excavator Heads
     public static final ItemResource excavatorHeadWood = new ItemResource(Names.Items.EXCAVATOR_HEAD_WOOD);
     //Excavators
-    public static final ItemExcavator excavatorWood = new ItemExcavator(Names.Items.EXCAVATOR_WOOD, Materials.HAMMER_WOOD);
-    public static final ItemExcavator excavatorStone = new ItemExcavator(Names.Items.EXCAVATOR_STONE, Materials.HAMMER_STONE);
-    public static final ItemExcavator excavatorIron = new ItemExcavator(Names.Items.EXCAVATOR_IRON, Materials.HAMMER_IRON);
-    public static final ItemExcavator excavatorGold = new ItemExcavator(Names.Items.EXCAVATOR_GOLD, Materials.HAMMER_GOLD);
-    public static final ItemExcavator excavatorDiamond = new ItemExcavator(Names.Items.EXCAVATOR_DIAMOND, Materials.HAMMER_DIAMOND);
+    public static final ItemAOE excavatorWood = new ItemAOE(Names.Items.EXCAVATOR_WOOD, Materials.HAMMER_WOOD, true);
+    public static final ItemAOE excavatorStone = new ItemAOE(Names.Items.EXCAVATOR_STONE, Materials.HAMMER_STONE, true);
+    public static final ItemAOE excavatorIron = new ItemAOE(Names.Items.EXCAVATOR_IRON, Materials.HAMMER_IRON, true);
+    public static final ItemAOE excavatorGold = new ItemAOE(Names.Items.EXCAVATOR_GOLD, Materials.HAMMER_GOLD, true);
+    public static final ItemAOE excavatorDiamond = new ItemAOE(Names.Items.EXCAVATOR_DIAMOND, Materials.HAMMER_DIAMOND, true);
+
+    //Debug
+    public static final ItemDebug debug = new ItemDebug();
 
     public static void regItems()
     {
         //Heammer Heads
-        GameRegistry.registerItem(hammerHeadWood, Names.Items.HAMMER_HEAD_WOOD);
+        GameRegistry.register(hammerHeadWood);
         //Hammers
-        GameRegistry.registerItem(hammerWood, Names.Items.HAMMER_WOOD);
-        GameRegistry.registerItem(hammerStone, Names.Items.HAMMER_STONE);
-        GameRegistry.registerItem(hammerIron, Names.Items.HAMMER_IRON);
-        GameRegistry.registerItem(hammerGold, Names.Items.HAMMER_GOLD);
-        GameRegistry.registerItem(hammerDiamond, Names.Items.HAMMER_DIAMOND);
+        GameRegistry.register(hammerWood);
+        GameRegistry.register(hammerStone);
+        GameRegistry.register(hammerIron);
+        GameRegistry.register(hammerGold);
+        GameRegistry.register(hammerDiamond);
 
-        GameRegistry.registerItem(hammerThor, Names.Items.HAMMER_THOR);
-        GameRegistry.registerItem(hammerMini, Names.Items.HAMMER_MINI);
-        GameRegistry.registerItem(hammerGiant, Names.Items.HAMMER_GIANT);
-        GameRegistry.registerItem(hammerNetherStar, Names.Items.HAMMER_NETHERSTAR);
+        GameRegistry.register(hammerThor);
+        GameRegistry.register(hammerMini);
+        GameRegistry.register(hammerGiant);
+        GameRegistry.register(hammerNetherStar);
 
         //Excavator Heads
-        GameRegistry.registerItem(excavatorHeadWood, Names.Items.EXCAVATOR_HEAD_WOOD);
+        GameRegistry.register(excavatorHeadWood);
         //Excavators
-        GameRegistry.registerItem(excavatorWood, Names.Items.EXCAVATOR_WOOD);
-        GameRegistry.registerItem(excavatorStone, Names.Items.EXCAVATOR_STONE);
-        GameRegistry.registerItem(excavatorIron, Names.Items.EXCAVATOR_IRON);
-        GameRegistry.registerItem(excavatorGold, Names.Items.EXCAVATOR_GOLD);
-        GameRegistry.registerItem(excavatorDiamond, Names.Items.EXCAVATOR_DIAMOND);
+        GameRegistry.register(excavatorWood);
+        GameRegistry.register(excavatorStone);
+        GameRegistry.register(excavatorIron);
+        GameRegistry.register(excavatorGold);
+        GameRegistry.register(excavatorDiamond);
+
+        //Debug
+        GameRegistry.register(debug);
     }
 
     public static void regModels()
@@ -79,5 +85,8 @@ public class SHItems
         ClientUtils.regModel(excavatorIron);
         ClientUtils.regModel(excavatorGold);
         ClientUtils.regModel(excavatorDiamond);
+
+        //Debug
+        ClientUtils.regModel(debug);
     }
 }

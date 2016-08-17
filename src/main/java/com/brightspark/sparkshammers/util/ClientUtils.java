@@ -3,7 +3,7 @@ package com.brightspark.sparkshammers.util;
 import com.brightspark.sparkshammers.reference.Reference;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.resources.model.ModelResourceLocation;
+import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.item.Item;
 import net.minecraftforge.client.ItemModelMesherForge;
 

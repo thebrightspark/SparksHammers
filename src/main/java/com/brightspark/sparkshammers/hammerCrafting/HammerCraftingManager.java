@@ -40,31 +40,31 @@ public class HammerCraftingManager
 
         //Vanilla
         addRecipe(new ItemStack(SHItems.hammerWood), new Object[]{"HHHHH", "HHHHH", "SSSS ", 'H', "plankWood", 'S', "stickWood"});
-        addRecipe(new ItemStack(SHItems.hammerIron), new Object[]{"HHHHH", "HHHHH", "SSSS ", 'H', Items.iron_ingot, 'S', "stickWood"});
-        addRecipe(new ItemStack(SHItems.hammerGold), new Object[]{"HHHHH", "HHHHH", "SSSS ", 'H', Items.gold_ingot, 'S', "stickWood"});
-        addRecipe(new ItemStack(SHItems.hammerDiamond), new Object[]{"HHHHH", "HHHHH", "SSSS ", 'H', Items.diamond, 'S', "stickWood"});
+        addRecipe(new ItemStack(SHItems.hammerIron), new Object[]{"HHHHH", "HHHHH", "SSSS ", 'H', Items.IRON_INGOT, 'S', "stickWood"});
+        addRecipe(new ItemStack(SHItems.hammerGold), new Object[]{"HHHHH", "HHHHH", "SSSS ", 'H', Items.GOLD_INGOT, 'S', "stickWood"});
+        addRecipe(new ItemStack(SHItems.hammerDiamond), new Object[]{"HHHHH", "HHHHH", "SSSS ", 'H', Items.DIAMOND, 'S', "stickWood"});
 
-        addRecipe(new ItemStack(SHItems.hammerMini), new Object[]{" HHH ", " HHH ", "SSSS ", 'H', Items.iron_ingot, 'S', "stickWood"});
-        addRecipe(new ItemStack(SHItems.hammerGiant), new Object[]{"HHHHH", "HHDHH", "SSSS ", 'H', Blocks.iron_block, 'S', "stickWood", 'D', new ItemStack(Items.dye, 1, 5)});
-        addRecipe(new ItemStack(SHItems.hammerNetherStar), new Object[]{"HHBHH", "HBNBH", "SSSS ", 'H', Items.diamond, 'B', Blocks.gold_block, 'N', Items.nether_star, 'S', "stickWood"});
+        addRecipe(new ItemStack(SHItems.hammerMini), new Object[]{" HHH ", " HHH ", "SSSS ", 'H', Items.IRON_INGOT, 'S', "stickWood"});
+        addRecipe(new ItemStack(SHItems.hammerGiant), new Object[]{"HHHHH", "HHDHH", "SSSS ", 'H', Blocks.IRON_BLOCK, 'S', "stickWood", 'D', new ItemStack(Items.DYE, 1, 5)});
+        addRecipe(new ItemStack(SHItems.hammerNetherStar), new Object[]{"HHBHH", "HBNBH", "SSSS ", 'H', Items.DIAMOND, 'B', Blocks.GOLD_BLOCK, 'N', Items.NETHER_STAR, 'S', "stickWood"});
 
         addRecipe(new ItemStack(SHItems.excavatorWood), new Object[]{" HHH ", "HHHHH", "SSSS ", 'H', "plankWood", 'S', "stickWood"});
-        addRecipe(new ItemStack(SHItems.excavatorIron), new Object[]{" HHH ", "HHHHH", "SSSS ", 'H', Items.iron_ingot, 'S', "stickWood"});
-        addRecipe(new ItemStack(SHItems.excavatorGold), new Object[]{" HHH ", "HHHHH", "SSSS ", 'H', Items.gold_ingot, 'S', "stickWood"});
-        addRecipe(new ItemStack(SHItems.excavatorDiamond), new Object[]{" HHH ", "HHHHH", "SSSS ", 'H', Items.diamond, 'S', "stickWood"});
+        addRecipe(new ItemStack(SHItems.excavatorIron), new Object[]{" HHH ", "HHHHH", "SSSS ", 'H', Items.IRON_INGOT, 'S', "stickWood"});
+        addRecipe(new ItemStack(SHItems.excavatorGold), new Object[]{" HHH ", "HHHHH", "SSSS ", 'H', Items.GOLD_INGOT, 'S', "stickWood"});
+        addRecipe(new ItemStack(SHItems.excavatorDiamond), new Object[]{" HHH ", "HHHHH", "SSSS ", 'H', Items.DIAMOND, 'S', "stickWood"});
 
         //Make stone recipes made of compressed cobble when Extra Utilities is installed
         if(LoaderHelper.isModLoaded(Names.Mods.EXTRA_UTILITIES))
         {
-            Item compressedCobble = (Item) Item.itemRegistry.getObject(new ResourceLocation(Names.ModItemIds.COMPRESSED_COBBLE));
+            Item compressedCobble = (Item) Item.REGISTRY.getObject(new ResourceLocation(Names.ModItemIds.COMPRESSED_COBBLE));
             ItemStack cobble1x = new ItemStack(compressedCobble, 1, 0);
             addRecipe(new ItemStack(SHItems.hammerStone), new Object[]{"HHHHH", "HHHHH", "SSSS ", 'H', cobble1x, 'S', "stickWood"});
             addRecipe(new ItemStack(SHItems.excavatorStone), new Object[]{" HHH ", "HHHHH", "SSSS ", 'H', cobble1x, 'S', "stickWood"});
         }
         else
         {
-            addRecipe(new ItemStack(SHItems.hammerStone), new Object[]{"HHHHH", "HHHHH", "SSSS ", 'H', Blocks.cobblestone, 'S', "stickWood"});
-            addRecipe(new ItemStack(SHItems.excavatorStone), new Object[]{" HHH ", "HHHHH", "SSSS ", 'H', Blocks.cobblestone, 'S', "stickWood"});
+            addRecipe(new ItemStack(SHItems.hammerStone), new Object[]{"HHHHH", "HHHHH", "SSSS ", 'H', Blocks.COBBLESTONE, 'S', "stickWood"});
+            addRecipe(new ItemStack(SHItems.excavatorStone), new Object[]{" HHH ", "HHHHH", "SSSS ", 'H', Blocks.COBBLESTONE, 'S', "stickWood"});
         }
 
         //Modded
@@ -100,6 +100,22 @@ public class HammerCraftingManager
                 addRecipe(new ItemStack(SHModItems.excavatorUnstable), new Object[]{" HHH ", "HHHHH", "SSSS ", 'H', Names.ModOreDicts.INGOT_UNSTABLE, 'S', "stickWood"});
             }
             */
+            //MobHunter
+            if(LoaderHelper.doesOreExist(Names.ModOreDicts.INGOT_MACHALITE))
+            {
+                addRecipe(new ItemStack(SHModItems.hammerMachalite), new Object[]{"HHHHH", "HHHHH", "SSSS ", 'H', Names.ModOreDicts.INGOT_MACHALITE, 'S', "stickWood"});
+                addRecipe(new ItemStack(SHModItems.excavatorMachalite), new Object[]{" HHH ", "HHHHH", "SSSS ", 'H', Names.ModOreDicts.INGOT_MACHALITE, 'S', "stickWood"});
+            }
+            if(LoaderHelper.doesOreExist(Names.ModOreDicts.INGOT_DRAGONITE))
+            {
+                addRecipe(new ItemStack(SHModItems.hammerDragonite), new Object[]{"HHHHH", "HHHHH", "SSSS ", 'H', Names.ModOreDicts.INGOT_DRAGONITE, 'S', "stickWood"});
+                addRecipe(new ItemStack(SHModItems.excavatorDragonite), new Object[]{" HHH ", "HHHHH", "SSSS ", 'H', Names.ModOreDicts.INGOT_DRAGONITE, 'S', "stickWood"});
+            }
+            if(LoaderHelper.doesOreExist(Names.ModOreDicts.INGOT_GOSSAMITE))
+            {
+                addRecipe(new ItemStack(SHModItems.hammerGossamite), new Object[]{"HHHHH", "HHHHH", "SSSS ", 'H', Names.ModOreDicts.INGOT_GOSSAMITE, 'S', "stickWood"});
+                addRecipe(new ItemStack(SHModItems.excavatorGossamite), new Object[]{" HHH ", "HHHHH", "SSSS ", 'H', Names.ModOreDicts.INGOT_GOSSAMITE, 'S', "stickWood"});
+            }
             //Misc
             if(LoaderHelper.doesOreExist(Names.ModOreDicts.INGOT_BRONZE))
             {
@@ -109,100 +125,16 @@ public class HammerCraftingManager
         }
     }
 
-    @SuppressWarnings("unchecked")
-    public HammerShapedOreRecipe addRecipe(ItemStack stack, Object ... recipeObj)
+    public void addRecipe(ItemStack stack, Object ... recipeObj)
     {
-        HammerShapedOreRecipe recipe = new HammerShapedOreRecipe(stack, recipeObj);
-        recipes.add(recipe);
-        return recipe;
-
-        //Old code
-        /*
-        String s = "";
-        int i = 0;
-        int j = 0;
-        int k = 0;
-
-        if (recipeObj[i] instanceof String[])
-        {
-            String[] astring = (String[])((String[])recipeObj[i++]);
-
-            for (int l = 0; l < astring.length; ++l)
-            {
-                String s1 = astring[l];
-                ++k;
-                j = s1.length();
-                s = s + s1;
-            }
-        }
-        else
-        {
-            while (recipeObj[i] instanceof String)
-            {
-                String s2 = (String)recipeObj[i++];
-                ++k;
-                j = s2.length();
-                s = s + s2;
-            }
-        }
-
-        HashMap hashmap;
-
-        for (hashmap = new HashMap(); i < recipeObj.length; i += 2)
-        {
-            Character character = (Character)recipeObj[i];
-            ItemStack itemstack1 = null;
-
-            if (recipeObj[i + 1] instanceof Item)
-            {
-                itemstack1 = new ItemStack((Item)recipeObj[i + 1]);
-            }
-            else if (recipeObj[i + 1] instanceof Block)
-            {
-                itemstack1 = new ItemStack((Block)recipeObj[i + 1], 1, 32767);
-            }
-            else if (recipeObj[i + 1] instanceof ItemStack)
-            {
-                itemstack1 = (ItemStack)recipeObj[i + 1];
-            }
-
-            hashmap.put(character, itemstack1);
-        }
-
-        ItemStack[] aitemstack = new ItemStack[j * k];
-
-        for (int i1 = 0; i1 < j * k; ++i1)
-        {
-            char c0 = s.charAt(i1);
-
-            if (hashmap.containsKey(Character.valueOf(c0)))
-            {
-                aitemstack[i1] = ((ItemStack)hashmap.get(Character.valueOf(c0))).copy();
-            }
-            else
-            {
-                aitemstack[i1] = null;
-            }
-        }
-
-        ShapedRecipes shapedrecipes = new ShapedRecipes(j, k, aitemstack, stack);
-        this.recipes.add(shapedrecipes);
-        return shapedrecipes;
-        */
+        recipes.add(new HammerShapedOreRecipe(stack, recipeObj));
     }
 
     public ItemStack findMatchingRecipe(InventoryCrafting invCrafting, World world)
     {
-        int j;
-        for (j = 0; j < this.recipes.size(); ++j)
-        {
-            IRecipe irecipe = this.recipes.get(j);
-
-            if (irecipe.matches(invCrafting, world))
-            {
+        for(IRecipe irecipe : recipes)
+            if(irecipe.matches(invCrafting, world))
                 return irecipe.getCraftingResult(invCrafting);
-            }
-        }
 
         return null;
     }
@@ -228,7 +160,7 @@ public class HammerCraftingManager
     }
 
     /**
-     * returns the List<> of all recipes
+     * Returns the List<> of all recipes
      */
     public List getRecipeList()
     {

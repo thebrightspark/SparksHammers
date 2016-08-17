@@ -1,7 +1,6 @@
 package com.brightspark.sparkshammers.util;
 
 import com.brightspark.sparkshammers.item.ItemAOE;
-import com.brightspark.sparkshammers.item.ItemHammer;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
@@ -9,24 +8,22 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
-import net.minecraft.network.play.client.C07PacketPlayerDigging;
-import net.minecraft.network.play.server.S23PacketBlockChange;
-import net.minecraft.util.BlockPos;
+import net.minecraft.network.play.client.CPacketPlayerDigging;
+import net.minecraft.network.play.server.SPacketBlockChange;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeHooks;
 import org.lwjgl.input.Keyboard;
 
-/**
- * Created by Mark on 26/05/2016.
- */
 public class CommonUtils
 {
     public static boolean isCtrlKeyDown()
     {
         // prioritize CONTROL, but allow OPTION as well on Mac (note: GuiScreen's isCtrlKeyDown only checks for the OPTION key on Mac)
         boolean isCtrlKeyDown = Keyboard.isKeyDown(Keyboard.KEY_LCONTROL) || Keyboard.isKeyDown(Keyboard.KEY_RCONTROL);
-        if (!isCtrlKeyDown && Minecraft.isRunningOnMac)
+        if (!isCtrlKeyDown && Minecraft.IS_RUNNING_ON_MAC)
             isCtrlKeyDown = Keyboard.isKeyDown(Keyboard.KEY_LMETA) || Keyboard.isKeyDown(Keyboard.KEY_RMETA);
 
         return isCtrlKeyDown;
@@ -121,7 +118,7 @@ public class CommonUtils
                         //Play break sound at center only once
                         //LogHelper.info("Playing break sound");
                         brokeSomething = true;
-                        world.playAuxSFX(2001, center, Block.getStateId(Blocks.stone.getDefaultState()));
+                        world.playEvent(2001, center, Block.getStateId(Blocks.STONE.getDefaultState()));
                     }
                 }
     }
@@ -143,7 +140,7 @@ public class CommonUtils
         IBlockState blockState = world.getBlockState(blockPos);
         Block block = blockState.getBlock();
 
-        if(!breakBlockChecks(stack, world, blockPos, block))
+        if(!breakBlockChecks(stack, world, blockPos, blockState))
             return false;
 
         float strength = ForgeHooks.blockStrength(blockState, player, world, blockPos);
@@ -160,7 +157,7 @@ public class CommonUtils
         IBlockState blockState = world.getBlockState(blockPos);
         Block block = blockState.getBlock();
 
-        if(!breakBlockChecks(stack, world, blockPos, block))
+        if(!breakBlockChecks(stack, world, blockPos, blockState))
             return;
 
         IBlockState refBlockState = world.getBlockState(refBlockPos);
@@ -173,7 +170,7 @@ public class CommonUtils
         breakBlockAction(stack, world, player, blockPos, block, blockState);
     }
 
-    private static boolean breakBlockChecks(ItemStack stack, World world, BlockPos blockPos, Block block)
+    private static boolean breakBlockChecks(ItemStack stack, World world, BlockPos blockPos, IBlockState block)
     {
         // prevent calling that stuff for air blocks, could lead to unexpected behaviour since it fires events
         if(world.isAirBlock(blockPos)) return false;
@@ -181,7 +178,7 @@ public class CommonUtils
         // check if the block can be broken, since extra block breaks shouldn't instantly break stuff like obsidian
         // or precious ores you can't harvest while mining stone
         // only effective materials
-        if(!((ItemHammer)stack.getItem()).isEffective(block)) return false;
+        if(!((ItemAOE)stack.getItem()).isEffective(block)) return false;
 
         return true;
     }
@@ -193,23 +190,23 @@ public class CommonUtils
         if(player.capabilities.isCreativeMode)
         {
             block.onBlockHarvested(world, blockPos, blockState, player);
-            if(block.removedByPlayer(world, blockPos, player, false))
+            if(block.removedByPlayer(blockState, world, blockPos, player, false))
                 block.onBlockDestroyedByPlayer(world, blockPos, blockState);
 
             // send update to client
             if(!world.isRemote)
-                ((EntityPlayerMP)player).playerNetServerHandler.sendPacket(new S23PacketBlockChange(world, blockPos));
+                ((EntityPlayerMP)player).connection.sendPacket(new SPacketBlockChange(world, blockPos));
             return;
         }
 
         // callback to the tool the player uses. Called on both sides. This damages the tool n stuff.
-        stack.onBlockDestroyed(world, block, blockPos, player);
+        stack.onBlockDestroyed(world, blockState, blockPos, player);
 
         // server sided handling
         if(!world.isRemote)
         {
             // send the blockbreak event
-            int xp = ForgeHooks.onBlockBreakEvent(world, ((EntityPlayerMP) player).theItemInWorldManager.getGameType(), (EntityPlayerMP) player, blockPos);
+            int xp = ForgeHooks.onBlockBreakEvent(world, ((EntityPlayerMP) player).interactionManager.getGameType(), (EntityPlayerMP) player, blockPos);
             if(xp == -1) {
                 return;
             }
@@ -219,15 +216,15 @@ public class CommonUtils
             // ItemInWorldManager.removeBlock
             block.onBlockHarvested(world, blockPos, blockState, player);
 
-            if(block.removedByPlayer(world, blockPos, player, true)) // boolean is if block can be harvested, checked above
+            if(block.removedByPlayer(blockState, world, blockPos, player, true)) // boolean is if block can be harvested, checked above
             {
                 block.onBlockDestroyedByPlayer(world, blockPos, blockState);
-                block.harvestBlock(world, player, blockPos, blockState, world.getTileEntity(blockPos));
+                block.harvestBlock(world, player, blockPos, blockState, world.getTileEntity(blockPos), stack);
                 block.dropXpOnBlockBreak(world, blockPos, xp);
             }
 
             // always send block update to client
-            ((EntityPlayerMP)player).playerNetServerHandler.sendPacket(new S23PacketBlockChange(world, blockPos));
+            ((EntityPlayerMP)player).connection.sendPacket(new SPacketBlockChange(world, blockPos));
         }
         // client sided handling
         else
@@ -236,17 +233,17 @@ public class CommonUtils
             // the code above, executed on the server, sends a block-updates that give us the correct state of the block we destroy.
 
             // following code can be found in PlayerControllerMP.onPlayerDestroyBlock
-            world.playAuxSFX(2001, blockPos, Block.getStateId(blockState));
-            if(block.removedByPlayer(world, blockPos, player, true))
+            world.playEvent(2001, blockPos, Block.getStateId(blockState));
+            if(block.removedByPlayer(blockState, world, blockPos, player, true))
                 block.onBlockDestroyedByPlayer(world, blockPos, blockState);
             // callback to the tool
-            stack.onBlockDestroyed(world, block, blockPos, player);
+            stack.onBlockDestroyed(world, blockState, blockPos, player);
 
-            if(stack.stackSize == 0 && stack == player.getCurrentEquippedItem())
-                player.destroyCurrentEquippedItem();
+            if(stack.stackSize == 0 && stack == player.getHeldItemMainhand())
+                player.setHeldItem(EnumHand.MAIN_HAND, null);
 
             // send an update to the server, so we get an update back
-            Minecraft.getMinecraft().getNetHandler().addToSendQueue(new C07PacketPlayerDigging(C07PacketPlayerDigging.Action.STOP_DESTROY_BLOCK, blockPos, Minecraft.getMinecraft().objectMouseOver.sideHit));
+            Minecraft.getMinecraft().getConnection().sendPacket(new CPacketPlayerDigging(CPacketPlayerDigging.Action.STOP_DESTROY_BLOCK, blockPos, Minecraft.getMinecraft().objectMouseOver.sideHit));
         }
     }
 }

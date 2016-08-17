@@ -4,6 +4,7 @@ import com.brightspark.sparkshammers.init.SHBlocks;
 import com.brightspark.sparkshammers.reference.Materials;
 import com.brightspark.sparkshammers.reference.Names;
 import com.brightspark.sparkshammers.tileentity.TileHammer;
+import com.brightspark.sparkshammers.util.Lang;
 import com.brightspark.sparkshammers.util.NBTHelper;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockSnow;
@@ -12,10 +13,15 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.effect.EntityLightningBolt;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
+import net.minecraft.init.MobEffects;
 import net.minecraft.item.ItemStack;
-import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.*;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.RayTraceResult;
+import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -23,13 +29,13 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import java.util.List;
 import java.util.UUID;
 
-public class ItemHammerThor extends ItemHammer
+public class ItemHammerThor extends ItemAOE
 {
     private static int cooldownMax = 200; //10 secs
 
     public ItemHammerThor()
     {
-        super(Names.Items.HAMMER_THOR, Materials.HAMMER_DIAMOND, true);
+        super(Names.Items.HAMMER_THOR, Materials.HAMMER_MJOLNIR, false, true);
     }
 
     /**
@@ -85,7 +91,7 @@ public class ItemHammerThor extends ItemHammer
         return true;
     }
 
-    public boolean onItemUse(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ)
+    public EnumActionResult onItemUse(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ)
     {
         if(player.isSneaking() && getOwner(stack) != null)
         {
@@ -96,23 +102,15 @@ public class ItemHammerThor extends ItemHammer
 
             //Most of the following general stuff is taken from ItemReed.java
             //noinspection all
-            if(blockHit == Blocks.snow_layer && blockHitState.getValue(BlockSnow.LAYERS).intValue() < 1)
-            {
+            if(blockHit == Blocks.SNOW_LAYER && blockHitState.getValue(BlockSnow.LAYERS).intValue() < 1)
                 side = EnumFacing.UP;
-            }
             else if(! blockHit.isReplaceable(world, pos))
-            {
                 pos = pos.offset(side);
-            }
 
-            if(! player.canPlayerEdit(pos, side, stack))
-            {
-                return false;
-            }
+            if(!player.canPlayerEdit(pos, side, stack))
+                return EnumActionResult.PASS;
             else if(stack.stackSize == 0)
-            {
-                return false;
-            }
+                return EnumActionResult.PASS;
             else if(world.canBlockBePlaced(SHBlocks.blockHammer, pos, false, side, null, stack))
             {
                 //Place hammer block
@@ -124,22 +122,26 @@ public class ItemHammerThor extends ItemHammer
                     te.setOwner(player);
 
                     //Remove hammer item from inventory if not in Creative
-                    if(! player.capabilities.isCreativeMode) -- stack.stackSize;
-                    return true;
+                    if(!player.capabilities.isCreativeMode)
+                        --stack.stackSize;
+                    return EnumActionResult.FAIL;
                 }
             }
         }
-        return false;
+        return EnumActionResult.PASS;
     }
 
-    protected MovingObjectPosition raytrace(World worldIn, EntityPlayer playerIn, boolean useLiquids)
+    /**
+     * Ray traces 64 blocks (The one in Item goes only 5 blocks)
+     */
+    protected RayTraceResult rayTraceLong(World worldIn, EntityPlayer playerIn, boolean useLiquids)
     {
         float f = playerIn.rotationPitch;
         float f1 = playerIn.rotationYaw;
         double d0 = playerIn.posX;
         double d1 = playerIn.posY + (double)playerIn.getEyeHeight();
         double d2 = playerIn.posZ;
-        Vec3 vec3 = new Vec3(d0, d1, d2);
+        Vec3d vec3 = new Vec3d(d0, d1, d2);
         float f2 = MathHelper.cos(-f1 * 0.017453292F - (float)Math.PI);
         float f3 = MathHelper.sin(-f1 * 0.017453292F - (float)Math.PI);
         float f4 = -MathHelper.cos(-f * 0.017453292F);
@@ -147,30 +149,29 @@ public class ItemHammerThor extends ItemHammer
         float f6 = f3 * f4;
         float f7 = f2 * f4;
         double d3 = 64d; //Range limit
-        Vec3 vec31 = vec3.addVector((double)f6 * d3, (double)f5 * d3, (double)f7 * d3);
+        Vec3d vec31 = vec3.addVector((double)f6 * d3, (double)f5 * d3, (double)f7 * d3);
         return worldIn.rayTraceBlocks(vec3, vec31, useLiquids, !useLiquids, false);
     }
 
-    public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player)
+    public ActionResult<ItemStack> onItemRightClick(ItemStack stack, World world, EntityPlayer player, EnumHand hand)
     {
         if(getOwner(stack) == null)
             setOwner(stack, player);
         else if(!world.isRemote && !player.isSneaking() && getCooldown(stack) <= 0)
         {
             //Spawn lightning at cursor
-            MovingObjectPosition mop = raytrace(player.worldObj, player, false);
-            if(mop != null)
+            RayTraceResult ray = rayTraceLong(player.worldObj, player, false);
+            if(ray != null)
             {
-                BlockPos pos = mop.getBlockPos();
-                if(mop.entityHit != null)
-                    pos = mop.entityHit.getPosition();
-                if(pos != null)
-                    world.addWeatherEffect(new EntityLightningBolt(world, pos.getX(), pos.getY(), pos.getZ()));
+                BlockPos pos = ray.getBlockPos();
+                if(ray.entityHit != null)
+                    pos = ray.entityHit.getPosition();
+                world.addWeatherEffect(new EntityLightningBolt(world, pos.getX(), pos.getY(), pos.getZ(), false));
             }
             if(!player.capabilities.isCreativeMode)
                 setCooldownToMax(stack);
         }
-        return stack;
+        return new ActionResult<ItemStack>(EnumActionResult.PASS, stack);
     }
 
     public void onUpdate(ItemStack stack, World worldIn, Entity entityIn, int itemSlot, boolean isSelected)
@@ -185,9 +186,9 @@ public class ItemHammerThor extends ItemHammer
             if(entityIn instanceof EntityPlayer)
             {
                 EntityPlayer player = (EntityPlayer) entityIn;
-                player.addPotionEffect(new PotionEffect(Potion.weakness.getId(), 600, 3));
-                player.addPotionEffect(new PotionEffect(Potion.moveSlowdown.getId(), 10, 6));
-                player.addPotionEffect(new PotionEffect(Potion.jump.getId(), 10, -6));
+                player.addPotionEffect(new PotionEffect(MobEffects.WEAKNESS, 600, 3));
+                player.addPotionEffect(new PotionEffect(MobEffects.SLOWNESS, 10, 6));
+                player.addPotionEffect(new PotionEffect(MobEffects.JUMP_BOOST, 10, -6));
             }
         }
     }
@@ -216,17 +217,17 @@ public class ItemHammerThor extends ItemHammer
     public void addInformation(ItemStack stack, EntityPlayer player, List<String> tooltip, boolean advanced)
     {
         String name = getOwnerName(stack);
-        String text = StatCollector.translateToLocal(stack.getUnlocalizedName() + ".tooltip");
+        String text = Lang.localize(stack.getUnlocalizedName() + ".tooltip");
 
         if(name.equals("None"))
             //No owner
-            text += EnumChatFormatting.GOLD;
+            text += TextFormatting.GOLD;
         else if(name.equals(player.getDisplayNameString()))
             //Player holding item is owner
-            text += EnumChatFormatting.GREEN;
+            text += TextFormatting.GREEN;
         else
             //Player holding item is not owner
-            text += EnumChatFormatting.RED;
+            text += TextFormatting.RED;
 
         text += " " + name;
         tooltip.add(text);
