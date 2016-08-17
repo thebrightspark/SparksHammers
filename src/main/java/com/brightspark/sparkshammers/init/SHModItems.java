@@ -1,7 +1,6 @@
 package com.brightspark.sparkshammers.init;
 
 import com.brightspark.sparkshammers.item.ItemAOE;
-import com.brightspark.sparkshammers.item.ItemAOEDarkSteel;
 import com.brightspark.sparkshammers.reference.ModMaterials;
 import com.brightspark.sparkshammers.reference.Names;
 import com.brightspark.sparkshammers.util.ClientUtils;
@@ -19,7 +18,7 @@ public class SHModItems
     public static ItemAOE hammerUnstable, excavatorUnstable;
     */
     //EnderIO
-    public static ItemAOEDarkSteel hammerDarksteel, excavatorDarksteel;
+    //public static ItemAOEDarkSteel hammerDarksteel, excavatorDarksteel;
     //MobHunter
     public static ItemAOE hammerMachalite, hammerDragonite, hammerGossamite,
             excavatorMachalite, excavatorDragonite, excavatorGossamite;
@@ -67,6 +66,7 @@ public class SHModItems
         */
 
         //EnderIO
+        /*
         if(LoaderHelper.doesOreExist(Names.ModOreDicts.INGOT_DARKSTEEL))
         {
             hammerDarksteel = new ItemAOEDarkSteel();
@@ -74,6 +74,7 @@ public class SHModItems
             GameRegistry.register(hammerDarksteel);
             GameRegistry.register(excavatorDarksteel);
         }
+        */
 
         //MobHunter
         if(LoaderHelper.doesOreExist(Names.ModOreDicts.INGOT_MACHALITE))
@@ -139,11 +140,13 @@ public class SHModItems
         */
 
         //EnderIO
+        /*
         if(LoaderHelper.doesOreExist(Names.ModOreDicts.INGOT_DARKSTEEL))
         {
             ClientUtils.regModel(hammerDarksteel);
             ClientUtils.regModel(excavatorDarksteel);
         }
+        */
 
         //MobHunter
         if(LoaderHelper.doesOreExist(Names.ModOreDicts.INGOT_MACHALITE))

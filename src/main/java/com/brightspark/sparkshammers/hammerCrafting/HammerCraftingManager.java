@@ -87,11 +87,13 @@ public class HammerCraftingManager
                 addRecipe(new ItemStack(SHModItems.excavatorElementium), new Object[]{" HHH ", "HHHHH", "SSSS ", 'H', Names.ModOreDicts.INGOT_ELEMENTIUM, 'S', "stickWood"});
             }
             //EnderIO
+            /*
             if(LoaderHelper.doesOreExist(Names.ModOreDicts.INGOT_DARKSTEEL))
             {
                 addRecipe(new ItemStack(SHModItems.hammerDarksteel), new Object[]{"HHHHH", "HHHHH", "SSSS ", 'H', Names.ModOreDicts.INGOT_DARKSTEEL, 'S', "stickWood"});
                 addRecipe(new ItemStack(SHModItems.excavatorDarksteel), new Object[]{" HHH ", "HHHHH", "SSSS ", 'H', Names.ModOreDicts.INGOT_DARKSTEEL, 'S', "stickWood"});
             }
+            */
             //Extra Utilities
             /*
             if(!Config.useEasyUnstableRecipe && LoaderHelper.doesOreExist(Names.ModOreDicts.INGOT_UNSTABLE))
