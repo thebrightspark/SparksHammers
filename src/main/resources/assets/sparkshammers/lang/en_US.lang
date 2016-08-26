@@ -12,6 +12,10 @@ item.hammerDiamond.name=Diamond Hammer
 
 item.hammerThor.name=Mjolnir
 item.hammerThor.tooltip=Owner:
+item.hammerThor.chat.wrongPlayer.1=You are not worthy to wield me!
+item.hammerThor.chat.wrongPlayer.2=is my true Master!
+item.hammerThor.chat.noAchieve=You must prove you're worthy before you can wield me!
+
 item.hammerMini.name=Mini Hammer
 item.hammerGiant.name=Giant Hammer
 item.hammerGiant.8brickdmg=8BrickDMG's BFH

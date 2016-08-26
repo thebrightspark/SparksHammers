@@ -183,7 +183,7 @@ public class ItemHammerThor extends ItemAOE
         }
         else if(!getOwnerName(stack).equals("None"))
         {
-            if(entityIn instanceof EntityPlayer)
+            if(entityIn instanceof EntityPlayer && !((EntityPlayer)entityIn).isCreative())
             {
                 EntityPlayer player = (EntityPlayer) entityIn;
                 player.addPotionEffect(new PotionEffect(MobEffects.WEAKNESS, 600, 3));

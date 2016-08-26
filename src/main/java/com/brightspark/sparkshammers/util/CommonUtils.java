@@ -34,6 +34,17 @@ public class CommonUtils
         return Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_RSHIFT);
     }
 
+    public static String capitaliseFirstLetter(String text)
+    {
+        if(text == null || text.length() <= 0)
+            return text;
+        return text.substring(0, 1).toUpperCase() + text.substring(1);
+    }
+
+
+
+    // <<<< AOE STUFF >>>>
+
     public static BlockPos[] getBreakArea(ItemAOE hammerItem, BlockPos pos, EnumFacing sideHit, EntityPlayer player)
     {
         //Rotate if player is holding shift

@@ -1,9 +1,49 @@
 package com.brightspark.sparkshammers.reference;
 
+import com.brightspark.sparkshammers.util.CommonUtils;
+import net.minecraft.client.resources.I18n;
+
 public class Names
 {
+    public enum EnumMaterials
+    {
+        //Vanilla
+        WOOD(0x755821),
+        STONE(0x898989),
+        IRON(0xD8D8D8),
+        GOLD(0xCDD050),
+        DIAMOND(0x2BC7AC),
+
+        //Mod Metals
+        COPPER(0xFF976E),
+        SILVER(0xBEBEBE),
+        TIN(0xFFF3E5),
+        LEAD(0x737373),
+        NICKEL(0xE5FFE1),
+        PLATINUM(0xB0BEBA),
+        BRONZE(0xEC9D4B),
+        STEEL(0xCDDADC),
+        INVAR(0xCBC6B2),
+        ELECTRUM(0xFFF0A4);
+
+        public int colour;
+
+        EnumMaterials(int colour)
+        {
+            this.colour = colour;
+        }
+
+        public String unlocToolName(boolean isExcavator)
+        {
+            return I18n.format((isExcavator ? Items.EXCAVATOR : Items.HAMMER) + CommonUtils.capitaliseFirstLetter(toString().toLowerCase()));
+        }
+    }
+
     public static class Items
     {
+        public static final String HAMMER = "hammer";
+        public static final String EXCAVATOR = "excavator";
+
         //<<<< Hammers >>>>
         public static final String HAMMER_HEAD_WOOD = "hammerHeadWood";
 

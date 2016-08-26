@@ -11,6 +11,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityFallingBlock;
 import net.minecraft.entity.player.EntityPlayer;
@@ -19,6 +20,7 @@ import net.minecraft.init.MobEffects;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.PotionEffect;
+import net.minecraft.stats.AchievementList;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.EnumFacing;
@@ -26,6 +28,7 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentString;
+import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
@@ -90,34 +93,37 @@ public class BlockHammer extends BlockContainer
     public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, @Nullable ItemStack heldItem, EnumFacing side, float hitX, float hitY, float hitZ)
     {
         //When the player right clicks on this block
+        if(world.isRemote) return false;
 
-        //Get the owner from the tile entity
         TileHammer hammer = (TileHammer) world.getTileEntity(pos);
-        if(hand == EnumHand.MAIN_HAND && heldItem == null)
+        //If no item in hand
+        if(hammer != null && hand == EnumHand.MAIN_HAND && heldItem == null)
         {
-            //If no item in hand
             if(!hammer.hasOwner())
-            {
                 player.addStat(SHAchievements.mjolnir);
-                //LogHelper.info("Hammer has no owner");
-            }
-            if(!hammer.hasOwner() || hammer.isOwner(player))
+            //Player needs to have killed the dragon to be worthy
+            if((!hammer.hasOwner() || hammer.isOwner(player)) && player.hasAchievement(AchievementList.THE_END2))
             {
                 //Player is worthy
-                player.setHeldItem(hand, new ItemStack(SHItems.hammerThor));
-                ItemHammerThor.setOwner(player.getHeldItem(hand), player);
+                ItemStack givenHammer = new ItemStack(SHItems.hammerThor);
+                ItemHammerThor.setOwner(givenHammer, player);
+                player.setHeldItem(hand, givenHammer);
                 world.setBlockToAir(new BlockPos(pos));
+                world.removeTileEntity(pos);
             }
             else
             {
                 //Player is not worthy
                 player.addStat(SHAchievements.mjolnirNope);
                 player.addPotionEffect(new PotionEffect(MobEffects.WEAKNESS, 200, 1));
-                if(world.isRemote)
+                if(player.hasAchievement(AchievementList.THE_END2))
                 {
-                    player.addChatMessage(new TextComponentString("You are not worthy to wield me!"));
-                    player.addChatMessage(new TextComponentString(TextFormatting.GOLD + hammer.getOwnerName() + TextFormatting.RESET + " is my true Master!"));
+                    player.addChatMessage(new TextComponentTranslation("item.hammerThor.chat.wrongPlayer.1"));
+                    player.addChatMessage(new TextComponentString(TextFormatting.GOLD + hammer.getOwnerName() + TextFormatting.RESET + " " + I18n.format("item.hammerThor.chat.wrongPlayer.2")));
                 }
+                else
+                    //Player has not killed ender dragon
+                    player.addChatMessage(new TextComponentTranslation("item.hammerThor.chat.noAchieve"));
             }
             return true;
         }

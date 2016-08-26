@@ -6,8 +6,13 @@ import com.brightspark.sparkshammers.reference.Names;
 import com.brightspark.sparkshammers.util.ClientUtils;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class SHItems
 {
+    public static List<ItemAOE> ALL_AOE_TOOLS = new ArrayList<ItemAOE>();
+
     //Hammer Heads
     public static final ItemResource hammerHeadWood = new ItemResource(Names.Items.HAMMER_HEAD_WOOD);
     //Hammers
@@ -34,30 +39,36 @@ public class SHItems
     //Debug
     public static final ItemDebug debug = new ItemDebug();
 
+    private static void regAOE(ItemAOE tool)
+    {
+        GameRegistry.register(tool);
+        ALL_AOE_TOOLS.add(tool);
+    }
+
     public static void regItems()
     {
         //Heammer Heads
         GameRegistry.register(hammerHeadWood);
         //Hammers
-        GameRegistry.register(hammerWood);
-        GameRegistry.register(hammerStone);
-        GameRegistry.register(hammerIron);
-        GameRegistry.register(hammerGold);
-        GameRegistry.register(hammerDiamond);
+        regAOE(hammerWood);
+        regAOE(hammerStone);
+        regAOE(hammerIron);
+        regAOE(hammerGold);
+        regAOE(hammerDiamond);
 
-        GameRegistry.register(hammerThor);
-        GameRegistry.register(hammerMini);
-        GameRegistry.register(hammerGiant);
-        GameRegistry.register(hammerNetherStar);
+        regAOE(hammerThor);
+        regAOE(hammerMini);
+        regAOE(hammerGiant);
+        regAOE(hammerNetherStar);
 
         //Excavator Heads
         GameRegistry.register(excavatorHeadWood);
         //Excavators
-        GameRegistry.register(excavatorWood);
-        GameRegistry.register(excavatorStone);
-        GameRegistry.register(excavatorIron);
-        GameRegistry.register(excavatorGold);
-        GameRegistry.register(excavatorDiamond);
+        regAOE(excavatorWood);
+        regAOE(excavatorStone);
+        regAOE(excavatorIron);
+        regAOE(excavatorGold);
+        regAOE(excavatorDiamond);
 
         //Debug
         GameRegistry.register(debug);
@@ -67,6 +78,7 @@ public class SHItems
     {
         //Hammers
         ClientUtils.regModel(hammerHeadWood);
+        /*
         ClientUtils.regModel(hammerWood);
         ClientUtils.regModel(hammerStone);
         ClientUtils.regModel(hammerIron);
@@ -77,14 +89,21 @@ public class SHItems
         ClientUtils.regModel(hammerMini);
         ClientUtils.regModel(hammerGiant);
         ClientUtils.regModel(hammerNetherStar);
+        */
 
         //Excavators
         ClientUtils.regModel(excavatorHeadWood);
+        /*
         ClientUtils.regModel(excavatorWood);
         ClientUtils.regModel(excavatorStone);
         ClientUtils.regModel(excavatorIron);
         ClientUtils.regModel(excavatorGold);
         ClientUtils.regModel(excavatorDiamond);
+        */
+
+        //Hammers and Excavators
+        for(ItemAOE tool : ALL_AOE_TOOLS)
+            ClientUtils.regModel(tool);
 
         //Debug
         ClientUtils.regModel(debug);
