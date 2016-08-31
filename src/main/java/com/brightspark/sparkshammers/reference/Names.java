@@ -2,35 +2,38 @@ package com.brightspark.sparkshammers.reference;
 
 import com.brightspark.sparkshammers.util.CommonUtils;
 import net.minecraft.client.resources.I18n;
+import net.minecraft.item.Item;
 
 public class Names
 {
     public enum EnumMaterials
     {
         //Vanilla
-        WOOD(0x755821),
-        STONE(0x898989),
-        IRON(0xD8D8D8),
-        GOLD(0xCDD050),
-        DIAMOND(0x2BC7AC),
+        WOOD(0x755821, Materials.WOOD),
+        STONE(0x898989, Materials.STONE),
+        IRON(0xD8D8D8, Materials.IRON),
+        GOLD(0xCDD050, Materials.GOLD),
+        DIAMOND(0x2BC7AC, Materials.DIAMOND),
 
         //Mod Metals
-        COPPER(0xFF976E),
-        SILVER(0xBEBEBE),
-        TIN(0xFFF3E5),
-        LEAD(0x737373),
-        NICKEL(0xE5FFE1),
-        PLATINUM(0xB0BEBA),
-        BRONZE(0xEC9D4B),
-        STEEL(0xCDDADC),
-        INVAR(0xCBC6B2),
-        ELECTRUM(0xFFF0A4);
+        COPPER(0xFF976E, ModMaterials.COPPER),
+        SILVER(0xBEBEBE, null),
+        TIN(0xFFF3E5, null),
+        LEAD(0x737373, null),
+        NICKEL(0xE5FFE1, null),
+        PLATINUM(0xB0BEBA, null),
+        BRONZE(0xEC9D4B, ModMaterials.BRONZE),
+        STEEL(0xCDDADC, ModMaterials.STEEL),
+        INVAR(0xCBC6B2, null),
+        ELECTRUM(0xFFF0A4, null);
 
         public int colour;
+        public Item.ToolMaterial material;
 
-        EnumMaterials(int colour)
+        EnumMaterials(int colour, Item.ToolMaterial material)
         {
             this.colour = colour;
+            this.material = material;
         }
 
         public String unlocToolName(boolean isExcavator)
@@ -103,7 +106,7 @@ public class Names
 
     public static class Blocks
     {
-        public static final String HAMMER = "hammer";
+        public static final String HAMMER = "hammerBlock";
         public static final String HAMMER_CRAFT = "hammerCraft";
     }
 

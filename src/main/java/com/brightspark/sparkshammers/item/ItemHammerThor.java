@@ -35,7 +35,7 @@ public class ItemHammerThor extends ItemAOE
 
     public ItemHammerThor()
     {
-        super(Names.Items.HAMMER_THOR, Materials.HAMMER_MJOLNIR, false, true);
+        super(Names.Items.HAMMER_THOR, Materials.MJOLNIR, false, true);
     }
 
     /**

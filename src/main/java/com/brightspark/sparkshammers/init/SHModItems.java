@@ -30,22 +30,22 @@ public class SHModItems
         //Botania
         if(LoaderHelper.doesOreExist(Names.ModOreDicts.INGOT_MANASTEEL))
         {
-            hammerManasteel = new ItemAOE(Names.ModItems.HAMMER_MANASTEEL, ModMaterials.HAMMER_MANASTEEL);
-            excavatorManasteel = new ItemAOE(Names.ModItems.EXCAVATOR_MANASTEEL, ModMaterials.HAMMER_MANASTEEL, true);
+            hammerManasteel = new ItemAOE(Names.ModItems.HAMMER_MANASTEEL, ModMaterials.MANASTEEL);
+            excavatorManasteel = new ItemAOE(Names.ModItems.EXCAVATOR_MANASTEEL, ModMaterials.MANASTEEL, true);
             GameRegistry.register(hammerManasteel);
             GameRegistry.register(excavatorManasteel);
         }
         if(LoaderHelper.doesOreExist(Names.ModOreDicts.INGOT_TERRASTEEL))
         {
-            hammerTerrasteel = new ItemAOE(Names.ModItems.HAMMER_TERRASTEEL, ModMaterials.HAMMER_TERRASTEEL);
-            excavatorTerrasteel = new ItemAOE(Names.ModItems.EXCAVATOR_TERRASTEEL, ModMaterials.HAMMER_TERRASTEEL, true);
+            hammerTerrasteel = new ItemAOE(Names.ModItems.HAMMER_TERRASTEEL, ModMaterials.TERRASTEEL);
+            excavatorTerrasteel = new ItemAOE(Names.ModItems.EXCAVATOR_TERRASTEEL, ModMaterials.TERRASTEEL, true);
             GameRegistry.register(hammerTerrasteel);
             GameRegistry.register(excavatorTerrasteel);
         }
         if(LoaderHelper.doesOreExist(Names.ModOreDicts.INGOT_ELEMENTIUM))
         {
-            hammerElementium = new ItemAOE(Names.ModItems.HAMMER_ELEMENTIUM, ModMaterials.HAMMER_ELEMENTIUM);
-            excavatorElementium = new ItemAOE(Names.ModItems.EXCAVATOR_ELEMENTIUM, ModMaterials.HAMMER_ELEMENTIUM, true);
+            hammerElementium = new ItemAOE(Names.ModItems.HAMMER_ELEMENTIUM, ModMaterials.ELEMENTIUM);
+            excavatorElementium = new ItemAOE(Names.ModItems.EXCAVATOR_ELEMENTIUM, ModMaterials.ELEMENTIUM, true);
             GameRegistry.register(hammerElementium);
             GameRegistry.register(excavatorElementium);
         }
@@ -79,22 +79,22 @@ public class SHModItems
         //MobHunter
         if(LoaderHelper.doesOreExist(Names.ModOreDicts.INGOT_MACHALITE))
         {
-            hammerMachalite = new ItemAOE(Names.ModItems.HAMMER_MACHALITE, ModMaterials.HAMMER_MACHALITE);
-            excavatorMachalite = new ItemAOE(Names.ModItems.EXCAVATOR_MACHALITE, ModMaterials.HAMMER_MACHALITE, true);
+            hammerMachalite = new ItemAOE(Names.ModItems.HAMMER_MACHALITE, ModMaterials.MACHALITE);
+            excavatorMachalite = new ItemAOE(Names.ModItems.EXCAVATOR_MACHALITE, ModMaterials.MACHALITE, true);
             GameRegistry.register(hammerMachalite);
             GameRegistry.register(excavatorMachalite);
         }
         if(LoaderHelper.doesOreExist(Names.ModOreDicts.INGOT_DRAGONITE))
         {
-            hammerDragonite = new ItemAOE(Names.ModItems.HAMMER_DRAGONITE, ModMaterials.HAMMER_DRAGONITE);
-            excavatorDragonite = new ItemAOE(Names.ModItems.EXCAVATOR_DRAGONITE, ModMaterials.HAMMER_DRAGONITE, true);
+            hammerDragonite = new ItemAOE(Names.ModItems.HAMMER_DRAGONITE, ModMaterials.DRAGONITE);
+            excavatorDragonite = new ItemAOE(Names.ModItems.EXCAVATOR_DRAGONITE, ModMaterials.DRAGONITE, true);
             GameRegistry.register(hammerDragonite);
             GameRegistry.register(excavatorDragonite);
         }
         if(LoaderHelper.doesOreExist(Names.ModOreDicts.INGOT_GOSSAMITE))
         {
-            hammerGossamite = new ItemAOE(Names.ModItems.HAMMER_GOSSAMITE, ModMaterials.HAMMER_GOSSAMITE);
-            excavatorGossamite = new ItemAOE(Names.ModItems.EXCAVATOR_GOSSAMITE, ModMaterials.HAMMER_GOSSAMITE, true);
+            hammerGossamite = new ItemAOE(Names.ModItems.HAMMER_GOSSAMITE, ModMaterials.GOSSAMITE);
+            excavatorGossamite = new ItemAOE(Names.ModItems.EXCAVATOR_GOSSAMITE, ModMaterials.GOSSAMITE, true);
             GameRegistry.register(hammerGossamite);
             GameRegistry.register(excavatorGossamite);
         }
@@ -102,8 +102,8 @@ public class SHModItems
         //Misc
         if(LoaderHelper.doesOreExist(Names.ModOreDicts.INGOT_BRONZE))
         {
-            hammerBronze = new ItemAOE(Names.ModItems.HAMMER_BRONZE, ModMaterials.HAMMER_BRONZE);
-            excavatorBronze = new ItemAOE(Names.ModItems.EXCAVATOR_BRONZE, ModMaterials.HAMMER_BRONZE, true);
+            hammerBronze = new ItemAOE(Names.ModItems.HAMMER_BRONZE, ModMaterials.BRONZE);
+            excavatorBronze = new ItemAOE(Names.ModItems.EXCAVATOR_BRONZE, ModMaterials.BRONZE, true);
             GameRegistry.register(hammerBronze);
             GameRegistry.register(excavatorBronze);
         }

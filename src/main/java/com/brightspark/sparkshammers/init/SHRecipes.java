@@ -20,7 +20,7 @@ public class SHRecipes
 
         //Wooden Excavator
         GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(SHItems.excavatorHeadWood), new Object[]{" x ", "xxx", "   ", 'x', "logWood"}));
-        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(SHItems.excavatorWood), new Object[]{" x ", " s ", " s ", 'x', SHItems.excavatorHeadWood, 's', "plankWood"}));
+        //GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(SHItems.excavatorWood), new Object[]{" x ", " s ", " s ", 'x', SHItems.excavatorHeadWood, 's', "plankWood"}));
 
         //'Easy' Unstable Hammer Recipe
         /*

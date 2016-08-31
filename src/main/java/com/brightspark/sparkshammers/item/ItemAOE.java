@@ -2,6 +2,7 @@ package com.brightspark.sparkshammers.item;
 
 import com.brightspark.sparkshammers.SparksHammers;
 import com.brightspark.sparkshammers.init.SHItems;
+import com.brightspark.sparkshammers.reference.Names;
 import com.brightspark.sparkshammers.util.CommonUtils;
 import com.brightspark.sparkshammers.util.Lang;
 import com.google.common.collect.Sets;
@@ -38,9 +39,27 @@ public class ItemAOE extends ItemTool
     //The material types which the tool can mine in AOE:
     private Set<Material> materials;
 
+    public int textureColour = -1;
+
+    public ItemAOE(Names.EnumMaterials name)
+    {
+        this(name, false);
+    }
+
+    public ItemAOE(Names.EnumMaterials name, boolean isExcavator)
+    {
+        this(name, isExcavator, false);
+    }
+
+    public ItemAOE(Names.EnumMaterials name, boolean isExcavator, boolean isInfiniteUse)
+    {
+        this(name.unlocToolName(isExcavator), name.material, isExcavator, isInfiniteUse);
+        textureColour = name.colour;
+    }
+
     public ItemAOE(String name, ToolMaterial material)
     {
-        this(name, material, false);
+        this(name, material, false, false);
     }
 
     public ItemAOE(String name, ToolMaterial material, boolean isExcavator)
@@ -54,9 +73,9 @@ public class ItemAOE extends ItemTool
         this.isExcavator = isExcavator;
         infiniteUse = isInfiniteUse;
         setUnlocalizedName(name);
+        setRegistryName(name);
         setCreativeTab(SparksHammers.SH_TAB);
         materials = isExcavator ? ShovelMats : PickaxeMats;
-        setRegistryName(name);
     }
 
     /**
@@ -190,6 +209,12 @@ public class ItemAOE extends ItemTool
     public boolean getShiftRotating()
     {
         return this.shiftRotating;
+    }
+
+    public ItemAOE setItemColour(int colour)
+    {
+        this.textureColour = colour;
+        return this;
     }
 
     /**

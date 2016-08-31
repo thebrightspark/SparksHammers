@@ -48,10 +48,12 @@ public class HammerCraftingManager
         addRecipe(new ItemStack(SHItems.hammerGiant), new Object[]{"HHHHH", "HHDHH", "SSSS ", 'H', Blocks.IRON_BLOCK, 'S', "stickWood", 'D', new ItemStack(Items.DYE, 1, 5)});
         addRecipe(new ItemStack(SHItems.hammerNetherStar), new Object[]{"HHBHH", "HBNBH", "SSSS ", 'H', Items.DIAMOND, 'B', Blocks.GOLD_BLOCK, 'N', Items.NETHER_STAR, 'S', "stickWood"});
 
+        /*
         addRecipe(new ItemStack(SHItems.excavatorWood), new Object[]{" HHH ", "HHHHH", "SSSS ", 'H', "plankWood", 'S', "stickWood"});
         addRecipe(new ItemStack(SHItems.excavatorIron), new Object[]{" HHH ", "HHHHH", "SSSS ", 'H', Items.IRON_INGOT, 'S', "stickWood"});
         addRecipe(new ItemStack(SHItems.excavatorGold), new Object[]{" HHH ", "HHHHH", "SSSS ", 'H', Items.GOLD_INGOT, 'S', "stickWood"});
         addRecipe(new ItemStack(SHItems.excavatorDiamond), new Object[]{" HHH ", "HHHHH", "SSSS ", 'H', Items.DIAMOND, 'S', "stickWood"});
+        */
 
         //Make stone recipes made of compressed cobble when Extra Utilities is installed
         if(LoaderHelper.isModLoaded(Names.Mods.EXTRA_UTILITIES))
@@ -59,12 +61,12 @@ public class HammerCraftingManager
             Item compressedCobble = (Item) Item.REGISTRY.getObject(new ResourceLocation(Names.ModItemIds.COMPRESSED_COBBLE));
             ItemStack cobble1x = new ItemStack(compressedCobble, 1, 0);
             addRecipe(new ItemStack(SHItems.hammerStone), new Object[]{"HHHHH", "HHHHH", "SSSS ", 'H', cobble1x, 'S', "stickWood"});
-            addRecipe(new ItemStack(SHItems.excavatorStone), new Object[]{" HHH ", "HHHHH", "SSSS ", 'H', cobble1x, 'S', "stickWood"});
+            //addRecipe(new ItemStack(SHItems.excavatorStone), new Object[]{" HHH ", "HHHHH", "SSSS ", 'H', cobble1x, 'S', "stickWood"});
         }
         else
         {
             addRecipe(new ItemStack(SHItems.hammerStone), new Object[]{"HHHHH", "HHHHH", "SSSS ", 'H', Blocks.COBBLESTONE, 'S', "stickWood"});
-            addRecipe(new ItemStack(SHItems.excavatorStone), new Object[]{" HHH ", "HHHHH", "SSSS ", 'H', Blocks.COBBLESTONE, 'S', "stickWood"});
+            //addRecipe(new ItemStack(SHItems.excavatorStone), new Object[]{" HHH ", "HHHHH", "SSSS ", 'H', Blocks.COBBLESTONE, 'S', "stickWood"});
         }
 
         //Modded

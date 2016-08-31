@@ -15,7 +15,7 @@ public class ItemHammerNetherStar extends ItemAOE
 {
     public ItemHammerNetherStar()
     {
-        super(Names.Items.HAMMER_NETHERSTAR, Materials.HAMMER_NETHERSTAR);
+        super(Names.Items.HAMMER_NETHERSTAR, Materials.NETHERSTAR);
     }
 
     @SideOnly(Side.CLIENT)

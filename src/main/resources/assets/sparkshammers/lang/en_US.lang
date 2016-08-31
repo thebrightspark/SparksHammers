@@ -83,5 +83,5 @@ tile.hammerCraft.nei=Hammer Crafting
 jei.recipe.hammerCraftingTable=Hammer Crafting Table
 
 //Hammer Block
-tile.hammer.name=Mjolnir
+tile.hammerBlock.name=Mjolnir
 death.attack.fallingHammer=%1$s was crushed by Mjolnir

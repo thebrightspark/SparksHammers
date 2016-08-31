@@ -26,8 +26,8 @@ public class LootEventHandler
             LootPool pool = event.getTable().getPool("main");
             addLoot(pool, SHItems.hammerWood, 1);
             addLoot(pool, SHItems.hammerStone, 1);
-            addLoot(pool, SHItems.excavatorWood, 1);
-            addLoot(pool, SHItems.excavatorStone, 1);
+            //addLoot(pool, SHItems.excavatorWood, 1);
+            //addLoot(pool, SHItems.excavatorStone, 1);
         }
         else if(event.getName().equals(LootTableList.CHESTS_DESERT_PYRAMID))
         {
