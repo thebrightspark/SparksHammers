@@ -51,7 +51,7 @@ public class BlockEventHandler
     private Object[] getPlayerMining(EntityPlayer player)
     {
         for(Object[] o : miningSchedule)
-            if(((EntityPlayer)o[1]).equals(player))
+            if((o[1]).equals(player))
                 return o;
         return null;
     }
@@ -117,7 +117,7 @@ public class BlockEventHandler
                 ItemStack stack = (ItemStack) o[2];
                 ItemHammerNetherStar hammer = (ItemHammerNetherStar) stack.getItem();
                 EnumFacing miningDir = (EnumFacing) o[3];
-                int iteration = ((Integer) o[6]).intValue();
+                int iteration = (Integer) o[6];
                 //LogHelper.info("Mining iteration " + iteration + " for hole " + i);
                 BlockPos centerPos = ((BlockPos) o[4]).offset(miningDir, iteration);
                 BlockPos[] positions = CommonUtils.getBreakArea(hammer, centerPos, miningDir.getOpposite(), (EntityPlayer) o[1]);
@@ -125,7 +125,7 @@ public class BlockEventHandler
                 BlockPos end = positions[1];
 
                 //Break the blocks
-                CommonUtils.breakArea(stack, (World) o[0], (EntityPlayer) o[1], ((Float) o[5]).floatValue(), start, centerPos, end);
+                CommonUtils.breakArea(stack, (World) o[0], (EntityPlayer) o[1], (Float) o[5], start, centerPos, end);
 
                 if(++iteration > Config.netherStarHammerDistance)
                 {

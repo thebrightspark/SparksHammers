@@ -18,7 +18,7 @@ public class SHItems
     //Contains all items
     public static List<Item> ALL_ITEMS = new ArrayList<Item>();
     //Contains all of the AOE tools
-    public static List<ItemAOE> ALL_AOE_TOOLS = new ArrayList<ItemAOE>();
+    //public static List<ItemAOE> ALL_AOE_TOOLS = new ArrayList<ItemAOE>();
     //Contains all of the items which use a basic coloured texture
     public static List<Item> COLOURED_ITEMS = new ArrayList<Item>();
 
@@ -27,20 +27,19 @@ public class SHItems
 
     //Hammers
     public static ItemAOE hammerWood, hammerStone, hammerIron, hammerGold, hammerDiamond,
-            hammerThor, hammerMini, hammerGiant, hammerNetherStar;
-
+            hammerThor, hammerMini, hammerGiant, hammerNetherStar,
     //Excavators
-    public static ItemAOE excavatorWood, excavatorStone, excavatorIron, excavatorGold, excavatorDiamond;
-    
+            excavatorWood, excavatorStone, excavatorIron, excavatorGold, excavatorDiamond;
+
     //Debug
-    public static ItemDebug debug = new ItemDebug();
+    public static ItemDebug debug;
 
     public static void regItem(Item item)
     {
         GameRegistry.register(item);
         ALL_ITEMS.add(item);
-        if(item instanceof ItemAOE)
-            ALL_AOE_TOOLS.add((ItemAOE) item);
+        //if(item instanceof ItemAOE)
+        //    ALL_AOE_TOOLS.add((ItemAOE) item);
         if(item instanceof IColourable && ((IColourable)item).getTextureColour() >= 0)
             COLOURED_ITEMS.add(item);
     }
@@ -73,7 +72,7 @@ public class SHItems
         regItem(excavatorDiamond = new ItemAOE(Names.EnumMaterials.DIAMOND, true));
 
         //Debug
-        regItem(debug);
+        regItem(debug = new ItemDebug());
     }
 
     public static void regModels()

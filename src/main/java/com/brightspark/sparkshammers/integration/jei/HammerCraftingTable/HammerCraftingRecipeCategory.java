@@ -57,6 +57,7 @@ public class HammerCraftingRecipeCategory implements IRecipeCategory
     public void drawAnimations(@Nonnull Minecraft minecraft) {}
 
     @Override
+    @SuppressWarnings("unchecked")
     public void setRecipe(@Nonnull IRecipeLayout recipeLayout, @Nonnull IRecipeWrapper recipeWrapper)
     {
         if(!(recipeWrapper instanceof HammerCraftingRecipeWrapper))

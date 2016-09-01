@@ -25,54 +25,93 @@ public class SHModItems
 
     public static void regItems()
     {
-        //Botania
-        if(LoaderHelper.doesOreExist(Names.ModOreDicts.INGOT_MANASTEEL))
+        for(Names.EnumMaterials mat : Names.EnumMaterials.values())
         {
-            SHItems.regItem(hammerManasteel = new ItemAOE(Names.EnumMaterials.MANASTEEL));
-            SHItems.regItem(excavatorManasteel = new ItemAOE(Names.EnumMaterials.MANASTEEL, true));
-        }
-        if(LoaderHelper.doesOreExist(Names.ModOreDicts.INGOT_TERRASTEEL))
-        {
-            SHItems.regItem(hammerTerrasteel = new ItemAOE(Names.EnumMaterials.TERRASTEEL));
-            SHItems.regItem(excavatorTerrasteel = new ItemAOE(Names.EnumMaterials.TERRASTEEL, true));
-        }
-        if(LoaderHelper.doesOreExist(Names.ModOreDicts.INGOT_ELEMENTIUM))
-        {
-            SHItems.regItem(hammerElementium = new ItemAOE(Names.EnumMaterials.ELEMENTIUM));
-            SHItems.regItem(excavatorElementium = new ItemAOE(Names.EnumMaterials.ELEMENTIUM, true));
-        }
+            if(mat.dependantOreDic.equals(Names.EnumMaterials.OTHER_DEPENDENCY))
+                continue;
+            if(mat.dependantOreDic != null && LoaderHelper.doesOreExist(mat.dependantOreDic))
+            {
+                switch(mat)
+                {
+                    //Common Mod Metals
+                    case COPPER:
+                        SHItems.regItem(hammerCopper = new ItemAOE(Names.EnumMaterials.COPPER));
+                        SHItems.regItem(excavatorCopper = new ItemAOE(Names.EnumMaterials.COPPER, true));
+                        break;
+                    case SILVER:
+                        SHItems.regItem(hammerSilver = new ItemAOE(Names.EnumMaterials.SILVER));
+                        SHItems.regItem(excavatorSilver = new ItemAOE(Names.EnumMaterials.SILVER, true));
+                        break;
+                    case TIN:
+                        SHItems.regItem(hammerTin = new ItemAOE(Names.EnumMaterials.TIN));
+                        SHItems.regItem(excavatorTin = new ItemAOE(Names.EnumMaterials.TIN, true));
+                        break;
+                    case LEAD:
+                        SHItems.regItem(hammerLead = new ItemAOE(Names.EnumMaterials.LEAD));
+                        SHItems.regItem(excavatorLead = new ItemAOE(Names.EnumMaterials.LEAD, true));
+                        break;
+                    case NICKEL:
+                        SHItems.regItem(hammerNickel = new ItemAOE(Names.EnumMaterials.NICKEL));
+                        SHItems.regItem(excavatorNickel = new ItemAOE(Names.EnumMaterials.NICKEL, true));
+                        break;
+                    case PLATINUM:
+                        SHItems.regItem(hammerPlatinum = new ItemAOE(Names.EnumMaterials.PLATINUM));
+                        SHItems.regItem(excavatorPlatinum = new ItemAOE(Names.EnumMaterials.PLATINUM, true));
+                        break;
+                    case BRONZE:
+                        SHItems.regItem(hammerBronze = new ItemAOE(Names.EnumMaterials.BRONZE));
+                        SHItems.regItem(excavatorBronze = new ItemAOE(Names.EnumMaterials.BRONZE, true));
+                        break;
+                    case STEEL:
+                        SHItems.regItem(hammerSteel = new ItemAOE(Names.EnumMaterials.STEEL));
+                        SHItems.regItem(excavatorSteel = new ItemAOE(Names.EnumMaterials.STEEL, true));
+                        break;
+                    case INVAR:
+                        SHItems.regItem(hammerInvar = new ItemAOE(Names.EnumMaterials.INVAR));
+                        SHItems.regItem(excavatorInvar = new ItemAOE(Names.EnumMaterials.INVAR, true));
+                        break;
+                    case ELECTRUM:
+                        SHItems.regItem(hammerElectrum = new ItemAOE(Names.EnumMaterials.ELECTRUM));
+                        SHItems.regItem(excavatorElectrum = new ItemAOE(Names.EnumMaterials.ELECTRUM, true));
+                        break;
 
-        //EnderIO
-        /*
-        if(LoaderHelper.doesOreExist(Names.ModOreDicts.INGOT_DARKSTEEL))
-        {
-            SHItems.regItem(hammerDarksteel = new ItemAOE(Names.EnumMaterials.DARKSTEEL));
-            SHItems.regItem(excavatorDarksteel = new ItemAOEDarkSteel(Names.EnumMaterials.DARKSTEEL, true));
-        }
-        */
+                    //Botania
+                    case MANASTEEL:
+                        SHItems.regItem(hammerManasteel = new ItemAOE(Names.EnumMaterials.MANASTEEL));
+                        SHItems.regItem(excavatorManasteel = new ItemAOE(Names.EnumMaterials.MANASTEEL, true));
+                        break;
+                    case TERRASTEEL:
+                        SHItems.regItem(hammerTerrasteel = new ItemAOE(Names.EnumMaterials.TERRASTEEL));
+                        SHItems.regItem(excavatorTerrasteel = new ItemAOE(Names.EnumMaterials.TERRASTEEL, true));
+                        break;
+                    case ELEMENTIUM:
+                        SHItems.regItem(hammerElementium = new ItemAOE(Names.EnumMaterials.ELEMENTIUM));
+                        SHItems.regItem(excavatorElementium = new ItemAOE(Names.EnumMaterials.ELEMENTIUM, true));
+                        break;
 
-        //MobHunter
-        if(LoaderHelper.doesOreExist(Names.ModOreDicts.INGOT_MACHALITE))
-        {
-            SHItems.regItem(hammerMachalite = new ItemAOE(Names.EnumMaterials.MACHALITE));
-            SHItems.regItem(excavatorMachalite = new ItemAOE(Names.EnumMaterials.MACHALITE, true));
-        }
-        if(LoaderHelper.doesOreExist(Names.ModOreDicts.INGOT_DRAGONITE))
-        {
-            SHItems.regItem(hammerDragonite = new ItemAOE(Names.EnumMaterials.DRAGONITE));
-            SHItems.regItem(excavatorDragonite = new ItemAOE(Names.EnumMaterials.DRAGONITE, true));
-        }
-        if(LoaderHelper.doesOreExist(Names.ModOreDicts.INGOT_GOSSAMITE))
-        {
-            SHItems.regItem(hammerGossamite = new ItemAOE(Names.EnumMaterials.GOSSAMITE));
-            SHItems.regItem(excavatorGossamite = new ItemAOE(Names.EnumMaterials.GOSSAMITE, true));
-        }
+                    //EnderIO
+                    /*
+                    case DARKSTEEL:
+                        SHItems.regItem(hammerDarksteel = new ItemAOE(Names.EnumMaterials.DARKSTEEL));
+                        SHItems.regItem(excavatorDarksteel = new ItemAOEDarkSteel(Names.EnumMaterials.DARKSTEEL, true));
+                        break;
+                    */
 
-        //Misc
-        if(LoaderHelper.doesOreExist(Names.ModOreDicts.INGOT_BRONZE))
-        {
-            SHItems.regItem(hammerBronze = new ItemAOE(Names.EnumMaterials.BRONZE));
-            SHItems.regItem(excavatorBronze = new ItemAOE(Names.EnumMaterials.BRONZE, true));
+                    //Mob Hunter
+                    case MACHALITE:
+                        SHItems.regItem(hammerMachalite = new ItemAOE(Names.EnumMaterials.MACHALITE));
+                        SHItems.regItem(excavatorMachalite = new ItemAOE(Names.EnumMaterials.MACHALITE, true));
+                        break;
+                    case DRAGONITE:
+                        SHItems.regItem(hammerDragonite = new ItemAOE(Names.EnumMaterials.DRAGONITE));
+                        SHItems.regItem(excavatorDragonite = new ItemAOE(Names.EnumMaterials.DRAGONITE, true));
+                        break;
+                    case GOSSAMITE:
+                        SHItems.regItem(hammerGossamite = new ItemAOE(Names.EnumMaterials.GOSSAMITE));
+                        SHItems.regItem(excavatorGossamite = new ItemAOE(Names.EnumMaterials.GOSSAMITE, true));
+                        break;
+                }
+            }
         }
     }
 

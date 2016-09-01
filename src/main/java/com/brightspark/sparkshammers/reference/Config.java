@@ -53,6 +53,66 @@ public class Config
     public static int enchantabilityMin = 0;
     public static int enchantabilityMax = 50;
 
+    public static int copperHarvestLevel = 1;
+    public static int copperMaxUses = (int) (128*toolDurabilityModifier);
+    public static float copperEfficiency = 4f*toolSpeedModifier;
+    public static float copperDamageVsEntity = 1f;
+    public static int copperEnchantability = 12;
+
+    public static int silverHarvestLevel = 1;
+    public static int silverMaxUses = (int) (128*toolDurabilityModifier);
+    public static float silverEfficiency = 5f*toolSpeedModifier;
+    public static float silverDamageVsEntity = 1.3f;
+    public static int silverEnchantability = 15;
+
+    public static int tinHarvestLevel = 1;
+    public static int tinMaxUses = (int) (32*toolDurabilityModifier);
+    public static float tinEfficiency = 3f*toolSpeedModifier;
+    public static float tinDamageVsEntity = 0.8f;
+    public static int tinEnchantability = 5;
+
+    public static int leadHarvestLevel = 0;
+    public static int leadMaxUses = (int) (32*toolDurabilityModifier);
+    public static float leadEfficiency = 1f*toolSpeedModifier;
+    public static float leadDamageVsEntity = 0.3f;
+    public static int leadEnchantability = 2;
+
+    public static int nickelHarvestLevel = 1;
+    public static int nickelMaxUses = (int) (128*toolDurabilityModifier);
+    public static float nickelEfficiency = 4f*toolSpeedModifier;
+    public static float nickelDamageVsEntity = 1f;
+    public static int nickelEnchantability = 17;
+
+    public static int platinumHarvestLevel = 1;
+    public static int platinumMaxUses = (int) (160*toolDurabilityModifier);
+    public static float platinumEfficiency = 3f*toolSpeedModifier;
+    public static float platinumDamageVsEntity = 0.8f;
+    public static int platinumEnchantability = 37;
+
+    public static int bronzeHarvestLevel = 2;
+    public static int bronzeMaxUses = (int) (128*toolDurabilityModifier);
+    public static float bronzeEfficiency = 8f*toolSpeedModifier;
+    public static float bronzeDamageVsEntity = 2f;
+    public static int bronzeEnchantability = 11;
+
+    public static int steelHarvestLevel = 2;
+    public static int steelMaxUses = (int) (480*toolDurabilityModifier);
+    public static float steelEfficiency = 8f*toolSpeedModifier;
+    public static float steelDamageVsEntity = 2f;
+    public static int steelEnchantability = 5;
+
+    public static int invarHarvestLevel = 2;
+    public static int invarMaxUses = (int) (320*toolDurabilityModifier);
+    public static float invarEfficiency = 9f*toolSpeedModifier;
+    public static float invarDamageVsEntity = 2.3f;
+    public static int invarEnchantability = 7;
+
+    public static int electrumHarvestLevel = 1;
+    public static int electrumMaxUses = (int) (128*toolDurabilityModifier);
+    public static float electrumEfficiency = 5f*toolSpeedModifier;
+    public static float electrumDamageVsEntity = 1.3f;
+    public static int electrumEnchantability = 25;
+
     public static int manasteelHarvestLevel = 3;
     public static int manasteelMaxUses = (int) (300*toolDurabilityModifier);
     public static float manasteelEfficiency = 6.2f*toolSpeedModifier;
@@ -76,12 +136,6 @@ public class Config
     public static float darksteelEfficiency = 7f*toolSpeedModifier;
     public static float darksteelDamageVsEntity = 2f;
     public static int darksteelEnchantability = 25;
-
-    public static int bronzeHarvestLevel = 2;
-    public static int bronzeMaxUses = (int) (350*toolDurabilityModifier);
-    public static float bronzeEfficiency = 6f*toolSpeedModifier;
-    public static float bronzeDamageVsEntity = 2f;
-    public static int bronzeEnchantability = 13;
 
     public static int machaliteHarvestLevel = 2;
     public static int machaliteMaxUses = (int) (500*toolDurabilityModifier);

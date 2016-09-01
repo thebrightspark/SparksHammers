@@ -14,20 +14,6 @@ import net.minecraftforge.fml.common.gameevent.PlayerEvent;
 public class AchieveEventHandler
 {
     @SubscribeEvent
-    public void onCrafting(PlayerEvent.ItemCraftedEvent event)
-    {
-        Item item = event.crafting.getItem();
-        if(item.equals(SHItems.hammerWood))
-            event.player.addStat(SHAchievements.woodHammer);
-        else if(item.equals(Item.getItemFromBlock(SHBlocks.blockHammerCraft)))
-            event.player.addStat(SHAchievements.craftingTable);
-        else if(item.equals(SHItems.hammerDiamond))
-            event.player.addStat(SHAchievements.diamondHammer);
-        else if(item.equals(SHItems.hammerNetherStar))
-            event.player.addStat(SHAchievements.netherStarHammer);
-    }
-
-    @SubscribeEvent
     public void onPickup(PlayerEvent.ItemPickupEvent event)
     {
         ItemStack stack = event.pickedUp.getEntityItem();

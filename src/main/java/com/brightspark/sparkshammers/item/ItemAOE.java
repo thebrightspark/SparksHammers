@@ -1,6 +1,7 @@
 package com.brightspark.sparkshammers.item;
 
 import com.brightspark.sparkshammers.SparksHammers;
+import com.brightspark.sparkshammers.init.SHAchievements;
 import com.brightspark.sparkshammers.init.SHItems;
 import com.brightspark.sparkshammers.reference.Names;
 import com.brightspark.sparkshammers.util.CommonUtils;
@@ -12,6 +13,7 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemTool;
 import net.minecraft.util.math.BlockPos;
@@ -221,11 +223,20 @@ public class ItemAOE extends ItemTool implements IColourable
     /**
      * Called when item is crafted/smelted. Used only by maps so far.
      */
-    public void onCreated(ItemStack stack, World worldIn, EntityPlayer playerIn)
+    public void onCreated(ItemStack stack, World worldIn, EntityPlayer player)
     {
         //Sets the name to Jason's custom name if he crafts the giant hammer.
-        if(stack.getItem().equals(SHItems.hammerGiant) && playerIn.getDisplayNameString().equals("8BrickDMG"))
+        if(stack.getItem().equals(SHItems.hammerGiant) && player.getDisplayNameString().equals("8BrickDMG"))
             stack.setStackDisplayName(TextFormatting.LIGHT_PURPLE + Lang.localize(getUnlocalizedName(stack) + ".8brickdmg"));
+
+        //Handle achievements
+        Item item = stack.getItem();
+        if(item.equals(SHItems.hammerWood))
+            player.addStat(SHAchievements.woodHammer);
+        else if(item.equals(SHItems.hammerDiamond))
+            player.addStat(SHAchievements.diamondHammer);
+        else if(item.equals(SHItems.hammerNetherStar))
+            player.addStat(SHAchievements.netherStarHammer);
     }
 
     @Override

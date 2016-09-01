@@ -19,36 +19,44 @@ public class Names
         GIANT(0x955CC4, Materials.GIANT),
 
         //Common Mod Metals
-        COPPER(0xFF976E, null),
-        SILVER(0xBEBEBE, null),
-        TIN(0xFFF3E5, null),
-        LEAD(0x737373, null),
-        NICKEL(0xE5FFE1, null),
-        PLATINUM(0xB0BEBA, null),
-        BRONZE(0xEC9D4B, ModMaterials.BRONZE),
-        STEEL(0xCDDADC, null),
-        INVAR(0xCBC6B2, null),
-        ELECTRUM(0xFFF0A4, null),
+        COPPER(0xFF976E, ModMaterials.COPPER, ModOreDicts.INGOT_COPPER),
+        SILVER(0xBEBEBE, ModMaterials.SILVER, ModOreDicts.INGOT_SILVER),
+        TIN(0xFFF3E5, ModMaterials.TIN, ModOreDicts.INGOT_TIN),
+        LEAD(0x737373, ModMaterials.LEAD, ModOreDicts.INGOT_LEAD),
+        NICKEL(0xE5FFE1, ModMaterials.NICKEL, ModOreDicts.INGOT_NICKEL),
+        PLATINUM(0xB0BEBA, ModMaterials.PLATINUM, ModOreDicts.INGOT_PLATINUM),
+        BRONZE(0xEC9D4B, ModMaterials.BRONZE, ModOreDicts.INGOT_BRONZE),
+        STEEL(0xCDDADC, ModMaterials.STEEL, ModOreDicts.INGOT_STEEL),
+        INVAR(0xCBC6B2, ModMaterials.INVAR, ModOreDicts.INGOT_INVAR),
+        ELECTRUM(0xFFF0A4, ModMaterials.ELECTRUM, ModOreDicts.INGOT_ELECTRUM),
 
         //Mod Materials
         //Botania
-        MANASTEEL(0xA1E0FF, ModMaterials.MANASTEEL),
-        TERRASTEEL(0x9BF76C, ModMaterials.TERRASTEEL),
-        ELEMENTIUM(0xF8A1FF, ModMaterials.ELEMENTIUM),
+        MANASTEEL(0xA1E0FF, ModMaterials.MANASTEEL, ModOreDicts.INGOT_MANASTEEL),
+        TERRASTEEL(0x9BF76C, ModMaterials.TERRASTEEL, ModOreDicts.INGOT_TERRASTEEL),
+        ELEMENTIUM(0xF8A1FF, ModMaterials.ELEMENTIUM, ModOreDicts.INGOT_ELEMENTIUM),
         //EnderIO
         DARKSTEEL(0x636363, ModMaterials.DARKSTEEL),
         //MobHunter
-        MACHALITE(0xC1DCEA, ModMaterials.MACHALITE),
-        DRAGONITE(0xCBE0CB, ModMaterials.DRAGONITE),
-        GOSSAMITE(0xE2CFDC, ModMaterials.GOSSAMITE);
+        MACHALITE(0xC1DCEA, ModMaterials.MACHALITE, ModOreDicts.INGOT_MACHALITE),
+        DRAGONITE(0xCBE0CB, ModMaterials.DRAGONITE, ModOreDicts.INGOT_DRAGONITE),
+        GOSSAMITE(0xE2CFDC, ModMaterials.GOSSAMITE, ModOreDicts.INGOT_GOSSAMITE);
 
         public int colour;
         public Item.ToolMaterial material;
+        public String dependantOreDic = null;
+        public static String OTHER_DEPENDENCY = "<OTHER>";
 
         EnumMaterials(int colour, Item.ToolMaterial material)
         {
             this.colour = colour;
             this.material = material;
+        }
+
+        EnumMaterials(int colour, Item.ToolMaterial material, String dependantOreDic)
+        {
+            this(colour, material);
+            this.dependantOreDic = dependantOreDic;
         }
 
         @Override
@@ -99,10 +107,20 @@ public class Names
 
     public static class ModOreDicts
     {
+        public static final String INGOT_COPPER = "ingotCopper";
+        public static final String INGOT_SILVER = "ingotSilver";
+        public static final String INGOT_TIN = "ingotTin";
+        public static final String INGOT_LEAD = "ingotLead";
+        public static final String INGOT_NICKEL = "ingotNickel";
+        public static final String INGOT_PLATINUM = "ingotPlatinum";
+        public static final String INGOT_BRONZE = "ingotBronze";
+        public static final String INGOT_STEEL = "ingotSteel";
+        public static final String INGOT_INVAR = "ingotInvar";
+        public static final String INGOT_ELECTRUM = "ingotElectrum";
+
         public static final String INGOT_MANASTEEL = "ingotManasteel";
         public static final String INGOT_TERRASTEEL = "ingotTerrasteel";
         public static final String INGOT_ELEMENTIUM = "ingotElvenElementium";
-        public static final String INGOT_BRONZE = "ingotBronze";
         public static final String INGOT_MACHALITE = "ingotMachalite";
         public static final String INGOT_DRAGONITE = "ingotDragonite";
         public static final String INGOT_GOSSAMITE = "ingotGossamite";
