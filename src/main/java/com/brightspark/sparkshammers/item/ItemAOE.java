@@ -21,7 +21,7 @@ import net.minecraft.world.World;
 
 import java.util.Set;
 
-public class ItemAOE extends ItemTool
+public class ItemAOE extends ItemTool implements IColourable
 {
     private static final Set<Block> PickaxeBlocks = Sets.newHashSet(new Block[] {Blocks.ACTIVATOR_RAIL, Blocks.COAL_ORE, Blocks.COBBLESTONE, Blocks.DETECTOR_RAIL, Blocks.DIAMOND_BLOCK, Blocks.DIAMOND_ORE, Blocks.DOUBLE_STONE_SLAB, Blocks.GOLDEN_RAIL, Blocks.GOLD_BLOCK, Blocks.GOLD_ORE, Blocks.ICE, Blocks.IRON_BLOCK, Blocks.IRON_ORE, Blocks.LAPIS_BLOCK, Blocks.LAPIS_ORE, Blocks.LIT_REDSTONE_ORE, Blocks.MOSSY_COBBLESTONE, Blocks.NETHERRACK, Blocks.PACKED_ICE, Blocks.RAIL, Blocks.REDSTONE_ORE, Blocks.SANDSTONE, Blocks.RED_SANDSTONE, Blocks.STONE, Blocks.STONE_SLAB, Blocks.STONE_BUTTON, Blocks.STONE_PRESSURE_PLATE});
     private static final Set<Material> PickaxeMats = Sets.newHashSet(new Material[]{Material.ANVIL, Material.GLASS, Material.ICE, Material.IRON, Material.PACKED_ICE, Material.PISTON, Material.ROCK});
@@ -39,7 +39,8 @@ public class ItemAOE extends ItemTool
     //The material types which the tool can mine in AOE:
     private Set<Material> materials;
 
-    public int textureColour = -1;
+    //Used for the colour tint of the head of the tool texture
+    protected int textureColour = -1;
 
     public ItemAOE(Names.EnumMaterials name)
     {
@@ -175,45 +176,45 @@ public class ItemAOE extends ItemTool
 
     public ItemAOE setMineWidth(int width)
     {
-        this.mineWidth = width;
+        mineWidth = width;
         return this;
     }
 
     public ItemAOE setMineHeight(int height)
     {
-        this.mineHeight = height;
+        mineHeight = height;
         return this;
     }
 
     public ItemAOE setShiftRotating(boolean bool)
     {
-        this.shiftRotating = bool;
+        shiftRotating = bool;
         return this;
     }
 
     public int getMineWidth()
     {
-        return this.mineWidth;
+        return mineWidth;
     }
 
     public int getMineHeight()
     {
-        return this.mineHeight;
+        return mineHeight;
     }
 
     public int getMineDepth()
     {
-        return this.mineDepth;
+        return mineDepth;
     }
 
     public boolean getShiftRotating()
     {
-        return this.shiftRotating;
+        return shiftRotating;
     }
 
     public ItemAOE setItemColour(int colour)
     {
-        this.textureColour = colour;
+        textureColour = colour;
         return this;
     }
 
@@ -225,5 +226,11 @@ public class ItemAOE extends ItemTool
         //Sets the name to Jason's custom name if he crafts the giant hammer.
         if(stack.getItem().equals(SHItems.hammerGiant) && playerIn.getDisplayNameString().equals("8BrickDMG"))
             stack.setStackDisplayName(TextFormatting.LIGHT_PURPLE + Lang.localize(getUnlocalizedName(stack) + ".8brickdmg"));
+    }
+
+    @Override
+    public int getTextureColour()
+    {
+        return textureColour;
     }
 }

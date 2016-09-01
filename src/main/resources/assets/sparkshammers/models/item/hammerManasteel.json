@@ -1,6 +1,3 @@
 {
-	"parent": "sparkshammers:item/itemToolDefault",
-	"textures": {
-		"layer0": "SparksHammers:items/Botania/hammerManasteel"
-	}
+	"parent": "sparkshammers:item/hammer"
 }

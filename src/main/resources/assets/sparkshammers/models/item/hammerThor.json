@@ -1,6 +1,6 @@
 {
 	"parent": "sparkshammers:item/itemToolDefault",
 	"textures": {
-		"layer0": "SparksHammers:items/hammerIron"
+		"layer0": "SparksHammers:items/hammerMjolnir"
 	}
 }

@@ -9,23 +9,38 @@ public class Names
     public enum EnumMaterials
     {
         //Vanilla
-        WOOD(0x755821, Materials.WOOD),
-        STONE(0x898989, Materials.STONE),
-        IRON(0xD8D8D8, Materials.IRON),
-        GOLD(0xCDD050, Materials.GOLD),
-        DIAMOND(0x2BC7AC, Materials.DIAMOND),
+        WOOD(0x866526, Materials.WOOD),
+        STONE(0x9A9A9A, Materials.STONE),
+        IRON(0xFFFFFF, Materials.IRON),
+        GOLD(0xEAEE57, Materials.GOLD),
+        DIAMOND(0x33EBCB, Materials.DIAMOND),
 
-        //Mod Metals
-        COPPER(0xFF976E, ModMaterials.COPPER),
+        //Special
+        GIANT(0x955CC4, Materials.GIANT),
+
+        //Common Mod Metals
+        COPPER(0xFF976E, null),
         SILVER(0xBEBEBE, null),
         TIN(0xFFF3E5, null),
         LEAD(0x737373, null),
         NICKEL(0xE5FFE1, null),
         PLATINUM(0xB0BEBA, null),
         BRONZE(0xEC9D4B, ModMaterials.BRONZE),
-        STEEL(0xCDDADC, ModMaterials.STEEL),
+        STEEL(0xCDDADC, null),
         INVAR(0xCBC6B2, null),
-        ELECTRUM(0xFFF0A4, null);
+        ELECTRUM(0xFFF0A4, null),
+
+        //Mod Materials
+        //Botania
+        MANASTEEL(0xA1E0FF, ModMaterials.MANASTEEL),
+        TERRASTEEL(0x9BF76C, ModMaterials.TERRASTEEL),
+        ELEMENTIUM(0xF8A1FF, ModMaterials.ELEMENTIUM),
+        //EnderIO
+        DARKSTEEL(0x636363, ModMaterials.DARKSTEEL),
+        //MobHunter
+        MACHALITE(0xC1DCEA, ModMaterials.MACHALITE),
+        DRAGONITE(0xCBE0CB, ModMaterials.DRAGONITE),
+        GOSSAMITE(0xE2CFDC, ModMaterials.GOSSAMITE);
 
         public int colour;
         public Item.ToolMaterial material;
@@ -36,9 +51,15 @@ public class Names
             this.material = material;
         }
 
+        @Override
+        public String toString()
+        {
+            return CommonUtils.capitaliseFirstLetter(super.toString().toLowerCase());
+        }
+
         public String unlocToolName(boolean isExcavator)
         {
-            return I18n.format((isExcavator ? Items.EXCAVATOR : Items.HAMMER) + CommonUtils.capitaliseFirstLetter(toString().toLowerCase()));
+            return I18n.format((isExcavator ? Items.EXCAVATOR : Items.HAMMER) + toString());
         }
     }
 
@@ -50,13 +71,6 @@ public class Names
         //<<<< Hammers >>>>
         public static final String HAMMER_HEAD_WOOD = "hammerHeadWood";
 
-        //public static final String HAMMER = "hammer";
-        public static final String HAMMER_WOOD = "hammerWood";
-        public static final String HAMMER_STONE = "hammerStone";
-        public static final String HAMMER_IRON = "hammerIron";
-        public static final String HAMMER_GOLD = "hammerGold";
-        public static final String HAMMER_DIAMOND = "hammerDiamond";
-
         public static final String HAMMER_THOR = "hammerThor";
         public static final String HAMMER_MINI = "hammerMini";
         public static final String HAMMER_GIANT = "hammerGiant";
@@ -65,43 +79,8 @@ public class Names
         //<<<< Excavators >>>>
         public static final String EXCAVATOR_HEAD_WOOD = "excavatorHeadWood";
 
-        public static final String EXCAVATOR_WOOD = "excavatorWood";
-        public static final String EXCAVATOR_STONE = "excavatorStone";
-        public static final String EXCAVATOR_IRON = "excavatorIron";
-        public static final String EXCAVATOR_GOLD = "excavatorGold";
-        public static final String EXCAVATOR_DIAMOND = "excavatorDiamond";
-
         //<<<< Debug >>>>
         public static final String DEBUG = "debug";
-    }
-
-    public static class ModItems
-    {
-        //Botania
-        public static final String HAMMER_MANASTEEL = "hammerManasteel";
-        public static final String HAMMER_TERRASTEEL = "hammerTerrasteel";
-        public static final String HAMMER_ELEMENTIUM = "hammerElementium";
-        public static final String EXCAVATOR_MANASTEEL = "excavatorManasteel";
-        public static final String EXCAVATOR_TERRASTEEL = "excavatorTerrasteel";
-        public static final String EXCAVATOR_ELEMENTIUM = "excavatorElementium";
-        //Extra Utilities
-        public static final String HAMMER_HEAD_UNSTABLE = "hammerHeadUnstable";
-        public static final String HAMMER_UNSTABLE = "hammerUnstable";
-        public static final String EXCAVATOR_HEAD_UNSTABLE = "excavatorHeadUnstable";
-        public static final String EXCAVATOR_UNSTABLE = "excavatorUnstable";
-        //EnderIO
-        public static final String HAMMER_DARKSTEEL = "hammerDarksteel";
-        public static final String EXCAVATOR_DARKSTEEL = "excavatorDarksteel";
-        //MobHunter
-        public static final String HAMMER_MACHALITE = "hammerMachalite";
-        public static final String HAMMER_DRAGONITE = "hammerDragonite";
-        public static final String HAMMER_GOSSAMITE = "hammerGossamite";
-        public static final String EXCAVATOR_MACHALITE = "excavatorMachalite";
-        public static final String EXCAVATOR_DRAGONITE = "excavatorDragonite";
-        public static final String EXCAVATOR_GOSSAMITE = "excavatorGossamite";
-        //Misc
-        public static final String HAMMER_BRONZE = "hammerBronze";
-        public static final String EXCAVATOR_BRONZE = "excavatorBronze";
     }
 
     public static class Blocks
@@ -123,8 +102,6 @@ public class Names
         public static final String INGOT_MANASTEEL = "ingotManasteel";
         public static final String INGOT_TERRASTEEL = "ingotTerrasteel";
         public static final String INGOT_ELEMENTIUM = "ingotElvenElementium";
-        public static final String INGOT_UNSTABLE = "ingotUnstable";
-        public static final String INGOT_DARKSTEEL = "ingotDarkSteel";
         public static final String INGOT_BRONZE = "ingotBronze";
         public static final String INGOT_MACHALITE = "ingotMachalite";
         public static final String INGOT_DRAGONITE = "ingotDragonite";

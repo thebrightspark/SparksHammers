@@ -1,6 +1,3 @@
 {
-	"parent": "sparkshammers:item/itemToolDefault",
-	"textures": {
-		"layer0": "SparksHammers:items/MobHunter/hammerDragonite"
-	}
+	"parent": "sparkshammers:item/hammer"
 }
