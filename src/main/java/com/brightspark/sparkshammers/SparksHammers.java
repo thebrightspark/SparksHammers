@@ -60,6 +60,9 @@ public class SparksHammers
         ConfigurationHandler.init(event.getSuggestedConfigurationFile());
         MinecraftForge.EVENT_BUS.register(new ConfigurationHandler());
 
+        if(Config.includeOtherModItems)
+            //Initialise the materials before the Names enum is accessed, and so avoid the enum setting its materials to null.
+            ModMaterials.init();
         SHItems.regItems();
         SHBlocks.regBlocks();
     }
@@ -69,21 +72,19 @@ public class SparksHammers
     {
         //Initialize textures/models, GUIs, tile entities, recipies, event handlers here
 
+        //Adds mod material made items if enabled in config
+        if(Config.includeOtherModItems)
+        {
+            SHModItems.regItems();
+            if(event.getSide() == Side.CLIENT)
+                SHModItems.regModels();
+        }
+
         //Registers all of the item and block textures
         if(event.getSide() == Side.CLIENT)
         {
             SHItems.regModels();
             SHBlocks.regModels();
-        }
-
-        //Adds mod material made items if enabled in config
-        if(Config.includeOtherModItems)
-        {
-            ModMaterials.init();
-            SHModItems.regItems();
-            //Registers mod textures
-            if(event.getSide() == Side.CLIENT)
-                SHModItems.regModels();
         }
 
         SHRecipes.init(); //Adds vanilla crafting table recipes

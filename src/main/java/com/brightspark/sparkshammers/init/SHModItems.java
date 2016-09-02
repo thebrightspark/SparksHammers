@@ -27,9 +27,9 @@ public class SHModItems
     {
         for(Names.EnumMaterials mat : Names.EnumMaterials.values())
         {
-            if(mat.dependantOreDic.equals(Names.EnumMaterials.OTHER_DEPENDENCY))
+            if(mat.dependantOreDic == null || mat.dependantOreDic.equals(Names.EnumMaterials.OTHER_DEPENDENCY))
                 continue;
-            if(mat.dependantOreDic != null && LoaderHelper.doesOreExist(mat.dependantOreDic))
+            if(LoaderHelper.doesOreExist(mat.dependantOreDic))
             {
                 switch(mat)
                 {
