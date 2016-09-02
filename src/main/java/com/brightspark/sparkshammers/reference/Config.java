@@ -36,6 +36,14 @@ public class Config
     public static final int netherStarHammerDistanceMin = 3;
     public static final int netherStarHammerDistanceMax = 100;
 
+    /**
+     * Whether shrine structures should be generated in the world to find Mjolnir in.
+     */
+    public static boolean shouldGenerateMjolnirShrines = true;
+    public static int mjolnirShrineRarity = 50;
+    public static int mjolnirShrineMinY = 125;
+    public static boolean mjolnirShrineDebug = false;
+
     /*
      * Values for different Tool Materials.
      * The auto updating of Tool Materials can be turn on or off.
@@ -52,6 +60,18 @@ public class Config
     public static float damageMax = 100f;
     public static int enchantabilityMin = 0;
     public static int enchantabilityMax = 50;
+
+    /**
+     * Mjolnir
+     */
+    public static int mjolnirHarvestLevel = harvestLevelMax;
+    public static float mjolnirEfficiency = 10f;
+    public static float mjolnirDamageVsEntity = 10f;
+    public static boolean mjolnirPickupNeedsDragonAchieve = true;
+
+    /*
+     * Common mod metals
+     */
 
     public static int copperHarvestLevel = 1;
     public static int copperMaxUses = (int) (128*toolDurabilityModifier);
@@ -154,31 +174,4 @@ public class Config
     public static float gossamiteEfficiency = 8f*toolSpeedModifier;
     public static float gossamiteDamageVsEntity = 5f;
     public static int gossamiteEnchantability = 15;
-
-    /**
-     * Mjolnir
-     */
-    public static int mjolnirHarvestLevel = harvestLevelMax;
-    public static float mjolnirEfficiency = 10f;
-    public static float mjolnirDamageVsEntity = 10f;
-
-    /**
-     * Whether shrine structures should be generated in the world to find Mjolnir in.
-     */
-    public static boolean shouldGenerateMjolnirShrines = true;
-    public static int mjolnirShrineRarity = 50;
-    public static int mjolnirShrineMinY = 125;
-    public static boolean mjolnirShrineDebug = false;
-
-    /**
-     * Whether Mjolnir should be added to dungeon loot.
-     */
-    public static boolean shouldAddMjolnirToLoot = true;
-    public static int mjolnirLootRarity = 1;
-
-    /**
-     * Whether wooden and stone hammers and excavators should be added to mineshaft loot.
-     */
-    public static boolean shouldAddMineshaftLoot = true;
-    public static int mineshaftLootRarity = 1;
 }

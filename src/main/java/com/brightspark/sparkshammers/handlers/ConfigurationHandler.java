@@ -35,15 +35,6 @@ public class ConfigurationHandler
         Config.includeOtherModItems = configuration.getBoolean("includeOtherModItems", Categories.GENERAL, true, "Whether to add tools made from other mod materials into the game.");
         Config.toolDurabilityModifier = configuration.getFloat("toolDurabilityModifier", Categories.TOOLS, Config.toolDurabilityModifier, Config.toolDurabilityModifierMin, Config.toolDurabilityModifierMax, "Modifier for hammers and excavators made of vanilla materials to adjust durability.");
         Config.toolSpeedModifier = configuration.getFloat("toolSpeedModifier", Categories.TOOLS, Config.toolSpeedModifier, Config.toolSpeedModifierMin, Config.toolSpeedModifierMax, "Modifier for hammers and excavators made of vanilla materials to adjust mining speed.");
-        Config.netherStarHammerDurability = configuration.getInt("netherStarHammerDurability", Categories.TOOLS, Config.netherStarHammerDurability, Config.netherStarHammerDurabilityMin, Config.netherStarHammerDurabilityMax, "Durability of the Nether Star made hammer");
-        Config.netherStarHammerDistance = configuration.getInt("netherStarHammerDistance", Categories.TOOLS, Config.netherStarHammerDistance, Config.netherStarHammerDistanceMin, Config.netherStarHammerDistanceMax, "Max mining distance of the Nether Star made hammer");
-
-        /*
-         * Mjolnir Hammer
-         */
-        Config.mjolnirHarvestLevel = configuration.getInt("mjolnirHarvestLevel", Categories.SPECIFIC_TOOLS, Config.mjolnirHarvestLevel, Config.harvestLevelMin, Config.harvestLevelMax, "");
-        Config.mjolnirEfficiency = configuration.getFloat("mjolnirEfficiency", Categories.SPECIFIC_TOOLS, Config.mjolnirEfficiency, Config.efficiencyMin, Config.efficiencyMax, "");
-        Config.mjolnirDamageVsEntity = configuration.getFloat("mjolnirDamageVsEntity", Categories.SPECIFIC_TOOLS, Config.mjolnirDamageVsEntity, Config.damageMin, Config.damageMax, "");
 
         /*
          * World Generation
@@ -53,13 +44,22 @@ public class ConfigurationHandler
         Config.mjolnirShrineMinY = configuration.getInt("mjolnirShrineMinY", Categories.WORLD_GEN, Config.mjolnirShrineMinY, 0, 245, "Minimum Y coordinate value for the shrine to spawn at.");
         Config.mjolnirShrineDebug = configuration.getBoolean("mjolnirShrineDebug", Categories.WORLD_GEN, Config.mjolnirShrineDebug, "When true, a log will be printed in the console every time a shrine is generated with it's coordinates.");
 
-        Config.shouldAddMjolnirToLoot = configuration.getBoolean("shouldAddMjolnirToLoot", Categories.WORLD_GEN, Config.shouldAddMjolnirToLoot, "Whether Mjolnir should be added to desert pyramid loot.");
-        Config.mjolnirLootRarity = configuration.getInt("mjolnirLootRarity", Categories.WORLD_GEN, Config.mjolnirLootRarity, Config.maxUsesMin, Config.maxUsesMax, "Chance of finding Mjolnir (Lower is less chance).");
-        Config.shouldAddMineshaftLoot = configuration.getBoolean("shouldAddMineshaftLoot", Categories.WORLD_GEN, Config.shouldAddMineshaftLoot, "Whether wooden and stone hammers and excavators should be added to mineshaft loot.");
-        Config.mineshaftLootRarity = configuration.getInt("mineshaftLootRarity", Categories.WORLD_GEN, Config.mineshaftLootRarity, Config.maxUsesMin, Config.maxUsesMax, "Chance of finding loot (Lower is less chance).");
+        /*
+         * Nether Star Hammer
+         */
+        Config.netherStarHammerDurability = configuration.getInt("netherStarHammerDurability", Categories.SPECIFIC_TOOLS, Config.netherStarHammerDurability, Config.netherStarHammerDurabilityMin, Config.netherStarHammerDurabilityMax, "Durability of the Nether Star made hammer");
+        Config.netherStarHammerDistance = configuration.getInt("netherStarHammerDistance", Categories.SPECIFIC_TOOLS, Config.netherStarHammerDistance, Config.netherStarHammerDistanceMin, Config.netherStarHammerDistanceMax, "Max mining distance of the Nether Star made hammer");
 
         /*
-         * Tool Specific Configs
+         * Mjolnir Hammer
+         */
+        Config.mjolnirHarvestLevel = configuration.getInt("mjolnirHarvestLevel", Categories.SPECIFIC_TOOLS, Config.mjolnirHarvestLevel, Config.harvestLevelMin, Config.harvestLevelMax, "");
+        Config.mjolnirEfficiency = configuration.getFloat("mjolnirEfficiency", Categories.SPECIFIC_TOOLS, Config.mjolnirEfficiency, Config.efficiencyMin, Config.efficiencyMax, "");
+        Config.mjolnirDamageVsEntity = configuration.getFloat("mjolnirDamageVsEntity", Categories.SPECIFIC_TOOLS, Config.mjolnirDamageVsEntity, Config.damageMin, Config.damageMax, "");
+        Config.mjolnirPickupNeedsDragonAchieve = configuration.getBoolean("mjolnirPickupNeedsDragonAchieve", Categories.SPECIFIC_TOOLS, Config.mjolnirPickupNeedsDragonAchieve, "Whether the player needs to have gotten the 'End.' achievement to be able to pickup Mjolnir.");
+
+        /*
+         * Common Mod Metal Tools
          */
 
         Config.copperHarvestLevel = configuration.getInt("copperHarvestLevel", Categories.SPECIFIC_TOOLS, Config.copperHarvestLevel, Config.harvestLevelMin, Config.harvestLevelMax, "");

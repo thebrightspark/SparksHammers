@@ -5,6 +5,7 @@ import com.brightspark.sparkshammers.entity.EntityFallingHammer;
 import com.brightspark.sparkshammers.init.SHAchievements;
 import com.brightspark.sparkshammers.init.SHItems;
 import com.brightspark.sparkshammers.item.ItemHammerThor;
+import com.brightspark.sparkshammers.reference.Config;
 import com.brightspark.sparkshammers.reference.Names;
 import com.brightspark.sparkshammers.tileentity.TileHammer;
 import net.minecraft.block.Block;
@@ -102,7 +103,7 @@ public class BlockHammer extends BlockContainer
             if(!hammer.hasOwner())
                 player.addStat(SHAchievements.mjolnir);
             //Player needs to have killed the dragon to be worthy
-            if((!hammer.hasOwner() || hammer.isOwner(player)) && player.hasAchievement(AchievementList.THE_END2))
+            if((!hammer.hasOwner() || hammer.isOwner(player)) && (!Config.mjolnirPickupNeedsDragonAchieve || player.hasAchievement(AchievementList.THE_END2)))
             {
                 //Player is worthy
                 ItemStack givenHammer = new ItemStack(SHItems.hammerThor);

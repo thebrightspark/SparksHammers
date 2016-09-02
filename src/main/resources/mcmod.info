@@ -6,8 +6,8 @@
           "modid": "SparksHammers",
           "name": "Spark's Hammers",
           "description": "Adds hammers like from Tinkers Construct but using vanilla resources and in the style of vanilla tools.",
-          "version": "$version",
-          "mcversion": "$mcversion",
+          "version": "${version}",
+          "mcversion": "${mcversion}",
           "url": "http://minecraft.curseforge.com/projects/sparks-hammers",
           "updateUrl": "",
           "authorList": ["bright_spark"],
@@ -16,7 +16,7 @@
           "screenshots": [],
           "parent": "",
           "dependants": [],
-          "dependencies": ["EnderIO", "MobHunter", "JEI"],
+          "dependencies": ["MobHunter", "JEI"],
           "requiredMods": [],
           "useDependencyInformation": true
         }
