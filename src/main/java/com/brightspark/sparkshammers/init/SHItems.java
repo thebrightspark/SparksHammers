@@ -18,7 +18,7 @@ public class SHItems
     //Contains all items
     public static List<Item> ALL_ITEMS = new ArrayList<Item>();
     //Contains all of the AOE tools
-    //public static List<ItemAOE> ALL_AOE_TOOLS = new ArrayList<ItemAOE>();
+    public static List<ItemAOE> ALL_AOE_TOOLS = new ArrayList<ItemAOE>();
     //Contains all of the items which use a basic coloured texture
     public static List<Item> COLOURED_ITEMS = new ArrayList<Item>();
 
@@ -38,8 +38,8 @@ public class SHItems
     {
         GameRegistry.register(item);
         ALL_ITEMS.add(item);
-        //if(item instanceof ItemAOE)
-        //    ALL_AOE_TOOLS.add((ItemAOE) item);
+        if(item instanceof ItemAOE)
+            ALL_AOE_TOOLS.add((ItemAOE) item);
         if(item instanceof IColourable && ((IColourable)item).getTextureColour() >= 0)
             COLOURED_ITEMS.add(item);
     }

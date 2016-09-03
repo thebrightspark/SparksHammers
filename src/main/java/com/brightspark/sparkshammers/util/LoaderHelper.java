@@ -26,7 +26,6 @@ public class LoaderHelper
      */
     public static boolean isModLoaded(String modName)
     {
-
         //Check config
         if(!Config.includeOtherModItems)
             return false;

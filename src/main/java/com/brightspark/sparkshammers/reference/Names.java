@@ -9,11 +9,11 @@ public class Names
     public enum EnumMaterials
     {
         //Vanilla
-        WOOD(0x866526, Materials.WOOD),
-        STONE(0x9A9A9A, Materials.STONE),
-        IRON(0xFFFFFF, Materials.IRON),
-        GOLD(0xEAEE57, Materials.GOLD),
-        DIAMOND(0x33EBCB, Materials.DIAMOND),
+        WOOD(0x866526, Materials.WOOD, "plankWood"),
+        STONE(0x9A9A9A, Materials.STONE, "cobblestone"),
+        IRON(0xFFFFFF, Materials.IRON, "ingotIron"),
+        GOLD(0xEAEE57, Materials.GOLD, "ingotGold"),
+        DIAMOND(0x33EBCB, Materials.DIAMOND, "gemDiamond"),
 
         //Special
         GIANT(0x955CC4, Materials.GIANT),
@@ -100,7 +100,7 @@ public class Names
     public static class Mods
     {
         public static final String BOTANIA = "Botania";
-        public static final String EXTRA_UTILITIES = "extrautils2";
+        public static final String EXTRA_UTILITIES = "ExtraUtils2";
         public static final String ENDERIO = "EnderIO";
         public static final String MISC = "Misc";
     }
@@ -128,6 +128,6 @@ public class Names
 
     public static class ModItemIds
     {
-        public static final String COMPRESSED_COBBLE = Mods.EXTRA_UTILITIES + "CompressedCobblestone";
+        public static final String COMPRESSED_COBBLE = Mods.EXTRA_UTILITIES + ":CompressedCobblestone";
     }
 }

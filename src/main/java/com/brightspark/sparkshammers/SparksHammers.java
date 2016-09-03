@@ -1,7 +1,6 @@
 package com.brightspark.sparkshammers;
 
 import com.brightspark.sparkshammers.gui.GuiHandler;
-import com.brightspark.sparkshammers.hammerCrafting.HammerCraftingManager;
 import com.brightspark.sparkshammers.handlers.AchieveEventHandler;
 import com.brightspark.sparkshammers.handlers.BlockEventHandler;
 import com.brightspark.sparkshammers.handlers.ConfigurationHandler;
@@ -88,7 +87,6 @@ public class SparksHammers
         }
 
         SHRecipes.init(); //Adds vanilla crafting table recipes
-        HammerCraftingManager.getInstance(); //Calls the method so that the recipes are created.
         SHTileEntities.init();
 
         NetworkRegistry.INSTANCE.registerGuiHandler(this, new GuiHandler());
@@ -133,9 +131,7 @@ public class SparksHammers
         //Prints out all of the items in the ore dictionary
         /*
         for(String ore : OreDictionary.getOreNames())
-        {
             LogHelper.info(ore);
-        }
         */
 
         //This displays all item IDs:

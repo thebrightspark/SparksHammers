@@ -31,12 +31,13 @@ public class ItemAOE extends ItemTool implements IColourable
     private static final Set<Material> ShovelMats = Sets.newHashSet(new Material[]{Material.GRASS, Material.GROUND, Material.SAND, Material.SNOW, Material.CRAFTED_SNOW, Material.CLAY});
 
     //True if a hammer, false if an excavator
-    private boolean isExcavator;
+    public final boolean isExcavator;
     private int mineWidth = 1;
     private int mineHeight = 1;
     private int mineDepth = 0; //Depth (behind block)
     private boolean infiniteUse;
     private boolean shiftRotating = false;
+    private String dependantOreDic = null;
 
     //The material types which the tool can mine in AOE:
     private Set<Material> materials;
@@ -58,6 +59,7 @@ public class ItemAOE extends ItemTool implements IColourable
     {
         this(name.unlocToolName(isExcavator), name.material, isExcavator, isInfiniteUse);
         textureColour = name.colour;
+        dependantOreDic = name.dependantOreDic;
     }
 
     public ItemAOE(String name, ToolMaterial material)
@@ -243,5 +245,10 @@ public class ItemAOE extends ItemTool implements IColourable
     public int getTextureColour()
     {
         return textureColour;
+    }
+
+    public String getDependantOreDic()
+    {
+        return dependantOreDic;
     }
 }
