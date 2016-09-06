@@ -5,7 +5,7 @@ public class Reference
     //TODO: In 1.11, change this to "sparkshammers"
     public static final String MOD_ID = "SparksHammers";
     public static final String MOD_NAME = "Spark's Hammers";
-    public static final String VERSION = "1.10.2-1.3";
+    public static final String VERSION = "1.10.2-1.3.1";
     public static final String DEPENDENCIES =
             //"after:EnderIO;" +
             "after:MobHunter;" +
