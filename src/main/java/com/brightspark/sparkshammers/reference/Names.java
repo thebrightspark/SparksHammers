@@ -1,7 +1,6 @@
 package com.brightspark.sparkshammers.reference;
 
 import com.brightspark.sparkshammers.util.CommonUtils;
-import net.minecraft.client.resources.I18n;
 import net.minecraft.item.Item;
 
 public class Names
@@ -67,7 +66,7 @@ public class Names
 
         public String unlocToolName(boolean isExcavator)
         {
-            return I18n.format((isExcavator ? Items.EXCAVATOR : Items.HAMMER) + toString());
+            return (isExcavator ? Items.EXCAVATOR : Items.HAMMER) + toString();
         }
     }
 
@@ -81,7 +80,6 @@ public class Names
 
         public static final String HAMMER_THOR = "hammerThor";
         public static final String HAMMER_MINI = "hammerMini";
-        public static final String HAMMER_GIANT = "hammerGiant";
         public static final String HAMMER_NETHERSTAR = "hammerNetherStar";
 
         //<<<< Excavators >>>>

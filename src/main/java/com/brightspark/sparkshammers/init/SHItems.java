@@ -9,6 +9,8 @@ import net.minecraft.client.renderer.color.IItemColor;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.common.registry.GameRegistry;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,9 +18,9 @@ import java.util.List;
 public class SHItems
 {
     //Contains all items
-    public static List<Item> ALL_ITEMS = new ArrayList<Item>();
+    public static List<Item> ITEMS = new ArrayList<Item>();
     //Contains all of the AOE tools
-    public static List<ItemAOE> ALL_AOE_TOOLS = new ArrayList<ItemAOE>();
+    public static List<ItemAOE> AOE_TOOLS = new ArrayList<ItemAOE>();
     //Contains all of the items which use a basic coloured texture
     public static List<Item> COLOURED_ITEMS = new ArrayList<Item>();
 
@@ -37,9 +39,9 @@ public class SHItems
     public static void regItem(Item item)
     {
         GameRegistry.register(item);
-        ALL_ITEMS.add(item);
+        ITEMS.add(item);
         if(item instanceof ItemAOE)
-            ALL_AOE_TOOLS.add((ItemAOE) item);
+            AOE_TOOLS.add((ItemAOE) item);
         if(item instanceof IColourable && ((IColourable)item).getTextureColour() >= 0)
             COLOURED_ITEMS.add(item);
     }
@@ -75,10 +77,11 @@ public class SHItems
         regItem(debug = new ItemDebug());
     }
 
+    @SideOnly(Side.CLIENT)
     public static void regModels()
     {
         //Register all item models
-        for(Item tool : ALL_ITEMS)
+        for(Item tool : ITEMS)
             ClientUtils.regModel(tool);
 
         //Register item colours

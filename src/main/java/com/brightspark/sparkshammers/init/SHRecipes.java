@@ -36,7 +36,7 @@ public class SHRecipes
         HammerCraftingManager hammerCraft = HammerCraftingManager.getInstance();
 
         //Create recipes for all tools which have an ore dictionary ready for the item ingredient
-        for(ItemAOE tool : SHItems.ALL_AOE_TOOLS)
+        for(ItemAOE tool : SHItems.AOE_TOOLS)
         {
             String oreDic = tool.getDependantOreDic();
             if(oreDic == null)
