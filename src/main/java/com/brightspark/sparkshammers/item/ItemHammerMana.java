@@ -16,42 +16,41 @@ import vazkii.botania.api.mana.ManaItemHandler;
  * com.brightspark.sparkshammers.item
  * Oct 15, 2016
  */
-
-public class ItemHammerMana extends ItemAOE implements IManaUsingItem {
-
+public class ItemHammerMana extends ItemAOE implements IManaUsingItem
+{
 	private static int damageToMana = 60; // This is the default value for
 											// Terrasteel 1 Damage --> Mana
 											// ratio
 
-	public ItemHammerMana(EnumMaterials manasteel) {
+	public ItemHammerMana(EnumMaterials manasteel)
+    {
 		super(manasteel);
 	}
 
-	public ItemHammerMana(EnumMaterials manasteel, boolean isExcavator) {
+	public ItemHammerMana(EnumMaterials manasteel, boolean isExcavator)
+    {
 		super(manasteel, isExcavator);
 	}
 
 	/**
-	 * Calaculate mana cost and request it. If not enough, we damage the tool
+	 * Calculate mana cost and request it. If not enough, we damage the tool
 	 * normally.
 	 */
-
-	public static void damageItem(ItemStack stack, int dmg, EntityLivingBase entity) {
-
+	public static void damageItem(ItemStack stack, int dmg, EntityLivingBase entity)
+    {
 		int manaToRequest = dmg * damageToMana;
-		boolean manaRequested = entity instanceof EntityPlayer
-				? ManaItemHandler.requestManaExactForTool(stack, (EntityPlayer) entity, manaToRequest, true) : false;
+		boolean manaRequested = entity instanceof EntityPlayer && ManaItemHandler.requestManaExactForTool(stack, (EntityPlayer) entity, manaToRequest, true);
 
-		if (!manaRequested) {
+		if (!manaRequested)
 			stack.damageItem(dmg, entity);
-		}
 	}
 
 	/**
 	 * Item uses Mana, so we display the Mana bar
 	 */
 	@Override
-	public boolean usesMana(ItemStack arg0) {
+	public boolean usesMana(ItemStack stack)
+    {
 		return true;
 	}
 
@@ -60,22 +59,18 @@ public class ItemHammerMana extends ItemAOE implements IManaUsingItem {
 	 * If we have a mana providing item such as a mana tablet available, do not
 	 * damage the tool
 	 */
-
 	@Override
-	public boolean hitEntity(ItemStack stack, EntityLivingBase entityHit, EntityLivingBase player) {
-
+	public boolean hitEntity(ItemStack stack, EntityLivingBase entityHit, EntityLivingBase player)
+    {
 		damageItem(stack, 1, player);
 		return true;
 	}
 
 	@Override
-	public boolean onBlockDestroyed(ItemStack stack, World world, IBlockState state, BlockPos pos,
-			EntityLivingBase player) {
-		if (state.getBlockHardness(world, pos) != 0F) {
-
+	public boolean onBlockDestroyed(ItemStack stack, World world, IBlockState state, BlockPos pos, EntityLivingBase player)
+    {
+		if (state.getBlockHardness(world, pos) != 0F)
 			damageItem(stack, 1, player);
-
-		}
 		return true;
 	}
 
@@ -84,13 +79,11 @@ public class ItemHammerMana extends ItemAOE implements IManaUsingItem {
 	 * Handle Hammer/Excavator repair Null checks, check if we have enough mana
 	 * Uses default Botania values (double the mana ratio)
 	 */
-
 	@Override
-	public void onUpdate(ItemStack stack, World worldIn, Entity entityIn, int itemSlot, boolean isSelected) {
-
+	public void onUpdate(ItemStack stack, World worldIn, Entity entityIn, int itemSlot, boolean isSelected)
+    {
 		if (!worldIn.isRemote && entityIn instanceof EntityPlayer && stack.getItemDamage() > 0
 				&& ManaItemHandler.requestManaExactForTool(stack, (EntityPlayer) entityIn, damageToMana * 2, true))
 			stack.setItemDamage(stack.getItemDamage() - 1);
 	}
-
 }
