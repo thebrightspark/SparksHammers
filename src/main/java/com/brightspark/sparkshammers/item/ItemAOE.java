@@ -6,6 +6,7 @@ import com.brightspark.sparkshammers.init.SHItems;
 import com.brightspark.sparkshammers.reference.Names;
 import com.brightspark.sparkshammers.util.CommonUtils;
 import com.brightspark.sparkshammers.util.Lang;
+import com.brightspark.sparkshammers.util.LogHelper;
 import com.google.common.collect.Sets;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -227,8 +228,12 @@ public class ItemAOE extends ItemTool implements IColourable
      */
     public void onCreated(ItemStack stack, World worldIn, EntityPlayer player)
     {
+        super.onCreated(stack, worldIn, player);
+
         //Sets the name to Jason's custom name if he crafts the giant hammer.
-        if(stack.getItem().equals(SHItems.hammerGiant) && player.getDisplayNameString().equals("8BrickDMG"))
+        //TODO: Need to sort this display name out...
+        LogHelper.info("Player name: " + player.getDisplayNameString());
+        if(worldIn.isRemote && stack.getItem().equals(SHItems.hammerGiant) && player.getDisplayNameString().equals("bright_spark"))
             stack.setStackDisplayName(TextFormatting.LIGHT_PURPLE + Lang.localize(getUnlocalizedName(stack) + ".8brickdmg"));
 
         //Handle achievements

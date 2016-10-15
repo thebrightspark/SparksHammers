@@ -24,6 +24,7 @@ public class SHBlocks
             @Override
             public void onCreated(ItemStack stack, World worldIn, EntityPlayer player)
             {
+                super.onCreated(stack, worldIn, player);
                 //Handle achievements
                 Item item = stack.getItem();
                 if(item.equals(Item.getItemFromBlock(SHBlocks.blockHammerCraft)))
