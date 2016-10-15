@@ -3,8 +3,8 @@ package com.brightspark.sparkshammers.gui;
 import com.brightspark.sparkshammers.container.ContainerHammerCraft;
 import com.brightspark.sparkshammers.init.SHBlocks;
 import com.brightspark.sparkshammers.reference.Reference;
-import com.brightspark.sparkshammers.util.Lang;
 import net.minecraft.client.gui.inventory.GuiContainer;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
@@ -34,7 +34,7 @@ public class GuiHammerCraft extends GuiContainer
     protected void drawGuiContainerForegroundLayer(int p_146979_1_, int p_146979_2_)
     {
         //Draw text
-        fontRendererObj.drawString(Lang.localize(SHBlocks.blockHammerCraft.getUnlocalizedName() + ".name"), 12, 6, 4210752);
-        fontRendererObj.drawString(Lang.localize("container.inventory"), 12, this.ySize - 92, 4210752);
+        fontRendererObj.drawString(I18n.format(SHBlocks.blockHammerCraft.getUnlocalizedName() + ".name"), 12, 6, 4210752);
+        fontRendererObj.drawString(I18n.format("container.inventory"), 12, this.ySize - 92, 4210752);
     }
 }

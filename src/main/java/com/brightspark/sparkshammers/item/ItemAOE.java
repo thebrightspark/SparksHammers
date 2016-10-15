@@ -4,9 +4,9 @@ import com.brightspark.sparkshammers.SparksHammers;
 import com.brightspark.sparkshammers.init.SHAchievements;
 import com.brightspark.sparkshammers.init.SHItems;
 import com.brightspark.sparkshammers.reference.Names;
+import com.brightspark.sparkshammers.reference.Reference;
 import com.brightspark.sparkshammers.util.CommonUtils;
-import com.brightspark.sparkshammers.util.Lang;
-import com.brightspark.sparkshammers.util.LogHelper;
+import com.brightspark.sparkshammers.util.NBTHelper;
 import com.google.common.collect.Sets;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -26,10 +26,10 @@ import java.util.Set;
 
 public class ItemAOE extends ItemTool implements IColourable
 {
-    private static final Set<Block> PickaxeBlocks = Sets.newHashSet(new Block[] {Blocks.ACTIVATOR_RAIL, Blocks.COAL_ORE, Blocks.COBBLESTONE, Blocks.DETECTOR_RAIL, Blocks.DIAMOND_BLOCK, Blocks.DIAMOND_ORE, Blocks.DOUBLE_STONE_SLAB, Blocks.GOLDEN_RAIL, Blocks.GOLD_BLOCK, Blocks.GOLD_ORE, Blocks.ICE, Blocks.IRON_BLOCK, Blocks.IRON_ORE, Blocks.LAPIS_BLOCK, Blocks.LAPIS_ORE, Blocks.LIT_REDSTONE_ORE, Blocks.MOSSY_COBBLESTONE, Blocks.NETHERRACK, Blocks.PACKED_ICE, Blocks.RAIL, Blocks.REDSTONE_ORE, Blocks.SANDSTONE, Blocks.RED_SANDSTONE, Blocks.STONE, Blocks.STONE_SLAB, Blocks.STONE_BUTTON, Blocks.STONE_PRESSURE_PLATE});
-    private static final Set<Material> PickaxeMats = Sets.newHashSet(new Material[]{Material.ANVIL, Material.GLASS, Material.ICE, Material.IRON, Material.PACKED_ICE, Material.PISTON, Material.ROCK});
-    private static final Set<Block> ShovelBlocks = Sets.newHashSet(new Block[] {Blocks.CLAY, Blocks.DIRT, Blocks.FARMLAND, Blocks.GRASS, Blocks.GRAVEL, Blocks.MYCELIUM, Blocks.SAND, Blocks.SNOW, Blocks.SNOW_LAYER, Blocks.SOUL_SAND, Blocks.GRASS_PATH});
-    private static final Set<Material> ShovelMats = Sets.newHashSet(new Material[]{Material.GRASS, Material.GROUND, Material.SAND, Material.SNOW, Material.CRAFTED_SNOW, Material.CLAY});
+    private static final Set<Block> PickaxeBlocks = Sets.newHashSet(Blocks.ACTIVATOR_RAIL, Blocks.COAL_ORE, Blocks.COBBLESTONE, Blocks.DETECTOR_RAIL, Blocks.DIAMOND_BLOCK, Blocks.DIAMOND_ORE, Blocks.DOUBLE_STONE_SLAB, Blocks.GOLDEN_RAIL, Blocks.GOLD_BLOCK, Blocks.GOLD_ORE, Blocks.ICE, Blocks.IRON_BLOCK, Blocks.IRON_ORE, Blocks.LAPIS_BLOCK, Blocks.LAPIS_ORE, Blocks.LIT_REDSTONE_ORE, Blocks.MOSSY_COBBLESTONE, Blocks.NETHERRACK, Blocks.PACKED_ICE, Blocks.RAIL, Blocks.REDSTONE_ORE, Blocks.SANDSTONE, Blocks.RED_SANDSTONE, Blocks.STONE, Blocks.STONE_SLAB, Blocks.STONE_BUTTON, Blocks.STONE_PRESSURE_PLATE);
+    private static final Set<Material> PickaxeMats = Sets.newHashSet(Material.ANVIL, Material.GLASS, Material.ICE, Material.IRON, Material.PACKED_ICE, Material.PISTON, Material.ROCK);
+    private static final Set<Block> ShovelBlocks = Sets.newHashSet(Blocks.CLAY, Blocks.DIRT, Blocks.FARMLAND, Blocks.GRASS, Blocks.GRAVEL, Blocks.MYCELIUM, Blocks.SAND, Blocks.SNOW, Blocks.SNOW_LAYER, Blocks.SOUL_SAND, Blocks.GRASS_PATH);
+    private static final Set<Material> ShovelMats = Sets.newHashSet(Material.GRASS, Material.GROUND, Material.SAND, Material.SNOW, Material.CRAFTED_SNOW, Material.CLAY);
 
     //True if a hammer, false if an excavator
     public final boolean isExcavator;
@@ -39,6 +39,9 @@ public class ItemAOE extends ItemTool implements IColourable
     private boolean infiniteUse;
     private boolean shiftRotating = false;
     private String dependantOreDic = null;
+
+    protected static final String KEY_CUSTOM_NAME = "customName";
+    protected static final String KEY_CUSTOM_FORMATTING = "customFormatting";
 
     //The material types which the tool can mine in AOE:
     private Set<Material> materials;
@@ -85,8 +88,29 @@ public class ItemAOE extends ItemTool implements IColourable
     }
 
     /**
+     * Returns the unlocalized name of this item. This version accepts an ItemStack so different stacks can have
+     * different names based on their damage or NBT.
+     */
+    @Override
+    public String getUnlocalizedName(ItemStack stack)
+    {
+        //Get custom name if there's one in the NBT
+        String customName = NBTHelper.getString(stack, KEY_CUSTOM_NAME);
+        return customName.equals("") ? super.getUnlocalizedName(stack) : getUnlocalizedName() + "." + customName;
+    }
+
+    @Override
+    public String getItemStackDisplayName(ItemStack stack)
+    {
+        //Get custom colour formatting if there's one in the NBT
+        String customFormatting = NBTHelper.getString(stack, KEY_CUSTOM_FORMATTING);
+        return customFormatting.equals("") ? super.getItemStackDisplayName(stack) : customFormatting + super.getItemStackDisplayName(stack);
+    }
+
+    /**
      * Check whether this Item can harvest the given Block
      */
+    @Override
     public boolean canHarvestBlock(IBlockState state)
     {
         Block block = state.getBlock();
@@ -94,12 +118,13 @@ public class ItemAOE extends ItemTool implements IColourable
         if(!isExcavator)
             return block == Blocks.OBSIDIAN ? this.toolMaterial.getHarvestLevel() == 3 : (block != Blocks.DIAMOND_BLOCK && block != Blocks.DIAMOND_ORE ? (block != Blocks.EMERALD_ORE && block != Blocks.EMERALD_BLOCK ? (block != Blocks.GOLD_BLOCK && block != Blocks.GOLD_ORE ? (block != Blocks.IRON_BLOCK && block != Blocks.IRON_ORE ? (block != Blocks.LAPIS_BLOCK && block != Blocks.LAPIS_ORE ? (block != Blocks.REDSTONE_ORE && block != Blocks.LIT_REDSTONE_ORE ? (state.getMaterial() == Material.ROCK ? true : (state.getMaterial() == Material.IRON ? true : state.getMaterial() == Material.ANVIL)) : this.toolMaterial.getHarvestLevel() >= 2) : this.toolMaterial.getHarvestLevel() >= 1) : this.toolMaterial.getHarvestLevel() >= 1) : this.toolMaterial.getHarvestLevel() >= 2) : this.toolMaterial.getHarvestLevel() >= 2) : this.toolMaterial.getHarvestLevel() >= 2);
         else
-            return block == Blocks.SNOW_LAYER ? true : block == Blocks.SNOW;
+            return block == Blocks.SNOW_LAYER || block == Blocks.SNOW;
     }
 
     /**
      * Used in vanilla code for the pickaxe, but not the shovel
      */
+    @Override
     public float getStrVsBlock(ItemStack stack, IBlockState state)
     {
         if(!isExcavator)
@@ -118,18 +143,21 @@ public class ItemAOE extends ItemTool implements IColourable
     }
 
     //Override method from ItemTool to stop durability loss
+    @Override
     public boolean hitEntity(ItemStack stack, EntityLivingBase entityHit, EntityLivingBase player)
     {
         //Does not decrease durability if has infinite use
         return !infiniteUse && super.hitEntity(stack, entityHit, player);
     }
 
+    @Override
     public RayTraceResult rayTrace(World worldIn, EntityPlayer playerIn, boolean useLiquids)
     {
         return super.rayTrace(worldIn, playerIn, useLiquids);
     }
 
     //Override method from ItemTool to stop durability loss
+    @Override
     public boolean onBlockDestroyed(ItemStack stack, World world, IBlockState state, BlockPos pos, EntityLivingBase player)
     {
         //Does not decrease durability if has infinite use
@@ -161,6 +189,7 @@ public class ItemAOE extends ItemTool implements IColourable
     }
 
     // <<<< Also made with some help from Tinkers Construct >>>>
+    @Override
     public boolean onBlockStartBreak (ItemStack stack, BlockPos pos, EntityPlayer player)
     {
         //Block being mined
@@ -226,15 +255,17 @@ public class ItemAOE extends ItemTool implements IColourable
     /**
      * Called when item is crafted/smelted. Used only by maps so far.
      */
+    @Override
     public void onCreated(ItemStack stack, World worldIn, EntityPlayer player)
     {
         super.onCreated(stack, worldIn, player);
 
-        //Sets the name to Jason's custom name if he crafts the giant hammer.
-        //TODO: Need to sort this display name out...
-        LogHelper.info("Player name: " + player.getDisplayNameString());
-        if(worldIn.isRemote && stack.getItem().equals(SHItems.hammerGiant) && player.getDisplayNameString().equals("bright_spark"))
-            stack.setStackDisplayName(TextFormatting.LIGHT_PURPLE + Lang.localize(getUnlocalizedName(stack) + ".8brickdmg"));
+        //Sets the name to 8BrickDMG's custom name if he crafts the giant hammer.
+        if(!worldIn.isRemote && stack.getItem().equals(SHItems.hammerGiant) && player.getUniqueID().equals(Reference.UUIDs._8BRICKDMG))
+        {
+            NBTHelper.setString(stack, KEY_CUSTOM_NAME, "8brickdmg");
+            NBTHelper.setString(stack, KEY_CUSTOM_FORMATTING, TextFormatting.LIGHT_PURPLE.toString());
+        }
 
         //Handle achievements
         Item item = stack.getItem();

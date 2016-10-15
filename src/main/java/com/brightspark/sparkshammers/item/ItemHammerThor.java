@@ -4,11 +4,11 @@ import com.brightspark.sparkshammers.init.SHBlocks;
 import com.brightspark.sparkshammers.reference.Materials;
 import com.brightspark.sparkshammers.reference.Names;
 import com.brightspark.sparkshammers.tileentity.TileHammer;
-import com.brightspark.sparkshammers.util.Lang;
 import com.brightspark.sparkshammers.util.NBTHelper;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockSnow;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.effect.EntityLightningBolt;
 import net.minecraft.entity.player.EntityPlayer;
@@ -217,7 +217,7 @@ public class ItemHammerThor extends ItemAOE
     public void addInformation(ItemStack stack, EntityPlayer player, List<String> tooltip, boolean advanced)
     {
         String name = getOwnerName(stack);
-        String text = Lang.localize(stack.getUnlocalizedName() + ".tooltip");
+        String text = I18n.format(stack.getUnlocalizedName() + ".tooltip");
 
         if(name.equals("None"))
             //No owner

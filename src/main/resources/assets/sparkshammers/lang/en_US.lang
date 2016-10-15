@@ -18,7 +18,7 @@ item.hammerThor.chat.noAchieve=You must prove you're worthy before you can wield
 
 item.hammerMini.name=Mini Hammer
 item.hammerGiant.name=Giant Hammer
-item.hammerGiant.8brickdmg=8BrickDMG's BFH
+item.hammerGiant.8brickdmg.name=8BrickDMG's BFH
 item.hammerNetherStar.name=Nether Star Hammer
 
 //Excavator Heads
