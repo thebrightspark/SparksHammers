@@ -77,16 +77,13 @@ public class SHModItems
 
                     //Botania
                     case MANASTEEL:
-                        SHItems.regItem(hammerManasteel = new ItemAOE(Names.EnumMaterials.MANASTEEL));
-                        SHItems.regItem(excavatorManasteel = new ItemAOE(Names.EnumMaterials.MANASTEEL, true));
+                        SHItemsBotania.registerManasteel();
                         break;
                     case TERRASTEEL:
-                        SHItems.regItem(hammerTerrasteel = new ItemAOE(Names.EnumMaterials.TERRASTEEL));
-                        SHItems.regItem(excavatorTerrasteel = new ItemAOE(Names.EnumMaterials.TERRASTEEL, true));
+                    	SHItemsBotania.registerTerrasteel();
                         break;
                     case ELEMENTIUM:
-                        SHItems.regItem(hammerElementium = new ItemAOE(Names.EnumMaterials.ELEMENTIUM));
-                        SHItems.regItem(excavatorElementium = new ItemAOE(Names.EnumMaterials.ELEMENTIUM, true));
+                    	SHItemsBotania.registerElementium();
                         break;
 
                     //EnderIO
