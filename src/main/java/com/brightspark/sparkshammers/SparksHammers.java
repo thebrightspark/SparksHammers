@@ -53,7 +53,7 @@ public class SparksHammers
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent event)
     {
-        //Initialize item, blocks and configs here
+        //Initialize item, blocks, textures/models and configs here
 
         //Passes suggested configuration file into the init method
         ConfigurationHandler.init(event.getSuggestedConfigurationFile());
@@ -64,12 +64,6 @@ public class SparksHammers
             ModMaterials.init();
         SHItems.regItems();
         SHBlocks.regBlocks();
-    }
-
-    @Mod.EventHandler
-    public void init(FMLInitializationEvent event)
-    {
-        //Initialize textures/models, GUIs, tile entities, recipies, event handlers here
 
         //Adds mod material made items if enabled in config
         if(Config.includeOtherModItems)
@@ -78,14 +72,21 @@ public class SparksHammers
             if(event.getSide() == Side.CLIENT)
                 SHModItems.regModels();
         }
-
         //Registers all of the item and block textures
         if(event.getSide() == Side.CLIENT)
         {
             SHItems.regModels();
             SHBlocks.regModels();
         }
+    }
 
+    @Mod.EventHandler
+    public void init(FMLInitializationEvent event)
+    {
+        //Initialize GUIs, tile entities, recipies, event handlers here
+
+        if(event.getSide() == Side.CLIENT)
+            SHItems.regColours();
         SHRecipes.init(); //Adds vanilla crafting table recipes
         SHTileEntities.init();
 
@@ -130,13 +131,15 @@ public class SparksHammers
 
         //Prints out all of the items in the ore dictionary
         /*
+        LogHelper.info("\nORE DICTIONARIES:\n");
         for(String ore : OreDictionary.getOreNames())
             LogHelper.info(ore);
         */
 
         //This displays all item IDs:
         /*
-        Iterator items = Item.itemRegistry.getKeys().iterator();
+        LogHelper.info("\nITEM IDS:\n");
+        Iterator items = Item.REGISTRY.getKeys().iterator();
         while(items.hasNext())
             LogHelper.info(items.next().toString());
         */

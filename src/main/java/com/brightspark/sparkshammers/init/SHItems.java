@@ -83,7 +83,11 @@ public class SHItems
         //Register all item models
         for(Item tool : ITEMS)
             ClientUtils.regModel(tool);
+    }
 
+    @SideOnly(Side.CLIENT)
+    public static void regColours()
+    {
         //Register item colours
         Minecraft.getMinecraft().getItemColors().registerItemColorHandler(new IItemColor()
         {

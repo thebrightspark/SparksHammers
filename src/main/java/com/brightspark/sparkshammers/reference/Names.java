@@ -2,6 +2,7 @@ package com.brightspark.sparkshammers.reference;
 
 import com.brightspark.sparkshammers.util.CommonUtils;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 
 public class Names
 {
@@ -44,6 +45,7 @@ public class Names
         public int colour;
         public Item.ToolMaterial material;
         public String dependantOreDic = null;
+        public ItemStack dependantItem = null;
         public static String OTHER_DEPENDENCY = "<OTHER>";
 
         EnumMaterials(int colour, Item.ToolMaterial material)
@@ -56,6 +58,12 @@ public class Names
         {
             this(colour, material);
             this.dependantOreDic = dependantOreDic;
+        }
+
+        EnumMaterials(int colour, Item.ToolMaterial material, ItemStack dependantItem)
+        {
+            this(colour, material);
+            this.dependantItem = dependantItem;
         }
 
         @Override

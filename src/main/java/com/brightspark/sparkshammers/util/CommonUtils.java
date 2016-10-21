@@ -7,11 +7,13 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.play.client.CPacketPlayerDigging;
 import net.minecraft.network.play.server.SPacketBlockChange;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeHooks;
@@ -39,6 +41,11 @@ public class CommonUtils
         if(text == null || text.length() <= 0)
             return text;
         return text.substring(0, 1).toUpperCase() + text.substring(1);
+    }
+
+    public static Item getRegisteredItem(String itemId)
+    {
+        return Item.REGISTRY.getObject(new ResourceLocation(itemId));
     }
 
 

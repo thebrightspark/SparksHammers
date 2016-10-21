@@ -3,6 +3,7 @@ package com.brightspark.sparkshammers.init;
 import com.brightspark.sparkshammers.hammerCrafting.HammerCraftingManager;
 import com.brightspark.sparkshammers.item.ItemAOE;
 import com.brightspark.sparkshammers.reference.Names;
+import com.brightspark.sparkshammers.util.CommonUtils;
 import com.brightspark.sparkshammers.util.LoaderHelper;
 import com.brightspark.sparkshammers.util.LogHelper;
 import net.minecraft.init.Blocks;
@@ -44,7 +45,7 @@ public class SHRecipes
             if(oreDic.equals(Names.EnumMaterials.STONE.dependantOreDic) && LoaderHelper.isModLoaded(Names.Mods.EXTRA_UTILITIES))
             {
                 //Swap out for compressed cobblestone
-                Item compressedCobble = Item.REGISTRY.getObject(new ResourceLocation(Names.ModItemIds.COMPRESSED_COBBLE));
+                Item compressedCobble = CommonUtils.getRegisteredItem(Names.ModItemIds.COMPRESSED_COBBLE);
                 if(compressedCobble != null)
                 {
                     LogHelper.info("Compressed Cobblestone found in " + Names.Mods.EXTRA_UTILITIES + ". Using for " + tool.getRegistryName().getResourcePath() + " recipe.");

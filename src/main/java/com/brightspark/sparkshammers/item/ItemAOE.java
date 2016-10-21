@@ -71,11 +71,6 @@ public class ItemAOE extends ItemTool implements IColourable
         this(name, material, false, false);
     }
 
-    public ItemAOE(String name, ToolMaterial material, boolean isExcavator)
-    {
-        this(name, material, isExcavator, false);
-    }
-
     public ItemAOE(String name, ToolMaterial material, boolean isExcavator, boolean isInfiniteUse)
     {
         super(isExcavator ? 1.5f : 2f, isExcavator ? -3f : -3.2f, material, isExcavator ? ShovelBlocks : PickaxeBlocks);
