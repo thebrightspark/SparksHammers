@@ -1,9 +1,9 @@
 package com.brightspark.sparkshammers.init;
 
 import com.brightspark.sparkshammers.item.ItemAOE;
-import com.brightspark.sparkshammers.item.ItemHammerMana;
 import com.brightspark.sparkshammers.reference.Names;
 import com.brightspark.sparkshammers.util.LoaderHelper;
+import com.brightspark.sparkshammers.util.LogHelper;
 
 public class SHModItems
 {
@@ -32,69 +32,62 @@ public class SHModItems
                 continue;
             switch(mat)
             {
+                //Ignore vanilla materials
+                case WOOD:
+                case STONE:
+                case IRON:
+                case GOLD:
+                case DIAMOND:
+                    break;
+
                 //Common Mod Metals
                 case COPPER:
-                    SHItems.regItem(hammerCopper = new ItemAOE(Names.EnumMaterials.COPPER));
-                    SHItems.regItem(excavatorCopper = new ItemAOE(Names.EnumMaterials.COPPER, true));
+                    SHItems.regItem(hammerCopper = new ItemAOE(mat));
+                    SHItems.regItem(excavatorCopper = new ItemAOE(mat, true));
                     break;
                 case SILVER:
-                    SHItems.regItem(hammerSilver = new ItemAOE(Names.EnumMaterials.SILVER));
-                    SHItems.regItem(excavatorSilver = new ItemAOE(Names.EnumMaterials.SILVER, true));
+                    SHItems.regItem(hammerSilver = new ItemAOE(mat));
+                    SHItems.regItem(excavatorSilver = new ItemAOE(mat, true));
                     break;
                 case TIN:
-                    SHItems.regItem(hammerTin = new ItemAOE(Names.EnumMaterials.TIN));
-                    SHItems.regItem(excavatorTin = new ItemAOE(Names.EnumMaterials.TIN, true));
+                    SHItems.regItem(hammerTin = new ItemAOE(mat));
+                    SHItems.regItem(excavatorTin = new ItemAOE(mat, true));
                     break;
                 case LEAD:
-                    SHItems.regItem(hammerLead = new ItemAOE(Names.EnumMaterials.LEAD));
-                    SHItems.regItem(excavatorLead = new ItemAOE(Names.EnumMaterials.LEAD, true));
+                    SHItems.regItem(hammerLead = new ItemAOE(mat));
+                    SHItems.regItem(excavatorLead = new ItemAOE(mat, true));
                     break;
                 case NICKEL:
-                    SHItems.regItem(hammerNickel = new ItemAOE(Names.EnumMaterials.NICKEL));
-                    SHItems.regItem(excavatorNickel = new ItemAOE(Names.EnumMaterials.NICKEL, true));
+                    SHItems.regItem(hammerNickel = new ItemAOE(mat));
+                    SHItems.regItem(excavatorNickel = new ItemAOE(mat, true));
                     break;
                 case PLATINUM:
-                    SHItems.regItem(hammerPlatinum = new ItemAOE(Names.EnumMaterials.PLATINUM));
-                    SHItems.regItem(excavatorPlatinum = new ItemAOE(Names.EnumMaterials.PLATINUM, true));
+                    SHItems.regItem(hammerPlatinum = new ItemAOE(mat));
+                    SHItems.regItem(excavatorPlatinum = new ItemAOE(mat, true));
                     break;
                 case BRONZE:
-                    SHItems.regItem(hammerBronze = new ItemAOE(Names.EnumMaterials.BRONZE));
-                    SHItems.regItem(excavatorBronze = new ItemAOE(Names.EnumMaterials.BRONZE, true));
+                    SHItems.regItem(hammerBronze = new ItemAOE(mat));
+                    SHItems.regItem(excavatorBronze = new ItemAOE(mat, true));
                     break;
                 case STEEL:
-                    SHItems.regItem(hammerSteel = new ItemAOE(Names.EnumMaterials.STEEL));
-                    SHItems.regItem(excavatorSteel = new ItemAOE(Names.EnumMaterials.STEEL, true));
+                    SHItems.regItem(hammerSteel = new ItemAOE(mat));
+                    SHItems.regItem(excavatorSteel = new ItemAOE(mat, true));
                     break;
                 case INVAR:
-                    SHItems.regItem(hammerInvar = new ItemAOE(Names.EnumMaterials.INVAR));
-                    SHItems.regItem(excavatorInvar = new ItemAOE(Names.EnumMaterials.INVAR, true));
+                    SHItems.regItem(hammerInvar = new ItemAOE(mat));
+                    SHItems.regItem(excavatorInvar = new ItemAOE(mat, true));
                     break;
                 case ELECTRUM:
-                    SHItems.regItem(hammerElectrum = new ItemAOE(Names.EnumMaterials.ELECTRUM));
-                    SHItems.regItem(excavatorElectrum = new ItemAOE(Names.EnumMaterials.ELECTRUM, true));
+                    SHItems.regItem(hammerElectrum = new ItemAOE(mat));
+                    SHItems.regItem(excavatorElectrum = new ItemAOE(mat, true));
                     break;
 
                 //Botania
                 case MANASTEEL:
-                    if(LoaderHelper.isModLoaded(Names.Mods.BOTANIA))
-                    {
-                        SHItems.regItem(hammerManasteel = new ItemHammerMana(Names.EnumMaterials.MANASTEEL));
-                        SHItems.regItem(excavatorManasteel = new ItemHammerMana(Names.EnumMaterials.MANASTEEL, true));
-                    }
-                    break;
                 case TERRASTEEL:
-                    if(LoaderHelper.isModLoaded(Names.Mods.BOTANIA))
-                    {
-                        SHItems.regItem(hammerTerrasteel = new ItemHammerMana(Names.EnumMaterials.TERRASTEEL));
-                        SHItems.regItem(excavatorTerrasteel = new ItemHammerMana(Names.EnumMaterials.TERRASTEEL, true));
-                    }
-                    break;
                 case ELEMENTIUM:
                     if(LoaderHelper.isModLoaded(Names.Mods.BOTANIA))
-                    {
-                        SHItems.regItem(hammerElementium = new ItemHammerMana(Names.EnumMaterials.ELEMENTIUM));
-                        SHItems.regItem(excavatorElementium = new ItemHammerMana(Names.EnumMaterials.ELEMENTIUM, true));
-                    }
+                        SHItemsBotania.reg(mat);
                     break;
 
                 //EnderIO
@@ -107,17 +100,19 @@ public class SHModItems
 
                 //Mob Hunter
                 case MACHALITE:
-                    SHItems.regItem(hammerMachalite = new ItemAOE(Names.EnumMaterials.MACHALITE));
-                    SHItems.regItem(excavatorMachalite = new ItemAOE(Names.EnumMaterials.MACHALITE, true));
+                    SHItems.regItem(hammerMachalite = new ItemAOE(mat));
+                    SHItems.regItem(excavatorMachalite = new ItemAOE(mat, true));
                     break;
                 case DRAGONITE:
-                    SHItems.regItem(hammerDragonite = new ItemAOE(Names.EnumMaterials.DRAGONITE));
-                    SHItems.regItem(excavatorDragonite = new ItemAOE(Names.EnumMaterials.DRAGONITE, true));
+                    SHItems.regItem(hammerDragonite = new ItemAOE(mat));
+                    SHItems.regItem(excavatorDragonite = new ItemAOE(mat, true));
                     break;
                 case GOSSAMITE:
-                    SHItems.regItem(hammerGossamite = new ItemAOE(Names.EnumMaterials.GOSSAMITE));
-                    SHItems.regItem(excavatorGossamite = new ItemAOE(Names.EnumMaterials.GOSSAMITE, true));
+                    SHItems.regItem(hammerGossamite = new ItemAOE(mat));
+                    SHItems.regItem(excavatorGossamite = new ItemAOE(mat, true));
                     break;
+                default:
+                    LogHelper.info("Hammer/Excavator tool material " + mat + " was not registered to any tool.");
             }
         }
     }
