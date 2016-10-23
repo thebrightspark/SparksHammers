@@ -9,6 +9,7 @@ import com.brightspark.sparkshammers.init.*;
 import com.brightspark.sparkshammers.reference.Config;
 import com.brightspark.sparkshammers.reference.ModMaterials;
 import com.brightspark.sparkshammers.reference.Reference;
+import com.brightspark.sparkshammers.util.LoaderHelper;
 import com.brightspark.sparkshammers.worldgen.WorldGenMjolnirShrine;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
@@ -84,6 +85,9 @@ public class SparksHammers
     public void init(FMLInitializationEvent event)
     {
         //Initialize GUIs, tile entities, recipies, event handlers here
+
+        //Some ore dictionary entries are missed, as the list is created in preInit, so we re-load the list here.
+        LoaderHelper.reloadLocalOreDict();
 
         if(event.getSide() == Side.CLIENT)
             SHItems.regColours();

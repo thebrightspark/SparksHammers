@@ -9,6 +9,7 @@ import com.brightspark.sparkshammers.integration.jei.HammerCraftingTable.HammerC
 import com.brightspark.sparkshammers.item.ItemAOE;
 import com.brightspark.sparkshammers.reference.Reference;
 import com.brightspark.sparkshammers.util.LoaderHelper;
+import com.brightspark.sparkshammers.util.LogHelper;
 import mezz.jei.api.BlankModPlugin;
 import mezz.jei.api.IJeiHelpers;
 import mezz.jei.api.IModRegistry;
@@ -36,8 +37,12 @@ public class SparksHammersPlugin extends BlankModPlugin
         registry.addRecipeClickArea(GuiHammerCraft.class, 111, 69, 26, 19, Reference.JEI.HAMMER_CRAFTING_UID);
         registry.addRecipeCategoryCraftingItem(new ItemStack(SHBlocks.blockHammerCraft), Reference.JEI.HAMMER_CRAFTING_UID);
 
+        //Hide tools from JEI if you can't make them!
         for(ItemAOE tool : SHItems.AOE_TOOLS)
-            if(!LoaderHelper.doesOreExist(tool.getDependantOreDic()))
+            if(tool.getDependantOreDic() != null && !LoaderHelper.doesOreExist(tool.getDependantOreDic()))
+            {
+                LogHelper.info("Hiding tool " + tool.getRegistryName() + " from JEI with dependant ore dic " + tool.getDependantOreDic() + ".");
                 jeiHelper.getItemBlacklist().addItemToBlacklist(new ItemStack(tool));
+            }
     }
 }

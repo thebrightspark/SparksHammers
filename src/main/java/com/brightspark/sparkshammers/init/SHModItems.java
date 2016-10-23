@@ -3,6 +3,7 @@ package com.brightspark.sparkshammers.init;
 import com.brightspark.sparkshammers.item.ItemAOE;
 import com.brightspark.sparkshammers.item.ItemHammerMana;
 import com.brightspark.sparkshammers.reference.Names;
+import com.brightspark.sparkshammers.util.LoaderHelper;
 
 public class SHModItems
 {
@@ -75,16 +76,25 @@ public class SHModItems
 
                 //Botania
                 case MANASTEEL:
-                    SHItems.regItem(hammerManasteel = new ItemHammerMana(Names.EnumMaterials.MANASTEEL));
-                    SHItems.regItem(excavatorManasteel = new ItemHammerMana(Names.EnumMaterials.MANASTEEL, true));
+                    if(LoaderHelper.isModLoaded(Names.Mods.BOTANIA))
+                    {
+                        SHItems.regItem(hammerManasteel = new ItemHammerMana(Names.EnumMaterials.MANASTEEL));
+                        SHItems.regItem(excavatorManasteel = new ItemHammerMana(Names.EnumMaterials.MANASTEEL, true));
+                    }
                     break;
                 case TERRASTEEL:
-                    SHItems.regItem(hammerTerrasteel = new ItemHammerMana(Names.EnumMaterials.TERRASTEEL));
-                    SHItems.regItem(excavatorTerrasteel = new ItemHammerMana(Names.EnumMaterials.TERRASTEEL, true));
+                    if(LoaderHelper.isModLoaded(Names.Mods.BOTANIA))
+                    {
+                        SHItems.regItem(hammerTerrasteel = new ItemHammerMana(Names.EnumMaterials.TERRASTEEL));
+                        SHItems.regItem(excavatorTerrasteel = new ItemHammerMana(Names.EnumMaterials.TERRASTEEL, true));
+                    }
                     break;
                 case ELEMENTIUM:
-                    SHItems.regItem(hammerElementium = new ItemHammerMana(Names.EnumMaterials.ELEMENTIUM));
-                    SHItems.regItem(excavatorElementium = new ItemHammerMana(Names.EnumMaterials.ELEMENTIUM, true));
+                    if(LoaderHelper.isModLoaded(Names.Mods.BOTANIA))
+                    {
+                        SHItems.regItem(hammerElementium = new ItemHammerMana(Names.EnumMaterials.ELEMENTIUM));
+                        SHItems.regItem(excavatorElementium = new ItemHammerMana(Names.EnumMaterials.ELEMENTIUM, true));
+                    }
                     break;
 
                 //EnderIO
