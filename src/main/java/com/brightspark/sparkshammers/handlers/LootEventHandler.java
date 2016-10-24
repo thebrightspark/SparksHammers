@@ -24,14 +24,10 @@ public class LootEventHandler
         if(event.getName().equals(LootTableList.CHESTS_ABANDONED_MINESHAFT))
         {
             LootPool pool = event.getTable().getPool("main");
-            addLoot(pool, SHItems.hammerWood, 1);
-            addLoot(pool, SHItems.hammerStone, 1);
+            addLoot(pool, SHItems.getItemById("hammerWood"), 1);
+            addLoot(pool, SHItems.getItemById("hammerStone"), 1);
             //addLoot(pool, SHItems.excavatorWood, 1);
             //addLoot(pool, SHItems.excavatorStone, 1);
-        }
-        else if(event.getName().equals(LootTableList.CHESTS_DESERT_PYRAMID))
-        {
-            addLoot(event.getTable().getPool("main"), SHItems.hammerThor, 1);
         }
     }
 }

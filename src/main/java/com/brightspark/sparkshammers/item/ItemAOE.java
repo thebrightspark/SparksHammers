@@ -264,9 +264,9 @@ public class ItemAOE extends ItemTool implements IColourable
 
         //Handle achievements
         Item item = stack.getItem();
-        if(item.equals(SHItems.hammerWood))
+        if(item.equals(SHItems.getItemById("hammerWood")))
             player.addStat(SHAchievements.woodHammer);
-        else if(item.equals(SHItems.hammerDiamond))
+        else if(item.equals(SHItems.getItemById("hammerDiamond")))
             player.addStat(SHAchievements.diamondHammer);
         else if(item.equals(SHItems.hammerNetherStar))
             player.addStat(SHAchievements.netherStarHammer);

@@ -13,7 +13,7 @@ public class HammerCraftingManager
     /** The static instance of this class */
     private static final HammerCraftingManager instance = new HammerCraftingManager();
     /** A list of all the recipes added */
-    private List<IRecipe> recipes = Lists.newArrayList();
+    private List<HammerShapedOreRecipe> recipes = Lists.newArrayList();
 
     /**
      * Returns the static instance of this class
@@ -60,9 +60,9 @@ public class HammerCraftingManager
     }
 
     /**
-     * Returns the List<> of all recipes
+     * Returns the List of all recipes
      */
-    public List getRecipeList()
+    public List<HammerShapedOreRecipe> getRecipeList()
     {
         return this.recipes;
     }

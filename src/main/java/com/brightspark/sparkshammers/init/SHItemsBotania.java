@@ -19,21 +19,21 @@ import com.brightspark.sparkshammers.util.LogHelper;
 
 public class SHItemsBotania
 {
-    public static void reg(EnumMaterials mat)
+    public static void regItems(EnumMaterials mat)
     {
         switch(mat)
         {
             case MANASTEEL:
-                SHItems.regItem(SHModItems.hammerManasteel = new ItemHammerMana(mat));
-                SHItems.regItem(SHModItems.excavatorManasteel = new ItemHammerMana(mat, true));
+                SHItems.regItem(new ItemHammerMana(mat));
+                SHItems.regItem(new ItemHammerMana(mat, true));
                 break;
             case TERRASTEEL:
-                SHItems.regItem(SHModItems.hammerTerrasteel = new ItemHammerMana(mat));
-                SHItems.regItem(SHModItems.excavatorTerrasteel = new ItemHammerMana(mat, true));
+                SHItems.regItem(new ItemHammerMana(mat));
+                SHItems.regItem(new ItemHammerMana(mat, true));
                 break;
             case ELEMENTIUM:
-                SHItems.regItem(SHModItems.hammerElementium = new ItemHammerMana(mat));
-                SHItems.regItem(SHModItems.excavatorElementium = new ItemHammerMana(mat, true));
+                SHItems.regItem(new ItemHammerMana(mat));
+                SHItems.regItem(new ItemHammerMana(mat, true));
                 break;
             default:
                 LogHelper.warn("Botania registration was passed material " + mat + " (This shouldn't happen)");

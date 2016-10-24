@@ -36,7 +36,7 @@ public class Names
         TERRASTEEL(0x9BF76C, ModMaterials.TERRASTEEL, ModOreDicts.INGOT_TERRASTEEL),
         ELEMENTIUM(0xF8A1FF, ModMaterials.ELEMENTIUM, ModOreDicts.INGOT_ELEMENTIUM),
         //EnderIO
-        DARKSTEEL(0x636363, ModMaterials.DARKSTEEL),
+        //DARKSTEEL(0x636363, ModMaterials.DARKSTEEL),
         //MobHunter
         MACHALITE(0xC1DCEA, ModMaterials.MACHALITE, ModOreDicts.INGOT_MACHALITE),
         DRAGONITE(0xCBE0CB, ModMaterials.DRAGONITE, ModOreDicts.INGOT_DRAGONITE),
@@ -47,6 +47,12 @@ public class Names
         public String dependantOreDic = null;
         public ItemStack dependantItem = null;
         public static String OTHER_DEPENDENCY = "<OTHER>";
+        public static EnumMaterials[] VANILLA;
+
+        static
+        {
+            VANILLA = new EnumMaterials[]{WOOD, STONE, IRON, GOLD, DIAMOND};
+        }
 
         EnumMaterials(int colour, Item.ToolMaterial material)
         {
