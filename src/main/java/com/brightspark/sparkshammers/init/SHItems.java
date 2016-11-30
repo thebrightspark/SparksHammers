@@ -32,7 +32,7 @@ public class SHItems
     public static ItemResource hammerHeadWood, excavatorHeadWood;
 
     //Special Hammers
-    public static ItemAOE hammerThor, hammerMini, hammerGiant, hammerNetherStar;
+    public static ItemAOE hammerMjolnir, hammerMini, hammerGiant, hammerNetherStar;
 
     //Debug
     public static ItemDebug debug;
@@ -75,7 +75,7 @@ public class SHItems
         regItem(excavatorHeadWood = new ItemResource(Names.Items.EXCAVATOR_HEAD_WOOD));
 
         //Special Hammers
-        regItem(hammerThor = new ItemHammerThor());
+        regItem(hammerMjolnir = new ItemHammerMjolnir());
         regItem(hammerMini = new ItemAOE(Names.EnumMaterials.MINI).setMineWidth(0).setShiftRotating(true));
         regItem(hammerGiant = new ItemAOE(Names.EnumMaterials.GIANT).setMineWidth(4).setMineHeight(4));
         regItem(hammerNetherStar = new ItemHammerNetherStar());

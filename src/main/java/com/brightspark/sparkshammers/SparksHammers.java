@@ -110,7 +110,7 @@ public class SparksHammers
         List<HammerShapedOreRecipe> recipes = HammerCraftingManager.getInstance().getRecipeList();
         for(ItemAOE tool : SHItems.AOE_TOOLS)
         {
-            if(tool.equals(SHItems.hammerThor))
+            if(tool.equals(SHItems.hammerMjolnir))
                 continue;
             boolean found = false;
             for(HammerShapedOreRecipe r : recipes)

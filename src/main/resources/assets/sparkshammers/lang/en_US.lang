@@ -10,16 +10,16 @@ item.hammerIron.name=Iron Hammer
 item.hammerGold.name=Gold Hammer
 item.hammerDiamond.name=Diamond Hammer
 
-item.hammerThor.name=Mjolnir
-item.hammerThor.tooltip=Owner:
-item.hammerThor.chat.wrongPlayer.1=You are not worthy to wield me!
-item.hammerThor.chat.wrongPlayer.2=is my true Master!
-item.hammerThor.chat.noAchieve=You must prove you're worthy before you can wield me!
+item.hammerMjolnir.name=Mjolnir
+item.hammerMjolnir.tooltip=Owner:
+item.hammerMjolnir.chat.wrongPlayer.1=You are not worthy to wield me!
+item.hammerMjolnir.chat.wrongPlayer.2=is my true Master!
+item.hammerMjolnir.chat.noAchieve=You must prove you're worthy before you can wield me!
 
 item.hammerMini.name=Mini Hammer
 item.hammerGiant.name=Giant Hammer
 item.hammerGiant.8brickdmg.name=8BrickDMG's BFH
-item.hammerNetherStar.name=Nether Star Hammer
+item.hammerNetherstar.name=Nether Star Hammer
 
 //Excavator Heads
 item.excavatorHeadWood.name=Wooden Excavator Head
