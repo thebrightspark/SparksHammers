@@ -122,7 +122,12 @@ public class SHItems
     {
         //Register all item models
         for(Item tool : ITEMS.values())
-            ClientUtils.regModel(tool);
+        {
+            if(tool instanceof ItemAOE && AOE_TOOLS.contains(tool))
+                ClientUtils.regTool((ItemAOE) tool);
+            else
+                ClientUtils.regModel(tool);
+        }
     }
 
     @SideOnly(Side.CLIENT)
