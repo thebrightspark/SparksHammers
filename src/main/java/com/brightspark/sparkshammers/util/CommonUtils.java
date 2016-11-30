@@ -7,14 +7,18 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.play.client.CPacketPlayerDigging;
 import net.minecraft.network.play.server.SPacketBlockChange;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeHooks;
+import net.minecraftforge.event.ForgeEventFactory;
 import org.lwjgl.input.Keyboard;
 
 public class CommonUtils
@@ -33,6 +37,22 @@ public class CommonUtils
     {
         return Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_RSHIFT);
     }
+
+    public static String capitaliseFirstLetter(String text)
+    {
+        if(text == null || text.length() <= 0)
+            return text;
+        return text.substring(0, 1).toUpperCase() + text.substring(1);
+    }
+
+    public static Item getRegisteredItem(String itemId)
+    {
+        return Item.REGISTRY.getObject(new ResourceLocation(itemId));
+    }
+
+
+
+    // <<<< AOE STUFF >>>>
 
     public static BlockPos[] getBreakArea(ItemAOE hammerItem, BlockPos pos, EnumFacing sideHit, EntityPlayer player)
     {
@@ -213,13 +233,12 @@ public class CommonUtils
 
             // serverside we reproduce ItemInWorldManager.tryHarvestBlock
 
+            TileEntity te = world.getTileEntity(blockPos);
             // ItemInWorldManager.removeBlock
-            block.onBlockHarvested(world, blockPos, blockState, player);
-
             if(block.removedByPlayer(blockState, world, blockPos, player, true)) // boolean is if block can be harvested, checked above
             {
                 block.onBlockDestroyedByPlayer(world, blockPos, blockState);
-                block.harvestBlock(world, player, blockPos, blockState, world.getTileEntity(blockPos), stack);
+                block.harvestBlock(world, player, blockPos, blockState, te, stack);
                 block.dropXpOnBlockBreak(world, blockPos, xp);
             }
 
@@ -240,7 +259,10 @@ public class CommonUtils
             stack.onBlockDestroyed(world, blockState, blockPos, player);
 
             if(stack.stackSize == 0 && stack == player.getHeldItemMainhand())
+            {
+                ForgeEventFactory.onPlayerDestroyItem(player, stack, EnumHand.MAIN_HAND);
                 player.setHeldItem(EnumHand.MAIN_HAND, null);
+            }
 
             // send an update to the server, so we get an update back
             Minecraft.getMinecraft().getConnection().sendPacket(new CPacketPlayerDigging(CPacketPlayerDigging.Action.STOP_DESTROY_BLOCK, blockPos, Minecraft.getMinecraft().objectMouseOver.sideHit));

@@ -1,6 +1,5 @@
 package com.brightspark.sparkshammers.item;
 
-import com.brightspark.sparkshammers.reference.Materials;
 import com.brightspark.sparkshammers.reference.Names;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
@@ -15,7 +14,7 @@ public class ItemHammerNetherStar extends ItemAOE
 {
     public ItemHammerNetherStar()
     {
-        super(Names.Items.HAMMER_NETHERSTAR, Materials.HAMMER_NETHERSTAR);
+        super(Names.EnumMaterials.NETHERSTAR);
     }
 
     @SideOnly(Side.CLIENT)

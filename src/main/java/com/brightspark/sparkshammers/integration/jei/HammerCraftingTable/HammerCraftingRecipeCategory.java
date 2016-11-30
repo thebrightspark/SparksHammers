@@ -1,8 +1,6 @@
 package com.brightspark.sparkshammers.integration.jei.HammerCraftingTable;
 
 import com.brightspark.sparkshammers.reference.Reference;
-import com.brightspark.sparkshammers.util.Lang;
-import com.brightspark.sparkshammers.util.LogHelper;
 import mezz.jei.api.IGuiHelper;
 import mezz.jei.api.gui.IDrawable;
 import mezz.jei.api.gui.IGuiItemStackGroup;
@@ -10,6 +8,7 @@ import mezz.jei.api.gui.IRecipeLayout;
 import mezz.jei.api.recipe.IRecipeCategory;
 import mezz.jei.api.recipe.IRecipeWrapper;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 
@@ -24,7 +23,7 @@ public class HammerCraftingRecipeCategory implements IRecipeCategory
 
     public HammerCraftingRecipeCategory(IGuiHelper guiHelper)
     {
-        locTitle = Lang.localize(Reference.JEI.HAMMER_CRAFTING_TITLE_UNLOC);
+        locTitle = I18n.format(Reference.JEI.HAMMER_CRAFTING_TITLE_UNLOC);
         //background = guiHelper.createBlankDrawable(150, 110);
         background = guiHelper.createDrawable(new ResourceLocation(Reference.MOD_ID, Reference.GUI_TEXTURE_DIR + "guiHammerCraftNEI.png"), 0, 0, 166, 112);
     }
@@ -57,6 +56,7 @@ public class HammerCraftingRecipeCategory implements IRecipeCategory
     public void drawAnimations(@Nonnull Minecraft minecraft) {}
 
     @Override
+    @SuppressWarnings("unchecked")
     public void setRecipe(@Nonnull IRecipeLayout recipeLayout, @Nonnull IRecipeWrapper recipeWrapper)
     {
         if(!(recipeWrapper instanceof HammerCraftingRecipeWrapper))

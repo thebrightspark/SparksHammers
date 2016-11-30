@@ -357,9 +357,9 @@ public class WorldGenMjolnirShrine implements IWorldGenerator
 
         world.setBlockToAir(pos.add(2, 4, 4));
         world.setBlockState(pos.add(3, 4, 4), Blocks.QUARTZ_BLOCK.getDefaultState().withProperty(BlockQuartz.VARIANT, BlockQuartz.EnumType.LINES_Z));
-        world.setBlockState(pos.add(4, 4, 4), Blocks.STONE_SLAB.getDefaultState().withProperty(BlockStoneSlab.VARIANT, BlockStoneSlab.EnumType.QUARTZ));
+        world.setBlockState(pos.add(4, 4, 4), Blocks.STONE_SLAB.getDefaultState().withProperty(BlockStoneSlab.VARIANT, BlockStoneSlab.EnumType.QUARTZ).withProperty(BlockStoneSlab.HALF, BlockSlab.EnumBlockHalf.TOP));
         world.setBlockState(pos.add(5, 4, 4), Blocks.QUARTZ_STAIRS.getDefaultState().withProperty(BlockStairs.FACING, EnumFacing.SOUTH).withProperty(BlockStairs.HALF, BlockStairs.EnumHalf.TOP));
-        world.setBlockState(pos.add(6, 4, 4), Blocks.STONE_SLAB.getDefaultState().withProperty(BlockStoneSlab.VARIANT, BlockStoneSlab.EnumType.QUARTZ));
+        world.setBlockState(pos.add(6, 4, 4), Blocks.STONE_SLAB.getDefaultState().withProperty(BlockStoneSlab.VARIANT, BlockStoneSlab.EnumType.QUARTZ).withProperty(BlockStoneSlab.HALF, BlockSlab.EnumBlockHalf.TOP));
         world.setBlockState(pos.add(7, 4, 4), Blocks.QUARTZ_BLOCK.getDefaultState().withProperty(BlockQuartz.VARIANT, BlockQuartz.EnumType.LINES_Z));
         world.setBlockToAir(pos.add(8, 4, 4));
 
@@ -373,9 +373,9 @@ public class WorldGenMjolnirShrine implements IWorldGenerator
 
         world.setBlockToAir(pos.add(2, 4, 6));
         world.setBlockState(pos.add(3, 4, 6), Blocks.QUARTZ_BLOCK.getDefaultState().withProperty(BlockQuartz.VARIANT, BlockQuartz.EnumType.LINES_Z));
-        world.setBlockState(pos.add(4, 4, 6), Blocks.STONE_SLAB.getDefaultState().withProperty(BlockStoneSlab.VARIANT, BlockStoneSlab.EnumType.QUARTZ));
+        world.setBlockState(pos.add(4, 4, 6), Blocks.STONE_SLAB.getDefaultState().withProperty(BlockStoneSlab.VARIANT, BlockStoneSlab.EnumType.QUARTZ).withProperty(BlockStoneSlab.HALF, BlockSlab.EnumBlockHalf.TOP));
         world.setBlockState(pos.add(5, 4, 6), Blocks.QUARTZ_STAIRS.getDefaultState().withProperty(BlockStairs.FACING, EnumFacing.NORTH).withProperty(BlockStairs.HALF, BlockStairs.EnumHalf.TOP));
-        world.setBlockState(pos.add(6, 4, 6), Blocks.STONE_SLAB.getDefaultState().withProperty(BlockStoneSlab.VARIANT, BlockStoneSlab.EnumType.QUARTZ));
+        world.setBlockState(pos.add(6, 4, 6), Blocks.STONE_SLAB.getDefaultState().withProperty(BlockStoneSlab.VARIANT, BlockStoneSlab.EnumType.QUARTZ).withProperty(BlockStoneSlab.HALF, BlockSlab.EnumBlockHalf.TOP));
         world.setBlockState(pos.add(7, 4, 6), Blocks.QUARTZ_BLOCK.getDefaultState().withProperty(BlockQuartz.VARIANT, BlockQuartz.EnumType.LINES_Z));
         world.setBlockToAir(pos.add(8, 4, 6));
 

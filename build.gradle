@@ -20,12 +20,12 @@ plugins {
     id "net.minecraftforge.gradle.forge" version "2.0.2"
 }
 */
-version = "1.10.2-1.0"
+version = "1.10.2-1.4.4"
 group= "com.brightspark.sparkshammers" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = "SparksHammers"
 
 minecraft {
-    version = "1.10.2-12.18.1.2011"
+    version = "1.10.2-12.18.2.2107"
     runDir = "run"
     
     // the mappings can be changed at any time, and must be in the following format.
@@ -41,12 +41,16 @@ minecraft {
 
 repositories {
     maven {
+        // location of the maven that hosts JEI files
         url "http://dvs1.progwml6.com/files/maven"
     }
 }
 
 dependencies {
-    deobfProvided "mezz.jei:jei_1.9.4:3.6.3.212"
+    // compile against the JEI API
+    deobfProvided "mezz.jei:jei_1.10.2:3.7.8.235:api"
+    // at runtime, use the full JEI jar
+    runtime "mezz.jei:jei_1.10.2:3.7.8.235"
 
     // you may put jars on which you depend on in ./libs
     // or you may define them like so..

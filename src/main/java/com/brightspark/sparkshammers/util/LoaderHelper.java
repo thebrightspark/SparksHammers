@@ -18,6 +18,11 @@ public class LoaderHelper
     //Ore Dictionary
     private static ArrayList<String> oreDict = new ArrayList<String>(Arrays.asList(OreDictionary.getOreNames()));
 
+    public static void reloadLocalOreDict()
+    {
+        oreDict = new ArrayList<String>(Arrays.asList(OreDictionary.getOreNames()));
+    }
+
     /**
      * Uses {@link Loader} to check if a mod is loaded, but first
      * checks the config for whether it should check for the mod or not.
@@ -26,7 +31,6 @@ public class LoaderHelper
      */
     public static boolean isModLoaded(String modName)
     {
-
         //Check config
         if(!Config.includeOtherModItems)
             return false;

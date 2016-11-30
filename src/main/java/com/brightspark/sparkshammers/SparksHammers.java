@@ -2,14 +2,17 @@ package com.brightspark.sparkshammers;
 
 import com.brightspark.sparkshammers.gui.GuiHandler;
 import com.brightspark.sparkshammers.hammerCrafting.HammerCraftingManager;
+import com.brightspark.sparkshammers.hammerCrafting.HammerShapedOreRecipe;
 import com.brightspark.sparkshammers.handlers.AchieveEventHandler;
 import com.brightspark.sparkshammers.handlers.BlockEventHandler;
 import com.brightspark.sparkshammers.handlers.ConfigurationHandler;
 import com.brightspark.sparkshammers.handlers.LootEventHandler;
 import com.brightspark.sparkshammers.init.*;
+import com.brightspark.sparkshammers.item.ItemAOE;
 import com.brightspark.sparkshammers.reference.Config;
-import com.brightspark.sparkshammers.reference.ModMaterials;
 import com.brightspark.sparkshammers.reference.Reference;
+import com.brightspark.sparkshammers.util.LoaderHelper;
+import com.brightspark.sparkshammers.util.LogHelper;
 import com.brightspark.sparkshammers.worldgen.WorldGenMjolnirShrine;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
@@ -22,6 +25,8 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
+
+import java.util.List;
 
 @Mod(modid=Reference.MOD_ID, name=Reference.MOD_NAME, version=Reference.VERSION, dependencies=Reference.DEPENDENCIES)
 public class SparksHammers
@@ -38,7 +43,7 @@ public class SparksHammers
         @Override
         public Item getTabIconItem()
         {
-            return SHItems.hammerDiamond;
+            return SHItems.getItemById("hammerDiamond");
         }
 
         @Override
@@ -54,7 +59,7 @@ public class SparksHammers
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent event)
     {
-        //Initialize item, blocks and configs here
+        //Initialize item, blocks, textures/models and configs here
 
         //Passes suggested configuration file into the init method
         ConfigurationHandler.init(event.getSuggestedConfigurationFile());
@@ -62,12 +67,6 @@ public class SparksHammers
 
         SHItems.regItems();
         SHBlocks.regBlocks();
-    }
-
-    @Mod.EventHandler
-    public void init(FMLInitializationEvent event)
-    {
-        //Initialize textures/models, GUIs, tile entities, recipies, event handlers here
 
         //Registers all of the item and block textures
         if(event.getSide() == Side.CLIENT)
@@ -75,19 +74,19 @@ public class SparksHammers
             SHItems.regModels();
             SHBlocks.regModels();
         }
+    }
 
-        //Adds mod material made items if enabled in config
-        if(Config.includeOtherModItems)
-        {
-            ModMaterials.init();
-            SHModItems.regItems();
-            //Registers mod textures
-            if(event.getSide() == Side.CLIENT)
-                SHModItems.regModels();
-        }
+    @Mod.EventHandler
+    public void init(FMLInitializationEvent event)
+    {
+        //Initialize GUIs, tile entities, recipies, event handlers here
 
+        //Some ore dictionary entries are missed, as the list is created in preInit, so we re-load the list here.
+        LoaderHelper.reloadLocalOreDict();
+
+        if(event.getSide() == Side.CLIENT)
+            SHItems.regColours();
         SHRecipes.init(); //Adds vanilla crafting table recipes
-        HammerCraftingManager.getInstance(); //Calls the method so that the recipes are created.
         SHTileEntities.init();
 
         NetworkRegistry.INSTANCE.registerGuiHandler(this, new GuiHandler());
@@ -106,6 +105,24 @@ public class SparksHammers
     public void postInit(FMLPostInitializationEvent event)
     {
         //Run stuff after mods have initialized here
+
+        //Make sure all tools have recipes
+        List<HammerShapedOreRecipe> recipes = HammerCraftingManager.getInstance().getRecipeList();
+        for(ItemAOE tool : SHItems.AOE_TOOLS)
+        {
+            if(tool.equals(SHItems.hammerMjolnir))
+                continue;
+            boolean found = false;
+            for(HammerShapedOreRecipe r : recipes)
+            {
+                if(r.getRecipeOutput() != null && r.getRecipeOutput().getItem().equals(tool))
+                {
+                    found = true;
+                    break;
+                }
+            }
+            if(!found) LogHelper.warn("No hammer crafting recipe found for " + tool.getRegistryName() + "!");
+        }
 
         //Prints out all crafting recipes
         /*
@@ -131,17 +148,28 @@ public class SparksHammers
 
         //Prints out all of the items in the ore dictionary
         /*
+        LogHelper.info("\nORE DICTIONARIES:\n");
         for(String ore : OreDictionary.getOreNames())
-        {
             LogHelper.info(ore);
-        }
         */
 
         //This displays all item IDs:
         /*
-        Iterator items = Item.itemRegistry.getKeys().iterator();
+        LogHelper.info("\nITEM IDS:\n");
+        Iterator items = Item.REGISTRY.getKeys().iterator();
         while(items.hasNext())
             LogHelper.info(items.next().toString());
+        */
+
+        //Go through tool materials and print them out with details
+        /*
+        LogHelper.info("Current Tool Materials!");
+        ToolMaterial[] mat = ToolMaterial.values();
+        for(ToolMaterial m : mat)
+        {
+            LogHelper.info("Material: " + m.name());
+            LogHelper.info(m.getHarvestLevel()+","+m.getMaxUses()+","+m.getEfficiencyOnProperMaterial()+","+m.getDamageVsEntity()+","+m.getEnchantability());
+        }
         */
     }
 }

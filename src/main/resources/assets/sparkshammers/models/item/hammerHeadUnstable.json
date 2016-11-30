@@ -1,6 +1,0 @@
-{
-	"parent": "sparkshammers:item/itemDefault",
-	"textures": {
-		"layer0": "SparksHammers:items/ExtraUtilities/hammerHeadUnstable"
-	}
-}

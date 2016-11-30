@@ -1,92 +1,146 @@
 package com.brightspark.sparkshammers.init;
 
 import com.brightspark.sparkshammers.item.*;
-import com.brightspark.sparkshammers.reference.Materials;
+import com.brightspark.sparkshammers.reference.Config;
 import com.brightspark.sparkshammers.reference.Names;
 import com.brightspark.sparkshammers.util.ClientUtils;
+import com.brightspark.sparkshammers.util.LoaderHelper;
+import com.brightspark.sparkshammers.util.LogHelper;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.color.IItemColor;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.common.registry.GameRegistry;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class SHItems
 {
-    //Hammer Heads
-    public static final ItemResource hammerHeadWood = new ItemResource(Names.Items.HAMMER_HEAD_WOOD);
-    //Hammers
-    public static final ItemAOE hammerWood = new ItemAOE(Names.Items.HAMMER_WOOD, Materials.HAMMER_WOOD);
-    public static final ItemAOE hammerStone = new ItemAOE(Names.Items.HAMMER_STONE, Materials.HAMMER_STONE);
-    public static final ItemAOE hammerIron = new ItemAOE(Names.Items.HAMMER_IRON, Materials.HAMMER_IRON);
-    public static final ItemAOE hammerGold = new ItemAOE(Names.Items.HAMMER_GOLD, Materials.HAMMER_GOLD);
-    public static final ItemAOE hammerDiamond = new ItemAOE(Names.Items.HAMMER_DIAMOND, Materials.HAMMER_DIAMOND);
+    //Contains all items
+    public static Map<String, Item> ITEMS = new HashMap<String, Item>();
+    //Contains all of the AOE tools
+    public static List<ItemAOE> AOE_TOOLS = new ArrayList<ItemAOE>();
+    //Contains all of the items which use a basic coloured texture
+    private static List<Item> COLOURED_ITEMS = new ArrayList<Item>();
 
-    public static final ItemAOE hammerThor = new ItemHammerThor();
-    public static final ItemAOE hammerMini = new ItemAOE(Names.Items.HAMMER_MINI, Materials.HAMMER_MINI).setMineWidth(0).setShiftRotating(true);
-    public static final ItemAOE hammerGiant = new ItemAOE(Names.Items.HAMMER_GIANT, Materials.HAMMER_GIANT).setMineWidth(4).setMineHeight(4);
-    public static final ItemAOE hammerNetherStar = new ItemHammerNetherStar();
+    //Tool Heads
+    public static ItemResource hammerHeadWood, excavatorHeadWood;
 
-    //Excavator Heads
-    public static final ItemResource excavatorHeadWood = new ItemResource(Names.Items.EXCAVATOR_HEAD_WOOD);
-    //Excavators
-    public static final ItemAOE excavatorWood = new ItemAOE(Names.Items.EXCAVATOR_WOOD, Materials.HAMMER_WOOD, true);
-    public static final ItemAOE excavatorStone = new ItemAOE(Names.Items.EXCAVATOR_STONE, Materials.HAMMER_STONE, true);
-    public static final ItemAOE excavatorIron = new ItemAOE(Names.Items.EXCAVATOR_IRON, Materials.HAMMER_IRON, true);
-    public static final ItemAOE excavatorGold = new ItemAOE(Names.Items.EXCAVATOR_GOLD, Materials.HAMMER_GOLD, true);
-    public static final ItemAOE excavatorDiamond = new ItemAOE(Names.Items.EXCAVATOR_DIAMOND, Materials.HAMMER_DIAMOND, true);
+    //Special Hammers
+    public static ItemAOE hammerMjolnir, hammerMini, hammerGiant, hammerNetherStar;
 
     //Debug
-    public static final ItemDebug debug = new ItemDebug();
+    public static ItemDebug debug;
+
+    public static Item getItemById(String itemId)
+    {
+        return ITEMS.get(itemId);
+    }
+
+    private static void regGeneralItem(Item item)
+    {
+        GameRegistry.register(item);
+        ITEMS.put(item.getRegistryName().getResourcePath(), item);
+        if(item instanceof IColourable && ((IColourable)item).getTextureColour() >= 0)
+            COLOURED_ITEMS.add(item);
+    }
+
+    public static void regItem(Item item)
+    {
+        regGeneralItem(item);
+        if(item instanceof ItemAOE)
+            AOE_TOOLS.add((ItemAOE) item);
+    }
+
+    public static void regAOE(Names.EnumMaterials mat)
+    {
+        regAOE(mat, false);
+    }
+
+    public static void regAOE(Names.EnumMaterials mat, boolean isExcavator)
+    {
+        ItemAOE tool = new ItemAOE(mat, isExcavator);
+        regItem(tool);
+    }
 
     public static void regItems()
     {
-        //Heammer Heads
-        GameRegistry.register(hammerHeadWood);
-        //Hammers
-        GameRegistry.register(hammerWood);
-        GameRegistry.register(hammerStone);
-        GameRegistry.register(hammerIron);
-        GameRegistry.register(hammerGold);
-        GameRegistry.register(hammerDiamond);
+        //Tool Heads
+        regItem(hammerHeadWood = new ItemResource(Names.Items.HAMMER_HEAD_WOOD));
+        regItem(excavatorHeadWood = new ItemResource(Names.Items.EXCAVATOR_HEAD_WOOD));
 
-        GameRegistry.register(hammerThor);
-        GameRegistry.register(hammerMini);
-        GameRegistry.register(hammerGiant);
-        GameRegistry.register(hammerNetherStar);
-
-        //Excavator Heads
-        GameRegistry.register(excavatorHeadWood);
-        //Excavators
-        GameRegistry.register(excavatorWood);
-        GameRegistry.register(excavatorStone);
-        GameRegistry.register(excavatorIron);
-        GameRegistry.register(excavatorGold);
-        GameRegistry.register(excavatorDiamond);
+        //Special Hammers
+        regItem(hammerMjolnir = new ItemHammerMjolnir());
+        regItem(hammerMini = new ItemAOE(Names.EnumMaterials.MINI).setMineWidth(0).setShiftRotating(true));
+        regItem(hammerGiant = new ItemAOE(Names.EnumMaterials.GIANT).setMineWidth(4).setMineHeight(4));
+        regItem(hammerNetherStar = new ItemHammerNetherStar());
 
         //Debug
-        GameRegistry.register(debug);
+        regItem(debug = new ItemDebug());
+
+        //All Regular Hammers And Excavators
+        Names.EnumMaterials[] materials = Config.includeOtherModItems ? Names.EnumMaterials.values() : Names.EnumMaterials.VANILLA;
+        for(Names.EnumMaterials mat : materials)
+        {
+            if(mat.dependantOreDic == null && mat.dependantItem == null)
+            {
+                LogHelper.warn("No dependant ore dictionary or item stack for material " + mat);
+                continue;
+            }
+            LogHelper.info("Registering material " + mat);
+            switch(mat)
+            {
+                case WOOD:
+                case STONE:
+                case IRON:
+                case GOLD:
+                case DIAMOND:
+                    regAOE(mat);
+                    regAOE(mat, true);
+                    break;
+                case MANASTEEL:
+                case TERRASTEEL:
+                case ELEMENTIUM:
+                    if(LoaderHelper.isModLoaded(Names.Mods.BOTANIA))
+                        SHItemsBotania.regItems(mat);
+                    break;
+                default:
+                    if(!Config.includeOtherModItems) break;
+                    regAOE(mat);
+                    regAOE(mat, true);
+            }
+        }
     }
 
+    @SideOnly(Side.CLIENT)
     public static void regModels()
     {
-        //Hammers
-        ClientUtils.regModel(hammerHeadWood);
-        ClientUtils.regModel(hammerWood);
-        ClientUtils.regModel(hammerStone);
-        ClientUtils.regModel(hammerIron);
-        ClientUtils.regModel(hammerGold);
-        ClientUtils.regModel(hammerDiamond);
+        //Register all item models
+        for(Item tool : ITEMS.values())
+        {
+            if(tool instanceof ItemAOE && AOE_TOOLS.contains(tool))
+                ClientUtils.regTool((ItemAOE) tool);
+            else
+                ClientUtils.regModel(tool);
+        }
+    }
 
-        ClientUtils.regModel(hammerThor);
-        ClientUtils.regModel(hammerMini);
-        ClientUtils.regModel(hammerGiant);
-        ClientUtils.regModel(hammerNetherStar);
-
-        //Excavators
-        ClientUtils.regModel(excavatorHeadWood);
-        ClientUtils.regModel(excavatorWood);
-        ClientUtils.regModel(excavatorStone);
-        ClientUtils.regModel(excavatorIron);
-        ClientUtils.regModel(excavatorGold);
-        ClientUtils.regModel(excavatorDiamond);
-
-        //Debug
-        ClientUtils.regModel(debug);
+    @SideOnly(Side.CLIENT)
+    public static void regColours()
+    {
+        //Register item colours
+        Minecraft.getMinecraft().getItemColors().registerItemColorHandler(new IItemColor()
+        {
+            @Override
+            public int getColorFromItemstack(ItemStack stack, int tintIndex)
+            {
+                return tintIndex == 0 ? ((IColourable)stack.getItem()).getTextureColour() : -1;
+            }
+        }, COLOURED_ITEMS.toArray(new Item[]{}));
     }
 }

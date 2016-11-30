@@ -2,27 +2,42 @@ package com.brightspark.sparkshammers.init;
 
 import com.brightspark.sparkshammers.block.BlockHammer;
 import com.brightspark.sparkshammers.block.BlockHammerCraft;
-import com.brightspark.sparkshammers.item.ItemBlockBasic;
-import com.brightspark.sparkshammers.reference.Names;
 import com.brightspark.sparkshammers.util.ClientUtils;
+import net.minecraft.block.Block;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
+import net.minecraft.item.ItemStack;
+import net.minecraft.world.World;
 import net.minecraftforge.fml.common.registry.GameRegistry;
-import net.minecraftforge.fml.common.registry.IForgeRegistryEntry;
 
 public class SHBlocks
 {
     public static BlockHammer blockHammer = new BlockHammer();
-    public static ItemBlock itemBlockHammer = new ItemBlockBasic(blockHammer);
     public static BlockHammerCraft blockHammerCraft = new BlockHammerCraft();
-    public static ItemBlock itemBlockHammerCraft = new ItemBlockBasic(blockHammerCraft);
+
+    public static void regBlock(Block block)
+    {
+        GameRegistry.register(block);
+        GameRegistry.register(new ItemBlock(block)
+        {
+            @Override
+            public void onCreated(ItemStack stack, World worldIn, EntityPlayer player)
+            {
+                super.onCreated(stack, worldIn, player);
+                //Handle achievements
+                Item item = stack.getItem();
+                if(item.equals(Item.getItemFromBlock(SHBlocks.blockHammerCraft)))
+                    player.addStat(SHAchievements.craftingTable);
+            }
+        }.setRegistryName(block.getRegistryName()));
+    }
 
     public static void regBlocks()
     {
         //Register blocks here
-        GameRegistry.register(blockHammer);
-        GameRegistry.register(itemBlockHammer);
-        GameRegistry.register(blockHammerCraft);
-        GameRegistry.register(itemBlockHammerCraft);
+        regBlock(blockHammer);
+        regBlock(blockHammerCraft);
     }
 
     public static void regModels()

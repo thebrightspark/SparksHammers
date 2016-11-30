@@ -12,9 +12,6 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-/**
- * Created by Mark on 13/06/2016.
- */
 public class ItemDebug extends ItemResource
 {
     public ItemDebug()
@@ -29,7 +26,7 @@ public class ItemDebug extends ItemResource
     {
         IBlockState state = worldIn.getBlockState(pos);
         Material mat = state.getMaterial();
-        if(mat == Material.CRAFTED_SNOW || mat == Material.PLANTS || mat == Material.VINE) pos = pos.up();
+        if(mat != Material.CRAFTED_SNOW && mat != Material.PLANTS && mat != Material.VINE) pos = pos.up();
         WorldGenMjolnirShrine.generateShrine(worldIn, pos);
         return EnumActionResult.FAIL;
     }

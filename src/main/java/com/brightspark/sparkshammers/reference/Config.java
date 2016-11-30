@@ -1,5 +1,8 @@
 package com.brightspark.sparkshammers.reference;
 
+import net.minecraft.item.Item;
+import net.minecraftforge.common.util.EnumHelper;
+
 public class Config
 {
     /**
@@ -36,78 +39,6 @@ public class Config
     public static final int netherStarHammerDistanceMin = 3;
     public static final int netherStarHammerDistanceMax = 100;
 
-    /*
-     * Values for different Tool Materials.
-     * The auto updating of Tool Materials can be turn on or off.
-     * This simply, when the Tool Material for it's respective pickaxe is in the mod pack, it will check against it
-     *  and update these values against it. Otherwise, it will keep what's already saved.
-     */
-    public static int harvestLevelMin = 0;
-    public static int harvestLevelMax = Integer.MAX_VALUE;
-    public static int maxUsesMin = 1;
-    public static int maxUsesMax = Integer.MAX_VALUE;
-    public static float efficiencyMin = 0f;
-    public static float efficiencyMax = 100f;
-    public static float damageMin = 0f;
-    public static float damageMax = 100f;
-    public static int enchantabilityMin = 0;
-    public static int enchantabilityMax = 50;
-
-    public static int manasteelHarvestLevel = 3;
-    public static int manasteelMaxUses = (int) (300*toolDurabilityModifier);
-    public static float manasteelEfficiency = 6.2f*toolSpeedModifier;
-    public static float manasteelDamageVsEntity = 2f;
-    public static int manasteelEnchantability = 20;
-
-    public static int elementiumHarvestLevel = 3;
-    public static int elementiumMaxUses = (int) (720*toolDurabilityModifier);
-    public static float elementiumEfficiency = 6.2f*toolSpeedModifier;
-    public static float elementiumDamageVsEntity = 2f;
-    public static int elementiumEnchantability = 20;
-
-    public static int terrasteelHarvestLevel = 4;
-    public static int terrasteelMaxUses = (int) (2300*toolDurabilityModifier);
-    public static float terrasteelEfficiency = 9f*toolSpeedModifier;
-    public static float terrasteelDamageVsEntity = 3f;
-    public static int terrasteelEnchantability = 26;
-
-    public static int darksteelHarvestLevel = 5;
-    public static int darksteelMaxUses = (int) (1561*toolDurabilityModifier);
-    public static float darksteelEfficiency = 7f*toolSpeedModifier;
-    public static float darksteelDamageVsEntity = 2f;
-    public static int darksteelEnchantability = 25;
-
-    public static int bronzeHarvestLevel = 2;
-    public static int bronzeMaxUses = (int) (350*toolDurabilityModifier);
-    public static float bronzeEfficiency = 6f*toolSpeedModifier;
-    public static float bronzeDamageVsEntity = 2f;
-    public static int bronzeEnchantability = 13;
-
-    public static int machaliteHarvestLevel = 2;
-    public static int machaliteMaxUses = (int) (500*toolDurabilityModifier);
-    public static float machaliteEfficiency = 7f*toolSpeedModifier;
-    public static float machaliteDamageVsEntity = 3f;
-    public static int machaliteEnchantability = 15;
-
-    public static int dragoniteHarvestLevel = 3;
-    public static int dragoniteMaxUses = (int) (750*toolDurabilityModifier);
-    public static float dragoniteEfficiency = 7f*toolSpeedModifier;
-    public static float dragoniteDamageVsEntity = 4f;
-    public static int dragoniteEnchantability = 15;
-
-    public static int gossamiteHarvestLevel = 3;
-    public static int gossamiteMaxUses = (int) (1000*toolDurabilityModifier);
-    public static float gossamiteEfficiency = 8f*toolSpeedModifier;
-    public static float gossamiteDamageVsEntity = 5f;
-    public static int gossamiteEnchantability = 15;
-
-    /**
-     * Mjolnir
-     */
-    public static int mjolnirHarvestLevel = harvestLevelMax;
-    public static float mjolnirEfficiency = 10f;
-    public static float mjolnirDamageVsEntity = 10f;
-
     /**
      * Whether shrine structures should be generated in the world to find Mjolnir in.
      */
@@ -116,15 +47,70 @@ public class Config
     public static int mjolnirShrineMinY = 125;
     public static boolean mjolnirShrineDebug = false;
 
-    /**
-     * Whether Mjolnir should be added to dungeon loot.
+    /*
+     * Mjolnir
      */
-    public static boolean shouldAddMjolnirToLoot = true;
-    public static int mjolnirLootRarity = 1;
+    public static int mjolnirHarvestLevel = Integer.MAX_VALUE;
+    public static float mjolnirEfficiency = 10f;
+    public static float mjolnirDamageVsEntity = 10f;
+    public static boolean mjolnirPickupNeedsDragonAchieve = true;
+
+    /*
+     * Common mod metals
+     */
 
     /**
-     * Whether wooden and stone hammers and excavators should be added to mineshaft loot.
+     * Create and returns the material currently saved as a double array as a tool material.
      */
-    public static boolean shouldAddMineshaftLoot = true;
-    public static int mineshaftLootRarity = 1;
+    public static Item.ToolMaterial getAsToolMaterial(String name, double[] material)
+    {
+        return EnumHelper.addToolMaterial(name, (int) material[0], (int) material[1], (float) material[2], (float) material[3], (int) material[4]);
+    }
+
+    /**
+     * Initialises the materials later after the tool modifiers have been loaded from the configs.
+     */
+    public static void initMaterials()
+    {
+        materialCopper = new double[] {1d, 128d*toolDurabilityModifier, 4d*toolSpeedModifier, 1d, 12d};
+        materialSilver = new double[] {1d, 128d*toolDurabilityModifier, 5d*toolSpeedModifier, 1.3d, 15d};
+        materialTin = new double[] {1d, 32d*toolDurabilityModifier, 3d*toolSpeedModifier, 0.8d, 5d};
+        materialLead = new double[] {0d, 32d*toolDurabilityModifier, 1d*toolSpeedModifier, 0.3d, 2d};
+        materialNickel = new double[] {1d, 128d*toolDurabilityModifier, 4d*toolSpeedModifier, 1d, 17d};
+        materialPlatinum = new double[] {1d, 160d*toolDurabilityModifier, 3d*toolSpeedModifier, 0.8d, 37d};
+        materialBronze = new double[] {2d, 128d*toolDurabilityModifier, 8d*toolSpeedModifier, 2d, 11d};
+        materialSteel = new double[] {2d, 480d*toolDurabilityModifier, 8d*toolSpeedModifier, 2d, 5d};
+        materialInvar = new double[] {2d, 320d*toolDurabilityModifier, 9d*toolSpeedModifier, 2.3d, 7d};
+        materialElectrum = new double[] {1d, 128d*toolDurabilityModifier, 5d*toolSpeedModifier, 1.3d, 25d};
+        materialAluminium = new double[] {2d, 220d*toolDurabilityModifier, 12d*toolSpeedModifier, 1.8d, 14d};
+
+        materialOsmium = new double[] {2d, 500d*toolDurabilityModifier, 10d*toolSpeedModifier, 4d, 12d};
+        materialZinc = new double[] {0d, 32d*toolDurabilityModifier, 1d*toolSpeedModifier, 0.3d, 2d};
+        materialChrome = new double[] {3d, 600d*toolDurabilityModifier, 7d*toolSpeedModifier, 4d, 7d};
+        materialIridium = new double[] {5d, 2000d*toolDurabilityModifier, 10d*toolSpeedModifier, 5d, 1d};
+        materialTitanium = new double[] {4d, 1000d*toolDurabilityModifier, 8d*toolSpeedModifier, 4d, 3d};
+        materialTungsten = new double[] {4d, 1000d*toolDurabilityModifier, 8d*toolSpeedModifier, 4d, 3d};
+
+        materialSapphire = new double[] {2d, 620d*toolDurabilityModifier, 5d*toolSpeedModifier, 2d, 8d};
+        materialRuby = new double[] {2d, 320d*toolDurabilityModifier, 6.2d*toolSpeedModifier, 2.7d, 10d};
+        materialPeridot = new double[] {2d, 400d*toolDurabilityModifier, 7d*toolSpeedModifier, 2.4d, 16d};
+
+        materialManasteel = new double[] {3d, 300d*toolDurabilityModifier, 6.2d*toolSpeedModifier, 2d, 20d};
+        materialElementium = new double[] {3d, 720d*toolDurabilityModifier, 6.2d*toolSpeedModifier, 2d, 20d};
+        materialTerrasteel = new double[] {4d, 2300d*toolDurabilityModifier, 9d*toolSpeedModifier, 3d, 26d};
+
+        materialMachalite = new double[] {2d, 500d*toolDurabilityModifier, 7d*toolSpeedModifier, 3d, 15d};
+        materialDragonite = new double[] {3d, 750d*toolDurabilityModifier, 7d*toolSpeedModifier, 4d, 15d};
+        materialGossamite = new double[] {3d, 1000d*toolDurabilityModifier, 8d*toolSpeedModifier, 5d, 15d};
+
+        materialDarksteel = new double[] {5d, 1561d*toolDurabilityModifier, 7d*toolSpeedModifier, 2d, 25d};
+    }
+
+    //Name, harvest level, durability, mining speed, damage vs entities, enchantability
+    public static double[] materialCopper, materialSilver, materialTin, materialLead, materialNickel, materialPlatinum, materialBronze, materialSteel, materialInvar, materialElectrum, materialAluminium,
+        materialOsmium, materialZinc, materialChrome, materialIridium, materialTitanium, materialTungsten,
+        materialSapphire, materialRuby, materialPeridot,
+        materialManasteel, materialElementium, materialTerrasteel,
+        materialMachalite, materialDragonite, materialGossamite,
+        materialDarksteel;
 }
