@@ -1,7 +1,6 @@
 package com.brightspark.sparkshammers.item;
 
 import com.brightspark.sparkshammers.init.SHBlocks;
-import com.brightspark.sparkshammers.reference.Materials;
 import com.brightspark.sparkshammers.reference.Names;
 import com.brightspark.sparkshammers.tileentity.TileHammer;
 import com.brightspark.sparkshammers.util.NBTHelper;
@@ -35,7 +34,7 @@ public class ItemHammerThor extends ItemAOE
 
     public ItemHammerThor()
     {
-        super(Names.Items.HAMMER_THOR, Materials.MJOLNIR, false, true);
+        super(Names.EnumMaterials.MJOLNIR, false, true);
     }
 
     /**

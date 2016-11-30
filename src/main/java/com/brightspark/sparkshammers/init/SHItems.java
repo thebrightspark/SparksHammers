@@ -2,7 +2,6 @@ package com.brightspark.sparkshammers.init;
 
 import com.brightspark.sparkshammers.item.*;
 import com.brightspark.sparkshammers.reference.Config;
-import com.brightspark.sparkshammers.reference.Materials;
 import com.brightspark.sparkshammers.reference.Names;
 import com.brightspark.sparkshammers.util.ClientUtils;
 import com.brightspark.sparkshammers.util.LoaderHelper;
@@ -77,7 +76,7 @@ public class SHItems
 
         //Special Hammers
         regItem(hammerThor = new ItemHammerThor());
-        regItem(hammerMini = new ItemAOE(Names.Items.HAMMER_MINI, Materials.MINI).setMineWidth(0).setShiftRotating(true));
+        regItem(hammerMini = new ItemAOE(Names.EnumMaterials.MINI).setMineWidth(0).setShiftRotating(true));
         regItem(hammerGiant = new ItemAOE(Names.EnumMaterials.GIANT).setMineWidth(4).setMineHeight(4));
         regItem(hammerNetherStar = new ItemHammerNetherStar());
 
@@ -96,6 +95,14 @@ public class SHItems
             LogHelper.info("Registering material " + mat);
             switch(mat)
             {
+                case WOOD:
+                case STONE:
+                case IRON:
+                case GOLD:
+                case DIAMOND:
+                    regAOE(mat);
+                    regAOE(mat, true);
+                    break;
                 case MANASTEEL:
                 case TERRASTEEL:
                 case ELEMENTIUM:
@@ -103,6 +110,7 @@ public class SHItems
                         SHItemsBotania.regItems(mat);
                     break;
                 default:
+                    if(!Config.includeOtherModItems) break;
                     regAOE(mat);
                     regAOE(mat, true);
             }

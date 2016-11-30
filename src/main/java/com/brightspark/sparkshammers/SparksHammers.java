@@ -10,14 +10,12 @@ import com.brightspark.sparkshammers.handlers.LootEventHandler;
 import com.brightspark.sparkshammers.init.*;
 import com.brightspark.sparkshammers.item.ItemAOE;
 import com.brightspark.sparkshammers.reference.Config;
-import com.brightspark.sparkshammers.reference.ModMaterials;
 import com.brightspark.sparkshammers.reference.Reference;
 import com.brightspark.sparkshammers.util.LoaderHelper;
 import com.brightspark.sparkshammers.util.LogHelper;
 import com.brightspark.sparkshammers.worldgen.WorldGenMjolnirShrine;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
@@ -67,9 +65,6 @@ public class SparksHammers
         ConfigurationHandler.init(event.getSuggestedConfigurationFile());
         MinecraftForge.EVENT_BUS.register(new ConfigurationHandler());
 
-        if(Config.includeOtherModItems)
-            //Initialise the materials before the Names enum is accessed, and so avoid the enum setting its materials to null.
-            ModMaterials.init();
         SHItems.regItems();
         SHBlocks.regBlocks();
 
@@ -164,6 +159,17 @@ public class SparksHammers
         Iterator items = Item.REGISTRY.getKeys().iterator();
         while(items.hasNext())
             LogHelper.info(items.next().toString());
+        */
+
+        //Go through tool materials and print them out with details
+        /*
+        LogHelper.info("Current Tool Materials!");
+        ToolMaterial[] mat = ToolMaterial.values();
+        for(ToolMaterial m : mat)
+        {
+            LogHelper.info("Material: " + m.name());
+            LogHelper.info(m.getHarvestLevel()+","+m.getMaxUses()+","+m.getEfficiencyOnProperMaterial()+","+m.getDamageVsEntity()+","+m.getEnchantability());
+        }
         */
     }
 }
