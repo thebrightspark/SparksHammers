@@ -26,28 +26,45 @@ public class Names
         NETHERSTAR(EnumHelper.addToolMaterial("HammerNetherStar", Item.ToolMaterial.DIAMOND.getHarvestLevel(), Config.netherStarHammerDurability, Item.ToolMaterial.DIAMOND.getEfficiencyOnProperMaterial(), 20.0f, 0).setRepairItem(new ItemStack(net.minecraft.init.Items.NETHER_STAR))),
 
         //Common Mod Metals
-        COPPER(0xFF976E, "ingotCopper", EnumHelper.addToolMaterial("HammerCopper", Config.copperHarvestLevel, Config.copperMaxUses, Config.copperEfficiency, Config.copperDamageVsEntity, Config.copperEnchantability)),
-        SILVER(0xBEBEBE, "ingotSilver", EnumHelper.addToolMaterial("HammerSilver", Config.silverHarvestLevel, Config.silverMaxUses, Config.silverEfficiency, Config.silverDamageVsEntity, Config.silverEnchantability)),
-        TIN(0xFFF3E5, "ingotTin", EnumHelper.addToolMaterial("HammerTin", Config.tinHarvestLevel, Config.tinMaxUses, Config.tinEfficiency, Config.tinDamageVsEntity, Config.tinEnchantability)),
-        LEAD(0x737373, "ingotLead", EnumHelper.addToolMaterial("HammerLead", Config.leadHarvestLevel, Config.leadMaxUses, Config.leadEfficiency, Config.leadDamageVsEntity, Config.leadEnchantability)),
-        NICKEL(0xE5FFE1, "ingotNickel", EnumHelper.addToolMaterial("HammerNickel", Config.nickelHarvestLevel, Config.nickelMaxUses, Config.nickelEfficiency, Config.nickelDamageVsEntity, Config.nickelEnchantability)),
-        PLATINUM(0xB0BEBA, "ingotPlatinum", EnumHelper.addToolMaterial("HammerPlatinum", Config.platinumHarvestLevel, Config.platinumMaxUses, Config.platinumEfficiency, Config.platinumDamageVsEntity, Config.platinumEnchantability)),
-        BRONZE(0xEC9D4B, "ingotBronze", EnumHelper.addToolMaterial("HammerBronze", Config.bronzeHarvestLevel, Config.bronzeMaxUses, Config.bronzeEfficiency, Config.bronzeDamageVsEntity, Config.bronzeEnchantability)),
-        STEEL(0xCDDADC, "ingotSteel", EnumHelper.addToolMaterial("HammerSteel", Config.steelHarvestLevel, Config.steelMaxUses, Config.steelEfficiency, Config.steelDamageVsEntity, Config.steelEnchantability)),
-        INVAR(0xCBC6B2, "ingotInvar", EnumHelper.addToolMaterial("HammerInvar", Config.invarHarvestLevel, Config.invarMaxUses, Config.invarEfficiency, Config.invarDamageVsEntity, Config.invarEnchantability)),
-        ELECTRUM(0xFFF0A4, "ingotElectrum", EnumHelper.addToolMaterial("HammerElectrum", Config.electrumHarvestLevel, Config.electrumMaxUses, Config.electrumEfficiency, Config.electrumDamageVsEntity, Config.electrumEnchantability)),
+        COPPER(0xFF976E, "ingotCopper", Config.getAsToolMaterial("HammerCopper", Config.materialCopper)),
+        SILVER(0xBEBEBE, "ingotSilver", Config.getAsToolMaterial("HammerSilver", Config.materialSilver)),
+        TIN(0xFFF3E5, "ingotTin", Config.getAsToolMaterial("HammerTin", Config.materialTin)),
+        LEAD(0x737373, "ingotLead", Config.getAsToolMaterial("HammerLead", Config.materialLead)),
+        NICKEL(0xE5FFE1, "ingotNickel", Config.getAsToolMaterial("HammerNickel", Config.materialNickel)),
+        PLATINUM(0xB0BEBA, "ingotPlatinum", Config.getAsToolMaterial("HammerPlatinum", Config.materialPlatinum)),
+        BRONZE(0xEC9D4B, "ingotBronze", Config.getAsToolMaterial("HammerBronze", Config.materialBronze)),
+        STEEL(0xCDDADC, "ingotSteel", Config.getAsToolMaterial("HammerSteel", Config.materialSteel)),
+        INVAR(0xCBC6B2, "ingotInvar", Config.getAsToolMaterial("HammerInvar", Config.materialInvar)),
+        ELECTRUM(0xFFF0A4, "ingotElectrum", Config.getAsToolMaterial("HammerElectrum", Config.materialElectrum)),
+        ALUMINIUM(0xECEAF7, "ingotAluminum", Config.getAsToolMaterial("HammerAluminium", Config.materialAluminium)),
+
+        //Uncommon Mod Metals
+        OSMIUM(0x8C9CA8, "ingotOsmium", Config.getAsToolMaterial("HammerOsmium", Config.materialOsmium)),
+        ZINC(0xC3CCB9, "ingotZinc", Config.getAsToolMaterial("HammerZinc", Config.materialZinc)),
+        CHROME(0xD1A3AE, "ingotChrome", Config.getAsToolMaterial("HammerChrome", Config.materialChrome)),
+        IRIDIUM(0xB9C0C9, "ingotIridium", Config.getAsToolMaterial("HammerIridium", Config.materialIridium)),
+        TITANIUM(0xADAECF, "ingotTitanium", Config.getAsToolMaterial("HammerTitanium", Config.materialTitanium)),
+        TUNGSTEN(0x818991, "ingotTungsten", Config.getAsToolMaterial("HammerTungsten", Config.materialTungsten)),
+
+        //Other Mod Materials
+        SAPPHIRE(0x548ABE, "gemSapphire", Config.getAsToolMaterial("HammerSapphire", Config.materialSapphire)),
+        RUBY(0xBE5562, "gemRuby", Config.getAsToolMaterial("HammerRuby", Config.materialRuby)),
+        PERIDOT(0x9DBE56, "gemPeridot", Config.getAsToolMaterial("HammerPeridot", Config.materialPeridot)),
 
         //Mod Materials
+
         //Botania
-        MANASTEEL(0xA1E0FF, "ingotManasteel", EnumHelper.addToolMaterial("HammerManasteel", Config.manasteelHarvestLevel, Config.manasteelMaxUses, Config.manasteelEfficiency, Config.manasteelDamageVsEntity, Config.manasteelEnchantability)),
-        TERRASTEEL(0x9BF76C, "ingotTerrasteel", EnumHelper.addToolMaterial("HammerTerrasteel", Config.terrasteelHarvestLevel, Config.terrasteelMaxUses, Config.terrasteelEfficiency, Config.terrasteelDamageVsEntity, Config.terrasteelEnchantability)),
-        ELEMENTIUM(0xF8A1FF, "ingotElvenElementium", EnumHelper.addToolMaterial("HammerElementium", Config.elementiumHarvestLevel, Config.elementiumMaxUses, Config.elementiumEfficiency, Config.elementiumDamageVsEntity, Config.elementiumEnchantability)),
+        MANASTEEL(0xA1E0FF, "ingotManasteel", Config.getAsToolMaterial("HammerManasteel", Config.materialManasteel)),
+        TERRASTEEL(0x9BF76C, "ingotTerrasteel", Config.getAsToolMaterial("HammerTerrasteel", Config.materialTerrasteel)),
+        ELEMENTIUM(0xF8A1FF, "ingotElvenElementium", Config.getAsToolMaterial("HammerElementium", Config.materialElementium)),
+
         //EnderIO
-        //DARKSTEEL(0x636363, EnumHelper.addToolMaterial("HammerDarksteel", Config.darksteelHarvestLevel, Config.darksteelMaxUses, Config.darksteelEfficiency, Config.darksteelDamageVsEntity, Config.darksteelEnchantability)),
+        DARKSTEEL(0x636363, Config.getAsToolMaterial("HammerDarksteel", Config.materialDarksteel)),
+
         //MobHunter
-        MACHALITE(0xC1DCEA, "ingotMachalite", EnumHelper.addToolMaterial("HammerMachalite", Config.machaliteHarvestLevel, Config.machaliteMaxUses, Config.machaliteEfficiency, Config.machaliteDamageVsEntity, Config.machaliteEnchantability)),
-        DRAGONITE(0xCBE0CB, "ingotDragonite", EnumHelper.addToolMaterial("HammerDragonite", Config.dragoniteHarvestLevel, Config.dragoniteMaxUses, Config.dragoniteEfficiency, Config.dragoniteDamageVsEntity, Config.dragoniteEnchantability)),
-        GOSSAMITE(0xE2CFDC, "ingotGossamite", EnumHelper.addToolMaterial("HammerGossamite", Config.gossamiteHarvestLevel, Config.gossamiteMaxUses, Config.gossamiteEfficiency, Config.gossamiteDamageVsEntity, Config.gossamiteEnchantability));
+        MACHALITE(0xC1DCEA, "ingotMachalite", Config.getAsToolMaterial("HammerMachalite", Config.materialMachalite)),
+        DRAGONITE(0xCBE0CB, "ingotDragonite", Config.getAsToolMaterial("HammerDragonite", Config.materialDragonite)),
+        GOSSAMITE(0xE2CFDC, "ingotGossamite", Config.getAsToolMaterial("HammerGossamite", Config.materialGossamite));
 
         public int colour = -1;
         public Item.ToolMaterial material;
