@@ -15,7 +15,7 @@ public class LootEventHandler
 {
     private void addLoot(LootPool pool, Item item, int weight)
     {
-        pool.addEntry(new LootEntryItem(item, weight, 0, new LootFunction[0], new LootCondition[0], Reference.MOD_ID + item.getUnlocalizedName()));
+        pool.addEntry(new LootEntryItem(item, weight, 0, new LootFunction[0], new LootCondition[0], item.getRegistryName().toString()));
     }
 
     @SubscribeEvent
@@ -24,8 +24,8 @@ public class LootEventHandler
         if(event.getName().equals(LootTableList.CHESTS_ABANDONED_MINESHAFT))
         {
             LootPool pool = event.getTable().getPool("main");
-            addLoot(pool, SHItems.getItemById("hammerWood"), 1);
-            addLoot(pool, SHItems.getItemById("hammerStone"), 1);
+            addLoot(pool, SHItems.getItemById("hammer_wood"), 1);
+            addLoot(pool, SHItems.getItemById("hammer_stone"), 1);
             //addLoot(pool, SHItems.excavatorWood, 1);
             //addLoot(pool, SHItems.excavatorStone, 1);
         }

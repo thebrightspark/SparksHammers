@@ -1,6 +1,5 @@
 package com.brightspark.sparkshammers.reference;
 
-import com.brightspark.sparkshammers.util.CommonUtils;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.util.EnumHelper;
@@ -102,15 +101,9 @@ public class Names
             this.dependantItem = dependantItem;
         }
 
-        @Override
-        public String toString()
-        {
-            return CommonUtils.capitaliseFirstLetter(super.toString().toLowerCase());
-        }
-
         public String unlocToolName(boolean isExcavator)
         {
-            return (isExcavator ? Items.EXCAVATOR : Items.HAMMER) + toString();
+            return (isExcavator ? Items.EXCAVATOR : Items.HAMMER) + "_" + toString().toLowerCase();
         }
     }
 
@@ -119,8 +112,8 @@ public class Names
         public static final String HAMMER = "hammer";
         public static final String EXCAVATOR = "excavator";
 
-        public static final String HAMMER_HEAD_WOOD = "hammerHeadWood";
-        public static final String EXCAVATOR_HEAD_WOOD = "excavatorHeadWood";
+        public static final String HAMMER_HEAD_WOOD = "hammer_head_wood";
+        public static final String EXCAVATOR_HEAD_WOOD = "excavator_head_wood";
 
         //<<<< Debug >>>>
         public static final String DEBUG = "debug";
@@ -128,8 +121,8 @@ public class Names
 
     public static class Blocks
     {
-        public static final String HAMMER = "hammerBlock";
-        public static final String HAMMER_CRAFT = "hammerCraft";
+        public static final String HAMMER = "hammer_block";
+        public static final String HAMMER_CRAFT = "hammer_craft";
     }
 
     public static class Mods

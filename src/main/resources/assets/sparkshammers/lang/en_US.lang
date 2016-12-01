@@ -1,112 +1,112 @@
 // <<<< Vanilla Style Tools >>>>
 
 //Hammer Heads
-item.hammerHeadWood.name=Wooden Hammer Head
+item.hammer_head_wood.name=Wooden Hammer Head
 
 //Hammers
-item.hammerWood.name=Wooden Hammer
-item.hammerStone.name=Stone Hammer
-item.hammerIron.name=Iron Hammer
-item.hammerGold.name=Gold Hammer
-item.hammerDiamond.name=Diamond Hammer
+item.hammer_wood.name=Wooden Hammer
+item.hammer_stone.name=Stone Hammer
+item.hammer_iron.name=Iron Hammer
+item.hammer_gold.name=Gold Hammer
+item.hammer_diamond.name=Diamond Hammer
 
-item.hammerMjolnir.name=Mjolnir
-item.hammerMjolnir.tooltip=Owner:
-item.hammerMjolnir.chat.wrongPlayer.1=You are not worthy to wield me!
-item.hammerMjolnir.chat.wrongPlayer.2=is my true Master!
-item.hammerMjolnir.chat.noAchieve=You must prove you're worthy before you can wield me!
+item.hammer_mjolnir.name=Mjolnir
+item.hammer_mjolnir.tooltip=Owner:
+item.hammer_mjolnir.chat.wrongPlayer.1=You are not worthy to wield me!
+item.hammer_mjolnir.chat.wrongPlayer.2=is my true Master!
+item.hammer_mjolnir.chat.noAchieve=You must prove you're worthy before you can wield me!
 
-item.hammerMini.name=Mini Hammer
-item.hammerGiant.name=Giant Hammer
-item.hammerGiant.8brickdmg.name=8BrickDMG's BFH
-item.hammerNetherstar.name=Nether Star Hammer
+item.hammer_mini.name=Mini Hammer
+item.hammer_giant.name=Giant Hammer
+item.hammer_giant.8brickdmg.name=8BrickDMG's BFH
+item.hammer_netherstar.name=Nether Star Hammer
 
 //Excavator Heads
-item.excavatorHeadWood.name=Wooden Excavator Head
+item.excavator_head_wood.name=Wooden Excavator Head
 
 //Excavators
-item.excavatorWood.name=Wooden Excavator
-item.excavatorStone.name=Stone Excavator
-item.excavatorIron.name=Iron Excavator
-item.excavatorGold.name=Gold Excavator
-item.excavatorDiamond.name=Diamond Excavator
+item.excavator_wood.name=Wooden Excavator
+item.excavator_stone.name=Stone Excavator
+item.excavator_iron.name=Iron Excavator
+item.excavator_gold.name=Gold Excavator
+item.excavator_diamond.name=Diamond Excavator
 
 // <<<< Mod Material Made Tools >>>>
 
 //Hammer Heads
-item.hammerHeadUnstable.name=Unstable Hammer Head
+item.hammer_head_unstable.name=Unstable Hammer Head
 
 //Hammers
-item.hammerCopper.name=Copper Hammer
-item.hammerSilver.name=Silver Hammer
-item.hammerTin.name=Tin Hammer
-item.hammerLead.name=Lead Hammer
-item.hammerNickel.name=Nickel Hammer
-item.hammerPlatinum.name=Platinum Hammer
-item.hammerBronze.name=Bronze Hammer
-item.hammerSteel.name=Steel Hammer
-item.hammerInvar.name=Invar Hammer
-item.hammerElectrum.name=Electrum Hammer
-item.hammerAluminium.name=Aluminium Hammer
+item.hammer_copper.name=Copper Hammer
+item.hammer_silver.name=Silver Hammer
+item.hammer_tin.name=Tin Hammer
+item.hammer_lead.name=Lead Hammer
+item.hammer_nickel.name=Nickel Hammer
+item.hammer_platinum.name=Platinum Hammer
+item.hammer_bronze.name=Bronze Hammer
+item.hammer_steel.name=Steel Hammer
+item.hammer_invar.name=Invar Hammer
+item.hammer_electrum.name=Electrum Hammer
+item.hammer_aluminium.name=Aluminium Hammer
 
-item.hammerOsmium.name=Osmium Hammer
-item.hammerZinc.name=Zinc Hammer
-item.hammerChrome.name=Chrome Hammer
-item.hammerIridium.name=Iridium Hammer
-item.hammerTitanium.name=Titanium Hammer
-item.hammerTungsten.name=Tungsten Hammer
+item.hammer_osmium.name=Osmium Hammer
+item.hammer_zinc.name=Zinc Hammer
+item.hammer_chrome.name=Chrome Hammer
+item.hammer_iridium.name=Iridium Hammer
+item.hammer_titanium.name=Titanium Hammer
+item.hammer_tungsten.name=Tungsten Hammer
 
-item.hammerSapphire.name=Sapphire Hammer
-item.hammerRuby.name=Ruby Hammer
-item.hammerPeridot.name=Peridot Hammer
+item.hammer_sapphire.name=Sapphire Hammer
+item.hammer_ruby.name=Ruby Hammer
+item.hammer_peridot.name=Peridot Hammer
 
-item.hammerManasteel.name=Manasteel Hammer
-item.hammerTerrasteel.name=Terrasteel Hammer
-item.hammerElementium.name=Elementium Hammer
+item.hammer_manasteel.name=Manasteel Hammer
+item.hammer_terrasteel.name=Terrasteel Hammer
+item.hammer_elementium.name=Elementium Hammer
 
-item.hammerUnstable.name=Unstable Hammer
+item.hammer_unstable.name=Unstable Hammer
 
-item.hammerDarksteel.name=Dark Steel Hammer
+item.hammer_darksteel.name=Dark Steel Hammer
 
-item.hammerMachalite.name=Machalite Hammer
-item.hammerDragonite.name=Dragonite Hammer
-item.hammerGossamite.name=Gossamite Hammer
+item.hammer_machalite.name=Machalite Hammer
+item.hammer_dragonite.name=Dragonite Hammer
+item.hammer_gossamite.name=Gossamite Hammer
 
 //Excavators
-item.excavatorCopper.name=Copper Excavator
-item.excavatorSilver.name=Silver Excavator
-item.excavatorTin.name=Tin Excavator
-item.excavatorLead.name=Lead Excavator
-item.excavatorNickel.name=Nickel Excavator
-item.excavatorPlatinum.name=Platinum Excavator
-item.excavatorBronze.name=Bronze Excavator
-item.excavatorSteel.name=Steel Excavator
-item.excavatorInvar.name=Invar Excavator
-item.excavatorElectrum.name=Electrum Excavator
-item.excavatorAluminium.name=Aluminium Excavator
+item.excavator_copper.name=Copper Excavator
+item.excavator_silver.name=Silver Excavator
+item.excavator_tin.name=Tin Excavator
+item.excavator_lead.name=Lead Excavator
+item.excavator_nickel.name=Nickel Excavator
+item.excavator_platinum.name=Platinum Excavator
+item.excavator_bronze.name=Bronze Excavator
+item.excavator_steel.name=Steel Excavator
+item.excavator_invar.name=Invar Excavator
+item.excavator_electrum.name=Electrum Excavator
+item.excavator_aluminium.name=Aluminium Excavator
 
-item.excavatorOsmium.name=Osmium Excavator
-item.excavatorZinc.name=Zinc Excavator
-item.excavatorChrome.name=Chrome Excavator
-item.excavatorIridium.name=Iridium Excavator
-item.excavatorTitanium.name=Titanium Excavator
-item.excavatorTungsten.name=Tungsten Excavator
+item.excavator_osmium.name=Osmium Excavator
+item.excavator_zinc.name=Zinc Excavator
+item.excavator_chrome.name=Chrome Excavator
+item.excavator_iridium.name=Iridium Excavator
+item.excavator_titanium.name=Titanium Excavator
+item.excavator_tungsten.name=Tungsten Excavator
 
-item.excavatorSapphire.name=Sapphire Excavator
-item.excavatorRuby.name=Ruby Excavator
-item.excavatorPeridot.name=Peridot Excavator
+item.excavator_sapphire.name=Sapphire Excavator
+item.excavator_ruby.name=Ruby Excavator
+item.excavator_peridot.name=Peridot Excavator
 
-item.excavatorManasteel.name=Manasteel Excavator
-item.excavatorTerrasteel.name=Terrasteel Excavator
-item.excavatorElementium.name=Elementium Excavator
+item.excavator_manasteel.name=Manasteel Excavator
+item.excavator_terrasteel.name=Terrasteel Excavator
+item.excavator_elementium.name=Elementium Excavator
 
-item.excavatorUnstable.name=Unstable Excavator
+item.excavator_unstable.name=Unstable Excavator
 
-item.excavatorDarksteel.name=Dark Steel Excavator
+item.excavator_darksteel.name=Dark Steel Excavator
 
-item.excavatorMachalite.name=Machalite Excavator
-item.excavatorDragonite.name=Dragonite Excavator
-item.excavatorGossamite.name=Gossamite Excavator
+item.excavator_machalite.name=Machalite Excavator
+item.excavator_dragonite.name=Dragonite Excavator
+item.excavator_gossamite.name=Gossamite Excavator
 
 // <<<< Achievements >>>>
 
@@ -127,11 +127,14 @@ achievement.mjolnirFallDeath.desc=Die from being hit by a falling Mjolnir.
 
 // <<<< Misc Names >>>>
 
+//Debug Tool
+item.debug.name=Super Secret Wand Of Magical Things
+
 //Hammer Crafting Table
-tile.hammerCraft.name=Hammer Crafting Table
-tile.hammerCraft.nei=Hammer Crafting
+tile.hammer_craft.name=Hammer Crafting Table
+tile.hammer_craft.nei=Hammer Crafting
 jei.recipe.hammerCraftingTable=Hammer Crafting Table
 
 //Hammer Block
-tile.hammerBlock.name=Mjolnir
+tile.hammer_block.name=Mjolnir
 death.attack.fallingHammer=%1$s was crushed by Mjolnir

@@ -1,6 +1,0 @@
-{
-	"parent": "sparkshammers:item/itemToolDefault",
-	"textures": {
-		"layer0": "SparksHammers:items/hammerNetherStar"
-	}
-}

@@ -162,15 +162,17 @@ public class ContainerHammerCraft extends Container
             else if (!this.mergeItemStack(stackInSlot, slotInvStart, slotInvStart+36, false))
                 return null;
 
-            if (stackInSlot.stackSize == 0)
+            //func_190916_E -> getStackSize
+            if (stackInSlot.func_190916_E() == 0)
                 slotObject.putStack(null);
             else
                 slotObject.onSlotChanged();
 
-            if (stackInSlot.stackSize == stack.stackSize)
+            if (stackInSlot.func_190916_E() == stack.func_190916_E())
                 return null;
 
-            slotObject.onPickupFromSlot(player, stackInSlot);
+            //func_190901_a -> onPickupFromSlot
+            slotObject.func_190901_a(player, stackInSlot);
         }
 
         return stack;

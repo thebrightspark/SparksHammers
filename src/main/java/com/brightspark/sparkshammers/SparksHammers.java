@@ -15,7 +15,7 @@ import com.brightspark.sparkshammers.util.LoaderHelper;
 import com.brightspark.sparkshammers.util.LogHelper;
 import com.brightspark.sparkshammers.worldgen.WorldGenMjolnirShrine;
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
@@ -41,9 +41,9 @@ public class SparksHammers
     public static final CreativeTabs SH_TAB = new CreativeTabs(Reference.MOD_ID)
     {
         @Override
-        public Item getTabIconItem()
+        public ItemStack getTabIconItem()
         {
-            return SHItems.getItemById("hammerDiamond");
+            return new ItemStack(SHItems.getItemById("hammer_diamond"));
         }
 
         @Override

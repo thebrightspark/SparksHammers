@@ -1,0 +1,12 @@
+{
+	"parent": "block/cube",
+	"textures": {
+		"particle": "sparkshammers:blocks/hammer_craft_side",
+		"down": "sparkshammers:blocks/hammer_craft_bottom",
+		"up": "sparkshammers:blocks/hammer_craft_top",
+		"north": "sparkshammers:blocks/hammer_craft_side",
+		"east": "sparkshammers:blocks/hammer_craft_side",
+		"south": "sparkshammers:blocks/hammer_craft_side",
+		"west": "sparkshammers:blocks/hammer_craft_side"
+	}
+}

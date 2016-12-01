@@ -19,13 +19,6 @@ public class HammerCraftingRecipeHandler implements IRecipeHandler<HammerShapedO
 
     @Nonnull
     @Override
-    public String getRecipeCategoryUid()
-    {
-        return Reference.JEI.HAMMER_CRAFTING_UID;
-    }
-
-    @Nonnull
-    @Override
     public String getRecipeCategoryUid(@Nonnull HammerShapedOreRecipe recipe)
     {
         return Reference.JEI.HAMMER_CRAFTING_UID;

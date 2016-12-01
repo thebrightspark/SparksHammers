@@ -4,6 +4,7 @@ import com.google.common.collect.Lists;
 import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
+import net.minecraft.util.NonNullList;
 import net.minecraft.world.World;
 
 import java.util.List;
@@ -45,7 +46,8 @@ public class HammerCraftingManager
         {
             if (irecipe.matches(p_180303_1_, worldIn))
             {
-                return irecipe.getRemainingItems(p_180303_1_);
+                NonNullList<ItemStack> list = irecipe.getRemainingItems(p_180303_1_);
+                return list.toArray(new ItemStack[list.size()]);
             }
         }
 

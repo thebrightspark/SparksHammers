@@ -9,6 +9,7 @@ import net.minecraft.block.BlockFalling;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.MoverType;
 import net.minecraft.entity.item.EntityFallingBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTBase;
@@ -69,7 +70,7 @@ public class EntityFallingHammer extends EntityFallingBlock
             }
 
             this.motionY -= 0.03999999910593033D;
-            this.moveEntity(this.motionX, this.motionY, this.motionZ);
+            this.moveEntity(MoverType.SELF, this.motionX, this.motionY, this.motionZ);
             this.motionX *= 0.9800000190734863D;
             this.motionY *= 0.9800000190734863D;
             this.motionZ *= 0.9800000190734863D;
@@ -85,7 +86,8 @@ public class EntityFallingHammer extends EntityFallingBlock
                     this.motionY *= -0.5D;
                     this.setDead();
 
-                    if (this.worldObj.canBlockBePlaced(block, blockpos1, true, EnumFacing.UP, null, null) && !BlockFalling.canFallThrough(this.worldObj.getBlockState(blockpos1.down())) && this.worldObj.setBlockState(blockpos1, this.fallTile))
+                    //func_190527_a -> canBlockBePlaced
+                    if (this.worldObj.func_190527_a(block, blockpos1, true, EnumFacing.UP, null) && !BlockFalling.canFallThrough(this.worldObj.getBlockState(blockpos1.down())) && this.worldObj.setBlockState(blockpos1, this.fallTile))
                     {
                         if (block instanceof BlockHammer)
                             ((BlockHammer)block).onEndFalling(this.worldObj, blockpos1);

@@ -1,7 +1,7 @@
 {
-	"parent": "sparkshammers:item/itemToolDefault",
+	"parent": "sparkshammers:item/item_tool_default",
 	"textures": {
-		"layer0": "SparksHammers:items/hammer_head",
-		"layer1": "SparksHammers:items/hammer_handle"
+		"layer0": "sparkshammers:items/hammer_head",
+		"layer1": "sparkshammers:items/hammer_handle"
 	}
 }

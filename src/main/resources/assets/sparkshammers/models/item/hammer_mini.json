@@ -1,6 +1,6 @@
 {
 	"parent": "sparkshammers:item/item_tool_default",
 	"textures": {
-		"layer0": "sparkshammers:items/debug"
+		"layer0": "sparkshammers:items/hammer_mini"
 	}
 }

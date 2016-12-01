@@ -90,7 +90,7 @@ public class WorldGenMjolnirShrine implements IWorldGenerator
     {
         //If the position isn't high enough, then don't spawn it.
         //If the biome's minimum height is less than 0 -> rules out any sort of water based biome
-        if(pos.getY() < Config.mjolnirShrineMinY || world.getBiomeGenForCoords(pos).getBaseHeight() < 0.0F)
+        if(pos.getY() < Config.mjolnirShrineMinY || world.getBiome(pos).getBaseHeight() < 0.0F)
             return -1;
 
         //Checks to see if the ground is 'flat enough'

@@ -82,7 +82,7 @@ public class BlockEventHandler
                 miningSchedule.add(new Object[] {
                         player.worldObj,
                         player,
-                        ItemStack.copyItemStack(heldStack),
+                        heldStack.copy(),
                         ((ItemHammerNetherStar) heldItem).rayTrace(event.getWorld(), player, false).sideHit.getOpposite(),
                         event.getPos(),
                         new Float(ForgeHooks.blockStrength(event.getState(), player, player.worldObj, event.getPos())),

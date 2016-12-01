@@ -8,6 +8,8 @@ import com.brightspark.sparkshammers.item.ItemHammerMjolnir;
 import com.brightspark.sparkshammers.reference.Config;
 import com.brightspark.sparkshammers.reference.Names;
 import com.brightspark.sparkshammers.tileentity.TileHammer;
+import com.brightspark.sparkshammers.util.CommonUtils;
+import com.brightspark.sparkshammers.util.LogHelper;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
@@ -51,6 +53,7 @@ public class BlockHammer extends BlockContainer
         setRegistryName(Names.Blocks.HAMMER);
     }
 
+    @Override
     public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos)
     {
         return HAMMER_BOUNDS;
@@ -62,6 +65,7 @@ public class BlockHammer extends BlockContainer
         return new TileHammer();
     }
 
+    @Override
     public void onBlockPlacedBy(World world, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack)
     {
         //Play anvil sound
@@ -69,37 +73,48 @@ public class BlockHammer extends BlockContainer
             world.playEvent(1031, pos, 0);
     }
 
+    @Override
     public boolean isOpaqueCube(IBlockState state)
     {
         return false;
     }
 
+    @Override
     public boolean isFullCube(IBlockState state)
     {
         return false;
     }
 
     //Return 3 for standard block models
+    @Override
     public EnumBlockRenderType getRenderType(IBlockState state)
     {
         return EnumBlockRenderType.MODEL;
     }
 
     //Will return no item when destroyed, since the block is unbreakable anyway, there's no need.
+    @Override
     public Item getItemDropped(IBlockState state, Random rand, int fortune)
     {
         return null;
     }
 
-    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, @Nullable ItemStack heldItem, EnumFacing side, float hitX, float hitY, float hitZ)
+    @Override
+    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ)
     {
         //When the player right clicks on this block
         if(world.isRemote) return false;
 
         TileHammer hammer = (TileHammer) world.getTileEntity(pos);
+        ItemStack heldStack = player.getHeldItem(hand);
+        LogHelper.info("Tile null? -> " + (hammer == null) + "    Hand -> " + hand.toString() + "    Hand empty? -> " + CommonUtils.isStackEmptyOrNull(heldStack));
+        if(heldStack != null)
+            LogHelper.info(heldStack.toString());
+
         //If no item in hand
-        if(hammer != null && hand == EnumHand.MAIN_HAND && heldItem == null)
+        if(hammer != null && hand == EnumHand.MAIN_HAND && CommonUtils.isStackEmptyOrNull(heldStack))
         {
+            LogHelper.info("Player has empty main hand");
             if(!hammer.hasOwner())
                 player.addStat(SHAchievements.mjolnir);
             //Player needs to have killed the dragon to be worthy
@@ -119,12 +134,12 @@ public class BlockHammer extends BlockContainer
                 player.addPotionEffect(new PotionEffect(MobEffects.WEAKNESS, 200, 1));
                 if(player.hasAchievement(AchievementList.THE_END2))
                 {
-                    player.addChatMessage(new TextComponentTranslation("item.hammerMjolnir.chat.wrongPlayer.1"));
-                    player.addChatMessage(new TextComponentString(TextFormatting.GOLD + hammer.getOwnerName() + TextFormatting.RESET + " " + I18n.format("item.hammerMjolnir.chat.wrongPlayer.2")));
+                    player.addChatMessage(new TextComponentTranslation("item.hammer_mjolnir.chat.wrongPlayer.1"));
+                    player.addChatMessage(new TextComponentString(TextFormatting.GOLD + hammer.getOwnerName() + TextFormatting.RESET + " " + I18n.format("item.hammer_mjolnir.chat.wrongPlayer.2")));
                 }
                 else
                     //Player has not killed ender dragon
-                    player.addChatMessage(new TextComponentTranslation("item.hammerMjolnir.chat.noAchieve"));
+                    player.addChatMessage(new TextComponentTranslation("item.hammer_mjolnir.chat.noAchieve"));
             }
             return true;
         }
@@ -134,6 +149,7 @@ public class BlockHammer extends BlockContainer
     //--------------------Falling Code--------------------//
     //(Taken from BlockFalling)
 
+    @Override
     public void onBlockAdded(World worldIn, BlockPos pos, IBlockState state)
     {
         worldIn.scheduleUpdate(pos, this, this.tickRate(worldIn));
@@ -144,7 +160,8 @@ public class BlockHammer extends BlockContainer
      * change. Cases may include when redstone power is updated, cactus blocks popping off due to a neighboring solid
      * block, etc.
      */
-    public void neighborChanged(IBlockState state, World worldIn, BlockPos pos, Block blockIn)
+    @Override
+    public void neighborChanged(IBlockState state, World worldIn, BlockPos pos, Block blockIn, BlockPos neighbourPos)
     {
         worldIn.scheduleUpdate(pos, this, this.tickRate(worldIn));
     }
@@ -162,6 +179,7 @@ public class BlockHammer extends BlockContainer
     }
     */
 
+    @Override
     public void updateTick(World worldIn, BlockPos pos, IBlockState state, Random rand)
     {
         if (!worldIn.isRemote)
@@ -202,6 +220,7 @@ public class BlockHammer extends BlockContainer
     /**
      * How many world ticks before ticking
      */
+    @Override
     public int tickRate(World worldIn)
     {
         return 2;

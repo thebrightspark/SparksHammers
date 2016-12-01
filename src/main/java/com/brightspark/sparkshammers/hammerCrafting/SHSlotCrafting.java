@@ -38,7 +38,8 @@ public class SHSlotCrafting extends Slot
     {
         if (this.getHasStack())
         {
-            this.amountCrafted += Math.min(amount, this.getStack().stackSize);
+            //func_190916_E -> getStackSize
+            this.amountCrafted += Math.min(amount, this.getStack().func_190916_E());
         }
 
         return super.decrStackSize(amount);

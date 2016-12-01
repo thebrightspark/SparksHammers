@@ -7,8 +7,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
+import net.minecraft.item.*;
 import net.minecraft.network.play.client.CPacketPlayerDigging;
 import net.minecraft.network.play.server.SPacketBlockChange;
 import net.minecraft.tileentity.TileEntity;
@@ -48,6 +47,11 @@ public class CommonUtils
     public static Item getRegisteredItem(String itemId)
     {
         return Item.REGISTRY.getObject(new ResourceLocation(itemId));
+    }
+
+    public static boolean isStackEmptyOrNull(ItemStack stack)
+    {
+        return stack == null || stack.getItem() instanceof ItemAir;
     }
 
 
@@ -258,7 +262,8 @@ public class CommonUtils
             // callback to the tool
             stack.onBlockDestroyed(world, blockState, blockPos, player);
 
-            if(stack.stackSize == 0 && stack == player.getHeldItemMainhand())
+            //func_190916_E -> getStackSize
+            if(stack.func_190916_E() == 0 && stack == player.getHeldItemMainhand())
             {
                 ForgeEventFactory.onPlayerDestroyItem(player, stack, EnumHand.MAIN_HAND);
                 player.setHeldItem(EnumHand.MAIN_HAND, null);

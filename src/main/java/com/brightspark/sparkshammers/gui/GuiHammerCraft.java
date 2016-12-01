@@ -12,7 +12,7 @@ import org.lwjgl.opengl.GL11;
 
 public class GuiHammerCraft extends GuiContainer
 {
-    private static final ResourceLocation guiImage = new ResourceLocation(Reference.MOD_ID, Reference.GUI_TEXTURE_DIR + "guiHammerCraft.png");
+    private static final ResourceLocation guiImage = new ResourceLocation(Reference.MOD_ID, Reference.GUI_TEXTURE_DIR + "gui_hammer_craft.png");
 
     public GuiHammerCraft(InventoryPlayer invPlayer, World world, int x, int y, int z)
     {

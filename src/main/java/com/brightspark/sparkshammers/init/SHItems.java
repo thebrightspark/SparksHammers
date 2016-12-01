@@ -39,12 +39,13 @@ public class SHItems
 
     public static Item getItemById(String itemId)
     {
-        return ITEMS.get(itemId);
+        return ITEMS.get(itemId.toLowerCase());
     }
 
     private static void regGeneralItem(Item item)
     {
         GameRegistry.register(item);
+        LogHelper.info("Registering " + item.getUnlocalizedName() + " with key '" + item.getRegistryName().getResourcePath() + "'");
         ITEMS.put(item.getRegistryName().getResourcePath(), item);
         if(item instanceof IColourable && ((IColourable)item).getTextureColour() >= 0)
             COLOURED_ITEMS.add(item);
@@ -103,12 +104,15 @@ public class SHItems
                     regAOE(mat);
                     regAOE(mat, true);
                     break;
+                //TODO: Re-add Botania tools when the mod gets updated!
+                /*
                 case MANASTEEL:
                 case TERRASTEEL:
                 case ELEMENTIUM:
                     if(LoaderHelper.isModLoaded(Names.Mods.BOTANIA))
                         SHItemsBotania.regItems(mat);
                     break;
+                */
                 default:
                     if(!Config.includeOtherModItems) break;
                     regAOE(mat);
