@@ -3,7 +3,7 @@
     "modList":
     [
         {
-          "modid": "SparksHammers",
+          "modid": "sparkshammers",
           "name": "Spark's Hammers",
           "description": "Adds hammers like from Tinkers Construct but using vanilla resources and in the style of vanilla tools.",
           "version": "${version}",
@@ -16,7 +16,7 @@
           "screenshots": [],
           "parent": "",
           "dependants": [],
-          "dependencies": ["MobHunter", "JEI"],
+          "dependencies": ["JEI"],
           "requiredMods": [],
           "useDependencyInformation": true
         }

@@ -4,15 +4,14 @@ import java.util.UUID;
 
 public class Reference
 {
-    //TODO: In 1.11, change this to "sparkshammers"
-    public static final String MOD_ID = "SparksHammers";
+    public static final String MOD_ID = "sparkshammers";
     public static final String MOD_NAME = "Spark's Hammers";
-    public static final String VERSION = "1.10.2-1.4.4";
+    public static final String VERSION = "1.11-1.4.4";
     public static final String DEPENDENCIES =
-            //"after:EnderIO;" +
-            "after:Botania;" +
-            "after:MobHunter;" +
-            "after:JEI";
+            "after:enderio;" +
+            "after:botania;" +
+            "after:mobhunter;" +
+            "after:jei";
 
     public static final String ITEM_TEXTURE_DIR = MOD_ID + ":";
     public static final String GUI_TEXTURE_DIR = "textures/gui/";

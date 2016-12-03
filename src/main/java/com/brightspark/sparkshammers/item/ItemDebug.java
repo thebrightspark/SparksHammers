@@ -22,12 +22,15 @@ public class ItemDebug extends ItemResource
     /**
      * Called when a Block is right-clicked with this Item
      */
-    public EnumActionResult onItemUse(ItemStack stack, EntityPlayer playerIn, World worldIn, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ)
+    public EnumActionResult onItemUse(EntityPlayer playerIn, World worldIn, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ)
     {
+        if(worldIn.isRemote)
+            return EnumActionResult.SUCCESS;
         IBlockState state = worldIn.getBlockState(pos);
         Material mat = state.getMaterial();
-        if(mat != Material.CRAFTED_SNOW && mat != Material.PLANTS && mat != Material.VINE) pos = pos.up();
+        if(mat != Material.CRAFTED_SNOW && mat != Material.PLANTS && mat != Material.VINE)
+            pos = pos.up();
         WorldGenMjolnirShrine.generateShrine(worldIn, pos);
-        return EnumActionResult.FAIL;
+        return EnumActionResult.SUCCESS;
     }
 }

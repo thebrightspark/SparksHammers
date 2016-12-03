@@ -1,5 +1,6 @@
 package com.brightspark.sparkshammers.util;
 
+import com.brightspark.sparkshammers.SparksHammers;
 import com.brightspark.sparkshammers.item.ItemAOE;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
@@ -52,6 +53,14 @@ public class CommonUtils
     public static boolean isStackEmptyOrNull(ItemStack stack)
     {
         return stack == null || stack.getItem() instanceof ItemAir;
+    }
+
+    /**
+     * Open a GUI for a block (Uses a guiID of -1).
+     */
+    public static void openGui(World world, EntityPlayer player, BlockPos pos)
+    {
+        player.openGui(SparksHammers.instance, -1, world, pos.getX(), pos.getY(), pos.getZ());
     }
 
 

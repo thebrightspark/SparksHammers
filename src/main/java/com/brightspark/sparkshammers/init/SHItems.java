@@ -45,7 +45,7 @@ public class SHItems
     private static void regGeneralItem(Item item)
     {
         GameRegistry.register(item);
-        LogHelper.info("Registering " + item.getUnlocalizedName() + " with key '" + item.getRegistryName().getResourcePath() + "'");
+        //LogHelper.info("Registering " + item.getUnlocalizedName() + " with key '" + item.getRegistryName().getResourcePath() + "'");
         ITEMS.put(item.getRegistryName().getResourcePath(), item);
         if(item instanceof IColourable && ((IColourable)item).getTextureColour() >= 0)
             COLOURED_ITEMS.add(item);

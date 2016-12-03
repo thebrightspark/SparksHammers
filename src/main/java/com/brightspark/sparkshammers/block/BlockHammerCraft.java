@@ -2,6 +2,7 @@ package com.brightspark.sparkshammers.block;
 
 import com.brightspark.sparkshammers.SparksHammers;
 import com.brightspark.sparkshammers.reference.Names;
+import com.brightspark.sparkshammers.util.CommonUtils;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -33,13 +34,13 @@ public class BlockHammerCraft extends Block
         return EnumBlockRenderType.MODEL;
     }
 
-    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, @Nullable ItemStack heldItem, EnumFacing side, float hitX, float hitY, float hitZ)
+    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ)
     {
         if(world.isRemote)
             return true;
         //Open crafting gui
         if(!player.isSneaking())
-            player.openGui(SparksHammers.instance, 0, world, pos.getX(), pos.getY(), pos.getZ());
+            CommonUtils.openGui(world, player, pos);
         return true;
     }
 }

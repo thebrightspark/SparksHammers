@@ -82,6 +82,12 @@ public class ItemAOE extends ItemTool implements IColourable
         materials = isExcavator ? ShovelMats : PickaxeMats;
     }
 
+    @Override
+    public Set<String> getToolClasses(ItemStack stack)
+    {
+        return com.google.common.collect.ImmutableSet.of(isExcavator ? "shovel" : "pickaxe");
+    }
+
     /**
      * Returns the unlocalized name of this item. This version accepts an ItemStack so different stacks can have
      * different names based on their damage or NBT.
@@ -264,9 +270,9 @@ public class ItemAOE extends ItemTool implements IColourable
 
         //Handle achievements
         Item item = stack.getItem();
-        if(item.equals(SHItems.getItemById("hammerWood")))
+        if(item.equals(SHItems.getItemById("hammer_wood")))
             player.addStat(SHAchievements.woodHammer);
-        else if(item.equals(SHItems.getItemById("hammerDiamond")))
+        else if(item.equals(SHItems.getItemById("hammer_diamond")))
             player.addStat(SHAchievements.diamondHammer);
         else if(item.equals(SHItems.hammerNetherStar))
             player.addStat(SHAchievements.netherStarHammer);

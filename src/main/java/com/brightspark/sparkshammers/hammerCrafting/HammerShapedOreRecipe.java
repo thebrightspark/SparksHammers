@@ -84,9 +84,7 @@ public class HammerShapedOreRecipe implements IRecipe
         {
             String ret = "Invalid shaped ore recipe: ";
             for (Object tmp :  recipe)
-            {
                 ret += tmp + ", ";
-            }
             ret += output;
             throw new RuntimeException(ret);
         }
@@ -99,28 +97,18 @@ public class HammerShapedOreRecipe implements IRecipe
             Object in = recipe[idx + 1];
 
             if (in instanceof ItemStack)
-            {
                 itemMap.put(chr, ((ItemStack)in).copy());
-            }
             else if (in instanceof Item)
-            {
                 itemMap.put(chr, new ItemStack((Item)in));
-            }
             else if (in instanceof Block)
-            {
                 itemMap.put(chr, new ItemStack((Block)in, 1, OreDictionary.WILDCARD_VALUE));
-            }
             else if (in instanceof String)
-            {
                 itemMap.put(chr, OreDictionary.getOres((String)in));
-            }
             else
             {
                 String ret = "Invalid shaped ore recipe: ";
                 for (Object tmp :  recipe)
-                {
                     ret += tmp + ", ";
-                }
                 ret += output;
                 throw new RuntimeException(ret);
             }
@@ -129,9 +117,7 @@ public class HammerShapedOreRecipe implements IRecipe
         input = new Object[width * height];
         int x = 0;
         for (char chr : shape.toCharArray())
-        {
             input[x++] = itemMap.get(chr);
-        }
     }
 
     /**
@@ -162,10 +148,7 @@ public class HammerShapedOreRecipe implements IRecipe
     public boolean matches(InventoryCrafting inv, World world)
     {
         if (checkMatch(inv))
-        {
-            //LogHelper.info("Recipe Checked. We have a match!");
             return true;
-        }
 
         /*
         if (mirrored && checkMatch(inv, true))
@@ -197,33 +180,22 @@ public class HammerShapedOreRecipe implements IRecipe
 
                 if (target instanceof ItemStack)
                 {
-                    //LogHelper.info("Comparing slot to: " + ((ItemStack)target).getDisplayName());
-
-                    if (!OreDictionary.itemMatches((ItemStack)target, slot, false))
-                    {
-                        //LogHelper.info("Crafting slot " + x + "," + y + " doesn't match ore dictionary.");
+                    if(!OreDictionary.itemMatches((ItemStack)target, slot, false))
                         return false;
-                    }
                 }
-                else if (target instanceof List)
+                else if(target instanceof List)
                 {
                     boolean matched = false;
 
                     Iterator<ItemStack> itr = ((List<ItemStack>)target).iterator();
-                    while (itr.hasNext() && !matched)
-                    {
+                    while(itr.hasNext() && !matched)
                         matched = OreDictionary.itemMatches(itr.next(), slot, false);
-                    }
 
-                    if (!matched)
-                    {
+                    if(!matched)
                         return false;
-                    }
                 }
-                else if (target == null && slot != null)
-                {
+                else if(target == null && !slot.func_190926_b())
                     return false;
-                }
             }
         }
 

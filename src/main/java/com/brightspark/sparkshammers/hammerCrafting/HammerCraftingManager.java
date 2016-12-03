@@ -1,6 +1,7 @@
 package com.brightspark.sparkshammers.hammerCrafting;
 
 import com.google.common.collect.Lists;
+import net.minecraft.init.Blocks;
 import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
@@ -37,7 +38,7 @@ public class HammerCraftingManager
             if(irecipe.matches(invCrafting, world))
                 return irecipe.getCraftingResult(invCrafting);
 
-        return null;
+        return new ItemStack(Blocks.AIR);
     }
 
     public ItemStack[] func_180303_b(InventoryCrafting p_180303_1_, World worldIn)
@@ -54,9 +55,7 @@ public class HammerCraftingManager
         ItemStack[] aitemstack = new ItemStack[p_180303_1_.getSizeInventory()];
 
         for (int i = 0; i < aitemstack.length; ++i)
-        {
             aitemstack[i] = p_180303_1_.getStackInSlot(i);
-        }
 
         return aitemstack;
     }
