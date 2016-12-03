@@ -127,7 +127,7 @@ public class SHItems
         //Register all item models
         for(Item tool : ITEMS.values())
         {
-            if(tool instanceof ItemAOE && AOE_TOOLS.contains(tool))
+            if(tool instanceof ItemAOE && ((ItemAOE)tool).getTextureColour() >= 0)
                 ClientUtils.regTool((ItemAOE) tool);
             else
                 ClientUtils.regModel(tool);
