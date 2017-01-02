@@ -116,7 +116,7 @@ public class ContainerHammerCraft extends Container
 
     public ItemStack transferStackInSlot(EntityPlayer player, int slot)
     {
-        ItemStack stack = null;
+        ItemStack stack = ItemStack.field_190927_a;
         Slot slotObject = inventorySlots.get(slot);
 
         if(slotObject != null && slotObject.getHasStack())
@@ -130,7 +130,7 @@ public class ContainerHammerCraft extends Container
             if(slot == 0)
             {
                 if(!mergeItemStack(stackInSlot, slotInvStart, slotInvStart+36, true))
-                    return null;
+                    return ItemStack.field_190927_a;
 
                 slotObject.onSlotChange(stackInSlot, stack);
             }
@@ -138,17 +138,17 @@ public class ContainerHammerCraft extends Container
             else if(slot >= slotInvStart && slot <= slotInvStart+26)
             {
                 if(!mergeItemStack(stackInSlot, slotInvStart+28, slotInvStart+36, false))
-                    return null;
+                    return ItemStack.field_190927_a;
             }
             //If slot Hotbar
             else if(slot >= slotInvStart+28 && slot <= slotInvStart+36)
             {
                 if(!mergeItemStack(stackInSlot, slotInvStart, slotInvStart+27, false))
-                    return null;
+                    return ItemStack.field_190927_a;
             }
             //If slot Crafting Grid
             else if(!mergeItemStack(stackInSlot, slotInvStart, slotInvStart+36, false))
-                return null;
+                return ItemStack.field_190927_a;
 
             //func_190916_E -> getStackSize
             if(stackInSlot.func_190916_E() == 0)
@@ -157,7 +157,7 @@ public class ContainerHammerCraft extends Container
                 slotObject.onSlotChanged();
 
             if(stackInSlot.func_190916_E() == stack.func_190916_E())
-                return null;
+                return ItemStack.field_190927_a;
 
             //func_190901_a -> onPickupFromSlot
             slotObject.func_190901_a(player, stackInSlot);
