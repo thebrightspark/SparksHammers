@@ -46,8 +46,9 @@ public class ConfigurationHandler
     private static void loadConfiguration()
     {
         Config.includeOtherModItems = configuration.getBoolean("includeOtherModItems", Categories.GENERAL, true, "Whether to add tools made from other mod materials into the game.");
-        Config.toolDurabilityModifier = configuration.getFloat("toolDurabilityModifier", Categories.TOOLS, Config.toolDurabilityModifier, Config.toolDurabilityModifierMin, Config.toolDurabilityModifierMax, "Modifier for hammers and excavators made of vanilla materials to adjust durability.");
-        Config.toolSpeedModifier = configuration.getFloat("toolSpeedModifier", Categories.TOOLS, Config.toolSpeedModifier, Config.toolSpeedModifierMin, Config.toolSpeedModifierMax, "Modifier for hammers and excavators made of vanilla materials to adjust mining speed.");
+        Config.toolDurabilityModifier = configuration.getFloat("toolDurabilityModifier", Categories.TOOLS, Config.toolDurabilityModifier, Config.toolDurabilityModifierMin, Config.toolDurabilityModifierMax, "Global modifier for hammers and excavators to adjust durability.");
+        Config.toolSpeedModifier = configuration.getFloat("toolSpeedModifier", Categories.TOOLS, Config.toolSpeedModifier, Config.toolSpeedModifierMin, Config.toolSpeedModifierMax, "Global modifier for hammers and excavators to adjust mining speed.");
+        Config.toolAttackModifier = configuration.getFloat("toolAttackModifier", Categories.TOOLS, Config.toolAttackModifier, Config.toolAttackModifierMin, Config.toolAttackModifierMax, "Global modifier for hammers and excavators to adjust mining speed.");
 
         //Init after loading tool modifiers, but before loading tools
         Config.initMaterials();
@@ -88,17 +89,19 @@ public class ConfigurationHandler
         Config.materialInvar = getMaterial("Invar", Config.materialInvar);
         Config.materialElectrum = getMaterial("Electrum", Config.materialElectrum);
         Config.materialAluminium = getMaterial("Aluminium", Config.materialAluminium);
+        Config.materialBrass = getMaterial("Brass", Config.materialBrass);
 
         Config.materialOsmium = getMaterial("Osmium", Config.materialOsmium);
         Config.materialZinc = getMaterial("Zinc", Config.materialZinc);
         Config.materialChrome = getMaterial("Chrome", Config.materialChrome);
-        Config.materialIridium = getMaterial("Iridium", Config.materialIridium);
-        Config.materialTitanium = getMaterial("Titanium", Config.materialTitanium);
-        Config.materialTungsten = getMaterial("Tungsten", Config.materialTungsten);
+        //Config.materialIridium = getMaterial("Iridium", Config.materialIridium);
+        //Config.materialTitanium = getMaterial("Titanium", Config.materialTitanium);
+        //Config.materialTungsten = getMaterial("Tungsten", Config.materialTungsten);
 
         Config.materialSapphire = getMaterial("Sapphire", Config.materialSapphire);
         Config.materialRuby = getMaterial("Ruby", Config.materialRuby);
         Config.materialPeridot = getMaterial("Peridot", Config.materialPeridot);
+        Config.materialObsidian = getMaterial("Obsidian", Config.materialObsidian);
 
         Config.materialManasteel = getMaterial("Manasteel", Config.materialManasteel);
         Config.materialElementium = getMaterial("Elementium", Config.materialElementium);
