@@ -3,14 +3,11 @@ package com.brightspark.sparkshammers.init;
 import com.brightspark.sparkshammers.item.*;
 import com.brightspark.sparkshammers.reference.Config;
 import com.brightspark.sparkshammers.reference.Names;
-import com.brightspark.sparkshammers.util.ClientUtils;
-import com.brightspark.sparkshammers.util.LoaderHelper;
 import com.brightspark.sparkshammers.util.LogHelper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.color.IItemColor;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -44,8 +41,6 @@ public class SHItems
 
     private static void regGeneralItem(Item item)
     {
-        GameRegistry.register(item);
-        //LogHelper.info("Registering " + item.getUnlocalizedName() + " with key '" + item.getRegistryName().getResourcePath() + "'");
         ITEMS.put(item.getRegistryName().getResourcePath(), item);
         if(item instanceof IColourable && ((IColourable)item).getTextureColour() >= 0)
             COLOURED_ITEMS.add(item);
@@ -71,6 +66,9 @@ public class SHItems
 
     public static void regItems()
     {
+        //Only register once
+        if(!ITEMS.isEmpty()) return;
+
         //Tool Heads
         regItem(hammerHeadWood = new ItemResource(Names.Items.HAMMER_HEAD_WOOD));
         regItem(excavatorHeadWood = new ItemResource(Names.Items.EXCAVATOR_HEAD_WOOD));
@@ -90,10 +88,10 @@ public class SHItems
         {
             if(mat.dependantOreDic == null && mat.dependantItem == null)
             {
-                LogHelper.warn("No dependant ore dictionary or item stack for material " + mat);
+                //LogHelper.warn("No dependant ore dictionary or item stack for material " + mat);
                 continue;
             }
-            LogHelper.info("Registering material " + mat);
+            //LogHelper.info("Registering material " + mat);
             switch(mat)
             {
                 case WOOD:
@@ -118,19 +116,6 @@ public class SHItems
                     regAOE(mat);
                     regAOE(mat, true);
             }
-        }
-    }
-
-    @SideOnly(Side.CLIENT)
-    public static void regModels()
-    {
-        //Register all item models
-        for(Item tool : ITEMS.values())
-        {
-            if(tool instanceof ItemAOE && ((ItemAOE)tool).getTextureColour() >= 0)
-                ClientUtils.regTool((ItemAOE) tool);
-            else
-                ClientUtils.regModel(tool);
         }
     }
 

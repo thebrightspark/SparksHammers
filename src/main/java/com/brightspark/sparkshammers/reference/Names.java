@@ -72,7 +72,6 @@ public class Names
         public Item.ToolMaterial material;
         public String dependantOreDic = null;
         public ItemStack dependantItem = null;
-        public static String OTHER_DEPENDENCY = "<OTHER>";
         public static EnumMaterials[] VANILLA;
 
         static

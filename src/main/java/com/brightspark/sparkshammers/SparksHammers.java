@@ -3,10 +3,8 @@ package com.brightspark.sparkshammers;
 import com.brightspark.sparkshammers.gui.GuiHandler;
 import com.brightspark.sparkshammers.hammerCrafting.HammerCraftingManager;
 import com.brightspark.sparkshammers.hammerCrafting.HammerShapedOreRecipe;
-import com.brightspark.sparkshammers.handlers.AchieveEventHandler;
 import com.brightspark.sparkshammers.handlers.BlockEventHandler;
 import com.brightspark.sparkshammers.handlers.ConfigurationHandler;
-import com.brightspark.sparkshammers.handlers.LootEventHandler;
 import com.brightspark.sparkshammers.init.*;
 import com.brightspark.sparkshammers.item.ItemAOE;
 import com.brightspark.sparkshammers.reference.Config;
@@ -35,9 +33,6 @@ public class SparksHammers
     @Mod.Instance(Reference.MOD_ID)
     public static SparksHammers instance;
 
-    //@SidedProxy(clientSide = Reference.CLIENT_PROXY_CLASS, serverSide = Reference.SERVER_PROXY_CLASS)
-    //public static IProxy proxy;
-
     public static final CreativeTabs SH_TAB = new CreativeTabs(Reference.MOD_ID)
     {
         @Override
@@ -63,17 +58,6 @@ public class SparksHammers
 
         //Passes suggested configuration file into the init method
         ConfigurationHandler.init(event.getSuggestedConfigurationFile());
-        MinecraftForge.EVENT_BUS.register(new ConfigurationHandler());
-
-        SHItems.regItems();
-        SHBlocks.regBlocks();
-
-        //Registers all of the item and block textures
-        if(event.getSide() == Side.CLIENT)
-        {
-            SHItems.regModels();
-            SHBlocks.regModels();
-        }
     }
 
     @Mod.EventHandler
@@ -91,8 +75,6 @@ public class SparksHammers
 
         NetworkRegistry.INSTANCE.registerGuiHandler(this, new GuiHandler());
         MinecraftForge.EVENT_BUS.register(blockEH); //Block Event Handler for the Nether Star Hammer
-        MinecraftForge.EVENT_BUS.register(new AchieveEventHandler()); //Event handlers for Achievements
-        MinecraftForge.EVENT_BUS.register(new LootEventHandler()); //Event handler to add loot to chests
 
         SHAchievements.init(); //Adds achievements
 

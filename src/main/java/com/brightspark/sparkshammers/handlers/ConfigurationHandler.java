@@ -4,10 +4,12 @@ import com.brightspark.sparkshammers.reference.Config;
 import com.brightspark.sparkshammers.reference.Reference;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.client.event.ConfigChangedEvent;
+import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 import java.io.File;
 
+@Mod.EventBusSubscriber
 public class ConfigurationHandler
 {
     public static class Categories

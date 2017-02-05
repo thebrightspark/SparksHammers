@@ -24,7 +24,7 @@ public class SHAchievements
         mjolnirFallDeath.registerStat();
         netherStarHammer.registerStat();
 
-        AchievementPage.registerAchievementPage(new AchievementPage(Reference.MOD_ID,
+        AchievementPage.registerAchievementPage(new AchievementPage(Reference.MOD_NAME,
                 woodHammer, craftingTable, diamondHammer, netherStarHammer,
                 mjolnir, mjolnirNope, mjolnirFallDeath));
     }

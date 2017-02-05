@@ -45,7 +45,7 @@ public class SHRecipes
             String oreDic = tool.getDependantOreDic();
             if(oreDic == null)
             {
-                LogHelper.warn("No dependant ore dictionary entry for tool " + tool.getRegistryName().getResourcePath());
+                //LogHelper.warn("No dependant ore dictionary entry for tool " + tool.getRegistryName().getResourcePath());
                 continue;
             }
             String topRow = tool.isExcavator ? " HHH " : "HHHHH";

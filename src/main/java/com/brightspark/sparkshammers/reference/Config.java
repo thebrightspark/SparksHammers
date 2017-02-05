@@ -116,8 +116,13 @@ public class Config
         materialDarksteel = new double[] {5d, 1561d*toolDurabilityModifier, 7d*toolSpeedModifier, 5d, 25d};
     }
 
+    static
+    {
+        initMaterials();
+    }
+
     public static double[] materialCopper, materialSilver, materialTin, materialLead, materialNickel, materialPlatinum, materialBronze, materialSteel, materialInvar, materialElectrum, materialAluminium, materialBrass,
-        materialOsmium, materialZinc, materialChrome, materialIridium, materialTitanium, materialTungsten,
+        materialOsmium, materialZinc, materialChrome, //materialIridium, materialTitanium, materialTungsten,
         materialSapphire, materialRuby, materialPeridot, materialObsidian,
         materialManasteel, materialElementium, materialTerrasteel,
         materialMachalite, materialDragonite, materialGossamite,
