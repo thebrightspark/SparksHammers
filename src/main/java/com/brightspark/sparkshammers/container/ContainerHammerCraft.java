@@ -116,7 +116,7 @@ public class ContainerHammerCraft extends Container
 
     public ItemStack transferStackInSlot(EntityPlayer player, int slot)
     {
-        ItemStack stack = ItemStack.field_190927_a;
+        ItemStack stack = ItemStack.EMPTY;
         Slot slotObject = inventorySlots.get(slot);
 
         if(slotObject != null && slotObject.getHasStack())
@@ -130,7 +130,7 @@ public class ContainerHammerCraft extends Container
             if(slot == 0)
             {
                 if(!mergeItemStack(stackInSlot, slotInvStart, slotInvStart+36, true))
-                    return ItemStack.field_190927_a;
+                    return ItemStack.EMPTY;
 
                 slotObject.onSlotChange(stackInSlot, stack);
             }
@@ -138,29 +138,27 @@ public class ContainerHammerCraft extends Container
             else if(slot >= slotInvStart && slot <= slotInvStart+26)
             {
                 if(!mergeItemStack(stackInSlot, slotInvStart+28, slotInvStart+36, false))
-                    return ItemStack.field_190927_a;
+                    return ItemStack.EMPTY;
             }
             //If slot Hotbar
             else if(slot >= slotInvStart+28 && slot <= slotInvStart+36)
             {
                 if(!mergeItemStack(stackInSlot, slotInvStart, slotInvStart+27, false))
-                    return ItemStack.field_190927_a;
+                    return ItemStack.EMPTY;
             }
             //If slot Crafting Grid
             else if(!mergeItemStack(stackInSlot, slotInvStart, slotInvStart+36, false))
-                return ItemStack.field_190927_a;
+                return ItemStack.EMPTY;
 
-            //func_190916_E -> getStackSize
-            if(stackInSlot.func_190916_E() == 0)
+            if(stackInSlot.getCount() == 0)
                 slotObject.putStack(new ItemStack(Blocks.AIR));
             else
                 slotObject.onSlotChanged();
 
-            if(stackInSlot.func_190916_E() == stack.func_190916_E())
-                return ItemStack.field_190927_a;
+            if(stackInSlot.getCount() == stack.getCount())
+                return ItemStack.EMPTY;
 
-            //func_190901_a -> onPickupFromSlot
-            slotObject.func_190901_a(player, stackInSlot);
+            slotObject.onTake(player, stackInSlot);
         }
 
         return stack;

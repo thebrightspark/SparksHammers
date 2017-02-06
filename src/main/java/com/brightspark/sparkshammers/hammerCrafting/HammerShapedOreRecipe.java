@@ -194,7 +194,7 @@ public class HammerShapedOreRecipe implements IRecipe
                     if(!matched)
                         return false;
                 }
-                else if(target == null && !slot.func_190926_b())
+                else if(target == null && !slot.isEmpty())
                     return false;
             }
         }

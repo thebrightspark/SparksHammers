@@ -185,7 +185,7 @@ public class ItemAOE extends ItemTool implements IColourable
                         continue;
 
                     if(!super.onBlockStartBreak(stack, new BlockPos(xPos, yPos, zPos), player))
-                        CommonUtils.breakBlock(stack, player.worldObj, player, new BlockPos(xPos, yPos, zPos), posHit);
+                        CommonUtils.breakBlock(stack, player.world, player, new BlockPos(xPos, yPos, zPos), posHit);
                 }
     }
 
@@ -194,7 +194,7 @@ public class ItemAOE extends ItemTool implements IColourable
     public boolean onBlockStartBreak (ItemStack stack, BlockPos pos, EntityPlayer player)
     {
         //Block being mined
-        RayTraceResult ray = rayTrace(player.worldObj, player, false);
+        RayTraceResult ray = rayTrace(player.world, player, false);
         if(ray == null)
             return super.onBlockStartBreak(stack, pos, player);
 

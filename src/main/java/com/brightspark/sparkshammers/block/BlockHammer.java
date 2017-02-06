@@ -134,12 +134,12 @@ public class BlockHammer extends BlockContainer
                 player.addPotionEffect(new PotionEffect(MobEffects.WEAKNESS, 200, 1));
                 if(player.hasAchievement(AchievementList.THE_END2))
                 {
-                    player.addChatMessage(new TextComponentTranslation("item.hammer_mjolnir.chat.wrongPlayer.1"));
-                    player.addChatMessage(new TextComponentString(TextFormatting.GOLD + hammer.getOwnerName() + TextFormatting.RESET + " " + I18n.format("item.hammer_mjolnir.chat.wrongPlayer.2")));
+                    player.sendMessage(new TextComponentTranslation("item.hammer_mjolnir.chat.wrongPlayer.1"));
+                    player.sendMessage(new TextComponentString(TextFormatting.GOLD + hammer.getOwnerName() + TextFormatting.RESET + " " + I18n.format("item.hammer_mjolnir.chat.wrongPlayer.2")));
                 }
                 else
                     //Player has not killed ender dragon
-                    player.addChatMessage(new TextComponentTranslation("item.hammer_mjolnir.chat.noAchieve"));
+                    player.sendMessage(new TextComponentTranslation("item.hammer_mjolnir.chat.noAchieve"));
             }
             return true;
         }
@@ -197,7 +197,7 @@ public class BlockHammer extends BlockContainer
                 TileHammer teHammer = (TileHammer) worldIn.getTileEntity(pos);
                 EntityFallingHammer entityfallingblock = new EntityFallingHammer(worldIn, pos.getX() + 0.5d, pos.getY() + 0.5d, pos.getZ() + 0.5d, worldIn.getBlockState(pos), teHammer.getOwnerUUID());
                 this.onStartFalling(entityfallingblock);
-                worldIn.spawnEntityInWorld(entityfallingblock);
+                worldIn.spawnEntity(entityfallingblock);
             }
             else
             {

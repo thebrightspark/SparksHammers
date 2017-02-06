@@ -58,11 +58,11 @@ public class EntityFallingHammer extends EntityFallingBlock
             {
                 BlockPos blockpos = new BlockPos(this);
 
-                if (this.worldObj.getBlockState(blockpos).getBlock() == block)
+                if (this.world.getBlockState(blockpos).getBlock() == block)
                 {
-                    this.worldObj.setBlockToAir(blockpos);
+                    this.world.setBlockToAir(blockpos);
                 }
-                else if (!this.worldObj.isRemote)
+                else if (!this.world.isRemote)
                 {
                     this.setDead();
                     return;
@@ -70,12 +70,12 @@ public class EntityFallingHammer extends EntityFallingBlock
             }
 
             this.motionY -= 0.03999999910593033D;
-            this.moveEntity(MoverType.SELF, this.motionX, this.motionY, this.motionZ);
+            this.move(MoverType.SELF, this.motionX, this.motionY, this.motionZ);
             this.motionX *= 0.9800000190734863D;
             this.motionY *= 0.9800000190734863D;
             this.motionZ *= 0.9800000190734863D;
 
-            if (!this.worldObj.isRemote)
+            if (!this.world.isRemote)
             {
                 BlockPos blockpos1 = new BlockPos(this);
 
@@ -87,13 +87,13 @@ public class EntityFallingHammer extends EntityFallingBlock
                     this.setDead();
 
                     //func_190527_a -> canBlockBePlaced
-                    if (this.worldObj.func_190527_a(block, blockpos1, true, EnumFacing.UP, null) && !BlockFalling.canFallThrough(this.worldObj.getBlockState(blockpos1.down())) && this.worldObj.setBlockState(blockpos1, this.fallTile))
+                    if (this.world.mayPlace(block, blockpos1, true, EnumFacing.UP, null) && !BlockFalling.canFallThrough(this.world.getBlockState(blockpos1.down())) && this.world.setBlockState(blockpos1, this.fallTile))
                     {
                         if (block instanceof BlockHammer)
-                            ((BlockHammer)block).onEndFalling(this.worldObj, blockpos1);
+                            ((BlockHammer)block).onEndFalling(this.world, blockpos1);
 
                         //Set the owner to the hammer block from this entity
-                        TileHammer tileentity = (TileHammer) this.worldObj.getTileEntity(blockpos1);
+                        TileHammer tileentity = (TileHammer) this.world.getTileEntity(blockpos1);
                         if(tileentity != null)
                             tileentity.setOwner(playerUUID);
 
@@ -120,12 +120,12 @@ public class EntityFallingHammer extends EntityFallingBlock
                             }
                         }
                     }
-                    else if (this.shouldDropItem && this.worldObj.getGameRules().getBoolean("doEntityDrops"))
+                    else if (this.shouldDropItem && this.world.getGameRules().getBoolean("doEntityDrops"))
                         this.entityDropItem(new ItemStack(block, 1, block.damageDropped(this.fallTile)), 0.0F);
                 }
-                else if (this.fallTime > 100 && !this.worldObj.isRemote && (blockpos1.getY() < 1 || blockpos1.getY() > 256) || this.fallTime > 600)
+                else if (this.fallTime > 100 && !this.world.isRemote && (blockpos1.getY() < 1 || blockpos1.getY() > 256) || this.fallTime > 600)
                 {
-                    if (this.shouldDropItem && this.worldObj.getGameRules().getBoolean("doEntityDrops"))
+                    if (this.shouldDropItem && this.world.getGameRules().getBoolean("doEntityDrops"))
                         this.entityDropItem(new ItemStack(block, 1, block.damageDropped(this.fallTile)), 0.0F);
                     this.setDead();
                 }
@@ -135,16 +135,16 @@ public class EntityFallingHammer extends EntityFallingBlock
 
     public void fall(float distance, float damageMultiplier)
     {
-        int i = MathHelper.ceiling_float_int(distance - 1.0F);
+        int i = MathHelper.ceil(distance - 1.0F);
 
         if (i > 0)
         {
-            List<Entity> list = Lists.newArrayList(this.worldObj.getEntitiesWithinAABBExcludingEntity(this, this.getEntityBoundingBox()));
+            List<Entity> list = Lists.newArrayList(this.world.getEntitiesWithinAABBExcludingEntity(this, this.getEntityBoundingBox()));
             DamageSource damagesource = SparksHammers.fallingHammer;
 
             for (Entity entity : list)
             {
-                entity.attackEntityFrom(damagesource, (float)Math.min(MathHelper.floor_float((float)i * this.fallHurtAmount), this.fallHurtMax));
+                entity.attackEntityFrom(damagesource, (float)Math.min(MathHelper.floor((float)i * this.fallHurtAmount), this.fallHurtMax));
             }
         }
         if(i > 10)

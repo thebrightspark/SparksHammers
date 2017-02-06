@@ -111,14 +111,12 @@ public class ItemHammerMjolnir extends ItemAOE
 
             if(!player.canPlayerEdit(pos, side, stack))
                 return EnumActionResult.PASS;
-            //func_190916_E -> getStackSize
-            else if(stack.func_190916_E() == 0)
+            else if(stack.getCount() == 0)
                 return EnumActionResult.PASS;
-            //func_190527_a -> canBlockBePlaced
-            else if(world.func_190527_a(SHBlocks.blockHammer, pos, false, side, null))
+            else if(world.mayPlace(SHBlocks.blockHammer, pos, false, side, null))
             {
                 //Place hammer block
-                IBlockState hammerState = SHBlocks.blockHammer.onBlockPlaced(world, pos, side, hitX, hitY, hitZ, 0, player);
+                IBlockState hammerState = SHBlocks.blockHammer.getStateForPlacement(world, pos, side, hitX, hitY, hitZ, 0, player, hand);
                 if(world.setBlockState(pos, SHBlocks.blockHammer.getDefaultState())) //Returns true if block placed successfully
                 {
                     hammerState.getBlock().onBlockPlacedBy(world, pos, hammerState, player, stack);
@@ -127,8 +125,7 @@ public class ItemHammerMjolnir extends ItemAOE
 
                     //Remove hammer item from inventory if not in Creative
                     if(!player.capabilities.isCreativeMode)
-                        //func_190918_g -> decreaseStackSize
-                        stack.func_190918_g(1);
+                        stack.shrink(1);
                     return EnumActionResult.FAIL;
                 }
             }
@@ -167,7 +164,7 @@ public class ItemHammerMjolnir extends ItemAOE
         else if(!world.isRemote && !player.isSneaking() && getCooldown(stack) <= 0)
         {
             //Spawn lightning at cursor
-            RayTraceResult ray = rayTraceLong(player.worldObj, player, false);
+            RayTraceResult ray = rayTraceLong(player.world, player, false);
             if(ray != null)
             {
                 BlockPos pos = ray.getBlockPos();

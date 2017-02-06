@@ -34,7 +34,7 @@ public class GuiHammerCraft extends GuiContainer
     protected void drawGuiContainerForegroundLayer(int p_146979_1_, int p_146979_2_)
     {
         //Draw text
-        fontRendererObj.drawString(I18n.format(SHBlocks.blockHammerCraft.getUnlocalizedName() + ".name"), 12, 6, 4210752);
-        fontRendererObj.drawString(I18n.format("container.inventory"), 12, this.ySize - 92, 4210752);
+        fontRenderer.drawString(I18n.format(SHBlocks.blockHammerCraft.getUnlocalizedName() + ".name"), 12, 6, 4210752);
+        fontRenderer.drawString(I18n.format("container.inventory"), 12, this.ySize - 92, 4210752);
     }
 }

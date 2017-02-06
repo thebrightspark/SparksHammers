@@ -2,7 +2,6 @@ package com.brightspark.sparkshammers.hammerCrafting;
 
 import com.brightspark.sparkshammers.util.CommonUtils;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Blocks;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.inventory.Slot;
@@ -39,8 +38,7 @@ public class SHSlotCrafting extends Slot
     public ItemStack decrStackSize(int amount)
     {
         if (getHasStack())
-            //func_190916_E -> getStackSize
-            amountCrafted += Math.min(amount, getStack().func_190916_E());
+            amountCrafted += Math.min(amount, getStack().getCount());
 
         return super.decrStackSize(amount);
     }
@@ -61,7 +59,7 @@ public class SHSlotCrafting extends Slot
     protected void onCrafting(ItemStack stack)
     {
         if (amountCrafted > 0)
-            stack.onCrafting(thePlayer.worldObj, thePlayer, amountCrafted);
+            stack.onCrafting(thePlayer.world, thePlayer, amountCrafted);
 
         amountCrafted = 0;
     }
@@ -72,7 +70,7 @@ public class SHSlotCrafting extends Slot
         net.minecraftforge.fml.common.FMLCommonHandler.instance().firePlayerCraftingEvent(playerIn, stack, craftMatrix);
         onCrafting(stack);
         net.minecraftforge.common.ForgeHooks.setCraftingPlayer(playerIn);
-        ItemStack[] aitemstack = HammerCraftingManager.getInstance().func_180303_b(craftMatrix, playerIn.worldObj);
+        ItemStack[] aitemstack = HammerCraftingManager.getInstance().func_180303_b(craftMatrix, playerIn.world);
         net.minecraftforge.common.ForgeHooks.setCraftingPlayer(null);
 
         for (int i = 0; i < aitemstack.length; ++i)
