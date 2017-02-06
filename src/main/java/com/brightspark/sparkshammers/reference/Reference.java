@@ -6,7 +6,7 @@ public class Reference
 {
     public static final String MOD_ID = "sparkshammers";
     public static final String MOD_NAME = "Spark's Hammers";
-    public static final String VERSION = "1.11.2-1.4.4.1";
+    public static final String VERSION = "1.11.2-1.4.5";
     public static final String DEPENDENCIES =
             "after:enderio;" +
             "after:botania;" +
