@@ -38,19 +38,21 @@ public class Names
         INVAR(0xCBC6B2, "ingotInvar", Config.getAsToolMaterial("HammerInvar", Config.materialInvar)),
         ELECTRUM(0xFFF0A4, "ingotElectrum", Config.getAsToolMaterial("HammerElectrum", Config.materialElectrum)),
         ALUMINIUM(0xECEAF7, "ingotAluminum", Config.getAsToolMaterial("HammerAluminium", Config.materialAluminium)),
+        BRASS(0xFFE067, "ingotBrass", Config.getAsToolMaterial("HammerBrass", Config.materialBrass)),
 
         //Uncommon Mod Metals
         OSMIUM(0x8C9CA8, "ingotOsmium", Config.getAsToolMaterial("HammerOsmium", Config.materialOsmium)),
         ZINC(0xC3CCB9, "ingotZinc", Config.getAsToolMaterial("HammerZinc", Config.materialZinc)),
         CHROME(0xD1A3AE, "ingotChrome", Config.getAsToolMaterial("HammerChrome", Config.materialChrome)),
-        IRIDIUM(0xB9C0C9, "ingotIridium", Config.getAsToolMaterial("HammerIridium", Config.materialIridium)),
-        TITANIUM(0xADAECF, "ingotTitanium", Config.getAsToolMaterial("HammerTitanium", Config.materialTitanium)),
-        TUNGSTEN(0x818991, "ingotTungsten", Config.getAsToolMaterial("HammerTungsten", Config.materialTungsten)),
+        //IRIDIUM(0xB9C0C9, "ingotIridium", Config.getAsToolMaterial("HammerIridium", Config.materialIridium)),
+        //TITANIUM(0xADAECF, "ingotTitanium", Config.getAsToolMaterial("HammerTitanium", Config.materialTitanium)),
+        //TUNGSTEN(0x818991, "ingotTungsten", Config.getAsToolMaterial("HammerTungsten", Config.materialTungsten)),
 
         //Other Mod Materials
         SAPPHIRE(0x548ABE, "gemSapphire", Config.getAsToolMaterial("HammerSapphire", Config.materialSapphire)),
         RUBY(0xBE5562, "gemRuby", Config.getAsToolMaterial("HammerRuby", Config.materialRuby)),
         PERIDOT(0x9DBE56, "gemPeridot", Config.getAsToolMaterial("HammerPeridot", Config.materialPeridot)),
+        OBSIDIAN(0x30244A, "obsidian", Config.getAsToolMaterial("HammerObsidian", Config.materialObsidian)),
 
         //Mod Materials
 

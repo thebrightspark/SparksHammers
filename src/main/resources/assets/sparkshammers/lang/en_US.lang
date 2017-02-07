@@ -51,6 +51,7 @@ item.hammerSteel.name=Steel Hammer
 item.hammerInvar.name=Invar Hammer
 item.hammerElectrum.name=Electrum Hammer
 item.hammerAluminium.name=Aluminium Hammer
+item.hammer_brass.name=Brass Hammer
 
 item.hammerOsmium.name=Osmium Hammer
 item.hammerZinc.name=Zinc Hammer
@@ -62,6 +63,7 @@ item.hammerTungsten.name=Tungsten Hammer
 item.hammerSapphire.name=Sapphire Hammer
 item.hammerRuby.name=Ruby Hammer
 item.hammerPeridot.name=Peridot Hammer
+item.hammer_obsidian.name=Obsidian Hammer
 
 item.hammerManasteel.name=Manasteel Hammer
 item.hammerTerrasteel.name=Terrasteel Hammer
@@ -87,6 +89,7 @@ item.excavatorSteel.name=Steel Excavator
 item.excavatorInvar.name=Invar Excavator
 item.excavatorElectrum.name=Electrum Excavator
 item.excavatorAluminium.name=Aluminium Excavator
+item.excavatorBrass.name=Brass Excavator
 
 item.excavatorOsmium.name=Osmium Excavator
 item.excavatorZinc.name=Zinc Excavator
@@ -98,6 +101,7 @@ item.excavatorTungsten.name=Tungsten Excavator
 item.excavatorSapphire.name=Sapphire Excavator
 item.excavatorRuby.name=Ruby Excavator
 item.excavatorPeridot.name=Peridot Excavator
+item.excavatorObsidian.name=Obsidian Excavator
 
 item.excavatorManasteel.name=Manasteel Excavator
 item.excavatorTerrasteel.name=Terrasteel Excavator
