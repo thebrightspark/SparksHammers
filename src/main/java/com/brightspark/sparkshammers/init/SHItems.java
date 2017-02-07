@@ -1,9 +1,10 @@
 package com.brightspark.sparkshammers.init;
 
+import com.brightspark.sparkshammers.customTools.CustomTools;
+import com.brightspark.sparkshammers.customTools.Tool;
 import com.brightspark.sparkshammers.item.*;
 import com.brightspark.sparkshammers.reference.Config;
 import com.brightspark.sparkshammers.reference.Names;
-import com.brightspark.sparkshammers.util.LogHelper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.color.IItemColor;
 import net.minecraft.item.Item;
@@ -53,15 +54,51 @@ public class SHItems
             AOE_TOOLS.add((ItemAOE) item);
     }
 
-    public static void regAOE(Names.EnumMaterials mat)
+    public static void regTool(Tool tool)
     {
-        regAOE(mat, false);
-    }
+        String name = tool.materialName;
 
-    public static void regAOE(Names.EnumMaterials mat, boolean isExcavator)
-    {
-        ItemAOE tool = new ItemAOE(mat, isExcavator);
-        regItem(tool);
+        //Don't register if tool is made from other mod materials and respective config is disabled
+        if(!Config.enableOtherModItems && !name.equals("wood") && !name.equals("stone") && !name.equals("iron") && !name.equals("gold") && !name.equals("diamond") && !name.equals("giant") && !name.equals("mini") && !name.equals("mjolnir") && !name.equals("netherstar"))
+            return;
+
+        if(name.equals("wood"))
+        {
+            regItem(hammerHeadWood = new ItemResource(Names.Items.HAMMER_HEAD_WOOD));
+            regItem(excavatorHeadWood = new ItemResource(Names.Items.EXCAVATOR_HEAD_WOOD));
+            regItem(new ItemAOE(tool, false));
+            regItem(new ItemAOE(tool, true));
+        }
+        else if(name.equals("mjolnir"))
+        {
+            if(Config.enableMjolnir)
+                regItem(hammerMjolnir = new ItemHammerMjolnir(tool));
+        }
+        else if(name.equals("mini"))
+        {
+            if(Config.enableMiniHammer)
+                regItem(hammerMini = new ItemAOE(tool, false).setMineWidth(0).setShiftRotating(true));
+        }
+        else if(name.equals("giant"))
+        {
+            if(Config.enableGiantHammer)
+                regItem(hammerGiant = new ItemAOE(tool, false).setMineWidth(4).setMineHeight(4));
+        }
+        else if(name.equals("netherstar"))
+        {
+            if(Config.enableNetherStarHammer)
+                regItem(hammerNetherStar = new ItemHammerNetherStar(tool));
+        }
+        //TODO: Re-add Botania tools when the mod gets updated!
+        /*
+        else if((name.equals("manasteel") || name.equals("elementium") || name.equals("terrasteel")) && LoaderHelper.isModLoaded(Names.Mods.BOTANIA))
+            SHItemsBotania.regItems(mat);
+        */
+        else
+        {
+            regItem(new ItemAOE(tool, false));
+            regItem(new ItemAOE(tool, true));
+        }
     }
 
     public static void regItems()
@@ -69,54 +106,18 @@ public class SHItems
         //Only register once
         if(!ITEMS.isEmpty()) return;
 
-        //Tool Heads
-        regItem(hammerHeadWood = new ItemResource(Names.Items.HAMMER_HEAD_WOOD));
-        regItem(excavatorHeadWood = new ItemResource(Names.Items.EXCAVATOR_HEAD_WOOD));
-
-        //Special Hammers
-        regItem(hammerMjolnir = new ItemHammerMjolnir());
-        regItem(hammerMini = new ItemAOE(Names.EnumMaterials.MINI).setMineWidth(0).setShiftRotating(true));
-        regItem(hammerGiant = new ItemAOE(Names.EnumMaterials.GIANT).setMineWidth(4).setMineHeight(4));
-        regItem(hammerNetherStar = new ItemHammerNetherStar());
-
         //Debug
         regItem(debug = new ItemDebug());
 
-        //All Regular Hammers And Excavators
-        Names.EnumMaterials[] materials = Config.includeOtherModItems ? Names.EnumMaterials.values() : Names.EnumMaterials.VANILLA;
-        for(Names.EnumMaterials mat : materials)
-        {
-            if(mat.dependantOreDic == null && mat.dependantItem == null)
-            {
-                //LogHelper.warn("No dependant ore dictionary or item stack for material " + mat);
-                continue;
-            }
-            //LogHelper.info("Registering material " + mat);
-            switch(mat)
-            {
-                case WOOD:
-                case STONE:
-                case IRON:
-                case GOLD:
-                case DIAMOND:
-                    regAOE(mat);
-                    regAOE(mat, true);
-                    break;
-                //TODO: Re-add Botania tools when the mod gets updated!
-                /*
-                case MANASTEEL:
-                case TERRASTEEL:
-                case ELEMENTIUM:
-                    if(LoaderHelper.isModLoaded(Names.Mods.BOTANIA))
-                        SHItemsBotania.regItems(mat);
-                    break;
-                */
-                default:
-                    if(!Config.includeOtherModItems) break;
-                    regAOE(mat);
-                    regAOE(mat, true);
-            }
-        }
+        //Gets tools from json file
+        List<Tool> tools = CustomTools.read();
+        //Register tools from json
+        for(Tool tool : tools)
+            regTool(tool);
+
+        //Because I want both wooden heads to be next to each other in JEI XD
+        if(hammerHeadWood != null)
+            regItem(hammerHeadWood = new ItemResource(Names.Items.HAMMER_HEAD_WOOD));
     }
 
     @SideOnly(Side.CLIENT)

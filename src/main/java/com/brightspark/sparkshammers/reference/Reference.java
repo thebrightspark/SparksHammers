@@ -1,5 +1,8 @@
 package com.brightspark.sparkshammers.reference;
 
+import net.minecraftforge.fml.common.Loader;
+
+import java.io.File;
 import java.util.UUID;
 
 public class Reference
@@ -15,6 +18,7 @@ public class Reference
 
     public static final String ITEM_TEXTURE_DIR = MOD_ID + ":";
     public static final String GUI_TEXTURE_DIR = "textures/gui/";
+    public static final File CONFIG_DIR = new File(Loader.instance().getConfigDir(), MOD_ID);
 
     public static class JEI
     {

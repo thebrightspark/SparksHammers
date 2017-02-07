@@ -50,6 +50,12 @@ public class CommonUtils
         return Item.REGISTRY.getObject(new ResourceLocation(itemId));
     }
 
+    public static String getRegisteredId(Item item)
+    {
+        ResourceLocation id = Item.REGISTRY.getNameForObject(item);
+        return id == null ? null : id.toString();
+    }
+
     public static boolean isStackEmptyOrNull(ItemStack stack)
     {
         return stack == null || stack.getItem() instanceof ItemAir;

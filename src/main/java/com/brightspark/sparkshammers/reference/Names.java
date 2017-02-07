@@ -12,61 +12,64 @@ public class Names
         //Name, harvest level, durability, mining speed, damage vs entities, enchantability
 
         //Vanilla
-        WOOD(0x866526, "plankWood", EnumHelper.addToolMaterial("HammerWood", Item.ToolMaterial.WOOD.getHarvestLevel(), (int) (Item.ToolMaterial.WOOD.getMaxUses() * Config.toolDurabilityModifier), (int) (Item.ToolMaterial.WOOD.getEfficiencyOnProperMaterial() * Config.toolSpeedModifier), (Item.ToolMaterial.WOOD.getDamageVsEntity() + 3f) * Config.toolAttackModifier, Item.ToolMaterial.WOOD.getEnchantability()).setRepairItem(new ItemStack(net.minecraft.init.Blocks.LOG, 1, OreDictionary.WILDCARD_VALUE))),
-        STONE(0x9A9A9A, "cobblestone", EnumHelper.addToolMaterial("HammerStone", Item.ToolMaterial.STONE.getHarvestLevel(), (int) (Item.ToolMaterial.STONE.getMaxUses() * Config.toolDurabilityModifier), (int) (Item.ToolMaterial.STONE.getEfficiencyOnProperMaterial() * Config.toolSpeedModifier), (Item.ToolMaterial.STONE.getDamageVsEntity() + 3f) * Config.toolAttackModifier, Item.ToolMaterial.STONE.getEnchantability()).setRepairItem(new ItemStack(net.minecraft.init.Blocks.COBBLESTONE))),
-        IRON(0xFFFFFF, "ingotIron", EnumHelper.addToolMaterial("HammerIron", Item.ToolMaterial.IRON.getHarvestLevel(), (int) (Item.ToolMaterial.IRON.getMaxUses() * Config.toolDurabilityModifier), (int) (Item.ToolMaterial.IRON.getEfficiencyOnProperMaterial() * Config.toolSpeedModifier), (Item.ToolMaterial.IRON.getDamageVsEntity() + 3f) * Config.toolAttackModifier, Item.ToolMaterial.IRON.getEnchantability()).setRepairItem(new ItemStack(net.minecraft.init.Items.IRON_INGOT))),
-        GOLD(0xEAEE57, "ingotGold", EnumHelper.addToolMaterial("HammerGold", Item.ToolMaterial.GOLD.getHarvestLevel(), (int) (Item.ToolMaterial.GOLD.getMaxUses() * Config.toolDurabilityModifier), (int) (Item.ToolMaterial.GOLD.getEfficiencyOnProperMaterial() * Config.toolSpeedModifier), (Item.ToolMaterial.GOLD.getDamageVsEntity() + 3f) * Config.toolAttackModifier, Item.ToolMaterial.GOLD.getEnchantability()).setRepairItem(new ItemStack(net.minecraft.init.Items.GOLD_INGOT))),
-        DIAMOND(0x33EBCB, "gemDiamond", EnumHelper.addToolMaterial("HammerDiamond", Item.ToolMaterial.DIAMOND.getHarvestLevel(), (int) (Item.ToolMaterial.DIAMOND.getMaxUses() * Config.toolDurabilityModifier), (int) (Item.ToolMaterial.DIAMOND.getEfficiencyOnProperMaterial() * Config.toolSpeedModifier), (Item.ToolMaterial.DIAMOND.getDamageVsEntity() + 3f) * Config.toolAttackModifier, Item.ToolMaterial.DIAMOND.getEnchantability()).setRepairItem(new ItemStack(net.minecraft.init.Items.DIAMOND))),
+        // Durability -> vanilla * 6
+        // Efficiency -> vanilla * 0.6
+        // Attack     -> vanilla + 3
+        WOOD(0x866526, "plankWood", EnumHelper.addToolMaterial("HammerWood", 0, 354, 1.2f, 3f, 15).setRepairItem(new ItemStack(net.minecraft.init.Blocks.LOG, 1, OreDictionary.WILDCARD_VALUE))),
+        STONE(0x9A9A9A, "cobblestone", EnumHelper.addToolMaterial("HammerStone", 1, 786, 2.4f, 4f, 5).setRepairItem(new ItemStack(net.minecraft.init.Blocks.COBBLESTONE))),
+        IRON(0xFFFFFF, "ingotIron", EnumHelper.addToolMaterial("HammerIron", 2, 1500, 3.6f, 5f, 14).setRepairItem(new ItemStack(net.minecraft.init.Items.IRON_INGOT))),
+        GOLD(0xEAEE57, "ingotGold", EnumHelper.addToolMaterial("HammerGold", 0, 192, 7.2f, 3f, 22).setRepairItem(new ItemStack(net.minecraft.init.Items.GOLD_INGOT))),
+        DIAMOND(0x33EBCB, "gemDiamond", EnumHelper.addToolMaterial("HammerDiamond", 3, 9366, 4.8f, 6f, 10).setRepairItem(new ItemStack(net.minecraft.init.Items.DIAMOND))),
 
         //Special
-        GIANT(0x955CC4, EnumHelper.addToolMaterial("HammerGiant", IRON.material.getHarvestLevel(), IRON.material.getMaxUses() * 6, IRON.material.getEfficiencyOnProperMaterial() * 0.5f, IRON.material.getDamageVsEntity() * 1.25f, IRON.material.getEnchantability()).setRepairItem(new ItemStack(net.minecraft.init.Blocks.IRON_BLOCK))),
-        MINI(EnumHelper.addToolMaterial("HammerMini", IRON.material.getHarvestLevel(), (int) (IRON.material.getMaxUses() * 0.5), IRON.material.getEfficiencyOnProperMaterial(), IRON.material.getDamageVsEntity() * 0.75f, IRON.material.getEnchantability()).setRepairItem(new ItemStack(net.minecraft.init.Items.IRON_INGOT))),
-        MJOLNIR(EnumHelper.addToolMaterial("HammerMjolnir", Config.mjolnirHarvestLevel, 1, Config.mjolnirEfficiency, Config.mjolnirDamageVsEntity, 0)),
+        GIANT(0x955CC4, EnumHelper.addToolMaterial("HammerGiant", 2, 9000, 1.8f, 8f, 10).setRepairItem(new ItemStack(net.minecraft.init.Blocks.IRON_BLOCK))),
+        MINI(EnumHelper.addToolMaterial("HammerMini", 2, 750, 3.6f, 3.5f, 14).setRepairItem(new ItemStack(net.minecraft.init.Items.IRON_INGOT))),
+        MJOLNIR(EnumHelper.addToolMaterial("HammerMjolnir", Integer.MAX_VALUE, 1, 10f, 10f, 0)),
         //TODO: Add config for Nether Star Hammer attack damage
-        NETHERSTAR(EnumHelper.addToolMaterial("HammerNetherStar", Item.ToolMaterial.DIAMOND.getHarvestLevel(), Config.netherStarHammerDurability, Item.ToolMaterial.DIAMOND.getEfficiencyOnProperMaterial(), 40.0f, 0).setRepairItem(new ItemStack(net.minecraft.init.Items.NETHER_STAR))),
+        NETHERSTAR(EnumHelper.addToolMaterial("HammerNetherStar", 3, 10, 5f, 40.0f, 0).setRepairItem(new ItemStack(net.minecraft.init.Items.NETHER_STAR))),
 
         //Common Mod Metals
-        COPPER(0xFF976E, "ingotCopper", Config.getAsToolMaterial("HammerCopper", Config.materialCopper)),
-        SILVER(0xBEBEBE, "ingotSilver", Config.getAsToolMaterial("HammerSilver", Config.materialSilver)),
-        TIN(0xFFF3E5, "ingotTin", Config.getAsToolMaterial("HammerTin", Config.materialTin)),
-        LEAD(0x737373, "ingotLead", Config.getAsToolMaterial("HammerLead", Config.materialLead)),
-        NICKEL(0xE5FFE1, "ingotNickel", Config.getAsToolMaterial("HammerNickel", Config.materialNickel)),
-        PLATINUM(0xB0BEBA, "ingotPlatinum", Config.getAsToolMaterial("HammerPlatinum", Config.materialPlatinum)),
-        BRONZE(0xEC9D4B, "ingotBronze", Config.getAsToolMaterial("HammerBronze", Config.materialBronze)),
-        STEEL(0xCDDADC, "ingotSteel", Config.getAsToolMaterial("HammerSteel", Config.materialSteel)),
-        INVAR(0xCBC6B2, "ingotInvar", Config.getAsToolMaterial("HammerInvar", Config.materialInvar)),
-        ELECTRUM(0xFFF0A4, "ingotElectrum", Config.getAsToolMaterial("HammerElectrum", Config.materialElectrum)),
-        ALUMINIUM(0xECEAF7, "ingotAluminum", Config.getAsToolMaterial("HammerAluminium", Config.materialAluminium)),
-        BRASS(0xFFE067, "ingotBrass", Config.getAsToolMaterial("HammerBrass", Config.materialBrass)),
+        COPPER(0xFF976E, "ingotCopper", EnumHelper.addToolMaterial("HammerCopper", 1, 768, 2.4f, 4f, 12)),
+        SILVER(0xBEBEBE, "ingotSilver", EnumHelper.addToolMaterial("HammerSilver", 1, 768, 3f, 4.3f, 15)),
+        TIN(0xFFF3E5, "ingotTin", EnumHelper.addToolMaterial("HammerTin", 1, 192, 1.8f, 3.8f, 5)),
+        LEAD(0x737373, "ingotLead", EnumHelper.addToolMaterial("HammerLead", 0, 192, 0.6f, 3.3f, 2)),
+        NICKEL(0xE5FFE1, "ingotNickel", EnumHelper.addToolMaterial("HammerNickel", 1, 768, 2.4f, 4f, 17)),
+        PLATINUM(0xB0BEBA, "ingotPlatinum", EnumHelper.addToolMaterial("HammerPlatinum", 1, 960, 1.8f, 3.8f, 37)),
+        BRONZE(0xEC9D4B, "ingotBronze", EnumHelper.addToolMaterial("HammerBronze", 2, 768, 4.8f, 5f, 11)),
+        STEEL(0xCDDADC, "ingotSteel", EnumHelper.addToolMaterial("HammerSteel", 2, 2880, 4.8f, 5f, 5)),
+        INVAR(0xCBC6B2, "ingotInvar", EnumHelper.addToolMaterial("HammerInvar", 2, 1920, 5.4f, 5.3f, 7)),
+        ELECTRUM(0xFFF0A4, "ingotElectrum", EnumHelper.addToolMaterial("HammerElectrum", 1, 768, 3f, 4.3f, 25)),
+        ALUMINIUM(0xECEAF7, "ingotAluminum", EnumHelper.addToolMaterial("HammerAluminium", 2, 1320, 7.2f, 4.8f, 14)),
+        BRASS(0xFFE067, "ingotBrass", EnumHelper.addToolMaterial("HammerBrass", 2, 576, 2.1f, 4.6f, 10)),
 
         //Uncommon Mod Metals
-        OSMIUM(0x8C9CA8, "ingotOsmium", Config.getAsToolMaterial("HammerOsmium", Config.materialOsmium)),
-        ZINC(0xC3CCB9, "ingotZinc", Config.getAsToolMaterial("HammerZinc", Config.materialZinc)),
-        CHROME(0xD1A3AE, "ingotChrome", Config.getAsToolMaterial("HammerChrome", Config.materialChrome)),
-        //IRIDIUM(0xB9C0C9, "ingotIridium", Config.getAsToolMaterial("HammerIridium", Config.materialIridium)),
-        //TITANIUM(0xADAECF, "ingotTitanium", Config.getAsToolMaterial("HammerTitanium", Config.materialTitanium)),
-        //TUNGSTEN(0x818991, "ingotTungsten", Config.getAsToolMaterial("HammerTungsten", Config.materialTungsten)),
+        OSMIUM(0x8C9CA8, "ingotOsmium", EnumHelper.addToolMaterial("HammerOsmium", 2, 3000, 6f, 7f, 12)),
+        ZINC(0xC3CCB9, "ingotZinc", EnumHelper.addToolMaterial("HammerZinc", 0, 192, 0.6f, 3.3f, 2)),
+        CHROME(0xD1A3AE, "ingotChrome", EnumHelper.addToolMaterial("HammerChrome", 3, 3600, 4.2f, 7f, 7)),
+        //IRIDIUM(0xB9C0C9, "ingotIridium", EnumHelper.addToolMaterial("HammerIridium", 5, 12000, 6f, 8f, 1)),
+        //TITANIUM(0xADAECF, "ingotTitanium", EnumHelper.addToolMaterial("HammerTitanium", 4, 6000, 4.8f, 7f, 3)),
+        //TUNGSTEN(0x818991, "ingotTungsten", EnumHelper.addToolMaterial("HammerTungsten", 4, 6000, 4.8f, 7f, 3)),
 
         //Other Mod Materials
-        SAPPHIRE(0x548ABE, "gemSapphire", Config.getAsToolMaterial("HammerSapphire", Config.materialSapphire)),
-        RUBY(0xBE5562, "gemRuby", Config.getAsToolMaterial("HammerRuby", Config.materialRuby)),
-        PERIDOT(0x9DBE56, "gemPeridot", Config.getAsToolMaterial("HammerPeridot", Config.materialPeridot)),
-        OBSIDIAN(0x30244A, "obsidian", Config.getAsToolMaterial("HammerObsidian", Config.materialObsidian)),
+        SAPPHIRE(0x548ABE, "gemSapphire", EnumHelper.addToolMaterial("HammerSapphire", 2, 3720, 3f, 5f, 8)),
+        RUBY(0xBE5562, "gemRuby", EnumHelper.addToolMaterial("HammerRuby", 2, 1920, 3.7f, 5.7f, 10)),
+        PERIDOT(0x9DBE56, "gemPeridot", EnumHelper.addToolMaterial("HammerPeridot", 2, 2400, 4.2f, 5.4f, 16)),
+        OBSIDIAN(0x30244A, "obsidian", EnumHelper.addToolMaterial("HammerObsidian", 1, 6000, 2.4f, 3f, 5)),
 
-        //Mod Materials
+        //Mod Specific Materials
 
         //Botania
-        MANASTEEL(0xA1E0FF, "ingotManasteel", Config.getAsToolMaterial("HammerManasteel", Config.materialManasteel)),
-        TERRASTEEL(0x9BF76C, "ingotTerrasteel", Config.getAsToolMaterial("HammerTerrasteel", Config.materialTerrasteel)),
-        ELEMENTIUM(0xF8A1FF, "ingotElvenElementium", Config.getAsToolMaterial("HammerElementium", Config.materialElementium)),
+        MANASTEEL(0xA1E0FF, "ingotManasteel", EnumHelper.addToolMaterial("HammerManasteel", 2, 3000, 3.7f, 5f, 20)),
+        ELEMENTIUM(0xF8A1FF, "ingotElvenElementium", EnumHelper.addToolMaterial("HammerElementium", 3, 4320, 3.7f, 5f, 20)),
+        TERRASTEEL(0x9BF76C, "ingotTerrasteel", EnumHelper.addToolMaterial("HammerTerrasteel", 4, 6000, 5.4f, 6f, 26)),
 
         //EnderIO
-        DARKSTEEL(0x636363, "ingotDarkSteel", Config.getAsToolMaterial("HammerDarksteel", Config.materialDarksteel)),
+        DARKSTEEL(0x636363, "ingotDarkSteel", EnumHelper.addToolMaterial("HammerDarksteel", 5, 9366, 3.7f, 5f, 25)),
 
         //MobHunter
-        MACHALITE(0xC1DCEA, "ingotMachalite", Config.getAsToolMaterial("HammerMachalite", Config.materialMachalite)),
-        DRAGONITE(0xCBE0CB, "ingotDragonite", Config.getAsToolMaterial("HammerDragonite", Config.materialDragonite)),
-        GOSSAMITE(0xE2CFDC, "ingotGossamite", Config.getAsToolMaterial("HammerGossamite", Config.materialGossamite));
+        MACHALITE(0xC1DCEA, "ingotMachalite", EnumHelper.addToolMaterial("HammerMachalite", 2, 3000, 4.2f, 6f, 15)),
+        DRAGONITE(0xCBE0CB, "ingotDragonite", EnumHelper.addToolMaterial("HammerDragonite", 3, 4500, 4.2f, 7f, 15)),
+        GOSSAMITE(0xE2CFDC, "ingotGossamite", EnumHelper.addToolMaterial("HammerGossamite", 3, 6000, 4.8f, 8f, 15));
 
         public int colour = -1;
         public Item.ToolMaterial material;

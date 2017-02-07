@@ -2,7 +2,6 @@ package com.brightspark.sparkshammers.handlers;
 
 import com.brightspark.sparkshammers.init.SHBlocks;
 import com.brightspark.sparkshammers.init.SHItems;
-import com.brightspark.sparkshammers.util.LogHelper;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraftforge.event.RegistryEvent;

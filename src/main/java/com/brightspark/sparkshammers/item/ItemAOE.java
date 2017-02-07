@@ -1,6 +1,7 @@
 package com.brightspark.sparkshammers.item;
 
 import com.brightspark.sparkshammers.SparksHammers;
+import com.brightspark.sparkshammers.customTools.Tool;
 import com.brightspark.sparkshammers.init.SHAchievements;
 import com.brightspark.sparkshammers.init.SHItems;
 import com.brightspark.sparkshammers.reference.Names;
@@ -38,7 +39,9 @@ public class ItemAOE extends ItemTool implements IColourable
     private int mineDepth = 0; //Depth (behind block)
     private boolean infiniteUse;
     private boolean shiftRotating = false;
+
     private String dependantOreDic = null;
+    private ItemStack dependantStack = null;
 
     protected static final String KEY_CUSTOM_NAME = "customName";
     protected static final String KEY_CUSTOM_FORMATTING = "customFormatting";
@@ -64,6 +67,15 @@ public class ItemAOE extends ItemTool implements IColourable
         this(name.unlocToolName(isExcavator), name.material, isExcavator, isInfiniteUse);
         textureColour = name.colour;
         dependantOreDic = name.dependantOreDic;
+    }
+
+    //This constructor is used when registering tools from the custom json file
+    public ItemAOE(Tool tool, boolean isExcavator)
+    {
+        this(tool.getToolName(isExcavator), tool.material, isExcavator, false);
+        textureColour = tool.toolColour;
+        dependantOreDic = tool.dependantOreDic;
+        dependantStack = tool.dependantStack;
     }
 
     public ItemAOE(String name, ToolMaterial material)
@@ -287,5 +299,10 @@ public class ItemAOE extends ItemTool implements IColourable
     public String getDependantOreDic()
     {
         return dependantOreDic;
+    }
+
+    public ItemStack getDependantStack()
+    {
+        return dependantStack;
     }
 }

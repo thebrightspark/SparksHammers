@@ -24,6 +24,7 @@ import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 
+import java.io.File;
 import java.util.List;
 
 @Mod(modid=Reference.MOD_ID, name=Reference.MOD_NAME, version=Reference.VERSION, dependencies=Reference.DEPENDENCIES)
@@ -56,8 +57,11 @@ public class SparksHammers
     {
         //Initialize item, blocks, textures/models and configs here
 
-        //Passes suggested configuration file into the init method
-        ConfigurationHandler.init(event.getSuggestedConfigurationFile());
+        //TODO: Remove in a few versions (added 1.11.2-1.5)
+        if(event.getSuggestedConfigurationFile().exists() && event.getSuggestedConfigurationFile().delete())
+            LogHelper.info("Removed old config file from main config directory. Configs are now being saved in config/" + Reference.MOD_ID + "/");
+
+        ConfigurationHandler.init(new File(Reference.CONFIG_DIR, "config.cfg"));
     }
 
     @Mod.EventHandler
@@ -79,7 +83,7 @@ public class SparksHammers
         SHAchievements.init(); //Adds achievements
 
         //Register world generation for Mjolnir Shrine
-        if(Config.shouldGenerateMjolnirShrines)
+        if(Config.shouldGenerateMjolnirShrines && Config.enableMjolnir)
             GameRegistry.registerWorldGenerator(new WorldGenMjolnirShrine(), 10);
     }
 

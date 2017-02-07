@@ -32,7 +32,7 @@ public class LoaderHelper
     public static boolean isModLoaded(String modName)
     {
         //Check config
-        if(!Config.includeOtherModItems)
+        if(!Config.enableOtherModItems)
             return false;
 
         //Has mod already been checked before
@@ -51,7 +51,7 @@ public class LoaderHelper
     public static boolean doesOreExist(String oreName)
     {
         //Check config
-        if(!Config.includeOtherModItems)
+        if(!Config.enableOtherModItems)
             return false;
 
         //Has ore already been checked before
@@ -64,7 +64,7 @@ public class LoaderHelper
     public static boolean doesToolMaterialExist(String materialName)
     {
         //Check config
-        if(!Config.includeOtherModItems)
+        if(!Config.enableOtherModItems)
             return false;
 
         //Has tool material already been check before

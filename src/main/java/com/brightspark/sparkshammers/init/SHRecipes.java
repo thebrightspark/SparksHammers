@@ -2,6 +2,7 @@ package com.brightspark.sparkshammers.init;
 
 import com.brightspark.sparkshammers.hammerCrafting.HammerCraftingManager;
 import com.brightspark.sparkshammers.item.ItemAOE;
+import com.brightspark.sparkshammers.reference.Config;
 import com.brightspark.sparkshammers.reference.Names;
 import com.brightspark.sparkshammers.util.CommonUtils;
 import com.brightspark.sparkshammers.util.LoaderHelper;
@@ -19,15 +20,24 @@ public class SHRecipes
     public static void init()
     {
         //Hammer Crafting Table
-        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(SHBlocks.blockHammerCraft), "scs", "chc", "scs", 's', "stone", 'c', Blocks.CRAFTING_TABLE, 'h', new ItemStack(SHItems.getItemById("hammer_wood"), 1, OreDictionary.WILDCARD_VALUE)));
+        Item hammerWood = SHItems.getItemById("hammer_wood");
+        ItemStack centerItem;
+        if(hammerWood == null)
+            centerItem = new ItemStack(SHItems.hammerHeadWood);
+        else
+            centerItem = new ItemStack(hammerWood, 1, OreDictionary.WILDCARD_VALUE);
+        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(SHBlocks.blockHammerCraft), "scs", "chc", "scs", 's', "stone", 'c', Blocks.CRAFTING_TABLE, 'h', centerItem));
 
         //Wooden Hammer
         GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(SHItems.hammerHeadWood), "xxx", "xxx", "   ", 'x', "logWood"));
         GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(SHItems.getItemById("hammer_wood")), " x ", " s ", " s ", 'x', SHItems.hammerHeadWood, 's', "plankWood"));
 
         //Wooden Excavator
-        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(SHItems.excavatorHeadWood), " x ", "xxx", "   ", 'x', "logWood"));
-        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(SHItems.getItemById("excavator_wood")), " x ", " s ", " s ", 'x', SHItems.excavatorHeadWood, 's', "plankWood"));
+        if(SHItems.excavatorHeadWood != null)
+        {
+            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(SHItems.excavatorHeadWood), " x ", "xxx", "   ", 'x', "logWood"));
+            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(SHItems.getItemById("excavator_wood")), " x ", " s ", " s ", 'x', SHItems.excavatorHeadWood, 's', "plankWood"));
+        }
 
         /*
          * Hammer Crafting Table Recipes
@@ -35,9 +45,12 @@ public class SHRecipes
 
         HammerCraftingManager hammerCraft = HammerCraftingManager.getInstance();
 
-        hammerCraft.addRecipe(new ItemStack(SHItems.hammerMini), " HHH ", " HHH ", "SSSS ", 'H', Items.IRON_INGOT, 'S', "stickWood");
-        hammerCraft.addRecipe(new ItemStack(SHItems.hammerGiant), "HHHHH", "HHDHH", "SSSS ", 'H', Blocks.IRON_BLOCK, 'S', "stickWood", 'D', new ItemStack(Items.DYE, 1, 5));
-        hammerCraft.addRecipe(new ItemStack(SHItems.hammerNetherStar), "HHBHH", "HBNBH", "SSSS ", 'H', Items.DIAMOND, 'B', Blocks.GOLD_BLOCK, 'N', Items.NETHER_STAR, 'S', "stickWood");
+        if(Config.enableMiniHammer)
+            hammerCraft.addRecipe(new ItemStack(SHItems.hammerMini), " HHH ", " HHH ", "SSSS ", 'H', Items.IRON_INGOT, 'S', "stickWood");
+        if(Config.enableGiantHammer)
+            hammerCraft.addRecipe(new ItemStack(SHItems.hammerGiant), "HHHHH", "HHDHH", "SSSS ", 'H', Blocks.IRON_BLOCK, 'S', "stickWood", 'D', new ItemStack(Items.DYE, 1, 5));
+        if(Config.enableNetherStarHammer)
+            hammerCraft.addRecipe(new ItemStack(SHItems.hammerNetherStar), "HHBHH", "HBNBH", "SSSS ", 'H', Items.DIAMOND, 'B', Blocks.GOLD_BLOCK, 'N', Items.NETHER_STAR, 'S', "stickWood");
 
         //Create recipes for all tools which have an ore dictionary ready for the item ingredient
         for(ItemAOE tool : SHItems.AOE_TOOLS)
