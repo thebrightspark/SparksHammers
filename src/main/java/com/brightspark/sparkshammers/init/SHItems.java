@@ -32,7 +32,7 @@ public class SHItems
     public static ItemResource hammerHeadWood, excavatorHeadWood;
 
     //Special Hammers
-    public static ItemAOE hammerMjolnir, hammerMini, hammerGiant, hammerNetherStar;
+    public static ItemAOE hammerMjolnir, hammerMini, hammerGiant, hammerNetherStar, hammerPowered;
 
     //Debug
     public static ItemDebug debug;
@@ -42,19 +42,12 @@ public class SHItems
         return ITEMS.get(itemId);
     }
 
-    private static void regGeneralItem(Item item)
+    public static void regItem(Item item)
     {
         GameRegistry.register(item);
         ITEMS.put(item.getRegistryName().getResourcePath(), item);
         if(item instanceof IColourable && ((IColourable)item).getTextureColour() >= 0)
             COLOURED_ITEMS.add(item);
-    }
-
-    public static void regItem(Item item)
-    {
-        regGeneralItem(item);
-        if(item instanceof ItemAOE)
-            AOE_TOOLS.add((ItemAOE) item);
     }
 
     public static void regAOE(Names.EnumMaterials mat)
@@ -64,8 +57,13 @@ public class SHItems
 
     public static void regAOE(Names.EnumMaterials mat, boolean isExcavator)
     {
-        ItemAOE tool = new ItemAOE(mat, isExcavator);
+        regAOE(new ItemAOE(mat, isExcavator));
+    }
+
+    public static void regAOE(ItemAOE tool)
+    {
         regItem(tool);
+        AOE_TOOLS.add(tool);
     }
 
     public static void regItems()
@@ -79,6 +77,7 @@ public class SHItems
         regItem(hammerMini = new ItemAOE(Names.EnumMaterials.MINI).setMineWidth(0).setShiftRotating(true));
         regItem(hammerGiant = new ItemAOE(Names.EnumMaterials.GIANT).setMineWidth(4).setMineHeight(4));
         regItem(hammerNetherStar = new ItemHammerNetherStar());
+        regItem(hammerPowered = new ItemHammerEnergy());
 
         //Debug
         regItem(debug = new ItemDebug());

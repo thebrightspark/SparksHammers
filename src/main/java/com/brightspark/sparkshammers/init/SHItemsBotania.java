@@ -24,16 +24,16 @@ public class SHItemsBotania
         switch(mat)
         {
             case MANASTEEL:
-                SHItems.regItem(new ItemHammerMana(mat));
-                SHItems.regItem(new ItemHammerMana(mat, true));
+                SHItems.regAOE(new ItemHammerMana(mat));
+                SHItems.regAOE(new ItemHammerMana(mat, true));
                 break;
             case TERRASTEEL:
-                SHItems.regItem(new ItemHammerMana(mat));
-                SHItems.regItem(new ItemHammerMana(mat, true));
+                SHItems.regAOE(new ItemHammerMana(mat));
+                SHItems.regAOE(new ItemHammerMana(mat, true));
                 break;
             case ELEMENTIUM:
-                SHItems.regItem(new ItemHammerMana(mat));
-                SHItems.regItem(new ItemHammerMana(mat, true));
+                SHItems.regAOE(new ItemHammerMana(mat));
+                SHItems.regAOE(new ItemHammerMana(mat, true));
                 break;
             default:
                 LogHelper.warn("Botania registration was passed material " + mat + " (This shouldn't happen)");

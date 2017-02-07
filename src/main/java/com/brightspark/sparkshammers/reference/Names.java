@@ -24,6 +24,7 @@ public class Names
         MINI(EnumHelper.addToolMaterial("HammerMini", IRON.material.getHarvestLevel(), (int) (IRON.material.getMaxUses() * 0.5), IRON.material.getEfficiencyOnProperMaterial(), IRON.material.getDamageVsEntity() * 0.75f, IRON.material.getEnchantability()).setRepairItem(new ItemStack(net.minecraft.init.Items.IRON_INGOT))),
         MJOLNIR(EnumHelper.addToolMaterial("HammerMjolnir", Config.mjolnirHarvestLevel, 1, Config.mjolnirEfficiency, Config.mjolnirDamageVsEntity, 0)),
         NETHERSTAR(EnumHelper.addToolMaterial("HammerNetherStar", Item.ToolMaterial.DIAMOND.getHarvestLevel(), Config.netherStarHammerDurability, Item.ToolMaterial.DIAMOND.getEfficiencyOnProperMaterial(), 20.0f, 0).setRepairItem(new ItemStack(net.minecraft.init.Items.NETHER_STAR))),
+        POWERED(EnumHelper.addToolMaterial("HammerPowered", Item.ToolMaterial.DIAMOND.getHarvestLevel(), IRON.material.getMaxUses(), DIAMOND.material.getEfficiencyOnProperMaterial(), DIAMOND.material.getDamageVsEntity(), 0).setRepairItem(new ItemStack(net.minecraft.init.Blocks.IRON_BLOCK))),
 
         //Common Mod Metals
         COPPER(0xFF976E, "ingotCopper", Config.getAsToolMaterial("HammerCopper", Config.materialCopper)),
@@ -59,7 +60,7 @@ public class Names
         ELEMENTIUM(0xF8A1FF, "ingotElvenElementium", Config.getAsToolMaterial("HammerElementium", Config.materialElementium)),
 
         //EnderIO
-        DARKSTEEL(0x636363, Config.getAsToolMaterial("HammerDarksteel", Config.materialDarksteel)),
+        DARKSTEEL(0x636363, "ingotDarkSteel", Config.getAsToolMaterial("HammerDarksteel", Config.materialDarksteel)),
 
         //MobHunter
         MACHALITE(0xC1DCEA, "ingotMachalite", Config.getAsToolMaterial("HammerMachalite", Config.materialMachalite)),
@@ -70,7 +71,6 @@ public class Names
         public Item.ToolMaterial material;
         public String dependantOreDic = null;
         public ItemStack dependantItem = null;
-        public static String OTHER_DEPENDENCY = "<OTHER>";
         public static EnumMaterials[] VANILLA;
 
         static
@@ -134,14 +134,14 @@ public class Names
 
     public static class Mods
     {
-        public static final String BOTANIA = "Botania";
-        public static final String EXTRA_UTILITIES = "ExtraUtils2";
-        public static final String ENDERIO = "EnderIO";
-        public static final String MISC = "Misc";
+        public static final String BOTANIA = "botania";
+        public static final String EXTRA_UTILITIES = "extrautils2";
+        public static final String ENDERIO = "enderio";
     }
 
     public static class ModItemIds
     {
         public static final String COMPRESSED_COBBLE = Mods.EXTRA_UTILITIES + ":CompressedCobblestone";
+        public static final String CAPACITOR_BANK = Mods.ENDERIO + ":blockCapBank";
     }
 }

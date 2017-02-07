@@ -82,6 +82,12 @@ public class ItemAOE extends ItemTool implements IColourable
         materials = isExcavator ? ShovelMats : PickaxeMats;
     }
 
+    @Override
+    public Set<String> getToolClasses(ItemStack stack)
+    {
+        return com.google.common.collect.ImmutableSet.of(isExcavator ? "shovel" : "pickaxe");
+    }
+
     /**
      * Returns the unlocalized name of this item. This version accepts an ItemStack so different stacks can have
      * different names based on their damage or NBT.

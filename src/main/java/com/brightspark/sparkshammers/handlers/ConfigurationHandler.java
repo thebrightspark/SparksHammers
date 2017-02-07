@@ -75,6 +75,13 @@ public class ConfigurationHandler
         Config.mjolnirPickupNeedsDragonAchieve = configuration.getBoolean("mjolnirPickupNeedsDragonAchieve", Categories.SPECIFIC_TOOLS, Config.mjolnirPickupNeedsDragonAchieve, "Whether the player needs to have gotten the 'End.' achievement to be able to pickup Mjolnir.");
 
         /*
+         * Powered Tools' Energy
+         */
+        Config.poweredEnergyCapacity = configuration.getInt("poweredEnergyCapacity", Categories.SPECIFIC_TOOLS, Config.poweredEnergyCapacity, 1, Integer.MAX_VALUE, "The energy capacity of powered tools.");
+        Config.poweredEnergyUsePerBlock = configuration.getInt("poweredEnergyUsePerBlock", Categories.SPECIFIC_TOOLS, Config.poweredEnergyUsePerBlock, 1, Integer.MAX_VALUE, "How much energy powered tools will use per block destroyed (Hitting entities will use x2 this amount).");
+        Config.poweredEnergyInputRate = configuration.getInt("poweredEnergyInputRate", Categories.SPECIFIC_TOOLS, Config.poweredEnergyInputRate, 1, Integer.MAX_VALUE, "The rate at which you can fill the energy of powered tools, in energy per tick.");
+
+        /*
          * Common Mod Metal Tools
          */
         Config.materialCopper = getMaterial("Copper", Config.materialCopper);

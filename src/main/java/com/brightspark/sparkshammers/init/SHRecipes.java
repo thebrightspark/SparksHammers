@@ -39,6 +39,22 @@ public class SHRecipes
         hammerCraft.addRecipe(new ItemStack(SHItems.hammerGiant), "HHHHH", "HHDHH", "SSSS ", 'H', Blocks.IRON_BLOCK, 'S', "stickWood", 'D', new ItemStack(Items.DYE, 1, 5));
         hammerCraft.addRecipe(new ItemStack(SHItems.hammerNetherStar), "HHBHH", "HBNBH", "SSSS ", 'H', Items.DIAMOND, 'B', Blocks.GOLD_BLOCK, 'N', Items.NETHER_STAR, 'S', "stickWood");
 
+        //Powered Hammer
+        boolean otherModLoaded = false;
+        if(LoaderHelper.isModLoaded(Names.Mods.ENDERIO))
+        {
+            Item capBank = Item.getByNameOrId(Names.ModItemIds.CAPACITOR_BANK);
+            if(capBank == null)
+                LogHelper.warn("Couldn't get " + Names.ModItemIds.CAPACITOR_BANK + " for Powered Hammer recipe!");
+            else
+            {
+                hammerCraft.addRecipe(new ItemStack(SHItems.hammerPowered), "IBDBI", "IDCDI", "SSSS ", 'I', Items.IRON_INGOT, 'B', Blocks.IRON_BLOCK, 'D', "blockDarkSteel", 'C', new ItemStack(capBank, 1, 1), 'S', "stickWood");
+                otherModLoaded = true;
+            }
+        }
+        if(!otherModLoaded)
+            hammerCraft.addRecipe(new ItemStack(SHItems.hammerPowered), "IBGBI", "IGRGI", "SSSS ", 'I', Items.IRON_INGOT, 'B', Blocks.IRON_BLOCK, 'G', Items.GOLD_INGOT, 'R', Blocks.REDSTONE_BLOCK, 'S', "stickWood");
+
         //Create recipes for all tools which have an ore dictionary ready for the item ingredient
         for(ItemAOE tool : SHItems.AOE_TOOLS)
         {

@@ -1,5 +1,7 @@
 package com.brightspark.sparkshammers;
 
+import com.brightspark.sparkshammers.energy.EnergyContainer;
+import com.brightspark.sparkshammers.energy.ISparkEnergyStorage;
 import com.brightspark.sparkshammers.gui.GuiHandler;
 import com.brightspark.sparkshammers.hammerCrafting.HammerCraftingManager;
 import com.brightspark.sparkshammers.hammerCrafting.HammerShapedOreRecipe;
@@ -16,8 +18,13 @@ import com.brightspark.sparkshammers.util.LogHelper;
 import com.brightspark.sparkshammers.worldgen.WorldGenMjolnirShrine;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
+import net.minecraft.nbt.NBTBase;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.EnumFacing;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.common.capabilities.CapabilityInject;
+import net.minecraftforge.common.capabilities.CapabilityManager;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
@@ -55,6 +62,8 @@ public class SparksHammers
 
     public static DamageSource fallingHammer = new DamageSource("fallingHammer");
     public static BlockEventHandler blockEH = new BlockEventHandler();
+    @CapabilityInject(ISparkEnergyStorage.class)
+    public static Capability<ISparkEnergyStorage> energyCapability;
 
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent event)
@@ -64,6 +73,19 @@ public class SparksHammers
         //Passes suggested configuration file into the init method
         ConfigurationHandler.init(event.getSuggestedConfigurationFile());
         MinecraftForge.EVENT_BUS.register(new ConfigurationHandler());
+
+        //Tool Energy Capability
+        CapabilityManager.INSTANCE.register(ISparkEnergyStorage.class, new Capability.IStorage<ISparkEnergyStorage>()
+        {
+            @Override
+            public NBTBase writeNBT(Capability<ISparkEnergyStorage> capability, ISparkEnergyStorage instance, EnumFacing side)
+            {
+                return null;
+            }
+
+            @Override
+            public void readNBT(Capability<ISparkEnergyStorage> capability, ISparkEnergyStorage instance, EnumFacing side, NBTBase nbt) {}
+        }, EnergyContainer.class);
 
         SHItems.regItems();
         SHBlocks.regBlocks();

@@ -21,6 +21,9 @@ item.hammerGiant.name=Giant Hammer
 item.hammerGiant.8brickdmg.name=8BrickDMG's BFH
 item.hammerNetherstar.name=Nether Star Hammer
 
+item.hammerPowered.name=Powered Hammer
+item.hammerPowered.tooltip=Energy
+
 //Excavator Heads
 item.excavatorHeadWood.name=Wooden Excavator Head
 

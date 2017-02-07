@@ -85,11 +85,13 @@ public class ItemHammerMjolnir extends ItemAOE
     }
 
     @SideOnly(Side.CLIENT)
+    @Override
     public boolean hasEffect(ItemStack stack)
     {
         return true;
     }
 
+    @Override
     public EnumActionResult onItemUse(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ)
     {
         if(player.isSneaking() && getOwner(stack) != null)
@@ -152,6 +154,7 @@ public class ItemHammerMjolnir extends ItemAOE
         return worldIn.rayTraceBlocks(vec3, vec31, useLiquids, !useLiquids, false);
     }
 
+    @Override
     public ActionResult<ItemStack> onItemRightClick(ItemStack stack, World world, EntityPlayer player, EnumHand hand)
     {
         if(getOwner(stack) == null)
@@ -173,6 +176,7 @@ public class ItemHammerMjolnir extends ItemAOE
         return new ActionResult<ItemStack>(EnumActionResult.PASS, stack);
     }
 
+    @Override
     public void onUpdate(ItemStack stack, World worldIn, Entity entityIn, int itemSlot, boolean isSelected)
     {
         if(isOwner(stack, entityIn))
@@ -192,11 +196,13 @@ public class ItemHammerMjolnir extends ItemAOE
         }
     }
 
+    @Override
     public boolean showDurabilityBar(ItemStack stack)
     {
         return getCooldown(stack) > 0;
     }
 
+    @Override
     public double getDurabilityForDisplay(ItemStack stack)
     {
         int cooldown = getCooldown(stack);
@@ -207,12 +213,14 @@ public class ItemHammerMjolnir extends ItemAOE
      * Determine if the player switching between these two item stacks
      * I'm using this to stop the animation happening every time the NBT of the item is different.
      */
+    @Override
     public boolean shouldCauseReequipAnimation(ItemStack oldStack, ItemStack newStack, boolean slotChanged)
     {
         return !ItemStack.areItemStacksEqual(oldStack, newStack) && slotChanged;
     }
 
     @SideOnly(Side.CLIENT)
+    @Override
     public void addInformation(ItemStack stack, EntityPlayer player, List<String> tooltip, boolean advanced)
     {
         String name = getOwnerName(stack);

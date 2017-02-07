@@ -56,8 +56,23 @@ public class Config
     public static boolean mjolnirPickupNeedsDragonAchieve = true;
 
     /*
+     * Powered Tools' Energy
+     */
+    public static int poweredEnergyCapacity = 100000;
+    public static int poweredEnergyUsePerBlock = 100;
+    public static int poweredEnergyInputRate = 10000;
+
+    /*
      * Common mod metals
      */
+
+    //Name, harvest level, durability, mining speed, damage vs entities, enchantability
+    public static double[] materialCopper, materialSilver, materialTin, materialLead, materialNickel, materialPlatinum, materialBronze, materialSteel, materialInvar, materialElectrum, materialAluminium,
+            materialOsmium, materialZinc, materialChrome, materialIridium, materialTitanium, materialTungsten,
+            materialSapphire, materialRuby, materialPeridot,
+            materialManasteel, materialElementium, materialTerrasteel,
+            materialMachalite, materialDragonite, materialGossamite,
+            materialDarksteel;
 
     /**
      * Create and returns the material currently saved as a double array as a tool material.
@@ -105,12 +120,4 @@ public class Config
 
         materialDarksteel = new double[] {5d, 1561d*toolDurabilityModifier, 7d*toolSpeedModifier, 2d, 25d};
     }
-
-    //Name, harvest level, durability, mining speed, damage vs entities, enchantability
-    public static double[] materialCopper, materialSilver, materialTin, materialLead, materialNickel, materialPlatinum, materialBronze, materialSteel, materialInvar, materialElectrum, materialAluminium,
-        materialOsmium, materialZinc, materialChrome, materialIridium, materialTitanium, materialTungsten,
-        materialSapphire, materialRuby, materialPeridot,
-        materialManasteel, materialElementium, materialTerrasteel,
-        materialMachalite, materialDragonite, materialGossamite,
-        materialDarksteel;
 }
