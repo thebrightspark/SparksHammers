@@ -136,8 +136,8 @@ public class Names
 
     public static class Mods
     {
-        public static final String BOTANIA = "botania";
-        public static final String EXTRA_UTILITIES = "extrautils2";
+        public static final String BOTANIA = "Botania";
+        public static final String EXTRA_UTILITIES = "ExtraUtils2";
         public static final String ENDERIO = "enderio";
     }
 

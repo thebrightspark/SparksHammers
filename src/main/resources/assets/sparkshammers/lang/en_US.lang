@@ -51,7 +51,7 @@ item.hammerSteel.name=Steel Hammer
 item.hammerInvar.name=Invar Hammer
 item.hammerElectrum.name=Electrum Hammer
 item.hammerAluminium.name=Aluminium Hammer
-item.hammer_brass.name=Brass Hammer
+item.hammerBrass.name=Brass Hammer
 
 item.hammerOsmium.name=Osmium Hammer
 item.hammerZinc.name=Zinc Hammer
@@ -63,7 +63,7 @@ item.hammerTungsten.name=Tungsten Hammer
 item.hammerSapphire.name=Sapphire Hammer
 item.hammerRuby.name=Ruby Hammer
 item.hammerPeridot.name=Peridot Hammer
-item.hammer_obsidian.name=Obsidian Hammer
+item.hammerObsidian.name=Obsidian Hammer
 
 item.hammerManasteel.name=Manasteel Hammer
 item.hammerTerrasteel.name=Terrasteel Hammer
@@ -133,6 +133,9 @@ achievement.mjolnirFallDeath=Crushed By Unworthyness
 achievement.mjolnirFallDeath.desc=Die from being hit by a falling Mjolnir.
 
 // <<<< Misc Names >>>>
+
+//Debug Tool
+item.debug.name=Super Secret Wand Of Magical Things
 
 //Hammer Crafting Table
 tile.hammerCraft.name=Hammer Crafting Table
