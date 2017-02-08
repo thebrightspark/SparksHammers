@@ -27,6 +27,7 @@ public class Names
         MJOLNIR(EnumHelper.addToolMaterial("HammerMjolnir", Integer.MAX_VALUE, 1, 10f, 10f, 0)),
         //TODO: Add config for Nether Star Hammer attack damage
         NETHERSTAR(EnumHelper.addToolMaterial("HammerNetherStar", 3, 10, 5f, 40.0f, 0).setRepairItem(new ItemStack(net.minecraft.init.Items.NETHER_STAR))),
+        POWERED(EnumHelper.addToolMaterial("HammerPowered", 3, 1500, 4.8f, 6f, 0).setRepairItem(new ItemStack(net.minecraft.init.Blocks.IRON_BLOCK))),
 
         //Common Mod Metals
         COPPER(0xFF976E, "ingotCopper", EnumHelper.addToolMaterial("HammerCopper", 1, 768, 2.4f, 4f, 12)),
@@ -140,5 +141,6 @@ public class Names
     public static class ModItemIds
     {
         public static final String COMPRESSED_COBBLE = Mods.EXTRA_UTILITIES + ":CompressedCobblestone";
+        public static final String CAPACITOR_BANK = Mods.ENDERIO + ":blockCapBank";
     }
 }

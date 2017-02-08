@@ -4,6 +4,7 @@ import com.brightspark.sparkshammers.reference.Names;
 import com.brightspark.sparkshammers.reference.Reference;
 import com.brightspark.sparkshammers.util.CommonUtils;
 import com.brightspark.sparkshammers.util.LogHelper;
+import com.google.common.collect.Lists;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -23,6 +24,7 @@ import java.util.List;
 public class CustomTools
 {
     private static File jsonFile = new File(Reference.CONFIG_DIR, "customTools.json");
+    private static List<String> SPECIAL_TOOLS = Lists.newArrayList("mjolnir", "mini", "giant", "netherstar", "powered");
 
     /**
      * Reads the custom tools' json file and returns them
@@ -64,17 +66,20 @@ public class CustomTools
                 continue;
             }
 
-            Object dependant = getJsonString(toolObj.get("DependantOreDic"), null);
-            if(dependant == null)
+            Object dependant = null;
+            if(!SPECIAL_TOOLS.contains(name))
             {
-                String id = getJsonString(toolObj.get("DependantItemId"), "");
-                int meta = getJsonInt(toolObj.get("DependantItemMeta"), -1);
-                if(!id.equals("") && meta != -1)
-                    dependant = new ItemStack(CommonUtils.getRegisteredItem(id), 1, meta);
-                else
+                if((dependant = getJsonString(toolObj.get("DependantOreDic"), null)) == null)
                 {
-                    LogHelper.warn("No dependant entry for material " + name + " in json file! Material will not be added.");
-                    continue;
+                    String id = getJsonString(toolObj.get("DependantItemId"), "");
+                    int meta = getJsonInt(toolObj.get("DependantItemMeta"), - 1);
+                    if(!id.equals("") && meta != - 1)
+                        dependant = new ItemStack(CommonUtils.getRegisteredItem(id), 1, meta);
+                    else
+                    {
+                        LogHelper.warn("No dependant entry for material " + name + " in json file! Material will not be added.");
+                        continue;
+                    }
                 }
             }
 

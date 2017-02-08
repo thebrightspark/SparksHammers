@@ -10,6 +10,7 @@ public class Config
     public static boolean enableMiniHammer = true;
     public static boolean enableGiantHammer = true;
     public static boolean enableNetherStarHammer = true;
+    public static boolean enablePoweredHammer = true;
 
     /**
      * Modifier for hammers and excavators to adjust durability.
@@ -49,4 +50,11 @@ public class Config
      * Whether Mjolnir needs the player to have the "End." achievement to be 'worthy'.
      */
     public static boolean mjolnirPickupNeedsDragonAchieve = true;
+
+    /*
+     * Powered Tools' Energy
+     */
+    public static int poweredEnergyCapacity = 100000;
+    public static int poweredEnergyUsePerBlock = 100;
+    public static int poweredEnergyInputRate = 10000;
 }

@@ -48,6 +48,12 @@ public class ConfigurationHandler
     private static void loadConfiguration()
     {
         Config.enableOtherModItems = configuration.getBoolean("enableOtherModItems", Categories.GENERAL, true, "Whether to add tools made from other mod materials into the game.");
+        Config.enableMjolnir = configuration.getBoolean("enableMjolnir", Categories.GENERAL, true, "Whether Mjolnir should be enabled (Disabling this will also disable the shrines)");
+        Config.enableMiniHammer = configuration.getBoolean("enableMiniHammer", Categories.GENERAL, true, "Whether the Mini Hammer should be enabled");
+        Config.enableGiantHammer = configuration.getBoolean("enableGiantHammer", Categories.GENERAL, true, "Whether the Giant Hammer should be enabled");
+        Config.enableNetherStarHammer = configuration.getBoolean("enableNetherStarHammer", Categories.GENERAL, true, "Whether the Nether Star Hammer should be enabled");
+        Config.enablePoweredHammer = configuration.getBoolean("enablePoweredHammer", Categories.GENERAL, true, "Whether the Powered Hammer should be enabled");
+
         Config.toolDurabilityModifier = configuration.getFloat("toolDurabilityModifier", Categories.TOOLS, Config.toolDurabilityModifier, Config.toolDurabilityModifierMin, Config.toolDurabilityModifierMax, "Global modifier for hammers and excavators to adjust durability.");
         Config.toolSpeedModifier = configuration.getFloat("toolSpeedModifier", Categories.TOOLS, Config.toolSpeedModifier, Config.toolSpeedModifierMin, Config.toolSpeedModifierMax, "Global modifier for hammers and excavators to adjust mining speed.");
         Config.toolAttackModifier = configuration.getFloat("toolAttackModifier", Categories.TOOLS, Config.toolAttackModifier, Config.toolAttackModifierMin, Config.toolAttackModifierMax, "Global modifier for hammers and excavators to adjust attack damage.");
@@ -69,6 +75,13 @@ public class ConfigurationHandler
          * Mjolnir Hammer
          */
         Config.mjolnirPickupNeedsDragonAchieve = configuration.getBoolean("mjolnirPickupNeedsDragonAchieve", Categories.SPECIFIC_TOOLS, Config.mjolnirPickupNeedsDragonAchieve, "Whether the player needs to have gotten the 'End.' achievement to be able to pickup Mjolnir.");
+
+        /*
+         * Powered Tools' Energy
+         */
+        Config.poweredEnergyCapacity = configuration.getInt("poweredEnergyCapacity", Categories.SPECIFIC_TOOLS, Config.poweredEnergyCapacity, 1, Integer.MAX_VALUE, "The energy capacity of powered tools.");
+        Config.poweredEnergyUsePerBlock = configuration.getInt("poweredEnergyUsePerBlock", Categories.SPECIFIC_TOOLS, Config.poweredEnergyUsePerBlock, 1, Integer.MAX_VALUE, "How much energy powered tools will use per block destroyed (Hitting entities will use x2 this amount).");
+        Config.poweredEnergyInputRate = configuration.getInt("poweredEnergyInputRate", Categories.SPECIFIC_TOOLS, Config.poweredEnergyInputRate, 1, Integer.MAX_VALUE, "The rate at which you can fill the energy of powered tools, in energy per tick.");
 
         if(configuration.hasChanged())
             configuration.save();

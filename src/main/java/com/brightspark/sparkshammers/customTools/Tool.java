@@ -25,6 +25,8 @@ public class Tool
     public Tool(String materialName, ToolMaterial material, int toolColour, Object dependantItem)
     {
         this(materialName, material, toolColour);
+        if(dependantItem == null)
+            return;
         if(dependantItem instanceof String)
             dependantOreDic = (String) dependantItem;
         else if(dependantItem instanceof ItemStack)

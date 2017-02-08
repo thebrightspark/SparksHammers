@@ -5,6 +5,7 @@ import com.brightspark.sparkshammers.customTools.Tool;
 import com.brightspark.sparkshammers.item.*;
 import com.brightspark.sparkshammers.reference.Config;
 import com.brightspark.sparkshammers.reference.Names;
+import com.google.common.collect.Lists;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.color.IItemColor;
 import net.minecraft.item.Item;
@@ -12,10 +13,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class SHItems
 {
@@ -25,12 +23,14 @@ public class SHItems
     public static List<ItemAOE> AOE_TOOLS = new ArrayList<ItemAOE>();
     //Contains all of the items which use a basic coloured texture
     private static List<Item> COLOURED_ITEMS = new ArrayList<Item>();
+    //A list of material names of my tools which aren't made from other modded items
+    private static List<String> VANILLA_NAMES = Lists.newArrayList("wood", "stone", "iron", "gold", "diamond", "mjolnir", "giant", "mini", "netherstar", "powered");
 
     //Tool Heads
     public static ItemResource hammerHeadWood, excavatorHeadWood;
 
     //Special Hammers
-    public static ItemAOE hammerMjolnir, hammerMini, hammerGiant, hammerNetherStar;
+    public static ItemAOE hammerMjolnir, hammerMini, hammerGiant, hammerNetherStar, hammerPowered;
 
     //Debug
     public static ItemDebug debug;
@@ -59,7 +59,7 @@ public class SHItems
         String name = tool.materialName;
 
         //Don't register if tool is made from other mod materials and respective config is disabled
-        if(!Config.enableOtherModItems && !name.equals("wood") && !name.equals("stone") && !name.equals("iron") && !name.equals("gold") && !name.equals("diamond") && !name.equals("giant") && !name.equals("mini") && !name.equals("mjolnir") && !name.equals("netherstar"))
+        if(!Config.enableOtherModItems && !VANILLA_NAMES.contains(name))
             return;
 
         if(name.equals("wood"))
@@ -88,6 +88,11 @@ public class SHItems
         {
             if(Config.enableNetherStarHammer)
                 regItem(hammerNetherStar = new ItemHammerNetherStar(tool));
+        }
+        else if(name.equals("powered"))
+        {
+            if(Config.enablePoweredHammer)
+                regItem(hammerPowered = new ItemHammerEnergy(tool));
         }
         //TODO: Re-add Botania tools when the mod gets updated!
         /*

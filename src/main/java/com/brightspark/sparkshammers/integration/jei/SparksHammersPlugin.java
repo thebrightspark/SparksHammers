@@ -15,7 +15,6 @@ import mezz.jei.api.IJeiHelpers;
 import mezz.jei.api.IModRegistry;
 import mezz.jei.api.JEIPlugin;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.ItemTool;
 
 import javax.annotation.Nonnull;
 
@@ -38,11 +37,14 @@ public class SparksHammersPlugin extends BlankModPlugin
         registry.addRecipeCategoryCraftingItem(new ItemStack(SHBlocks.blockHammerCraft), Reference.JEI.HAMMER_CRAFTING_UID);
 
         //Hide tools from JEI if you can't make them!
+        int count = 0;
         for(ItemAOE tool : SHItems.AOE_TOOLS)
             if(tool.getDependantOreDic() != null && !LoaderHelper.doesOreExist(tool.getDependantOreDic()))
             {
-                LogHelper.info("Hiding tool " + tool.getRegistryName() + " from JEI with dependant ore dic " + tool.getDependantOreDic() + ".");
                 jeiHelper.getItemBlacklist().addItemToBlacklist(new ItemStack(tool));
+                count++;
             }
+        if(count > 0)
+            LogHelper.info("Hidden " + count + " tools from JEI due to missing ingredients");
     }
 }

@@ -1,0 +1,6 @@
+{
+	"parent": "sparkshammers:item/item_tool_default",
+	"textures": {
+		"layer0": "SparksHammers:items/hammer_mjolnir"
+	}
+}
