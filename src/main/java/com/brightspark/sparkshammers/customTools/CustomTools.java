@@ -13,6 +13,7 @@ import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.util.EnumHelper;
+import net.minecraftforge.oredict.OreDictionary;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -72,8 +73,8 @@ public class CustomTools
                 if((dependant = getJsonString(toolObj.get("DependantOreDic"), null)) == null)
                 {
                     String id = getJsonString(toolObj.get("DependantItemId"), "");
-                    int meta = getJsonInt(toolObj.get("DependantItemMeta"), - 1);
-                    if(!id.equals("") && meta != - 1)
+                    int meta = getJsonInt(toolObj.get("DependantItemMeta"), OreDictionary.WILDCARD_VALUE);
+                    if(!id.equals(""))
                         dependant = new ItemStack(CommonUtils.getRegisteredItem(id), 1, meta);
                     else
                     {
