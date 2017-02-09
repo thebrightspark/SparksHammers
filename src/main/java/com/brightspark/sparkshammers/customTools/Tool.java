@@ -9,22 +9,23 @@ import net.minecraft.item.ItemStack;
  */
 public class Tool
 {
-    public String materialName;
+    public String name, localName;
     public ToolMaterial material;
     public int toolColour;
     public String dependantOreDic;
     public ItemStack dependantStack;
 
-    private Tool(String materialName, ToolMaterial material, int toolColour)
+    private Tool(String name, ToolMaterial material, int toolColour)
     {
-        this.materialName = materialName;
+        localName = name;
+        this.name = name.toLowerCase().replaceAll("\\s", "");
         this.material = material;
         this.toolColour = toolColour;
     }
 
-    public Tool(String materialName, ToolMaterial material, int toolColour, Object dependantItem)
+    public Tool(String name, ToolMaterial material, int toolColour, Object dependantItem)
     {
-        this(materialName, material, toolColour);
+        this(name, material, toolColour);
         if(dependantItem == null)
             return;
         if(dependantItem instanceof String)
@@ -37,7 +38,7 @@ public class Tool
 
     public Tool(Names.EnumMaterials enumMaterial)
     {
-        this(enumMaterial.toString().toLowerCase(), enumMaterial.material, enumMaterial.colour);
+        this(enumMaterial.getMaterialName(), enumMaterial.material, enumMaterial.colour);
         if(enumMaterial.dependantOreDic != null)
             dependantOreDic = enumMaterial.dependantOreDic;
         else if(enumMaterial.dependantItem != null)
@@ -46,6 +47,6 @@ public class Tool
 
     public String getToolName(boolean isExcavator)
     {
-        return (isExcavator ? Names.Items.EXCAVATOR : Names.Items.HAMMER) + "_" + materialName.toLowerCase();
+        return (isExcavator ? Names.Items.EXCAVATOR : Names.Items.HAMMER) + "_" + name;
     }
 }

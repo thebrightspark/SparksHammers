@@ -56,7 +56,7 @@ public class SHItems
 
     public static void regTool(Tool tool)
     {
-        String name = tool.materialName;
+        String name = tool.name;
 
         //Don't register if tool is made from other mod materials and respective config is disabled
         if(!Config.enableOtherModItems && !VANILLA_NAMES.contains(name))

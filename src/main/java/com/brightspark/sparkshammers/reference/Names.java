@@ -1,5 +1,6 @@
 package com.brightspark.sparkshammers.reference;
 
+import com.brightspark.sparkshammers.util.CommonUtils;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.util.EnumHelper;
@@ -26,7 +27,7 @@ public class Names
         MINI(EnumHelper.addToolMaterial("HammerMini", 2, 750, 3.6f, 3.5f, 14).setRepairItem(new ItemStack(net.minecraft.init.Items.IRON_INGOT))),
         MJOLNIR(EnumHelper.addToolMaterial("HammerMjolnir", Integer.MAX_VALUE, 1, 10f, 10f, 0)),
         //TODO: Add config for Nether Star Hammer attack damage
-        NETHERSTAR(EnumHelper.addToolMaterial("HammerNetherStar", 3, 10, 5f, 40.0f, 0).setRepairItem(new ItemStack(net.minecraft.init.Items.NETHER_STAR))),
+        NETHER_STAR(EnumHelper.addToolMaterial("HammerNetherStar", 3, 10, 5f, 40.0f, 0).setRepairItem(new ItemStack(net.minecraft.init.Items.NETHER_STAR))),
         POWERED(EnumHelper.addToolMaterial("HammerPowered", 3, 1500, 4.8f, 6f, 0).setRepairItem(new ItemStack(net.minecraft.init.Blocks.IRON_BLOCK))),
 
         //Common Mod Metals
@@ -107,9 +108,14 @@ public class Names
             this.dependantItem = dependantItem;
         }
 
+        public String getMaterialName()
+        {
+            return CommonUtils.capitaliseAllFirstLetters(toString().toLowerCase().replaceAll("_", " "));
+        }
+
         public String unlocToolName(boolean isExcavator)
         {
-            return (isExcavator ? Items.EXCAVATOR : Items.HAMMER) + "_" + toString().toLowerCase();
+            return (isExcavator ? Items.EXCAVATOR : Items.HAMMER) + "_" + toString().toLowerCase().replaceAll("_", "");
         }
     }
 

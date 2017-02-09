@@ -38,6 +38,24 @@ public class CommonUtils
         return Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_RSHIFT);
     }
 
+    /**
+     * Capitalises the first letter of every word in the string
+     */
+    public static String capitaliseAllFirstLetters(String text)
+    {
+        String[] textArray = text.split("\\s");
+        String output = "";
+        for(String t : textArray)
+        {
+            String space = output.equals("") ? "" : " ";
+            output += space + capitaliseFirstLetter(t);
+        }
+        return output;
+    }
+
+    /**
+     * Capitalises the first letter of the string
+     */
     public static String capitaliseFirstLetter(String text)
     {
         if(text == null || text.length() <= 0)

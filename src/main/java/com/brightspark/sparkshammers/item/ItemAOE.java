@@ -40,8 +40,9 @@ public class ItemAOE extends ItemTool implements IColourable
     private boolean infiniteUse;
     private boolean shiftRotating = false;
 
-    private String dependantOreDic = null;
-    private ItemStack dependantStack = null;
+    private String dependantOreDic;
+    private ItemStack dependantStack;
+    private String localName;
 
     protected static final String KEY_CUSTOM_NAME = "customName";
     protected static final String KEY_CUSTOM_FORMATTING = "customFormatting";
@@ -73,6 +74,7 @@ public class ItemAOE extends ItemTool implements IColourable
     public ItemAOE(Tool tool, boolean isExcavator)
     {
         this(tool.getToolName(isExcavator), tool.material, isExcavator, false);
+        localName = tool.localName;
         textureColour = tool.toolColour;
         dependantOreDic = tool.dependantOreDic;
         dependantStack = tool.dependantStack;
@@ -112,12 +114,17 @@ public class ItemAOE extends ItemTool implements IColourable
         return customName.equals("") ? super.getUnlocalizedName(stack) : getUnlocalizedName() + "." + customName;
     }
 
+    protected String getLocalName(ItemStack stack)
+    {
+        return localName != null ? localName + " " + CommonUtils.capitaliseFirstLetter(isExcavator ? Names.Items.EXCAVATOR : Names.Items.HAMMER) : super.getItemStackDisplayName(stack);
+    }
+
     @Override
     public String getItemStackDisplayName(ItemStack stack)
     {
         //Get custom colour formatting if there's one in the NBT
         String customFormatting = NBTHelper.getString(stack, KEY_CUSTOM_FORMATTING);
-        return customFormatting.equals("") ? super.getItemStackDisplayName(stack) : customFormatting + super.getItemStackDisplayName(stack);
+        return customFormatting.equals("") ? getLocalName(stack) : customFormatting + getLocalName(stack);
     }
 
     /**

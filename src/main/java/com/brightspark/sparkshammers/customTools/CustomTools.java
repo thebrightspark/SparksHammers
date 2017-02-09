@@ -67,7 +67,7 @@ public class CustomTools
             }
 
             Object dependant = null;
-            if(!SPECIAL_TOOLS.contains(name))
+            if(!SPECIAL_TOOLS.contains(name.toLowerCase().replaceAll("\\s", "")))
             {
                 if((dependant = getJsonString(toolObj.get("DependantOreDic"), null)) == null)
                 {
@@ -138,7 +138,7 @@ public class CustomTools
             for(Tool tool : tools)
             {
                 writer.beginObject();
-                writer.name("MaterialName").value(tool.materialName);
+                writer.name("MaterialName").value(tool.localName);
                 writer.name("HarvestLevel").value(tool.material.getHarvestLevel());
                 writer.name("Durability").value(tool.material.getMaxUses());
                 writer.name("Efficiency").value(tool.material.getEfficiencyOnProperMaterial());
@@ -157,7 +157,7 @@ public class CustomTools
                         writer.name("DependantItemMeta").value(tool.dependantStack.getMetadata());
                     }
                     else
-                        LogHelper.warn("Id not found for stack " + tool.dependantStack.toString() + "! Dependant item not being saved for material " + tool.materialName);
+                        LogHelper.warn("Id not found for stack " + tool.dependantStack.toString() + "! Dependant item not being saved for material " + tool.name);
                 }
                 writer.endObject();
             }
