@@ -1,8 +1,7 @@
 package com.brightspark.sparkshammers.init;
 
+import com.brightspark.sparkshammers.customTools.Tool;
 import com.brightspark.sparkshammers.item.ItemHammerMana;
-import com.brightspark.sparkshammers.reference.Names.EnumMaterials;
-import com.brightspark.sparkshammers.util.LogHelper;
 
 /**
 * @author CreeperShift
@@ -19,24 +18,9 @@ import com.brightspark.sparkshammers.util.LogHelper;
 
 public class SHItemsBotania
 {
-    public static void regItems(EnumMaterials mat)
+    public static void regItem(Tool tool)
     {
-        switch(mat)
-        {
-            case MANASTEEL:
-                SHItems.regAOE(new ItemHammerMana(mat));
-                SHItems.regAOE(new ItemHammerMana(mat, true));
-                break;
-            case TERRASTEEL:
-                SHItems.regAOE(new ItemHammerMana(mat));
-                SHItems.regAOE(new ItemHammerMana(mat, true));
-                break;
-            case ELEMENTIUM:
-                SHItems.regAOE(new ItemHammerMana(mat));
-                SHItems.regAOE(new ItemHammerMana(mat, true));
-                break;
-            default:
-                LogHelper.warn("Botania registration was passed material " + mat + " (This shouldn't happen)");
-        }
+        SHItems.regItem(new ItemHammerMana(tool, false));
+        SHItems.regItem(new ItemHammerMana(tool, true));
     }
 }

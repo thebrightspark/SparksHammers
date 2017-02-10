@@ -5,9 +5,11 @@ import com.brightspark.sparkshammers.init.SHAchievements;
 import com.brightspark.sparkshammers.item.ItemHammerMjolnir;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.event.entity.player.PlayerDropsEvent;
+import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent;
 
+@Mod.EventBusSubscriber
 public class AchieveEventHandler
 {
     @SubscribeEvent

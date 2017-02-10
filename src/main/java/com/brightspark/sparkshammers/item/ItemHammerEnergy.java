@@ -1,10 +1,10 @@
 package com.brightspark.sparkshammers.item;
 
 import com.brightspark.sparkshammers.SparksHammers;
+import com.brightspark.sparkshammers.customTools.Tool;
 import com.brightspark.sparkshammers.energy.EnergyContainer;
 import com.brightspark.sparkshammers.energy.EnergyContainerProvider;
 import com.brightspark.sparkshammers.reference.Config;
-import com.brightspark.sparkshammers.reference.Names;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.creativetab.CreativeTabs;
@@ -22,14 +22,9 @@ import java.util.List;
 
 public class ItemHammerEnergy extends ItemAOE
 {
-    public ItemHammerEnergy()
+    public ItemHammerEnergy(Tool tool, boolean isExcavator)
     {
-        super(Names.EnumMaterials.POWERED);
-    }
-
-    public ItemHammerEnergy(boolean isExcavator)
-    {
-        super(Names.EnumMaterials.POWERED, isExcavator);
+        super(tool, isExcavator);
     }
 
     @SideOnly(Side.CLIENT)

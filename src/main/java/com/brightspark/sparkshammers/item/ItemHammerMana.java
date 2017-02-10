@@ -1,6 +1,6 @@
 package com.brightspark.sparkshammers.item;
 
-import com.brightspark.sparkshammers.reference.Names.EnumMaterials;
+import com.brightspark.sparkshammers.customTools.Tool;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -22,14 +22,9 @@ public class ItemHammerMana extends ItemAOE implements IManaUsingItem
 											// Terrasteel 1 Damage --> Mana
 											// ratio
 
-	public ItemHammerMana(EnumMaterials manasteel)
+	public ItemHammerMana(Tool tool, boolean isExcavator)
     {
-		super(manasteel);
-	}
-
-	public ItemHammerMana(EnumMaterials manasteel, boolean isExcavator)
-    {
-		super(manasteel, isExcavator);
+		super(tool, isExcavator);
 	}
 
 	/**

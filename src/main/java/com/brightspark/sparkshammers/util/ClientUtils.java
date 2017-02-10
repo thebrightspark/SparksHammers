@@ -33,7 +33,7 @@ public class ClientUtils
     {
         String itemName = item.getRegistryName().getResourceDomain() + ":" + (item.isExcavator ? "excavator" : "hammer");
         if(item == SHItems.hammerGiant)
-            itemName += "_giant";
+            itemName += "Giant";
         ModelLoader.setCustomModelResourceLocation(item, 0, new ModelResourceLocation(itemName, "inventory"));
     }
 }

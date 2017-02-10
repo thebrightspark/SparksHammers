@@ -2,24 +2,28 @@ package com.brightspark.sparkshammers.init;
 
 import com.brightspark.sparkshammers.block.BlockHammer;
 import com.brightspark.sparkshammers.block.BlockHammerCraft;
-import com.brightspark.sparkshammers.util.ClientUtils;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.common.registry.GameRegistry;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class SHBlocks
 {
+    public static Map<String, Block> BLOCKS = new HashMap<String, Block>();
+    public static Map<String, ItemBlock> ITEM_BLOCKS = new HashMap<String, ItemBlock>();
+
     public static BlockHammer blockHammer = new BlockHammer();
     public static BlockHammerCraft blockHammerCraft = new BlockHammerCraft();
 
     public static void regBlock(Block block)
     {
-        GameRegistry.register(block);
-        GameRegistry.register(new ItemBlock(block)
+        BLOCKS.put(block.getRegistryName().getResourcePath(), block);
+        ITEM_BLOCKS.put(block.getRegistryName().getResourcePath(), (ItemBlock) new ItemBlock(block)
         {
             @Override
             public void onCreated(ItemStack stack, World worldIn, EntityPlayer player)
@@ -35,15 +39,10 @@ public class SHBlocks
 
     public static void regBlocks()
     {
-        //Register blocks here
+        //Only register once
+        if(!BLOCKS.isEmpty()) return;
+
         regBlock(blockHammer);
         regBlock(blockHammerCraft);
-    }
-
-    public static void regModels()
-    {
-        //Blocks
-        ClientUtils.regModel(SHBlocks.blockHammer);
-        ClientUtils.regModel(SHBlocks.blockHammerCraft);
     }
 }

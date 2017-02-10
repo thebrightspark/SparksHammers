@@ -1,21 +1,24 @@
 package com.brightspark.sparkshammers.reference;
 
+import net.minecraftforge.fml.common.Loader;
+
+import java.io.File;
 import java.util.UUID;
 
 public class Reference
 {
-    //TODO: In 1.11, change this to "sparkshammers"
     public static final String MOD_ID = "SparksHammers";
     public static final String MOD_NAME = "Spark's Hammers";
     public static final String VERSION = "1.10.2-1.4.4";
     public static final String DEPENDENCIES =
-            //"after:EnderIO;" +
+            "after:EnderIO;" +
             "after:Botania;" +
             "after:MobHunter;" +
             "after:JEI";
 
     public static final String ITEM_TEXTURE_DIR = MOD_ID + ":";
     public static final String GUI_TEXTURE_DIR = "textures/gui/";
+    public static final File CONFIG_DIR = new File(Loader.instance().getConfigDir(), MOD_ID);
 
     public static class JEI
     {

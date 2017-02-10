@@ -2,6 +2,7 @@ package com.brightspark.sparkshammers.init;
 
 import com.brightspark.sparkshammers.hammerCrafting.HammerCraftingManager;
 import com.brightspark.sparkshammers.item.ItemAOE;
+import com.brightspark.sparkshammers.reference.Config;
 import com.brightspark.sparkshammers.reference.Names;
 import com.brightspark.sparkshammers.util.CommonUtils;
 import com.brightspark.sparkshammers.util.LoaderHelper;
@@ -19,15 +20,27 @@ public class SHRecipes
     public static void init()
     {
         //Hammer Crafting Table
-        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(SHBlocks.blockHammerCraft), "scs", "chc", "scs", 's', "stone", 'c', Blocks.CRAFTING_TABLE, 'h', new ItemStack(SHItems.getItemById("hammerWood"), 1, OreDictionary.WILDCARD_VALUE)));
+        Item hammerWood = SHItems.getItemById("hammerWood");
+        ItemStack centerItem;
+        if(hammerWood == null)
+            centerItem = new ItemStack(SHItems.hammerHeadWood);
+        else
+            centerItem = new ItemStack(hammerWood, 1, OreDictionary.WILDCARD_VALUE);
+        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(SHBlocks.blockHammerCraft), "scs", "chc", "scs", 's', "stone", 'c', Blocks.CRAFTING_TABLE, 'h', centerItem));
 
         //Wooden Hammer
-        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(SHItems.hammerHeadWood), "xxx", "xxx", "   ", 'x', "logWood"));
-        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(SHItems.getItemById("hammerWood")), " x ", " s ", " s ", 'x', SHItems.hammerHeadWood, 's', "plankWood"));
+        if(SHItems.getItemById("hammerWood") != null)
+        {
+            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(SHItems.hammerHeadWood), "xxx", "xxx", "   ", 'x', "logWood"));
+            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(SHItems.getItemById("hammerWood")), " x ", " s ", " s ", 'x', SHItems.hammerHeadWood, 's', "plankWood"));
+        }
 
         //Wooden Excavator
-        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(SHItems.excavatorHeadWood), " x ", "xxx", "   ", 'x', "logWood"));
-        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(SHItems.getItemById("excavatorWood")), " x ", " s ", " s ", 'x', SHItems.excavatorHeadWood, 's', "plankWood"));
+        if(SHItems.excavatorHeadWood != null)
+        {
+            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(SHItems.excavatorHeadWood), " x ", "xxx", "   ", 'x', "logWood"));
+            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(SHItems.getItemById("excavatorWood")), " x ", " s ", " s ", 'x', SHItems.excavatorHeadWood, 's', "plankWood"));
+        }
 
         /*
          * Hammer Crafting Table Recipes
@@ -35,25 +48,29 @@ public class SHRecipes
 
         HammerCraftingManager hammerCraft = HammerCraftingManager.getInstance();
 
-        hammerCraft.addRecipe(new ItemStack(SHItems.hammerMini), " HHH ", " HHH ", "SSSS ", 'H', Items.IRON_INGOT, 'S', "stickWood");
-        hammerCraft.addRecipe(new ItemStack(SHItems.hammerGiant), "HHHHH", "HHDHH", "SSSS ", 'H', Blocks.IRON_BLOCK, 'S', "stickWood", 'D', new ItemStack(Items.DYE, 1, 5));
-        hammerCraft.addRecipe(new ItemStack(SHItems.hammerNetherStar), "HHBHH", "HBNBH", "SSSS ", 'H', Items.DIAMOND, 'B', Blocks.GOLD_BLOCK, 'N', Items.NETHER_STAR, 'S', "stickWood");
-
-        //Powered Hammer
-        boolean otherModLoaded = false;
-        if(LoaderHelper.isModLoaded(Names.Mods.ENDERIO))
+        if(Config.enableMiniHammer)
+            hammerCraft.addRecipe(new ItemStack(SHItems.hammerMini), " HHH ", " HHH ", "SSSS ", 'H', Items.IRON_INGOT, 'S', "stickWood");
+        if(Config.enableGiantHammer)
+            hammerCraft.addRecipe(new ItemStack(SHItems.hammerGiant), "HHHHH", "HHDHH", "SSSS ", 'H', Blocks.IRON_BLOCK, 'S', "stickWood", 'D', new ItemStack(Items.DYE, 1, 5));
+        if(Config.enableNetherStarHammer)
+            hammerCraft.addRecipe(new ItemStack(SHItems.hammerNetherStar), "HHBHH", "HBNBH", "SSSS ", 'H', Items.DIAMOND, 'B', Blocks.GOLD_BLOCK, 'N', Items.NETHER_STAR, 'S', "stickWood");
+        if(Config.enablePoweredHammer)
         {
-            Item capBank = Item.getByNameOrId(Names.ModItemIds.CAPACITOR_BANK);
-            if(capBank == null)
-                LogHelper.warn("Couldn't get " + Names.ModItemIds.CAPACITOR_BANK + " for Powered Hammer recipe!");
-            else
+            boolean enderioRecipeAdded = false;
+            if(LoaderHelper.isModLoaded(Names.Mods.ENDERIO))
             {
-                hammerCraft.addRecipe(new ItemStack(SHItems.hammerPowered), "IBDBI", "IDCDI", "SSSS ", 'I', Items.IRON_INGOT, 'B', Blocks.IRON_BLOCK, 'D', "blockDarkSteel", 'C', new ItemStack(capBank, 1, 1), 'S', "stickWood");
-                otherModLoaded = true;
+                Item capBank = Item.getByNameOrId(Names.ModItemIds.CAPACITOR_BANK);
+                if(capBank == null)
+                    LogHelper.warn("Couldn't get " + Names.ModItemIds.CAPACITOR_BANK + " for Powered Hammer recipe! Resorting to normal recipe. Please report this to mod author!");
+                else
+                {
+                    hammerCraft.addRecipe(new ItemStack(SHItems.hammerPowered), "IBDBI", "IDCDI", "SSSS ", 'I', Items.IRON_INGOT, 'B', Blocks.IRON_BLOCK, 'D', "blockDarkSteel", 'C', new ItemStack(capBank, 1, 1), 'S', "stickWood");
+                    enderioRecipeAdded = true;
+                }
             }
+            if(!enderioRecipeAdded)
+                hammerCraft.addRecipe(new ItemStack(SHItems.hammerPowered), "IBGBI", "IGRGI", "SSSS ", 'I', Items.IRON_INGOT, 'B', Blocks.IRON_BLOCK, 'G', Items.GOLD_INGOT, 'R', Blocks.REDSTONE_BLOCK, 'S', "stickWood");
         }
-        if(!otherModLoaded)
-            hammerCraft.addRecipe(new ItemStack(SHItems.hammerPowered), "IBGBI", "IGRGI", "SSSS ", 'I', Items.IRON_INGOT, 'B', Blocks.IRON_BLOCK, 'G', Items.GOLD_INGOT, 'R', Blocks.REDSTONE_BLOCK, 'S', "stickWood");
 
         //Create recipes for all tools which have an ore dictionary ready for the item ingredient
         for(ItemAOE tool : SHItems.AOE_TOOLS)
@@ -61,7 +78,7 @@ public class SHRecipes
             String oreDic = tool.getDependantOreDic();
             if(oreDic == null)
             {
-                LogHelper.warn("No dependant ore dictionary entry for tool " + tool.getRegistryName().getResourcePath());
+                //LogHelper.warn("No dependant ore dictionary entry for tool " + tool.getRegistryName().getResourcePath());
                 continue;
             }
             String topRow = tool.isExcavator ? " HHH " : "HHHHH";

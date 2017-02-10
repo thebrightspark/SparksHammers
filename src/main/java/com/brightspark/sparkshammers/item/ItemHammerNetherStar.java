@@ -1,9 +1,8 @@
 package com.brightspark.sparkshammers.item;
 
-import com.brightspark.sparkshammers.reference.Names;
+import com.brightspark.sparkshammers.customTools.Tool;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -12,9 +11,9 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ItemHammerNetherStar extends ItemAOE
 {
-    public ItemHammerNetherStar()
+    public ItemHammerNetherStar(Tool tool)
     {
-        super(Names.EnumMaterials.NETHERSTAR);
+        super(tool, false);
     }
 
     @SideOnly(Side.CLIENT)

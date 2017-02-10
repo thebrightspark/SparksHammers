@@ -1,8 +1,10 @@
 package com.brightspark.sparkshammers.item;
 
+import com.brightspark.sparkshammers.customTools.Tool;
 import com.brightspark.sparkshammers.init.SHBlocks;
 import com.brightspark.sparkshammers.reference.Names;
 import com.brightspark.sparkshammers.tileentity.TileHammer;
+import com.brightspark.sparkshammers.util.CommonUtils;
 import com.brightspark.sparkshammers.util.NBTHelper;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockSnow;
@@ -32,9 +34,16 @@ public class ItemHammerMjolnir extends ItemAOE
 {
     private static int cooldownMax = 200; //10 secs
 
-    public ItemHammerMjolnir()
+    public ItemHammerMjolnir(Tool tool)
     {
-        super(Names.EnumMaterials.MJOLNIR, false, true);
+        super(tool, false);
+        setInfinite(true);
+    }
+
+    @Override
+    protected String getLocalName(ItemStack stack)
+    {
+        return localName != null ? localName : super.getItemStackDisplayName(stack);
     }
 
     /**

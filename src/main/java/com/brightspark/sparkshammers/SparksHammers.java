@@ -33,6 +33,7 @@ import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 
+import java.io.File;
 import java.util.List;
 
 @Mod(modid=Reference.MOD_ID, name=Reference.MOD_NAME, version=Reference.VERSION, dependencies=Reference.DEPENDENCIES)
@@ -70,9 +71,11 @@ public class SparksHammers
     {
         //Initialize item, blocks, textures/models and configs here
 
-        //Passes suggested configuration file into the init method
-        ConfigurationHandler.init(event.getSuggestedConfigurationFile());
-        MinecraftForge.EVENT_BUS.register(new ConfigurationHandler());
+        //TODO: Remove in a few versions (added 1.11.2-1.5)
+        if(event.getSuggestedConfigurationFile().exists() && event.getSuggestedConfigurationFile().delete())
+            LogHelper.info("Removed old config file from main config directory. Configs are now being saved in config/" + Reference.MOD_ID + "/");
+
+        ConfigurationHandler.init(new File(Reference.CONFIG_DIR, "config.cfg"));
 
         //Tool Energy Capability
         CapabilityManager.INSTANCE.register(ISparkEnergyStorage.class, new Capability.IStorage<ISparkEnergyStorage>()
@@ -86,16 +89,6 @@ public class SparksHammers
             @Override
             public void readNBT(Capability<ISparkEnergyStorage> capability, ISparkEnergyStorage instance, EnumFacing side, NBTBase nbt) {}
         }, EnergyContainer.class);
-
-        SHItems.regItems();
-        SHBlocks.regBlocks();
-
-        //Registers all of the item and block textures
-        if(event.getSide() == Side.CLIENT)
-        {
-            SHItems.regModels();
-            SHBlocks.regModels();
-        }
     }
 
     @Mod.EventHandler
@@ -113,13 +106,11 @@ public class SparksHammers
 
         NetworkRegistry.INSTANCE.registerGuiHandler(this, new GuiHandler());
         MinecraftForge.EVENT_BUS.register(blockEH); //Block Event Handler for the Nether Star Hammer
-        MinecraftForge.EVENT_BUS.register(new AchieveEventHandler()); //Event handlers for Achievements
-        MinecraftForge.EVENT_BUS.register(new LootEventHandler()); //Event handler to add loot to chests
 
         SHAchievements.init(); //Adds achievements
 
         //Register world generation for Mjolnir Shrine
-        if(Config.shouldGenerateMjolnirShrines)
+        if(Config.shouldGenerateMjolnirShrines && Config.enableMjolnir)
             GameRegistry.registerWorldGenerator(new WorldGenMjolnirShrine(), 10);
     }
 
