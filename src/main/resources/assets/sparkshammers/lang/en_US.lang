@@ -4,116 +4,17 @@
 item.hammer_head_wood.name=Wooden Hammer Head
 
 //Hammers
-item.hammer_wood.name=Wooden Hammer
-item.hammer_stone.name=Stone Hammer
-item.hammer_iron.name=Iron Hammer
-item.hammer_gold.name=Gold Hammer
-item.hammer_diamond.name=Diamond Hammer
-
-item.hammer_mjolnir.name=Mjolnir
 item.hammer_mjolnir.tooltip=Owner:
 item.hammer_mjolnir.chat.wrongPlayer.1=You are not worthy to wield me!
 item.hammer_mjolnir.chat.wrongPlayer.2=is my true Master!
 item.hammer_mjolnir.chat.noAchieve=You must prove you're worthy before you can wield me!
 
-item.hammer_mini.name=Mini Hammer
-item.hammer_giant.name=Giant Hammer
 item.hammer_giant.8brickdmg.name=8BrickDMG's BFH
-item.hammer_netherstar.name=Nether Star Hammer
 
-item.hammer_powered.name=Powered Hammer
 item.hammer_powered.tooltip=Energy
 
 //Excavator Heads
 item.excavator_head_wood.name=Wooden Excavator Head
-
-//Excavators
-item.excavator_wood.name=Wooden Excavator
-item.excavator_stone.name=Stone Excavator
-item.excavator_iron.name=Iron Excavator
-item.excavator_gold.name=Gold Excavator
-item.excavator_diamond.name=Diamond Excavator
-
-// <<<< Mod Material Made Tools >>>>
-
-//Hammer Heads
-item.hammer_head_unstable.name=Unstable Hammer Head
-
-//Hammers
-item.hammer_copper.name=Copper Hammer
-item.hammer_silver.name=Silver Hammer
-item.hammer_tin.name=Tin Hammer
-item.hammer_lead.name=Lead Hammer
-item.hammer_nickel.name=Nickel Hammer
-item.hammer_platinum.name=Platinum Hammer
-item.hammer_bronze.name=Bronze Hammer
-item.hammer_steel.name=Steel Hammer
-item.hammer_invar.name=Invar Hammer
-item.hammer_electrum.name=Electrum Hammer
-item.hammer_aluminium.name=Aluminium Hammer
-item.hammer_brass.name=Brass Hammer
-
-item.hammer_osmium.name=Osmium Hammer
-item.hammer_zinc.name=Zinc Hammer
-item.hammer_chrome.name=Chrome Hammer
-item.hammer_iridium.name=Iridium Hammer
-item.hammer_titanium.name=Titanium Hammer
-item.hammer_tungsten.name=Tungsten Hammer
-
-item.hammer_sapphire.name=Sapphire Hammer
-item.hammer_ruby.name=Ruby Hammer
-item.hammer_peridot.name=Peridot Hammer
-item.hammer_obsidian.name=Obsidian Hammer
-
-item.hammer_manasteel.name=Manasteel Hammer
-item.hammer_terrasteel.name=Terrasteel Hammer
-item.hammer_elementium.name=Elementium Hammer
-
-item.hammer_unstable.name=Unstable Hammer
-
-item.hammer_darksteel.name=Dark Steel Hammer
-
-item.hammer_machalite.name=Machalite Hammer
-item.hammer_dragonite.name=Dragonite Hammer
-item.hammer_gossamite.name=Gossamite Hammer
-
-//Excavators
-item.excavator_copper.name=Copper Excavator
-item.excavator_silver.name=Silver Excavator
-item.excavator_tin.name=Tin Excavator
-item.excavator_lead.name=Lead Excavator
-item.excavator_nickel.name=Nickel Excavator
-item.excavator_platinum.name=Platinum Excavator
-item.excavator_bronze.name=Bronze Excavator
-item.excavator_steel.name=Steel Excavator
-item.excavator_invar.name=Invar Excavator
-item.excavator_electrum.name=Electrum Excavator
-item.excavator_aluminium.name=Aluminium Excavator
-item.excavator_brass.name=Brass Excavator
-
-item.excavator_osmium.name=Osmium Excavator
-item.excavator_zinc.name=Zinc Excavator
-item.excavator_chrome.name=Chrome Excavator
-item.excavator_iridium.name=Iridium Excavator
-item.excavator_titanium.name=Titanium Excavator
-item.excavator_tungsten.name=Tungsten Excavator
-
-item.excavator_sapphire.name=Sapphire Excavator
-item.excavator_ruby.name=Ruby Excavator
-item.excavator_peridot.name=Peridot Excavator
-item.excavator_obsidian.name=Obsidian Excavator
-
-item.excavator_manasteel.name=Manasteel Excavator
-item.excavator_terrasteel.name=Terrasteel Excavator
-item.excavator_elementium.name=Elementium Excavator
-
-item.excavator_unstable.name=Unstable Excavator
-
-item.excavator_darksteel.name=Dark Steel Excavator
-
-item.excavator_machalite.name=Machalite Excavator
-item.excavator_dragonite.name=Dragonite Excavator
-item.excavator_gossamite.name=Gossamite Excavator
 
 // <<<< Achievements >>>>
 
