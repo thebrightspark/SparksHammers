@@ -42,7 +42,7 @@ public class ItemAOE extends ItemTool implements IColourable
 
     private String dependantOreDic;
     private ItemStack dependantStack;
-    private String localName;
+    protected String localName;
 
     protected static final String KEY_CUSTOM_NAME = "customName";
     protected static final String KEY_CUSTOM_FORMATTING = "customFormatting";

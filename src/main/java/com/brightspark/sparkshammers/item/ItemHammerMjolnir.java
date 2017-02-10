@@ -38,6 +38,12 @@ public class ItemHammerMjolnir extends ItemAOE
         setInfinite(true);
     }
 
+    @Override
+    protected String getLocalName(ItemStack stack)
+    {
+        return localName != null ? localName : super.getItemStackDisplayName(stack);
+    }
+
     /**
      * Gets the item's lightning cooldown
      */

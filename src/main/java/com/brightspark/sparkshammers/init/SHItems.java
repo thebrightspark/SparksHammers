@@ -42,7 +42,7 @@ public class SHItems
 
     private static void regGeneralItem(Item item)
     {
-        ITEMS.put(item.getRegistryName().getResourcePath(), item);
+        ITEMS.put(item.getRegistryName().getResourcePath().toLowerCase(), item);
         if(item instanceof IColourable && ((IColourable)item).getTextureColour() >= 0)
             COLOURED_ITEMS.add(item);
     }

@@ -29,8 +29,11 @@ public class SHRecipes
         GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(SHBlocks.blockHammerCraft), "scs", "chc", "scs", 's', "stone", 'c', Blocks.CRAFTING_TABLE, 'h', centerItem));
 
         //Wooden Hammer
-        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(SHItems.hammerHeadWood), "xxx", "xxx", "   ", 'x', "logWood"));
-        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(SHItems.getItemById("hammer_wood")), " x ", " s ", " s ", 'x', SHItems.hammerHeadWood, 's', "plankWood"));
+        if(SHItems.getItemById("hammerWood") != null)
+        {
+            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(SHItems.hammerHeadWood), "xxx", "xxx", "   ", 'x', "logWood"));
+            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(SHItems.getItemById("hammer_wood")), " x ", " s ", " s ", 'x', SHItems.hammerHeadWood, 's', "plankWood"));
+        }
 
         //Wooden Excavator
         if(SHItems.excavatorHeadWood != null)
