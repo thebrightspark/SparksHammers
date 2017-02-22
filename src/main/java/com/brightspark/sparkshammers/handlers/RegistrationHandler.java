@@ -9,9 +9,6 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.registry.IForgeRegistry;
 
-/**
- * Created by Mark on 04/02/2017.
- */
 @Mod.EventBusSubscriber
 public class RegistrationHandler
 {
