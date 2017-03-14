@@ -71,11 +71,11 @@ public class CustomTools
             }
 
             //Get material name, default to using the local name if it doesn't exist
-            String materialName = getJsonString(toolObj.get("LocalisedName"), null);
+            String materialName = getJsonString(toolObj.get("MaterialName"), null);
             if(materialName == null)
                 materialName = name.toLowerCase().replaceAll("\\s", "");
 
-            boolean isSpecialTool = SPECIAL_TOOLS.contains(materialName);
+            boolean isSpecialTool = SPECIAL_TOOLS.contains(materialName.toLowerCase());
 
             //Get the dependant item if exists
             Object dependant = null;
