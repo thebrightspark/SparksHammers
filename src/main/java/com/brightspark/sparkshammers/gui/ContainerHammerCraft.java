@@ -1,4 +1,4 @@
-package com.brightspark.sparkshammers.container;
+package com.brightspark.sparkshammers.gui;
 
 import com.brightspark.sparkshammers.hammerCrafting.HammerCraftingManager;
 import com.brightspark.sparkshammers.hammerCrafting.SHSlotCrafting;

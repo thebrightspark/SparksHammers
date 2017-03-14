@@ -16,19 +16,19 @@ public class Names
         // Durability -> vanilla * 6
         // Efficiency -> vanilla * 0.6
         // Attack     -> vanilla + 3
-        WOOD(0x866526, "plankWood", EnumHelper.addToolMaterial("HammerWood", 0, 354, 1.2f, 3f, 15).setRepairItem(new ItemStack(net.minecraft.init.Blocks.LOG, 1, OreDictionary.WILDCARD_VALUE))),
-        STONE(0x9A9A9A, "cobblestone", EnumHelper.addToolMaterial("HammerStone", 1, 786, 2.4f, 4f, 5).setRepairItem(new ItemStack(net.minecraft.init.Blocks.COBBLESTONE))),
-        IRON(0xFFFFFF, "ingotIron", EnumHelper.addToolMaterial("HammerIron", 2, 1500, 3.6f, 5f, 14).setRepairItem(new ItemStack(net.minecraft.init.Items.IRON_INGOT))),
-        GOLD(0xEAEE57, "ingotGold", EnumHelper.addToolMaterial("HammerGold", 0, 192, 7.2f, 3f, 22).setRepairItem(new ItemStack(net.minecraft.init.Items.GOLD_INGOT))),
-        DIAMOND(0x33EBCB, "gemDiamond", EnumHelper.addToolMaterial("HammerDiamond", 3, 9366, 4.8f, 6f, 10).setRepairItem(new ItemStack(net.minecraft.init.Items.DIAMOND))),
+        WOOD(0x866526, "plankWood", EnumHelper.addToolMaterial("HammerWood", 0, 354, 1.2f, 3f, 15)),
+        STONE(0x9A9A9A, "cobblestone", EnumHelper.addToolMaterial("HammerStone", 1, 786, 2.4f, 4f, 5)),
+        IRON(0xFFFFFF, "ingotIron", EnumHelper.addToolMaterial("HammerIron", 2, 1500, 3.6f, 5f, 14)),
+        GOLD(0xEAEE57, "ingotGold", EnumHelper.addToolMaterial("HammerGold", 0, 192, 7.2f, 3f, 22)),
+        DIAMOND(0x33EBCB, "gemDiamond", EnumHelper.addToolMaterial("HammerDiamond", 3, 9366, 4.8f, 6f, 10)),
 
         //Special
-        GIANT(0x955CC4, EnumHelper.addToolMaterial("HammerGiant", 2, 9000, 1.8f, 8f, 10).setRepairItem(new ItemStack(net.minecraft.init.Blocks.IRON_BLOCK))),
-        MINI(EnumHelper.addToolMaterial("HammerMini", 2, 750, 3.6f, 3.5f, 14).setRepairItem(new ItemStack(net.minecraft.init.Items.IRON_INGOT))),
+        GIANT(0x955CC4, EnumHelper.addToolMaterial("HammerGiant", 2, 9000, 1.8f, 8f, 10)),
+        MINI(EnumHelper.addToolMaterial("HammerMini", 2, 750, 3.6f, 3.5f, 14)),
         MJOLNIR(EnumHelper.addToolMaterial("HammerMjolnir", Integer.MAX_VALUE, 1, 10f, 10f, 0)),
         //TODO: Add config for Nether Star Hammer attack damage
-        NETHER_STAR(EnumHelper.addToolMaterial("HammerNetherStar", 3, 10, 5f, 40.0f, 0).setRepairItem(new ItemStack(net.minecraft.init.Items.NETHER_STAR))),
-        POWERED(EnumHelper.addToolMaterial("HammerPowered", 3, 1500, 4.8f, 6f, 0).setRepairItem(new ItemStack(net.minecraft.init.Blocks.IRON_BLOCK))),
+        NETHER_STAR(EnumHelper.addToolMaterial("HammerNetherStar", 3, 10, 5f, 40.0f, 0)),
+        POWERED(EnumHelper.addToolMaterial("HammerPowered", 3, 1500, 4.8f, 6f, 0)),
 
         //Common Mod Metals
         COPPER(0xFF976E, "ingotCopper", EnumHelper.addToolMaterial("HammerCopper", 1, 768, 2.4f, 4f, 12)),

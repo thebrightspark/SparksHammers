@@ -1,6 +1,5 @@
 package com.brightspark.sparkshammers.gui;
 
-import com.brightspark.sparkshammers.container.ContainerHammerCraft;
 import com.brightspark.sparkshammers.init.SHBlocks;
 import com.brightspark.sparkshammers.reference.Reference;
 import net.minecraft.client.gui.inventory.GuiContainer;

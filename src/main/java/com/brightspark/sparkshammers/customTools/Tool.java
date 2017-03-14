@@ -4,9 +4,6 @@ import com.brightspark.sparkshammers.reference.Names;
 import net.minecraft.item.Item.ToolMaterial;
 import net.minecraft.item.ItemStack;
 
-/**
- * Created by Mark on 06/02/2017.
- */
 public class Tool
 {
     public String name, localName;
