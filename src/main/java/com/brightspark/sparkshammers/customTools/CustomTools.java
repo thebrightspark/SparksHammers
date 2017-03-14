@@ -11,6 +11,9 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
+import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.util.EnumHelper;
 import net.minecraftforge.oredict.OreDictionary;
@@ -19,9 +22,6 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by Mark on 06/02/2017.
- */
 public class CustomTools
 {
     private static File jsonFile = new File(Reference.CONFIG_DIR, "customTools.json");
@@ -60,15 +60,25 @@ public class CustomTools
         for(JsonElement toolElement : jsonData)
         {
             JsonObject toolObj = toolElement.getAsJsonObject();
-            String name = getJsonString(toolObj.get("MaterialName"), null);
+
+            //Get localised name
+            String name = getJsonString(toolObj.get("LocalisedName"), null);
             if(name == null)
             {
                 LogHelper.warn("A material in the custom tools json was found without a name! Material will not be added.");
                 continue;
             }
 
+            //Get material name, default to using the local name if it doesn't exist
+            String materialName = getJsonString(toolObj.get("LocalisedName"), null);
+            if(materialName == null)
+                materialName = name.toLowerCase().replaceAll("\\s", "");
+
+            boolean isSpecialTool = SPECIAL_TOOLS.contains(materialName);
+
+            //Get the dependant item if exists
             Object dependant = null;
-            if(!SPECIAL_TOOLS.contains(name.toLowerCase().replaceAll("\\s", "")))
+            if(!isSpecialTool)
             {
                 if((dependant = getJsonString(toolObj.get("DependantOreDic"), null)) == null)
                 {
@@ -84,15 +94,41 @@ public class CustomTools
                 }
             }
 
+            Item.ToolMaterial material = EnumHelper.addToolMaterial(
+                    name,
+                    getJsonInt(toolObj.get("HarvestLevel"), 1),
+                    getJsonInt(toolObj.get("Durability"), 500),
+                    getJsonFloat(toolObj.get("Efficiency"), 1f),
+                    getJsonFloat(toolObj.get("AttackDamage"), 2f),
+                    getJsonInt(toolObj.get("Enchantability"), 0));
+
+            if(isSpecialTool)
+            {
+                //Set repair material for special tools
+                if(materialName.equals("mini"))
+                    material.setRepairItem(new ItemStack(Items.IRON_INGOT));
+                else if(materialName.equals("giant") || materialName.equals("powered"))
+                    material.setRepairItem(new ItemStack(Blocks.IRON_BLOCK));
+                else if(materialName.equals("netherstar"))
+                    material.setRepairItem(new ItemStack(Items.NETHER_STAR));
+            }
+            else
+            {
+                //Set the repair item using the dependant item if possible
+                if(dependant instanceof ItemStack)
+                    material.setRepairItem((ItemStack) dependant);
+                else if(dependant != null)
+                {
+                    List<ItemStack> oreList = OreDictionary.getOres((String) dependant);
+                    if(oreList != null && ! oreList.isEmpty())
+                        material.setRepairItem(oreList.get(0));
+                }
+            }
+
+            //Create the Tool and add it to the list
             Tool tool = new Tool(
                     name,
-                    EnumHelper.addToolMaterial(
-                            name,
-                            getJsonInt(toolObj.get("HarvestLevel"), 1),
-                            getJsonInt(toolObj.get("Durability"), 500),
-                            getJsonFloat(toolObj.get("Efficiency"), 1f),
-                            getJsonFloat(toolObj.get("AttackDamage"), 2f),
-                            getJsonInt(toolObj.get("Enchantability"), 0)),
+                    material,
                     getJsonInt(toolObj.get("TextureColour"), -1),
                     dependant);
             tools.add(tool);
@@ -139,7 +175,8 @@ public class CustomTools
             for(Tool tool : tools)
             {
                 writer.beginObject();
-                writer.name("MaterialName").value(tool.localName);
+                writer.name("MaterialName").value(tool.name);
+                writer.name("LocalisedName").value(tool.localName);
                 writer.name("HarvestLevel").value(tool.material.getHarvestLevel());
                 writer.name("Durability").value(tool.material.getMaxUses());
                 writer.name("Efficiency").value(tool.material.getEfficiencyOnProperMaterial());
