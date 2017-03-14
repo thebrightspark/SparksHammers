@@ -1,5 +1,5 @@
 {
-	"parent": "sparkshammers:block/hammerBlock",
+	"parent": "sparkshammers:block/hammer_craft",
 	"display": {
 		"thirdperson": {
 			"rotation": [ 10, -45, 170 ],

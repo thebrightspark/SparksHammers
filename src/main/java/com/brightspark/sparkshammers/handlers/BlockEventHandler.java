@@ -80,12 +80,12 @@ public class BlockEventHandler
                 //Add a NBT tag to the hammer for future checks
                 NBTHelper.setBoolean(heldStack, "mining", true);
                 miningSchedule.add(new Object[] {
-                        player.worldObj,
+                        player.world,
                         player,
-                        ItemStack.copyItemStack(heldStack),
+                        heldStack.copy(),
                         ((ItemHammerNetherStar) heldItem).rayTrace(event.getWorld(), player, false).sideHit.getOpposite(),
                         event.getPos(),
-                        new Float(ForgeHooks.blockStrength(event.getState(), player, player.worldObj, event.getPos())),
+                        new Float(ForgeHooks.blockStrength(event.getState(), player, player.world, event.getPos())),
                         new Integer(1),
                         new Byte((byte)2)});
                 heldStack.damageItem(1, player);

@@ -1,7 +1,7 @@
 {
     "__comment": "Model generated using MrCrayfish's Model Creator (http://mrcrayfish.com/modelcreator/)",
     "textures": {
-        "0": "sparkshammers:blocks/hammerBlock",
+        "0": "sparkshammers:blocks/hammer_block",
 		"particle": "blocks/iron_block"
     },
     "elements": [

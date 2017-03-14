@@ -1,36 +1,31 @@
 package com.brightspark.sparkshammers.integration.jei.HammerCraftingTable;
 
 import com.brightspark.sparkshammers.hammerCrafting.HammerShapedOreRecipe;
+import com.brightspark.sparkshammers.integration.jei.SparksHammersPlugin;
+import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.recipe.BlankRecipeWrapper;
+import mezz.jei.api.recipe.IStackHelper;
 import net.minecraft.item.ItemStack;
 
-import javax.annotation.Nonnull;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 public class HammerCraftingRecipeWrapper extends BlankRecipeWrapper
 {
-    private final List input;
-    private final ItemStack output;
+    private List<List<ItemStack>> input;
+    private ItemStack output;
 
     public HammerCraftingRecipeWrapper(HammerShapedOreRecipe recipe)
     {
-        input = Arrays.asList(recipe.getInput());
+        IStackHelper stackHelper = SparksHammersPlugin.jeiHelper.getStackHelper();
+        input = stackHelper.expandRecipeItemStackInputs(Arrays.asList(recipe.getInput()));
         output = recipe.getRecipeOutput();
     }
 
     @Override
-    @Nonnull
-    public List getInputs()
+    public void getIngredients(IIngredients ingredients)
     {
-        return input;
-    }
-
-    @Override
-    @Nonnull
-    public List<ItemStack> getOutputs()
-    {
-        return Collections.singletonList(output);
+        ingredients.setInputLists(ItemStack.class, input);
+        ingredients.setOutput(ItemStack.class, output);
     }
 }

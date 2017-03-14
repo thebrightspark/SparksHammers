@@ -1,7 +1,7 @@
 package com.brightspark.sparkshammers.item;
 
+import com.brightspark.sparkshammers.customTools.Tool;
 import com.brightspark.sparkshammers.init.SHBlocks;
-import com.brightspark.sparkshammers.reference.Names;
 import com.brightspark.sparkshammers.tileentity.TileHammer;
 import com.brightspark.sparkshammers.util.NBTHelper;
 import net.minecraft.block.Block;
@@ -32,9 +32,16 @@ public class ItemHammerMjolnir extends ItemAOE
 {
     private static int cooldownMax = 200; //10 secs
 
-    public ItemHammerMjolnir()
+    public ItemHammerMjolnir(Tool tool)
     {
-        super(Names.EnumMaterials.MJOLNIR, false, true);
+        super(tool, false);
+        setInfinite(true);
+    }
+
+    @Override
+    protected String getLocalName(ItemStack stack)
+    {
+        return localName != null ? localName : super.getItemStackDisplayName(stack);
     }
 
     /**
@@ -84,14 +91,17 @@ public class ItemHammerMjolnir extends ItemAOE
         NBTHelper.setOwner(stack, player);
     }
 
+    @Override
     @SideOnly(Side.CLIENT)
     public boolean hasEffect(ItemStack stack)
     {
         return true;
     }
 
-    public EnumActionResult onItemUse(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ)
+    @Override
+    public EnumActionResult onItemUse(EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ)
     {
+        ItemStack stack = player.getHeldItem(hand);
         if(player.isSneaking() && getOwner(stack) != null)
         {
             //Place hammer in the world and remove item from inventory
@@ -108,12 +118,12 @@ public class ItemHammerMjolnir extends ItemAOE
 
             if(!player.canPlayerEdit(pos, side, stack))
                 return EnumActionResult.PASS;
-            else if(stack.stackSize == 0)
+            else if(stack.getCount() == 0)
                 return EnumActionResult.PASS;
-            else if(world.canBlockBePlaced(SHBlocks.blockHammer, pos, false, side, null, stack))
+            else if(world.mayPlace(SHBlocks.blockHammer, pos, false, side, null))
             {
                 //Place hammer block
-                IBlockState hammerState = SHBlocks.blockHammer.onBlockPlaced(world, pos, side, hitX, hitY, hitZ, 0, player);
+                IBlockState hammerState = SHBlocks.blockHammer.getStateForPlacement(world, pos, side, hitX, hitY, hitZ, 0, player, hand);
                 if(world.setBlockState(pos, SHBlocks.blockHammer.getDefaultState())) //Returns true if block placed successfully
                 {
                     hammerState.getBlock().onBlockPlacedBy(world, pos, hammerState, player, stack);
@@ -122,7 +132,7 @@ public class ItemHammerMjolnir extends ItemAOE
 
                     //Remove hammer item from inventory if not in Creative
                     if(!player.capabilities.isCreativeMode)
-                        --stack.stackSize;
+                        stack.shrink(1);
                     return EnumActionResult.FAIL;
                 }
             }
@@ -152,14 +162,16 @@ public class ItemHammerMjolnir extends ItemAOE
         return worldIn.rayTraceBlocks(vec3, vec31, useLiquids, !useLiquids, false);
     }
 
-    public ActionResult<ItemStack> onItemRightClick(ItemStack stack, World world, EntityPlayer player, EnumHand hand)
+    @Override
+    public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand)
     {
+        ItemStack stack = player.getHeldItem(hand);
         if(getOwner(stack) == null)
             setOwner(stack, player);
         else if(!world.isRemote && !player.isSneaking() && getCooldown(stack) <= 0)
         {
             //Spawn lightning at cursor
-            RayTraceResult ray = rayTraceLong(player.worldObj, player, false);
+            RayTraceResult ray = rayTraceLong(player.world, player, false);
             if(ray != null)
             {
                 BlockPos pos = ray.getBlockPos();
@@ -173,6 +185,7 @@ public class ItemHammerMjolnir extends ItemAOE
         return new ActionResult<ItemStack>(EnumActionResult.PASS, stack);
     }
 
+    @Override
     public void onUpdate(ItemStack stack, World worldIn, Entity entityIn, int itemSlot, boolean isSelected)
     {
         if(isOwner(stack, entityIn))
@@ -192,11 +205,13 @@ public class ItemHammerMjolnir extends ItemAOE
         }
     }
 
+    @Override
     public boolean showDurabilityBar(ItemStack stack)
     {
         return getCooldown(stack) > 0;
     }
 
+    @Override
     public double getDurabilityForDisplay(ItemStack stack)
     {
         int cooldown = getCooldown(stack);
@@ -207,11 +222,13 @@ public class ItemHammerMjolnir extends ItemAOE
      * Determine if the player switching between these two item stacks
      * I'm using this to stop the animation happening every time the NBT of the item is different.
      */
+    @Override
     public boolean shouldCauseReequipAnimation(ItemStack oldStack, ItemStack newStack, boolean slotChanged)
     {
         return !ItemStack.areItemStacksEqual(oldStack, newStack) && slotChanged;
     }
 
+    @Override
     @SideOnly(Side.CLIENT)
     public void addInformation(ItemStack stack, EntityPlayer player, List<String> tooltip, boolean advanced)
     {

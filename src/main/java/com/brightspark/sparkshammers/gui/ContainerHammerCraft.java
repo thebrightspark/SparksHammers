@@ -1,10 +1,12 @@
-package com.brightspark.sparkshammers.container;
+package com.brightspark.sparkshammers.gui;
 
 import com.brightspark.sparkshammers.hammerCrafting.HammerCraftingManager;
 import com.brightspark.sparkshammers.hammerCrafting.SHSlotCrafting;
 import com.brightspark.sparkshammers.init.SHBlocks;
+import com.brightspark.sparkshammers.util.CommonUtils;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
+import net.minecraft.init.Blocks;
 import net.minecraft.inventory.*;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
@@ -50,7 +52,7 @@ public class ContainerHammerCraft extends Container
         pos = position;
 
         //Add the slots
-        this.addSlotToContainer(new SHSlotCrafting(invPlayer.player, this.craftMatrix, this.craftResult, 0, resultX, resultY));
+        addSlotToContainer(new SHSlotCrafting(invPlayer.player, craftMatrix, craftResult, 0, resultX, resultY));
 
         int handleXStart = gridStartX + 18 * 2;
         int handleYStart = gridStartY + 18 * 2;
@@ -62,12 +64,10 @@ public class ContainerHammerCraft extends Container
                 if(headY == 2)
                 {
                     if(headX < 4)
-                    {
-                        this.addSlotToContainer(new Slot(this.craftMatrix, numSlots, handleXStart, handleYStart + headX * 18));
-                    }
+                        addSlotToContainer(new Slot(craftMatrix, numSlots, handleXStart, handleYStart + headX * 18));
                 }
                 else
-                    this.addSlotToContainer(new Slot(this.craftMatrix, numSlots, gridStartX + headX * 18, gridStartY + headY * 18));
+                    addSlotToContainer(new Slot(craftMatrix, numSlots, gridStartX + headX * 18, gridStartY + headY * 18));
                 numSlots++;
             }
         }
@@ -77,34 +77,24 @@ public class ContainerHammerCraft extends Container
 
     public void onCraftMatrixChanged(IInventory inventory)
     {
-        ItemStack stack = HammerCraftingManager.getInstance().findMatchingRecipe(this.craftMatrix, this.worldObj);
-
-        //if(stack == null) LogHelper.info("Hammer Crafting Output: Null");
-        //else LogHelper.info("Hammer Crafting Output: " + stack.getDisplayName());
-
-        this.craftResult.setInventorySlotContents(0, stack);
+        ItemStack stack = HammerCraftingManager.getInstance().findMatchingRecipe(craftMatrix, worldObj);
+        craftResult.setInventorySlotContents(0, stack);
     }
 
     public boolean canInteractWith(EntityPlayer player)
     {
         //Returns true if the block is the Hammer Crafting block, and is within range
-        return this.worldObj.getBlockState(pos).getBlock() == SHBlocks.blockHammerCraft && player.getDistanceSq((double)pos.getX() + 0.5D, (double)pos.getY() + 0.5D, (double)pos.getZ() + 0.5D) <= 64.0D;
+        return worldObj.getBlockState(pos).getBlock() == SHBlocks.blockHammerCraft && player.getDistanceSq((double)pos.getX() + 0.5D, (double)pos.getY() + 0.5D, (double)pos.getZ() + 0.5D) <= 64.0D;
     }
 
     protected void bindPlayerInventory(InventoryPlayer inventoryPlayer)
     {
         for (int i = 0; i < 3; i++)
-        {
             for (int j = 0; j < 9; j++)
-            {
                 addSlotToContainer(new Slot(inventoryPlayer, j + i * 9 + 9, invStartX + j * 18, invStartY + i * 18));
-            }
-        }
 
         for (int i = 0; i < 9; i++)
-        {
             addSlotToContainer(new Slot(inventoryPlayer, i, invStartX + i * 18, invStartY + 18 * 3 + 4));
-        }
     }
 
     //Drops items in the crafting grid when gui is closed
@@ -112,65 +102,63 @@ public class ContainerHammerCraft extends Container
     {
         super.onContainerClosed(player);
 
-        if (!this.worldObj.isRemote)
+        if(!worldObj.isRemote)
         {
-            for (int i = 0; i < numSlots; ++i)
+            for(int i = 0; i < numSlots; ++i)
             {
-                ItemStack itemstack = this.craftMatrix.removeStackFromSlot(i); //Used to be .getStackInSlotOnClosing(i)
+                ItemStack itemstack = craftMatrix.removeStackFromSlot(i); //Used to be .getStackInSlotOnClosing(i)
 
-                if (itemstack != null)
-                {
+                if(!CommonUtils.isStackEmptyOrNull(itemstack))
                     player.dropItem(itemstack, false);
-                }
             }
         }
     }
 
     public ItemStack transferStackInSlot(EntityPlayer player, int slot)
     {
-        ItemStack stack = null;
-        Slot slotObject = this.inventorySlots.get(slot);
+        ItemStack stack = ItemStack.EMPTY;
+        Slot slotObject = inventorySlots.get(slot);
 
-        if (slotObject != null && slotObject.getHasStack())
+        if(slotObject != null && slotObject.getHasStack())
         {
             ItemStack stackInSlot = slotObject.getStack();
             stack = stackInSlot.copy();
 
-            int slotInvStart = this.numSlots;
+            int slotInvStart = numSlots;
 
             //If slot 0 (output)
-            if (slot == 0)
+            if(slot == 0)
             {
-                if (!this.mergeItemStack(stackInSlot, slotInvStart, slotInvStart+36, true))
-                    return null;
+                if(!mergeItemStack(stackInSlot, slotInvStart, slotInvStart+36, true))
+                    return ItemStack.EMPTY;
 
                 slotObject.onSlotChange(stackInSlot, stack);
             }
             //If slot Inventory (not Hotbar)
-            else if (slot >= slotInvStart && slot <= slotInvStart+26)
+            else if(slot >= slotInvStart && slot <= slotInvStart+26)
             {
-                if (!this.mergeItemStack(stackInSlot, slotInvStart+28, slotInvStart+36, false))
-                    return null;
+                if(!mergeItemStack(stackInSlot, slotInvStart+28, slotInvStart+36, false))
+                    return ItemStack.EMPTY;
             }
             //If slot Hotbar
-            else if (slot >= slotInvStart+28 && slot <= slotInvStart+36)
+            else if(slot >= slotInvStart+28 && slot <= slotInvStart+36)
             {
-                if (!this.mergeItemStack(stackInSlot, slotInvStart, slotInvStart+27, false))
-                    return null;
+                if(!mergeItemStack(stackInSlot, slotInvStart, slotInvStart+27, false))
+                    return ItemStack.EMPTY;
             }
             //If slot Crafting Grid
-            else if (!this.mergeItemStack(stackInSlot, slotInvStart, slotInvStart+36, false))
-                return null;
+            else if(!mergeItemStack(stackInSlot, slotInvStart, slotInvStart+36, false))
+                return ItemStack.EMPTY;
 
-            if (stackInSlot.stackSize == 0)
-                slotObject.putStack(null);
+            if(stackInSlot.getCount() == 0)
+                slotObject.putStack(new ItemStack(Blocks.AIR));
             else
                 slotObject.onSlotChanged();
 
-            if (stackInSlot.stackSize == stack.stackSize)
-                return null;
+            if(stackInSlot.getCount() == stack.getCount())
+                return ItemStack.EMPTY;
 
-            slotObject.onPickupFromSlot(player, stackInSlot);
+            slotObject.onTake(player, stackInSlot);
         }
 
         return stack;

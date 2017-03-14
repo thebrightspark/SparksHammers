@@ -1,5 +1,6 @@
 package com.brightspark.sparkshammers.util;
 
+import com.brightspark.sparkshammers.init.SHItems;
 import com.brightspark.sparkshammers.item.ItemAOE;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
@@ -30,6 +31,9 @@ public class ClientUtils
     //Register a tool to use either hammer.json or excavator.json so I don't need a file for every tool
     public static void regTool(ItemAOE item)
     {
-        ModelLoader.setCustomModelResourceLocation(item, 0, new ModelResourceLocation(item.getRegistryName().getResourceDomain() + ":" + (item.isExcavator ? "excavator" : "hammer"), "inventory"));
+        String itemName = item.getRegistryName().getResourceDomain() + ":" + (item.isExcavator ? "excavator" : "hammer");
+        if(item == SHItems.hammerGiant)
+            itemName += "_giant";
+        ModelLoader.setCustomModelResourceLocation(item, 0, new ModelResourceLocation(itemName, "inventory"));
     }
 }

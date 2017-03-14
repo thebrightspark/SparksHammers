@@ -1,5 +1,6 @@
 package com.brightspark.sparkshammers.hammerCrafting;
 
+import com.brightspark.sparkshammers.util.CommonUtils;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.InventoryCrafting;
@@ -18,8 +19,8 @@ public class SHSlotCrafting extends Slot
     public SHSlotCrafting(EntityPlayer player, InventoryCrafting craftingInventory, IInventory p_i45790_3_, int slotIndex, int xPosition, int yPosition)
     {
         super(p_i45790_3_, slotIndex, xPosition, yPosition);
-        this.thePlayer = player;
-        this.craftMatrix = craftingInventory;
+        thePlayer = player;
+        craftMatrix = craftingInventory;
     }
 
     /**
@@ -36,10 +37,8 @@ public class SHSlotCrafting extends Slot
      */
     public ItemStack decrStackSize(int amount)
     {
-        if (this.getHasStack())
-        {
-            this.amountCrafted += Math.min(amount, this.getStack().stackSize);
-        }
+        if (getHasStack())
+            amountCrafted += Math.min(amount, getStack().getCount());
 
         return super.decrStackSize(amount);
     }
@@ -50,8 +49,8 @@ public class SHSlotCrafting extends Slot
      */
     protected void onCrafting(ItemStack stack, int amount)
     {
-        this.amountCrafted += amount;
-        this.onCrafting(stack);
+        amountCrafted += amount;
+        onCrafting(stack);
     }
 
     /**
@@ -59,43 +58,37 @@ public class SHSlotCrafting extends Slot
      */
     protected void onCrafting(ItemStack stack)
     {
-        if (this.amountCrafted > 0)
-        {
-            stack.onCrafting(this.thePlayer.worldObj, this.thePlayer, this.amountCrafted);
-        }
+        if (amountCrafted > 0)
+            stack.onCrafting(thePlayer.world, thePlayer, amountCrafted);
 
-        this.amountCrafted = 0;
+        amountCrafted = 0;
     }
 
-    public void onPickupFromSlot(EntityPlayer playerIn, ItemStack stack)
+    //onPickupFromSlot
+    public ItemStack func_190901_a(EntityPlayer playerIn, ItemStack stack)
     {
         net.minecraftforge.fml.common.FMLCommonHandler.instance().firePlayerCraftingEvent(playerIn, stack, craftMatrix);
-        this.onCrafting(stack);
+        onCrafting(stack);
         net.minecraftforge.common.ForgeHooks.setCraftingPlayer(playerIn);
-        ItemStack[] aitemstack = HammerCraftingManager.getInstance().func_180303_b(this.craftMatrix, playerIn.worldObj);
+        ItemStack[] aitemstack = HammerCraftingManager.getInstance().func_180303_b(craftMatrix, playerIn.world);
         net.minecraftforge.common.ForgeHooks.setCraftingPlayer(null);
 
         for (int i = 0; i < aitemstack.length; ++i)
         {
-            ItemStack itemstack = this.craftMatrix.getStackInSlot(i);
+            ItemStack itemstack = craftMatrix.getStackInSlot(i);
             ItemStack itemstack1 = aitemstack[i];
 
-            if (itemstack != null)
-            {
-                this.craftMatrix.decrStackSize(i, 1);
-            }
+            if (!CommonUtils.isStackEmptyOrNull(itemstack))
+                craftMatrix.decrStackSize(i, 1);
 
-            if (itemstack1 != null)
+            if (!CommonUtils.isStackEmptyOrNull(itemstack1))
             {
-                if (this.craftMatrix.getStackInSlot(i) == null)
-                {
-                    this.craftMatrix.setInventorySlotContents(i, itemstack1);
-                }
-                else if (!this.thePlayer.inventory.addItemStackToInventory(itemstack1))
-                {
-                    this.thePlayer.dropItem(itemstack1, false);
-                }
+                if (CommonUtils.isStackEmptyOrNull(craftMatrix.getStackInSlot(i)))
+                    craftMatrix.setInventorySlotContents(i, itemstack1);
+                else if (!thePlayer.inventory.addItemStackToInventory(itemstack1))
+                    thePlayer.dropItem(itemstack1, false);
             }
         }
+        return stack;
     }
 }

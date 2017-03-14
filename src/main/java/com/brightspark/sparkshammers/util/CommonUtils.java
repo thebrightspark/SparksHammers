@@ -1,5 +1,6 @@
 package com.brightspark.sparkshammers.util;
 
+import com.brightspark.sparkshammers.SparksHammers;
 import com.brightspark.sparkshammers.item.ItemAOE;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
@@ -7,8 +8,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
+import net.minecraft.item.*;
 import net.minecraft.network.play.client.CPacketPlayerDigging;
 import net.minecraft.network.play.server.SPacketBlockChange;
 import net.minecraft.tileentity.TileEntity;
@@ -38,6 +38,24 @@ public class CommonUtils
         return Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_RSHIFT);
     }
 
+    /**
+     * Capitalises the first letter of every word in the string
+     */
+    public static String capitaliseAllFirstLetters(String text)
+    {
+        String[] textArray = text.split("\\s");
+        String output = "";
+        for(String t : textArray)
+        {
+            String space = output.equals("") ? "" : " ";
+            output += space + capitaliseFirstLetter(t);
+        }
+        return output;
+    }
+
+    /**
+     * Capitalises the first letter of the string
+     */
     public static String capitaliseFirstLetter(String text)
     {
         if(text == null || text.length() <= 0)
@@ -48,6 +66,25 @@ public class CommonUtils
     public static Item getRegisteredItem(String itemId)
     {
         return Item.REGISTRY.getObject(new ResourceLocation(itemId));
+    }
+
+    public static String getRegisteredId(Item item)
+    {
+        ResourceLocation id = Item.REGISTRY.getNameForObject(item);
+        return id == null ? null : id.toString();
+    }
+
+    public static boolean isStackEmptyOrNull(ItemStack stack)
+    {
+        return stack == null || stack.getItem() instanceof ItemAir;
+    }
+
+    /**
+     * Open a GUI for a block (Uses a guiID of -1).
+     */
+    public static void openGui(World world, EntityPlayer player, BlockPos pos)
+    {
+        player.openGui(SparksHammers.instance, -1, world, pos.getX(), pos.getY(), pos.getZ());
     }
 
 
@@ -149,7 +186,7 @@ public class CommonUtils
             for (int yPos = posStart.getY(); yPos <= posEnd.getY(); yPos++)
                 for (int zPos = posStart.getZ(); zPos <= posEnd.getZ(); zPos++)
                     if(!stack.getItem().onBlockStartBreak(stack, new BlockPos(xPos, yPos, zPos), player))
-                        breakBlock(stack, player.worldObj, player, new BlockPos(xPos, yPos, zPos), posHit);
+                        breakBlock(stack, player.world, player, new BlockPos(xPos, yPos, zPos), posHit);
     }
 
     /**
@@ -258,7 +295,7 @@ public class CommonUtils
             // callback to the tool
             stack.onBlockDestroyed(world, blockState, blockPos, player);
 
-            if(stack.stackSize == 0 && stack == player.getHeldItemMainhand())
+            if(stack.getCount() == 0 && stack == player.getHeldItemMainhand())
             {
                 ForgeEventFactory.onPlayerDestroyItem(player, stack, EnumHand.MAIN_HAND);
                 player.setHeldItem(EnumHand.MAIN_HAND, null);

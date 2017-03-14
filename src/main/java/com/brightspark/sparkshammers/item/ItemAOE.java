@@ -1,6 +1,7 @@
 package com.brightspark.sparkshammers.item;
 
 import com.brightspark.sparkshammers.SparksHammers;
+import com.brightspark.sparkshammers.customTools.Tool;
 import com.brightspark.sparkshammers.init.SHAchievements;
 import com.brightspark.sparkshammers.init.SHItems;
 import com.brightspark.sparkshammers.reference.Names;
@@ -38,7 +39,10 @@ public class ItemAOE extends ItemTool implements IColourable
     private int mineDepth = 0; //Depth (behind block)
     private boolean infiniteUse;
     private boolean shiftRotating = false;
-    private String dependantOreDic = null;
+
+    private String dependantOreDic;
+    private ItemStack dependantStack;
+    protected String localName;
 
     protected static final String KEY_CUSTOM_NAME = "customName";
     protected static final String KEY_CUSTOM_FORMATTING = "customFormatting";
@@ -66,6 +70,16 @@ public class ItemAOE extends ItemTool implements IColourable
         dependantOreDic = name.dependantOreDic;
     }
 
+    //This constructor is used when registering tools from the custom json file
+    public ItemAOE(Tool tool, boolean isExcavator)
+    {
+        this(tool.getToolName(isExcavator), tool.material, isExcavator, false);
+        localName = tool.localName;
+        textureColour = tool.toolColour;
+        dependantOreDic = tool.dependantOreDic;
+        dependantStack = tool.dependantStack;
+    }
+
     public ItemAOE(String name, ToolMaterial material)
     {
         this(name, material, false, false);
@@ -73,13 +87,19 @@ public class ItemAOE extends ItemTool implements IColourable
 
     public ItemAOE(String name, ToolMaterial material, boolean isExcavator, boolean isInfiniteUse)
     {
-        super(isExcavator ? 1.5f : 2f, isExcavator ? -3f : -3.2f, material, isExcavator ? ShovelBlocks : PickaxeBlocks);
+        super(isExcavator ? 0f : 2f, isExcavator ? -3f : -3.2f, material, isExcavator ? ShovelBlocks : PickaxeBlocks);
         this.isExcavator = isExcavator;
         infiniteUse = isInfiniteUse;
         setUnlocalizedName(name);
         setRegistryName(name);
         setCreativeTab(SparksHammers.SH_TAB);
         materials = isExcavator ? ShovelMats : PickaxeMats;
+    }
+
+    @Override
+    public Set<String> getToolClasses(ItemStack stack)
+    {
+        return com.google.common.collect.ImmutableSet.of(isExcavator ? "shovel" : "pickaxe");
     }
 
     /**
@@ -94,12 +114,17 @@ public class ItemAOE extends ItemTool implements IColourable
         return customName.equals("") ? super.getUnlocalizedName(stack) : getUnlocalizedName() + "." + customName;
     }
 
+    protected String getLocalName(ItemStack stack)
+    {
+        return localName != null ? localName + " " + CommonUtils.capitaliseFirstLetter(isExcavator ? Names.Items.EXCAVATOR : Names.Items.HAMMER) : super.getItemStackDisplayName(stack);
+    }
+
     @Override
     public String getItemStackDisplayName(ItemStack stack)
     {
         //Get custom colour formatting if there's one in the NBT
         String customFormatting = NBTHelper.getString(stack, KEY_CUSTOM_FORMATTING);
-        return customFormatting.equals("") ? super.getItemStackDisplayName(stack) : customFormatting + super.getItemStackDisplayName(stack);
+        return customFormatting.equals("") ? getLocalName(stack) : customFormatting + getLocalName(stack);
     }
 
     /**
@@ -179,7 +204,7 @@ public class ItemAOE extends ItemTool implements IColourable
                         continue;
 
                     if(!super.onBlockStartBreak(stack, new BlockPos(xPos, yPos, zPos), player))
-                        CommonUtils.breakBlock(stack, player.worldObj, player, new BlockPos(xPos, yPos, zPos), posHit);
+                        CommonUtils.breakBlock(stack, player.world, player, new BlockPos(xPos, yPos, zPos), posHit);
                 }
     }
 
@@ -188,7 +213,7 @@ public class ItemAOE extends ItemTool implements IColourable
     public boolean onBlockStartBreak (ItemStack stack, BlockPos pos, EntityPlayer player)
     {
         //Block being mined
-        RayTraceResult ray = rayTrace(player.worldObj, player, false);
+        RayTraceResult ray = rayTrace(player.world, player, false);
         if(ray == null)
             return super.onBlockStartBreak(stack, pos, player);
 
@@ -264,9 +289,9 @@ public class ItemAOE extends ItemTool implements IColourable
 
         //Handle achievements
         Item item = stack.getItem();
-        if(item.equals(SHItems.getItemById("hammerWood")))
+        if(item.equals(SHItems.getItemById("hammer_wood")))
             player.addStat(SHAchievements.woodHammer);
-        else if(item.equals(SHItems.getItemById("hammerDiamond")))
+        else if(item.equals(SHItems.getItemById("hammer_diamond")))
             player.addStat(SHAchievements.diamondHammer);
         else if(item.equals(SHItems.hammerNetherStar))
             player.addStat(SHAchievements.netherStarHammer);
@@ -281,5 +306,10 @@ public class ItemAOE extends ItemTool implements IColourable
     public String getDependantOreDic()
     {
         return dependantOreDic;
+    }
+
+    public ItemStack getDependantStack()
+    {
+        return dependantStack;
     }
 }

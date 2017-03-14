@@ -1,12 +1,12 @@
 package com.brightspark.sparkshammers;
 
+import com.brightspark.sparkshammers.energy.EnergyContainer;
+import com.brightspark.sparkshammers.energy.ISparkEnergyStorage;
 import com.brightspark.sparkshammers.gui.GuiHandler;
 import com.brightspark.sparkshammers.hammerCrafting.HammerCraftingManager;
 import com.brightspark.sparkshammers.hammerCrafting.HammerShapedOreRecipe;
-import com.brightspark.sparkshammers.handlers.AchieveEventHandler;
 import com.brightspark.sparkshammers.handlers.BlockEventHandler;
 import com.brightspark.sparkshammers.handlers.ConfigurationHandler;
-import com.brightspark.sparkshammers.handlers.LootEventHandler;
 import com.brightspark.sparkshammers.init.*;
 import com.brightspark.sparkshammers.item.ItemAOE;
 import com.brightspark.sparkshammers.reference.Config;
@@ -15,9 +15,14 @@ import com.brightspark.sparkshammers.util.LoaderHelper;
 import com.brightspark.sparkshammers.util.LogHelper;
 import com.brightspark.sparkshammers.worldgen.WorldGenMjolnirShrine;
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTBase;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.EnumFacing;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.common.capabilities.CapabilityInject;
+import net.minecraftforge.common.capabilities.CapabilityManager;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
@@ -26,6 +31,7 @@ import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 
+import java.io.File;
 import java.util.List;
 
 @Mod(modid=Reference.MOD_ID, name=Reference.MOD_NAME, version=Reference.VERSION, dependencies=Reference.DEPENDENCIES)
@@ -35,15 +41,12 @@ public class SparksHammers
     @Mod.Instance(Reference.MOD_ID)
     public static SparksHammers instance;
 
-    //@SidedProxy(clientSide = Reference.CLIENT_PROXY_CLASS, serverSide = Reference.SERVER_PROXY_CLASS)
-    //public static IProxy proxy;
-
     public static final CreativeTabs SH_TAB = new CreativeTabs(Reference.MOD_ID)
     {
         @Override
-        public Item getTabIconItem()
+        public ItemStack getTabIconItem()
         {
-            return SHItems.getItemById("hammerDiamond");
+            return new ItemStack(SHItems.getItemById("hammer_diamond"));
         }
 
         @Override
@@ -55,25 +58,32 @@ public class SparksHammers
 
     public static DamageSource fallingHammer = new DamageSource("fallingHammer");
     public static BlockEventHandler blockEH = new BlockEventHandler();
+    @CapabilityInject(ISparkEnergyStorage.class)
+    public static Capability<ISparkEnergyStorage> energyCapability;
 
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent event)
     {
         //Initialize item, blocks, textures/models and configs here
 
-        //Passes suggested configuration file into the init method
-        ConfigurationHandler.init(event.getSuggestedConfigurationFile());
-        MinecraftForge.EVENT_BUS.register(new ConfigurationHandler());
+        //TODO: Remove in a few versions (added 1.11.2-1.5)
+        if(event.getSuggestedConfigurationFile().exists() && event.getSuggestedConfigurationFile().delete())
+            LogHelper.info("Removed old config file from main config directory. Configs are now being saved in config/" + Reference.MOD_ID + "/");
 
-        SHItems.regItems();
-        SHBlocks.regBlocks();
+        ConfigurationHandler.init(new File(Reference.CONFIG_DIR, "config.cfg"));
 
-        //Registers all of the item and block textures
-        if(event.getSide() == Side.CLIENT)
+        //Tool Energy Capability
+        CapabilityManager.INSTANCE.register(ISparkEnergyStorage.class, new Capability.IStorage<ISparkEnergyStorage>()
         {
-            SHItems.regModels();
-            SHBlocks.regModels();
-        }
+            @Override
+            public NBTBase writeNBT(Capability<ISparkEnergyStorage> capability, ISparkEnergyStorage instance, EnumFacing side)
+            {
+                return null;
+            }
+
+            @Override
+            public void readNBT(Capability<ISparkEnergyStorage> capability, ISparkEnergyStorage instance, EnumFacing side, NBTBase nbt) {}
+        }, EnergyContainer.class);
     }
 
     @Mod.EventHandler
@@ -91,13 +101,11 @@ public class SparksHammers
 
         NetworkRegistry.INSTANCE.registerGuiHandler(this, new GuiHandler());
         MinecraftForge.EVENT_BUS.register(blockEH); //Block Event Handler for the Nether Star Hammer
-        MinecraftForge.EVENT_BUS.register(new AchieveEventHandler()); //Event handlers for Achievements
-        MinecraftForge.EVENT_BUS.register(new LootEventHandler()); //Event handler to add loot to chests
 
         SHAchievements.init(); //Adds achievements
 
         //Register world generation for Mjolnir Shrine
-        if(Config.shouldGenerateMjolnirShrines)
+        if(Config.shouldGenerateMjolnirShrines && Config.enableMjolnir)
             GameRegistry.registerWorldGenerator(new WorldGenMjolnirShrine(), 10);
     }
 

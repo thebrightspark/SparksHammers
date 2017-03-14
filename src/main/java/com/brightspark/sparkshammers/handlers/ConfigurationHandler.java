@@ -4,10 +4,12 @@ import com.brightspark.sparkshammers.reference.Config;
 import com.brightspark.sparkshammers.reference.Reference;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.client.event.ConfigChangedEvent;
+import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 import java.io.File;
 
+@Mod.EventBusSubscriber
 public class ConfigurationHandler
 {
     public static class Categories
@@ -45,12 +47,16 @@ public class ConfigurationHandler
 
     private static void loadConfiguration()
     {
-        Config.includeOtherModItems = configuration.getBoolean("includeOtherModItems", Categories.GENERAL, true, "Whether to add tools made from other mod materials into the game.");
-        Config.toolDurabilityModifier = configuration.getFloat("toolDurabilityModifier", Categories.TOOLS, Config.toolDurabilityModifier, Config.toolDurabilityModifierMin, Config.toolDurabilityModifierMax, "Modifier for hammers and excavators made of vanilla materials to adjust durability.");
-        Config.toolSpeedModifier = configuration.getFloat("toolSpeedModifier", Categories.TOOLS, Config.toolSpeedModifier, Config.toolSpeedModifierMin, Config.toolSpeedModifierMax, "Modifier for hammers and excavators made of vanilla materials to adjust mining speed.");
+        Config.enableOtherModItems = configuration.getBoolean("enableOtherModItems", Categories.GENERAL, true, "Whether to add tools made from other mod materials into the game.");
+        Config.enableMjolnir = configuration.getBoolean("enableMjolnir", Categories.GENERAL, true, "Whether Mjolnir should be enabled (Disabling this will also disable the shrines)");
+        Config.enableMiniHammer = configuration.getBoolean("enableMiniHammer", Categories.GENERAL, true, "Whether the Mini Hammer should be enabled");
+        Config.enableGiantHammer = configuration.getBoolean("enableGiantHammer", Categories.GENERAL, true, "Whether the Giant Hammer should be enabled");
+        Config.enableNetherStarHammer = configuration.getBoolean("enableNetherStarHammer", Categories.GENERAL, true, "Whether the Nether Star Hammer should be enabled");
+        Config.enablePoweredHammer = configuration.getBoolean("enablePoweredHammer", Categories.GENERAL, true, "Whether the Powered Hammer should be enabled");
 
-        //Init after loading tool modifiers, but before loading tools
-        Config.initMaterials();
+        Config.toolDurabilityModifier = configuration.getFloat("toolDurabilityModifier", Categories.TOOLS, Config.toolDurabilityModifier, Config.toolDurabilityModifierMin, Config.toolDurabilityModifierMax, "Global modifier for hammers and excavators to adjust durability.");
+        Config.toolSpeedModifier = configuration.getFloat("toolSpeedModifier", Categories.TOOLS, Config.toolSpeedModifier, Config.toolSpeedModifierMin, Config.toolSpeedModifierMax, "Global modifier for hammers and excavators to adjust mining speed.");
+        Config.toolAttackModifier = configuration.getFloat("toolAttackModifier", Categories.TOOLS, Config.toolAttackModifier, Config.toolAttackModifierMin, Config.toolAttackModifierMax, "Global modifier for hammers and excavators to adjust attack damage.");
 
         /*
          * World Generation
@@ -63,52 +69,19 @@ public class ConfigurationHandler
         /*
          * Nether Star Hammer
          */
-        Config.netherStarHammerDurability = configuration.getInt("netherStarHammerDurability", Categories.SPECIFIC_TOOLS, Config.netherStarHammerDurability, Config.netherStarHammerDurabilityMin, Config.netherStarHammerDurabilityMax, "Durability of the Nether Star made hammer");
         Config.netherStarHammerDistance = configuration.getInt("netherStarHammerDistance", Categories.SPECIFIC_TOOLS, Config.netherStarHammerDistance, Config.netherStarHammerDistanceMin, Config.netherStarHammerDistanceMax, "Max mining distance of the Nether Star made hammer");
 
         /*
          * Mjolnir Hammer
          */
-        Config.mjolnirHarvestLevel = configuration.getInt("mjolnirHarvestLevel", Categories.SPECIFIC_TOOLS, Config.mjolnirHarvestLevel, 0, Integer.MAX_VALUE, "");
-        Config.mjolnirEfficiency = configuration.getFloat("mjolnirEfficiency", Categories.SPECIFIC_TOOLS, Config.mjolnirEfficiency, 0f, 100f, "");
-        Config.mjolnirDamageVsEntity = configuration.getFloat("mjolnirDamageVsEntity", Categories.SPECIFIC_TOOLS, Config.mjolnirDamageVsEntity, 0f, Integer.MAX_VALUE, "");
         Config.mjolnirPickupNeedsDragonAchieve = configuration.getBoolean("mjolnirPickupNeedsDragonAchieve", Categories.SPECIFIC_TOOLS, Config.mjolnirPickupNeedsDragonAchieve, "Whether the player needs to have gotten the 'End.' achievement to be able to pickup Mjolnir.");
 
         /*
-         * Common Mod Metal Tools
+         * Powered Tools' Energy
          */
-        Config.materialCopper = getMaterial("Copper", Config.materialCopper);
-        Config.materialSilver = getMaterial("Silver", Config.materialSilver);
-        Config.materialTin = getMaterial("Tin", Config.materialTin);
-        Config.materialLead = getMaterial("Lead", Config.materialLead);
-        Config.materialNickel = getMaterial("Nickel", Config.materialNickel);
-        Config.materialPlatinum = getMaterial("Platinum", Config.materialPlatinum);
-        Config.materialBronze = getMaterial("Bronze", Config.materialBronze);
-        Config.materialSteel = getMaterial("Steel", Config.materialSteel);
-        Config.materialInvar = getMaterial("Invar", Config.materialInvar);
-        Config.materialElectrum = getMaterial("Electrum", Config.materialElectrum);
-        Config.materialAluminium = getMaterial("Aluminium", Config.materialAluminium);
-
-        Config.materialOsmium = getMaterial("Osmium", Config.materialOsmium);
-        Config.materialZinc = getMaterial("Zinc", Config.materialZinc);
-        Config.materialChrome = getMaterial("Chrome", Config.materialChrome);
-        Config.materialIridium = getMaterial("Iridium", Config.materialIridium);
-        Config.materialTitanium = getMaterial("Titanium", Config.materialTitanium);
-        Config.materialTungsten = getMaterial("Tungsten", Config.materialTungsten);
-
-        Config.materialSapphire = getMaterial("Sapphire", Config.materialSapphire);
-        Config.materialRuby = getMaterial("Ruby", Config.materialRuby);
-        Config.materialPeridot = getMaterial("Peridot", Config.materialPeridot);
-
-        Config.materialManasteel = getMaterial("Manasteel", Config.materialManasteel);
-        Config.materialElementium = getMaterial("Elementium", Config.materialElementium);
-        Config.materialTerrasteel = getMaterial("Terrasteel", Config.materialTerrasteel);
-
-        Config.materialMachalite = getMaterial("Machalite", Config.materialMachalite);
-        Config.materialDragonite = getMaterial("Dragonite", Config.materialDragonite);
-        Config.materialGossamite = getMaterial("Gossamite", Config.materialGossamite);
-
-        Config.materialDarksteel = getMaterial("Darksteel", Config.materialDarksteel);
+        Config.poweredEnergyCapacity = configuration.getInt("poweredEnergyCapacity", Categories.SPECIFIC_TOOLS, Config.poweredEnergyCapacity, 1, Integer.MAX_VALUE, "The energy capacity of powered tools.");
+        Config.poweredEnergyUsePerBlock = configuration.getInt("poweredEnergyUsePerBlock", Categories.SPECIFIC_TOOLS, Config.poweredEnergyUsePerBlock, 1, Integer.MAX_VALUE, "How much energy powered tools will use per block destroyed (Hitting entities will use x2 this amount).");
+        Config.poweredEnergyInputRate = configuration.getInt("poweredEnergyInputRate", Categories.SPECIFIC_TOOLS, Config.poweredEnergyInputRate, 1, Integer.MAX_VALUE, "The rate at which you can fill the energy of powered tools, in energy per tick.");
 
         if(configuration.hasChanged())
             configuration.save();
