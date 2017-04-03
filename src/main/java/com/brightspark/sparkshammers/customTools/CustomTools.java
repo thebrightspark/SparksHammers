@@ -126,11 +126,44 @@ public class CustomTools
                 }
             }
 
+            //Get the tool colour
+            String colourS = getJsonString(toolObj.get("TextureColour"), null);
+            int colourI = 0;
+            if(isSpecialTool && colourS == null)
+                colourI = -1;
+            else if(colourS != null)
+            {
+                if(colourS.startsWith("0x"))
+                {
+                    //Convert the hexadecimal number to decimal
+                    try
+                    {
+                        colourI = Integer.parseInt(colourS.substring(2), 16);
+                    }
+                    catch(NumberFormatException e)
+                    {
+                        LogHelper.info("Tool '" + name + "' has an invalid hexadecimal colour!");
+                    }
+                }
+                else
+                {
+                    //Try convert the String to an integer
+                    try
+                    {
+                        colourI = Integer.parseInt(colourS);
+                    }
+                    catch(NumberFormatException e)
+                    {
+                        LogHelper.info("Tool '" + name + "' has an invalid colour! It should be a decimal value or hexadecimal beginning with '0x'");
+                    }
+                }
+            }
+
             //Create the Tool and add it to the list
             Tool tool = new Tool(
                     name,
                     material,
-                    getJsonInt(toolObj.get("TextureColour"), -1),
+                    colourI,
                     dependant);
             tools.add(tool);
         }
