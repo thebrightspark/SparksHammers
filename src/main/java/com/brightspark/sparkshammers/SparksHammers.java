@@ -57,7 +57,6 @@ public class SparksHammers
     };
 
     public static DamageSource fallingHammer = new DamageSource("fallingHammer");
-    public static BlockEventHandler blockEH = new BlockEventHandler();
     @CapabilityInject(ISparkEnergyStorage.class)
     public static Capability<ISparkEnergyStorage> energyCapability;
 
@@ -100,7 +99,6 @@ public class SparksHammers
         SHTileEntities.init();
 
         NetworkRegistry.INSTANCE.registerGuiHandler(this, new GuiHandler());
-        MinecraftForge.EVENT_BUS.register(blockEH); //Block Event Handler for the Nether Star Hammer
 
         SHAchievements.init(); //Adds achievements
 

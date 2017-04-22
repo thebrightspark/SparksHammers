@@ -7,56 +7,34 @@ import com.brightspark.sparkshammers.util.NBTHelper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
-import net.minecraftforge.common.ForgeHooks;
+import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.event.world.BlockEvent.BreakEvent;
+import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerLoggedOutEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
+@Mod.EventBusSubscriber
 public class BlockEventHandler
 {
-    /**
-     * Object content:
-     * 0: World -> the world
-     * 1: EntityPlayer -> player which mined the blocks
-     * 2: ItemStack -> hammer being used
-     * 3: EnumFacing -> mining direction
-     * 4: BlockPos -> hit block position
-     * 5: Float -> block strength
-     * 6: Integer -> current iteration
-     */
-    private ArrayList<Object[]> miningSchedule;
-    private boolean isMining;
-    private int tickDelay;
+    private static ArrayList<MiningObject> miningSchedule = new ArrayList<MiningObject>();
+    private static boolean isMining = false;
+    private static int tickDelay = 0;
     private static final int tickDelayMax = 2;
 
-    public BlockEventHandler()
+    private static MiningObject getPlayerMining(EntityPlayer player)
     {
-        isMining = false;
-        tickDelay = 0;
-        miningSchedule = new ArrayList<Object[]>();
-    }
-
-    public boolean canPlayerMine(EntityPlayer player)
-    {
-        return getPlayerMining(player) == null;
-    }
-
-    private Object[] getPlayerMining(EntityPlayer player)
-    {
-        for(Object[] o : miningSchedule)
-            if((o[1]).equals(player))
+        for(MiningObject o : miningSchedule)
+            if(o.player.equals(player))
                 return o;
         return null;
     }
 
-    private int getPlayerMiningIndex(EntityPlayer player)
+    private static int getPlayerMiningIndex(EntityPlayer player)
     {
         return miningSchedule.indexOf(getPlayerMining(player));
     }
@@ -64,43 +42,39 @@ public class BlockEventHandler
     //This will stop the player from mining using the Nether Star hammer if already mining.
     //Otherwise it'll add a new mining instance for the onWorldTick to dig out.
     @SubscribeEvent
-    public void onBlockBreak(BreakEvent event)
+    public static void onBlockBreak(BreakEvent event)
     {
-        ItemStack heldStack = event.getPlayer().getHeldItem(EnumHand.MAIN_HAND);
-        if(heldStack == null) return;
+        ItemStack heldStack = event.getPlayer().getHeldItemMainhand();
+        if(heldStack.isEmpty()) return;
         Item heldItem = heldStack.getItem();
         if(heldItem instanceof ItemHammerNetherStar)
         {
-            Object[] playerMining = getPlayerMining(event.getPlayer());
+            MiningObject playerMining = getPlayerMining(event.getPlayer());
             if(playerMining == null)
             {
-                //LogHelper.info("Starting new mining!");
                 //Player isn't mining yet, so we'll start mining
-                EntityPlayer player = event.getPlayer();
-                //Add a NBT tag to the hammer for future checks
-                NBTHelper.setBoolean(heldStack, "mining", true);
-                miningSchedule.add(new Object[] {
-                        player.world,
-                        player,
-                        heldStack.copy(),
-                        ((ItemHammerNetherStar) heldItem).rayTrace(event.getWorld(), player, false).sideHit.getOpposite(),
-                        event.getPos(),
-                        new Float(ForgeHooks.blockStrength(event.getState(), player, player.world, event.getPos())),
-                        new Integer(1),
-                        new Byte((byte)2)});
-                heldStack.damageItem(1, player);
-            }
-            else if(!NBTHelper.hasTag(heldStack, "mining"))
-            {
-                //LogHelper.info("Already mining! Cancelling block break.");
-                event.setCanceled(true);
+                miningSchedule.add(new MiningObject(event.getPlayer(), event.getPos(), event.getState()));
+                heldStack.damageItem(1, event.getPlayer());
             }
         }
     }
 
+    //This event is called after the BreakEvent, as well as Item#onBlockStartBreak, so we'll add the NBT tag here.
+    @SubscribeEvent
+    public static void onHarvestBlock(BlockEvent.HarvestDropsEvent event)
+    {
+        if(event.getHarvester() == null) return;
+        ItemStack heldStack = event.getHarvester().getHeldItemMainhand();
+        if(heldStack.isEmpty() || !(heldStack.getItem() instanceof ItemHammerNetherStar)) return;
+
+        MiningObject mining = getPlayerMining(event.getHarvester());
+        if(mining != null && mining.iteration == 1)
+            NBTHelper.setBoolean(mining.stackActual, "mining", true);
+    }
+
     //Iterates through the mining schedule and digs as necessary
     @SubscribeEvent
-    public void onTick(TickEvent event)
+    public static void onTick(TickEvent event)
     {
         //Mines if possible
         if(!isMining && miningSchedule.size() > 0 && event.type == TickEvent.Type.SERVER && event.phase == TickEvent.Phase.END)
@@ -110,46 +84,41 @@ public class BlockEventHandler
                 return;
             isMining = true;
             tickDelay = 0;
-            for(int i = 0; i < miningSchedule.size(); i++)
-            {
-                Object[] o = miningSchedule.get(i);
 
-                ItemStack stack = (ItemStack) o[2];
-                ItemHammerNetherStar hammer = (ItemHammerNetherStar) stack.getItem();
-                EnumFacing miningDir = (EnumFacing) o[3];
-                int iteration = (Integer) o[6];
-                //LogHelper.info("Mining iteration " + iteration + " for hole " + i);
-                BlockPos centerPos = ((BlockPos) o[4]).offset(miningDir, iteration);
-                BlockPos[] positions = CommonUtils.getBreakArea(hammer, centerPos, miningDir.getOpposite(), (EntityPlayer) o[1]);
-                BlockPos start = positions[0];
-                BlockPos end = positions[1];
+            Iterator<MiningObject> miningIterator = miningSchedule.iterator();
+            while(miningIterator.hasNext())
+            {
+                MiningObject o = miningIterator.next();
+
+                ItemHammerNetherStar hammer = (ItemHammerNetherStar) o.stackCopy.getItem();
+                BlockPos centerPos = o.getCenterPos();
+                BlockPos[] positions = CommonUtils.getBreakArea(hammer, centerPos, o.facing.getOpposite(), o.player);
 
                 //Break the blocks
-                CommonUtils.breakArea(stack, (World) o[0], (EntityPlayer) o[1], (Float) o[5], start, centerPos, end);
+                CommonUtils.breakArea(o.stackCopy, o.world, o.player, o.blockStrength, positions[0], centerPos, positions[1]);
 
-                if(++iteration > Config.netherStarHammerDistance)
+                if(++o.iteration > Config.netherStarHammerDistance)
                 {
                     //If reached end of mining, then remove from mining schedule
-                    NBTHelper.removeTag(stack, "mining");
-                    miningSchedule.remove(o);
-                }
-                else
-                {
-                    //Increase the iteration
-                    o[6] = iteration;
-                    miningSchedule.set(i, o);
+                    if(!o.stackActual.isEmpty())
+                        NBTHelper.setBoolean(o.stackActual, "mining", false);
+                    miningIterator.remove();
                 }
             }
+
             isMining = false;
         }
     }
 
     //This will be used to check if the players currently mining, and will remove the mining for the player.
     @SubscribeEvent
-    public void onPlayerLogout(PlayerLoggedOutEvent event)
+    public static void onPlayerLogout(PlayerLoggedOutEvent event)
     {
         int miningIndex = getPlayerMiningIndex(event.player);
         if(miningIndex == -1) return;
+        ItemStack stack = miningSchedule.get(miningIndex).stackActual;
+        if(!stack.isEmpty())
+            NBTHelper.setBoolean(stack, "mining", false);
         miningSchedule.remove(miningIndex);
     }
 }
