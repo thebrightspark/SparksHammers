@@ -1,8 +1,10 @@
 package com.brightspark.sparkshammers.item;
 
 import com.brightspark.sparkshammers.customTools.Tool;
+import com.brightspark.sparkshammers.util.NBTHelper;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -36,5 +38,13 @@ public class ItemHammerNetherStar extends ItemAOE
     public boolean onBlockDestroyed(ItemStack stack, World worldIn, IBlockState state, BlockPos pos, EntityLivingBase entityLiving)
     {
         return true;
+    }
+
+    @Override
+    public boolean onBlockStartBreak(ItemStack stack, BlockPos pos, EntityPlayer player)
+    {
+        //Can only mine when the NBT tag isn't true
+        if(NBTHelper.getBoolean(stack, "mining")) return true;
+        return super.onBlockStartBreak(stack, pos, player);
     }
 }
