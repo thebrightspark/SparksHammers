@@ -34,27 +34,23 @@ public class BlockEventHandler
         return null;
     }
 
-    private static int getPlayerMiningIndex(EntityPlayer player)
-    {
-        return miningSchedule.indexOf(getPlayerMining(player));
-    }
-
     //This will stop the player from mining using the Nether Star hammer if already mining.
     //Otherwise it'll add a new mining instance for the onWorldTick to dig out.
     @SubscribeEvent
     public static void onBlockBreak(BreakEvent event)
     {
-        ItemStack heldStack = event.getPlayer().getHeldItemMainhand();
+        EntityPlayer player = event.getPlayer();
+        ItemStack heldStack = player.getHeldItemMainhand();
         if(heldStack.isEmpty()) return;
         Item heldItem = heldStack.getItem();
         if(heldItem instanceof ItemHammerNetherStar)
         {
-            MiningObject playerMining = getPlayerMining(event.getPlayer());
-            if(playerMining == null)
+            MiningObject playerMining = getPlayerMining(player);
+            if(player.capabilities.isCreativeMode || playerMining == null)
             {
-                //Player isn't mining yet, so we'll start mining
-                miningSchedule.add(new MiningObject(event.getPlayer(), event.getPos(), event.getState()));
-                heldStack.damageItem(1, event.getPlayer());
+                //Player is in creative or isn't mining yet, so we'll start mining
+                miningSchedule.add(new MiningObject(player, event.getPos(), event.getState()));
+                heldStack.damageItem(1, player);
             }
         }
     }
@@ -63,7 +59,7 @@ public class BlockEventHandler
     @SubscribeEvent
     public static void onHarvestBlock(BlockEvent.HarvestDropsEvent event)
     {
-        if(event.getHarvester() == null) return;
+        if(event.getHarvester() == null || event.getHarvester().capabilities.isCreativeMode) return;
         ItemStack heldStack = event.getHarvester().getHeldItemMainhand();
         if(heldStack.isEmpty() || !(heldStack.getItem() instanceof ItemHammerNetherStar)) return;
 
@@ -114,11 +110,16 @@ public class BlockEventHandler
     @SubscribeEvent
     public static void onPlayerLogout(PlayerLoggedOutEvent event)
     {
-        int miningIndex = getPlayerMiningIndex(event.player);
-        if(miningIndex == -1) return;
-        ItemStack stack = miningSchedule.get(miningIndex).stackActual;
-        if(!stack.isEmpty())
-            NBTHelper.setBoolean(stack, "mining", false);
-        miningSchedule.remove(miningIndex);
+        Iterator<MiningObject> miningIterator = miningSchedule.iterator();
+        while(miningIterator.hasNext())
+        {
+            MiningObject o = miningIterator.next();
+            if(o.player.equals(event.player))
+            {
+                if(!o.stackActual.isEmpty())
+                    NBTHelper.setBoolean(o.stackActual, "mining", false);
+                miningIterator.remove();
+            }
+        }
     }
 }

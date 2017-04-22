@@ -19,11 +19,13 @@ public class ItemHammerNetherStar extends ItemAOE
     }
 
     @SideOnly(Side.CLIENT)
+    @Override
     public boolean hasEffect(ItemStack stack)
     {
         return true;
     }
 
+    @Override
     public boolean hitEntity(ItemStack stack, EntityLivingBase entityHit, EntityLivingBase player)
     {
         //Damages hammer for 1 tunnel mining use
@@ -32,11 +34,13 @@ public class ItemHammerNetherStar extends ItemAOE
     }
 
     //Overriding this to stop item damage which is handled elsewhere
+    @Override
     public boolean onBlockDestroyed(ItemStack stack, World worldIn, IBlockState state, BlockPos pos, EntityLivingBase entityLiving)
     {
         return true;
     }
 
+    @Override
     public boolean onBlockStartBreak(ItemStack stack, BlockPos pos, EntityPlayer player)
     {
         //Can only mine when the NBT tag isn't true
