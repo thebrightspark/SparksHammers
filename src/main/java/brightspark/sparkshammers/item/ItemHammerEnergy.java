@@ -16,7 +16,7 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.capabilities.ICapabilityProvider;
+import net.minecraftforge.common.capabilities.ICapabilitySerializable;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
 import net.minecraftforge.fml.relauncher.Side;
@@ -106,7 +106,7 @@ public class ItemHammerEnergy extends ItemAOE implements IEnergyContainerItem
     @Override
     public net.minecraftforge.common.capabilities.ICapabilityProvider initCapabilities(ItemStack stack, NBTTagCompound nbt)
     {
-        return new ICapabilityProvider()
+        return new ICapabilitySerializable<NBTTagCompound>()
         {
             SHEnergyStorage energy = new SHEnergyStorage(Config.poweredEnergyCapacity, Config.poweredEnergyInputRate, 0);
 
@@ -123,6 +123,18 @@ public class ItemHammerEnergy extends ItemAOE implements IEnergyContainerItem
                 if(capability == CapabilityEnergy.ENERGY)
                     return (T) energy;
                 return null;
+            }
+
+            @Override
+            public NBTTagCompound serializeNBT()
+            {
+                return energy.serializeNBT();
+            }
+
+            @Override
+            public void deserializeNBT(NBTTagCompound nbt)
+            {
+                energy.deserializeNBT(nbt);
             }
         };
     }
