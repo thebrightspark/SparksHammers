@@ -21,7 +21,7 @@ plugins {
 }
 */
 version = "1.10.2-1.6.4"
-group= "com.brightspark.sparkshammers" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
+group= "brightspark.sparkshammers" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = "SparksHammers"
 
 minecraft {
