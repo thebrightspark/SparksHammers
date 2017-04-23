@@ -3,6 +3,7 @@ package brightspark.sparkshammers.item;
 import brightspark.sparkshammers.customTools.Tool;
 import brightspark.sparkshammers.energy.SHEnergyStorage;
 import brightspark.sparkshammers.reference.Config;
+import cofh.api.energy.IEnergyContainerItem;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.creativetab.CreativeTabs;
@@ -25,7 +26,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class ItemHammerEnergy extends ItemAOE
+public class ItemHammerEnergy extends ItemAOE implements IEnergyContainerItem
 {
     public ItemHammerEnergy(Tool tool, boolean isExcavator)
     {
@@ -52,9 +53,28 @@ public class ItemHammerEnergy extends ItemAOE
         return stack.getCapability(CapabilityEnergy.ENERGY, null);
     }
 
-    public static int getEnergyStored(ItemStack stack)
+    @Override
+    public int receiveEnergy(ItemStack container, int maxReceive, boolean simulate)
     {
-        return getEnergyStorage(stack).getEnergyStored();
+        return getEnergyStorage(container).receiveEnergy(maxReceive, simulate);
+    }
+
+    @Override
+    public int extractEnergy(ItemStack container, int maxExtract, boolean simulate)
+    {
+        return getEnergyStorage(container).extractEnergy(maxExtract, simulate);
+    }
+
+    @Override
+    public int getEnergyStored(ItemStack container)
+    {
+        return getEnergyStorage(container).getEnergyStored();
+    }
+
+    @Override
+    public int getMaxEnergyStored(ItemStack container)
+    {
+        return getEnergyStorage(container).getMaxEnergyStored();
     }
 
     public static boolean useEnergy(ItemStack stack, int amount)
