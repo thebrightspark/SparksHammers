@@ -30,9 +30,12 @@ public class SHBlocks
                 {
                     super.onCreated(stack, worldIn, player);
                     //Handle achievements
+                    //TODO: Review for 1.12
+                    /*
                     Item item = stack.getItem();
                     if(item.equals(Item.getItemFromBlock(SHBlocks.blockHammerCraft)))
                         player.addStat(SHAchievements.craftingTable);
+                    */
                 }
             }.setRegistryName(block.getRegistryName()));
     }

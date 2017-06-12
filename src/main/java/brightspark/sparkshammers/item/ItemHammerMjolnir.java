@@ -7,7 +7,10 @@ import brightspark.sparkshammers.util.NBTHelper;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockSnow;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.multiplayer.WorldClient;
 import net.minecraft.client.resources.I18n;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.effect.EntityLightningBolt;
 import net.minecraft.entity.player.EntityPlayer;
@@ -25,6 +28,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+import javax.annotation.Nullable;
 import java.util.List;
 import java.util.UUID;
 
@@ -230,15 +234,17 @@ public class ItemHammerMjolnir extends ItemAOE
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void addInformation(ItemStack stack, EntityPlayer player, List<String> tooltip, boolean advanced)
+    public void addInformation(ItemStack stack, @Nullable World world, List<String> tooltip, ITooltipFlag advanced)
     {
+        if(world == null || !world.isRemote) return;
+
         String name = getOwnerName(stack);
         String text = I18n.format(stack.getUnlocalizedName() + ".tooltip");
 
         if(name.equals("None"))
             //No owner
             text += TextFormatting.GOLD;
-        else if(name.equals(player.getDisplayNameString()))
+        else if(name.equals(Minecraft.getMinecraft().player.getDisplayNameString()))
             //Player holding item is owner
             text += TextFormatting.GREEN;
         else

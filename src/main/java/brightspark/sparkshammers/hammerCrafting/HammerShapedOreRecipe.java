@@ -5,10 +5,12 @@ import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
+import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.NonNullList;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.oredict.OreDictionary;
+import net.minecraftforge.oredict.OreIngredient;
 
 import java.util.HashMap;
 import java.util.Iterator;
@@ -28,7 +30,7 @@ public class HammerShapedOreRecipe implements IRecipe
     private static final int MAX_CRAFT_GRID_HEIGHT = 3;
 
     private ItemStack output = null;
-    private Object[] input = null;
+    private NonNullList<Ingredient> input = null;
     public int width = 0;
     public int height = 0;
     //private boolean mirrored = true;
@@ -57,11 +59,11 @@ public class HammerShapedOreRecipe implements IRecipe
         }
         */
 
-        if (recipe[idx] instanceof String[])
+        if(recipe[idx] instanceof String[])
         {
             String[] parts = ((String[])recipe[idx++]);
 
-            for (String s : parts)
+            for(String s : parts)
             {
                 width = s.length();
                 shape += s;
@@ -71,7 +73,7 @@ public class HammerShapedOreRecipe implements IRecipe
         }
         else
         {
-            while (recipe[idx] instanceof String)
+            while(recipe[idx] instanceof String)
             {
                 String s = (String)recipe[idx++];
                 shape += s;
@@ -80,7 +82,7 @@ public class HammerShapedOreRecipe implements IRecipe
             }
         }
 
-        if (width * height != shape.length())
+        if(width * height != shape.length())
         {
             String ret = "Invalid shaped ore recipe: ";
             for (Object tmp :  recipe)
@@ -89,21 +91,24 @@ public class HammerShapedOreRecipe implements IRecipe
             throw new RuntimeException(ret);
         }
 
-        HashMap<Character, Object> itemMap = new HashMap<Character, Object>();
+        HashMap<Character, Ingredient> itemMap = new HashMap<>();
 
-        for (; idx < recipe.length; idx += 2)
+        for(; idx < recipe.length; idx += 2)
         {
             Character chr = (Character)recipe[idx];
             Object in = recipe[idx + 1];
 
-            if (in instanceof ItemStack)
-                itemMap.put(chr, ((ItemStack)in).copy());
-            else if (in instanceof Item)
-                itemMap.put(chr, new ItemStack((Item)in));
-            else if (in instanceof Block)
-                itemMap.put(chr, new ItemStack((Block)in, 1, OreDictionary.WILDCARD_VALUE));
-            else if (in instanceof String)
-                itemMap.put(chr, OreDictionary.getOres((String)in));
+            //TODO: Review for 1.12
+            if(in instanceof ItemStack)
+                itemMap.put(chr, Ingredient.func_193369_a(((ItemStack)in).copy()));
+            else if(in instanceof Item)
+                itemMap.put(chr, Ingredient.func_193367_a((Item)in));
+            else if(in instanceof Block)
+                itemMap.put(chr, Ingredient.func_193369_a(new ItemStack((Block)in, 1, OreDictionary.WILDCARD_VALUE)));
+            else if(in instanceof String)
+                itemMap.put(chr, new OreIngredient((String)in));
+            else if(in instanceof Ingredient)
+                itemMap.put(chr, (Ingredient) in);
             else
             {
                 String ret = "Invalid shaped ore recipe: ";
@@ -114,10 +119,11 @@ public class HammerShapedOreRecipe implements IRecipe
             }
         }
 
-        input = new Object[width * height];
+        //TODO: Review for 1.12
+        input = NonNullList.withSize(width * height, Ingredient.field_193370_a);
         int x = 0;
-        for (char chr : shape.toCharArray())
-            input[x++] = itemMap.get(chr);
+        for(char chr : shape.toCharArray())
+            input.add(x++, itemMap.get(chr));
     }
 
     /**
@@ -126,11 +132,12 @@ public class HammerShapedOreRecipe implements IRecipe
     @Override
     public ItemStack getCraftingResult(InventoryCrafting var1){ return output.copy(); }
 
-    /**
-     * Returns the size of the recipe area
-     */
+    //TODO: Review for 1.12
     @Override
-    public int getRecipeSize(){ return input.length; }
+    public boolean func_194133_a(int i, int j)
+    {
+        return i >= width && j >= height;
+    }
 
     @Override
     public ItemStack getRecipeOutput(){ return output; }
@@ -168,16 +175,13 @@ public class HammerShapedOreRecipe implements IRecipe
         {
             for (int x = 0; x < MAX_CRAFT_GRID_WIDTH; x++)
             {
-                Object target = input[x + (y * MAX_CRAFT_GRID_WIDTH)];
-
+                Ingredient target = input.get(x + (y * MAX_CRAFT_GRID_WIDTH));
                 ItemStack slot = inv.getStackInRowAndColumn(x, y);
-                /*
-                if(slot == null)
-                    LogHelper.info("Crafting slot " + x + "," + y + ": Null");
-                else
-                    LogHelper.info("Crafting slot " + x + "," + y + ": " + slot.getDisplayName());
-                */
 
+                if(!target.apply(slot))
+                    return false;
+
+                /*
                 if (target instanceof ItemStack)
                 {
                     if(!OreDictionary.itemMatches((ItemStack)target, slot, false))
@@ -196,6 +200,7 @@ public class HammerShapedOreRecipe implements IRecipe
                 }
                 else if(target == null && !slot.isEmpty())
                     return false;
+                */
             }
         }
 
@@ -209,16 +214,6 @@ public class HammerShapedOreRecipe implements IRecipe
         return this;
     }
     */
-
-    /**
-     * Returns the input for this recipe, any mod accessing this value should never
-     * manipulate the values in this array as it will effect the recipe itself.
-     * @return The recipes input vales.
-     */
-    public Object[] getInput()
-    {
-        return input;
-    }
 
     public int getWidth()
     {
@@ -252,5 +247,25 @@ public class HammerShapedOreRecipe implements IRecipe
         }
         str = str.substring(0, str.length()-2);
         return str;
+    }
+
+    //TODO: Review for 1.12
+    /**
+     * Gets the inputs
+     */
+    @Override
+    public NonNullList<Ingredient> func_192400_c()
+    {
+        return input;
+    }
+
+    //TODO: Review for 1.12
+    /**
+     * Gets the group for this recipe
+     */
+    @Override
+    public String func_193358_e()
+    {
+        return "";
     }
 }

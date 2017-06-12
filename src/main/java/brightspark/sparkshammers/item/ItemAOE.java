@@ -288,6 +288,8 @@ public class ItemAOE extends ItemTool implements IColourable
         }
 
         //Handle achievements
+        //TODO: Review for 1.12
+        /*
         Item item = stack.getItem();
         if(item.equals(SHItems.getItemById("hammer_wood")))
             player.addStat(SHAchievements.woodHammer);
@@ -295,6 +297,7 @@ public class ItemAOE extends ItemTool implements IColourable
             player.addStat(SHAchievements.diamondHammer);
         else if(item.equals(SHItems.hammerNetherStar))
             player.addStat(SHAchievements.netherStarHammer);
+        */
     }
 
     @Override

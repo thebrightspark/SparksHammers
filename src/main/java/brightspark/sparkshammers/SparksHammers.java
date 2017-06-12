@@ -71,7 +71,8 @@ public class SparksHammers
 
         if(event.getSide() == Side.CLIENT)
             SHItems.regColours();
-        SHRecipes.init(); //Adds vanilla crafting table recipes
+        //TODO: Review for 1.12
+        //SHRecipes.init();
         SHTileEntities.init();
 
         NetworkRegistry.INSTANCE.registerGuiHandler(this, new GuiHandler());

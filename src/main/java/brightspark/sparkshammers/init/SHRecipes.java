@@ -4,6 +4,7 @@ import brightspark.sparkshammers.hammerCrafting.HammerCraftingManager;
 import brightspark.sparkshammers.item.ItemAOE;
 import brightspark.sparkshammers.reference.Config;
 import brightspark.sparkshammers.reference.Names;
+import brightspark.sparkshammers.reference.Reference;
 import brightspark.sparkshammers.util.CommonUtils;
 import brightspark.sparkshammers.util.LoaderHelper;
 import brightspark.sparkshammers.util.LogHelper;
@@ -11,16 +12,25 @@ import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.fml.common.registry.GameRegistry;
+import net.minecraft.item.crafting.CraftingManager;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 
 public class SHRecipes
 {
+    private static final ResourceLocation GROUP = new ResourceLocation(Reference.MOD_ID);
+
+    //TODO: Review for 1.12
+    private static void addShapedOreRecipe(ItemStack output, Object... inputs)
+    {
+        CraftingManager.func_193372_a(output.getItem().getRegistryName(), new ShapedOreRecipe(GROUP, output, inputs));
+    }
+
     public static void init()
     {
         //Wooden Hammer Head
-        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(SHItems.hammerHeadWood), "xxx", "xxx", "   ", 'x', "logWood"));
+        addShapedOreRecipe(new ItemStack(SHItems.hammerHeadWood), "xxx", "xxx", "   ", 'x', "logWood");
 
         //Hammer Crafting Table
         Item hammerWood = SHItems.getItemById("hammer_wood");
@@ -29,17 +39,17 @@ public class SHRecipes
             centerItem = new ItemStack(SHItems.hammerHeadWood);
         else
             centerItem = new ItemStack(hammerWood, 1, OreDictionary.WILDCARD_VALUE);
-        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(SHBlocks.blockHammerCraft), "scs", "chc", "scs", 's', "stone", 'c', Blocks.CRAFTING_TABLE, 'h', centerItem));
+        addShapedOreRecipe(new ItemStack(SHBlocks.blockHammerCraft), "scs", "chc", "scs", 's', "stone", 'c', Blocks.CRAFTING_TABLE, 'h', centerItem);
 
         //Wooden Hammer
         if(hammerWood != null)
-            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(SHItems.getItemById("hammer_wood")), " x ", " s ", " s ", 'x', SHItems.hammerHeadWood, 's', "plankWood"));
+            addShapedOreRecipe(new ItemStack(SHItems.getItemById("hammer_wood")), " x ", " s ", " s ", 'x', SHItems.hammerHeadWood, 's', "plankWood");
 
         //Wooden Excavator
         if(SHItems.excavatorHeadWood != null)
         {
-            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(SHItems.excavatorHeadWood), " x ", "xxx", "   ", 'x', "logWood"));
-            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(SHItems.getItemById("excavator_wood")), " x ", " s ", " s ", 'x', SHItems.excavatorHeadWood, 's', "plankWood"));
+            addShapedOreRecipe(new ItemStack(SHItems.excavatorHeadWood), " x ", "xxx", "   ", 'x', "logWood");
+            addShapedOreRecipe(new ItemStack(SHItems.getItemById("excavator_wood")), " x ", " s ", " s ", 'x', SHItems.excavatorHeadWood, 's', "plankWood");
         }
 
         /*

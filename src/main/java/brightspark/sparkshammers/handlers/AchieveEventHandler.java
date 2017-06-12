@@ -9,9 +9,11 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent;
 
-@Mod.EventBusSubscriber
+//@Mod.EventBusSubscriber
 public class AchieveEventHandler
 {
+    //TODO: Review for 1.12
+    /*
     @SubscribeEvent
     public void onPickup(PlayerEvent.ItemPickupEvent event)
     {
@@ -26,4 +28,5 @@ public class AchieveEventHandler
         if(event.getSource().getDamageType().equals(SparksHammers.fallingHammer.getDamageType()))
             event.getEntityPlayer().addStat(SHAchievements.mjolnirFallDeath);
     }
+    */
 }

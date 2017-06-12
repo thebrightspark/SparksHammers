@@ -23,7 +23,6 @@ import net.minecraft.init.MobEffects;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.PotionEffect;
-import net.minecraft.stats.AchievementList;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.EnumFacing;
@@ -114,10 +113,12 @@ public class BlockHammer extends BlockContainer
         if(hammer != null && hand == EnumHand.MAIN_HAND && CommonUtils.isStackEmptyOrNull(heldStack))
         {
             LogHelper.info("Player has empty main hand");
-            if(!hammer.hasOwner())
-                player.addStat(SHAchievements.mjolnir);
+            //TODO: Sort out achievements
+            //if(!hammer.hasOwner())
+            //    player.addStat(SHAchievements.mjolnir);
             //Player needs to have killed the dragon to be worthy
-            if((!hammer.hasOwner() || hammer.isOwner(player)) && (!Config.mjolnirPickupNeedsDragonAchieve || player.hasAchievement(AchievementList.THE_END2)))
+            //TODO: Sort out achievements
+            if((!hammer.hasOwner() || hammer.isOwner(player))) //&& (!Config.mjolnirPickupNeedsDragonAchieve || player.hasAchievement(AchievementList.THE_END2)))
             {
                 //Player is worthy
                 ItemStack givenHammer = new ItemStack(SHItems.hammerMjolnir);
@@ -129,16 +130,18 @@ public class BlockHammer extends BlockContainer
             else
             {
                 //Player is not worthy
-                player.addStat(SHAchievements.mjolnirNope);
+                //TODO: Sort out achievements
+                //player.addStat(SHAchievements.mjolnirNope);
                 player.addPotionEffect(new PotionEffect(MobEffects.WEAKNESS, 200, 1));
-                if(player.hasAchievement(AchievementList.THE_END2))
-                {
+                //TODO: Sort out achievements
+                //if(player.hasAchievement(AchievementList.THE_END2))
+                //{
                     player.sendMessage(new TextComponentTranslation("item.hammer_mjolnir.chat.wrongPlayer.1"));
                     player.sendMessage(new TextComponentString(TextFormatting.GOLD + hammer.getOwnerName() + TextFormatting.RESET + " " + I18n.format("item.hammer_mjolnir.chat.wrongPlayer.2")));
-                }
-                else
+                //}
+                //else
                     //Player has not killed ender dragon
-                    player.sendMessage(new TextComponentTranslation("item.hammer_mjolnir.chat.noAchieve"));
+                    //player.sendMessage(new TextComponentTranslation("item.hammer_mjolnir.chat.noAchieve"));
             }
             return true;
         }

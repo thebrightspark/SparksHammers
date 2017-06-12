@@ -6,10 +6,9 @@ import brightspark.sparkshammers.reference.Config;
 import cofh.api.energy.IEnergyContainerItem;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.resources.I18n;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
@@ -36,11 +35,11 @@ public class ItemHammerEnergy extends ItemAOE implements IEnergyContainerItem
 
     @SideOnly(Side.CLIENT)
     @Override
-    public void getSubItems(Item itemIn, CreativeTabs tab, NonNullList<ItemStack> subItems)
+    public void getSubItems(CreativeTabs tab, NonNullList<ItemStack> subItems)
     {
-        super.getSubItems(itemIn, tab, subItems);
+        super.getSubItems(tab, subItems);
 
-        ItemStack poweredStack = new ItemStack(itemIn);
+        ItemStack poweredStack = new ItemStack(this);
         SHEnergyStorage energy = ((SHEnergyStorage) poweredStack.getCapability(CapabilityEnergy.ENERGY, null));
         if(energy != null)
         {
@@ -142,7 +141,7 @@ public class ItemHammerEnergy extends ItemAOE implements IEnergyContainerItem
 
     @SideOnly(Side.CLIENT)
     @Override
-    public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced)
+    public void addInformation(ItemStack stack, @Nullable World world, List<String> tooltip, ITooltipFlag advanced)
     {
         IEnergyStorage energy = getEnergyStorage(stack);
         tooltip.add(I18n.format("item.hammer_powered.tooltip") + ":");
