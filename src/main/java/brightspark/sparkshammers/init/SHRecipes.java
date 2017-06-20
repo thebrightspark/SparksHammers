@@ -12,8 +12,8 @@ import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.CraftingManager;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 
@@ -21,10 +21,9 @@ public class SHRecipes
 {
     private static final ResourceLocation GROUP = new ResourceLocation(Reference.MOD_ID);
 
-    //TODO: Review for 1.12
     private static void addShapedOreRecipe(ItemStack output, Object... inputs)
     {
-        CraftingManager.func_193372_a(output.getItem().getRegistryName(), new ShapedOreRecipe(GROUP, output, inputs));
+        ForgeRegistries.RECIPES.register(new ShapedOreRecipe(GROUP, output, inputs).setRegistryName(Reference.MOD_ID, output.getItem().getRegistryName().getResourcePath()));
     }
 
     public static void init()

@@ -48,9 +48,9 @@ public class ItemHammerEnergy extends ItemAOE implements IEnergyContainerItem
         }
     }
 
-    public static IEnergyStorage getEnergyStorage(ItemStack stack)
+    public static SHEnergyStorage getEnergyStorage(ItemStack stack)
     {
-        return stack.getCapability(CapabilityEnergy.ENERGY, null);
+        return (SHEnergyStorage) stack.getCapability(CapabilityEnergy.ENERGY, null);
     }
 
     @Override
@@ -79,12 +79,12 @@ public class ItemHammerEnergy extends ItemAOE implements IEnergyContainerItem
 
     public static boolean useEnergy(ItemStack stack, int amount)
     {
-        IEnergyStorage energy = getEnergyStorage(stack);
+        SHEnergyStorage energy = getEnergyStorage(stack);
         if(energy.getEnergyStored() < amount)
             return false;
         else
         {
-            energy.extractEnergy(amount, false);
+            energy.extractEnergyInternal(amount);
             return true;
         }
     }

@@ -20,6 +20,16 @@ public class SHEnergyStorage extends EnergyStorage implements INBTSerializable<N
             energy = 0;
     }
 
+    /**
+     * Internal method to bypass maxExtract check.
+     */
+    public int extractEnergyInternal(int maxExtract)
+    {
+        int energyExtracted = Math.min(energy, Math.min(this.maxReceive, maxExtract));
+        energy -= energyExtracted;
+        return energyExtracted;
+    }
+
     @Override
     public NBTTagCompound serializeNBT()
     {

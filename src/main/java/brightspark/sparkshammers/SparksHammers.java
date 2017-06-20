@@ -72,7 +72,7 @@ public class SparksHammers
         if(event.getSide() == Side.CLIENT)
             SHItems.regColours();
         //TODO: Review for 1.12
-        //SHRecipes.init();
+        SHRecipes.init();
         SHTileEntities.init();
 
         NetworkRegistry.INSTANCE.registerGuiHandler(this, new GuiHandler());

@@ -9,11 +9,9 @@ import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.NonNullList;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeHooks;
-import net.minecraftforge.oredict.OreDictionary;
-import net.minecraftforge.oredict.OreIngredient;
+import net.minecraftforge.common.crafting.CraftingHelper;
+import net.minecraftforge.fml.common.registry.IForgeRegistryEntry;
 
-import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 
 /*
@@ -23,7 +21,7 @@ I have just adapted it to work for my uses of hammer recipes.
 The mirroring has been commented out so that it can't be used.
  */
 
-public class HammerShapedOreRecipe implements IRecipe
+public class HammerShapedOreRecipe extends IForgeRegistryEntry.Impl<IRecipe> implements IRecipe
 {
     //Added in for future ease of change, but hard coded for now.
     private static final int MAX_CRAFT_GRID_WIDTH = 5;
@@ -40,90 +38,11 @@ public class HammerShapedOreRecipe implements IRecipe
     public HammerShapedOreRecipe(ItemStack result, Object... recipe)
     {
         output = result.copy();
-
-        String shape = "";
-        int idx = 0;
-
-        /*
-        if (recipe[idx] instanceof Boolean)
-        {
-            mirrored = (Boolean)recipe[idx];
-            if (recipe[idx+1] instanceof Object[])
-            {
-                recipe = (Object[])recipe[idx+1];
-            }
-            else
-            {
-                idx = 1;
-            }
-        }
-        */
-
-        if(recipe[idx] instanceof String[])
-        {
-            String[] parts = ((String[])recipe[idx++]);
-
-            for(String s : parts)
-            {
-                width = s.length();
-                shape += s;
-            }
-
-            height = parts.length;
-        }
-        else
-        {
-            while(recipe[idx] instanceof String)
-            {
-                String s = (String)recipe[idx++];
-                shape += s;
-                width = s.length();
-                height++;
-            }
-        }
-
-        if(width * height != shape.length())
-        {
-            String ret = "Invalid shaped ore recipe: ";
-            for (Object tmp :  recipe)
-                ret += tmp + ", ";
-            ret += output;
-            throw new RuntimeException(ret);
-        }
-
-        HashMap<Character, Ingredient> itemMap = new HashMap<>();
-
-        for(; idx < recipe.length; idx += 2)
-        {
-            Character chr = (Character)recipe[idx];
-            Object in = recipe[idx + 1];
-
-            //TODO: Review for 1.12
-            if(in instanceof ItemStack)
-                itemMap.put(chr, Ingredient.func_193369_a(((ItemStack)in).copy()));
-            else if(in instanceof Item)
-                itemMap.put(chr, Ingredient.func_193367_a((Item)in));
-            else if(in instanceof Block)
-                itemMap.put(chr, Ingredient.func_193369_a(new ItemStack((Block)in, 1, OreDictionary.WILDCARD_VALUE)));
-            else if(in instanceof String)
-                itemMap.put(chr, new OreIngredient((String)in));
-            else if(in instanceof Ingredient)
-                itemMap.put(chr, (Ingredient) in);
-            else
-            {
-                String ret = "Invalid shaped ore recipe: ";
-                for (Object tmp :  recipe)
-                    ret += tmp + ", ";
-                ret += output;
-                throw new RuntimeException(ret);
-            }
-        }
-
-        //TODO: Review for 1.12
-        input = NonNullList.withSize(width * height, Ingredient.field_193370_a);
-        int x = 0;
-        for(char chr : shape.toCharArray())
-            input.add(x++, itemMap.get(chr));
+        CraftingHelper.ShapedPrimer primer = CraftingHelper.parseShaped(recipe);
+        width = primer.width;
+        height = primer.height;
+        input = primer.input;
+        //mirrored = primer.mirrored;
     }
 
     /**
@@ -132,9 +51,8 @@ public class HammerShapedOreRecipe implements IRecipe
     @Override
     public ItemStack getCraftingResult(InventoryCrafting var1){ return output.copy(); }
 
-    //TODO: Review for 1.12
     @Override
-    public boolean func_194133_a(int i, int j)
+    public boolean canFit(int i, int j)
     {
         return i >= width && j >= height;
     }
@@ -249,22 +167,20 @@ public class HammerShapedOreRecipe implements IRecipe
         return str;
     }
 
-    //TODO: Review for 1.12
     /**
      * Gets the inputs
      */
     @Override
-    public NonNullList<Ingredient> func_192400_c()
+    public NonNullList<Ingredient> getIngredients()
     {
         return input;
     }
 
-    //TODO: Review for 1.12
     /**
      * Gets the group for this recipe
      */
     @Override
-    public String func_193358_e()
+    public String getGroup()
     {
         return "";
     }
