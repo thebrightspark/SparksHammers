@@ -203,7 +203,7 @@ public class ItemAOE extends ItemTool implements IColourable
                     if (xPos == posHit.getX() && yPos == posHit.getY() && zPos == posHit.getZ())
                         continue;
 
-                    if(!super.onBlockStartBreak(stack, new BlockPos(xPos, yPos, zPos), player))
+                    if(!super.onBlockStartBreak(stack, new BlockPos(xPos, yPos, zPos), player) && !stack.isEmpty())
                         CommonUtils.breakBlock(stack, player.world, player, new BlockPos(xPos, yPos, zPos), posHit);
                 }
     }
