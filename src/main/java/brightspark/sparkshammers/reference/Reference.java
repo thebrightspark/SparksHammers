@@ -9,7 +9,7 @@ public class Reference
 {
     public static final String MOD_ID = "sparkshammers";
     public static final String MOD_NAME = "Spark's Hammers";
-    public static final String VERSION = "1.12-1.6.5.1";
+    public static final String VERSION = "1.12-1.6.5.2";
     public static final String DEPENDENCIES =
             "after:enderio;" +
             "after:botania;" +
