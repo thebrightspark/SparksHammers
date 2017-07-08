@@ -11,9 +11,9 @@ apply plugin: 'net.minecraftforge.gradle.forge'
 //Only edit below this line, the above code adds and enables the nessasary things for Forge to be setup.
 
 
-version = "1.12-1.6.5.2"
-group= "brightspark.sparkshammers" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
-archivesBaseName = "sparkshammers"
+version = "${project.minecraft_version}-${project.mod_version}"
+group= project.base_package // http://maven.apache.org/guides/mini/guide-naming-conventions.html
+archivesBaseName = project.mod_name
 
 sourceCompatibility = targetCompatibility = '1.8' // Need this here so eclipse task generates correctly.
 compileJava {
@@ -21,7 +21,7 @@ compileJava {
 }
 
 minecraft {
-    version = "1.12-14.21.1.2402"
+    version = "${project.minecraft_version}-${project.forge_version}"
     runDir = "run"
     
     // the mappings can be changed at any time, and must be in the following format.
@@ -29,24 +29,33 @@ minecraft {
     // stable_#            stables are built at the discretion of the MCP team.
     // Use non-default mappings at your own risk. they may not always work.
     // simply re-run your setup task after changing the mappings to update your workspace.
-    mappings = "snapshot_20170708"
+    mappings = project.forge_mappings
     // makeObfSourceJar = false // an Srg named sources jar is made by default. uncomment this to disable.
 
     //useDepAts = true
+
+    replace "@VERSION@", project.mod_version
+    replaceIn "reference/Reference.java"
 }
 
 repositories {
     maven {
         // location of the maven that hosts JEI files
-        url "http://dvs1.progwml6.com/files/maven"
+        name = "Progwml6 maven"
+        url = "http://dvs1.progwml6.com/files/maven"
+    }
+    maven {
+        // location of a maven mirror for JEI files, as a fallback
+        name = "ModMaven"
+        url = "modmaven.k-4u.nl"
     }
 }
 
 dependencies {
     // compile against the JEI API
-    //deobfProvided "mezz.jei:jei_1.11:4.0.4.199:api"
+    deobfCompile "mezz.jei:jei_${project.minecraft_version}:${project.jei_version}:api"
     // at runtime, use the full JEI jar
-    //runtime "mezz.jei:jei_1.11:4.0.4.199"
+    runtime "mezz.jei:jei_${project.minecraft_version}:${project.jei_version}"
 
     // you may put jars on which you depend on in ./libs
     // or you may define them like so..

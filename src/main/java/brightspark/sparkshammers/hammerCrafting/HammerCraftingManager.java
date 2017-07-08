@@ -1,5 +1,7 @@
 package brightspark.sparkshammers.hammerCrafting;
 
+import brightspark.sparkshammers.item.ItemAOE;
+import brightspark.sparkshammers.util.LoaderHelper;
 import com.google.common.collect.Lists;
 import net.minecraft.init.Blocks;
 import net.minecraft.inventory.InventoryCrafting;
@@ -16,6 +18,8 @@ public class HammerCraftingManager
     private static final HammerCraftingManager instance = new HammerCraftingManager();
     /** A list of all the recipes added */
     private List<HammerShapedOreRecipe> recipes = Lists.newArrayList();
+    /** A list of all the recipes which do not have any missing ingredients **/
+    private List<HammerShapedOreRecipe> validRecipes = null;
 
     /**
      * Returns the static instance of this class
@@ -61,10 +65,29 @@ public class HammerCraftingManager
     }
 
     /**
-     * Returns the List of all recipes
+     * Returns the list of all recipes
      */
     public List<HammerShapedOreRecipe> getRecipeList()
     {
         return this.recipes;
+    }
+
+    /**
+     * Returns the list of all valid recipes which do not have any missing ingredients
+     * This is used by the JEI plugin
+     */
+    public List<HammerShapedOreRecipe> getValidRecipeList()
+    {
+        if(validRecipes == null)
+        {
+            validRecipes = Lists.newArrayList();
+            for(HammerShapedOreRecipe recipe : recipes)
+            {
+                String oreDic = ((ItemAOE) recipe.getRecipeOutput().getItem()).getDependantOreDic();
+                if(oreDic == null || LoaderHelper.doesOreExist(oreDic))
+                    validRecipes.add(recipe);
+            }
+        }
+        return validRecipes;
     }
 }

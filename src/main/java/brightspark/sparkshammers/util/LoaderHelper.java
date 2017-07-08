@@ -11,16 +11,16 @@ import java.util.HashMap;
 
 public class LoaderHelper
 {
-    private static HashMap<String, Boolean> modsChecked = new HashMap<String, Boolean>();
-    private static HashMap<String, Boolean> oresChecked = new HashMap<String, Boolean>();
-    private static HashMap<String, Boolean> materialsChecked = new HashMap<String, Boolean>();
+    private static HashMap<String, Boolean> modsChecked = new HashMap<>();
+    private static HashMap<String, Boolean> oresChecked = new HashMap<>();
+    private static HashMap<String, Boolean> materialsChecked = new HashMap<>();
 
     //Ore Dictionary
-    private static ArrayList<String> oreDict = new ArrayList<String>(Arrays.asList(OreDictionary.getOreNames()));
+    private static ArrayList<String> oreDict = new ArrayList<>(Arrays.asList(OreDictionary.getOreNames()));
 
     public static void reloadLocalOreDict()
     {
-        oreDict = new ArrayList<String>(Arrays.asList(OreDictionary.getOreNames()));
+        oreDict = new ArrayList<>(Arrays.asList(OreDictionary.getOreNames()));
     }
 
     /**
@@ -57,7 +57,7 @@ public class LoaderHelper
         //Has ore already been checked before
         if(!oresChecked.containsKey(oreName))
             //Check ore and add to the list for future ore checks
-            oresChecked.put(oreName, oreDict.contains(oreName));
+            oresChecked.put(oreName, oreDict.contains(oreName) && !OreDictionary.getOres(oreName).isEmpty());
         return oresChecked.get(oreName);
     }
 
