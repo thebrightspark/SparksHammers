@@ -49,6 +49,10 @@ repositories {
         name = "ModMaven"
         url = "modmaven.k-4u.nl"
     }
+    maven {
+        name = "CoFH Maven"
+        url = "http://maven.covers1624.net"
+    }
 }
 
 dependencies {
@@ -56,6 +60,9 @@ dependencies {
     deobfCompile "mezz.jei:jei_${project.minecraft_version}:${project.jei_version}:api"
     // at runtime, use the full JEI jar
     runtime "mezz.jei:jei_${project.minecraft_version}:${project.jei_version}"
+
+    //RF API
+    deobfCompile "cofh:RedstoneFlux:${project.minecraft_version}-${project.rf_api_version}:universal"
 
     // you may put jars on which you depend on in ./libs
     // or you may define them like so..
