@@ -18,13 +18,11 @@ public class RegistrationHandler
         //Register all items
         SHItems.regItems();
         IForgeRegistry<Item> registry = event.getRegistry();
-        for(Item item : SHItems.ITEMS.values())
-            registry.register(item);
+        SHItems.ITEMS.forEach(registry::register);
 
         //Register item blocks
         SHBlocks.regBlocks();
-        for(Item item : SHBlocks.ITEM_BLOCKS.values())
-            registry.register(item);
+        SHBlocks.ITEM_BLOCKS.forEach(registry::register);
     }
 
     @SubscribeEvent
@@ -33,7 +31,6 @@ public class RegistrationHandler
         //Register all blocks
         SHBlocks.regBlocks();
         IForgeRegistry<Block> registry = event.getRegistry();
-        for(Block block : SHBlocks.BLOCKS.values())
-            registry.register(block);
+        SHBlocks.BLOCKS.forEach(registry::register);
     }
 }

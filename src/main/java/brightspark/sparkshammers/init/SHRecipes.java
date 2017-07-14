@@ -32,7 +32,7 @@ public class SHRecipes
         addShapedOreRecipe(new ItemStack(SHItems.hammerHeadWood), "xxx", "xxx", "   ", 'x', "logWood");
 
         //Hammer Crafting Table
-        Item hammerWood = SHItems.getItemById("hammer_wood");
+        Item hammerWood = SHItems.hammerWood;
         ItemStack centerItem;
         if(hammerWood == null)
             centerItem = new ItemStack(SHItems.hammerHeadWood);
@@ -42,13 +42,13 @@ public class SHRecipes
 
         //Wooden Hammer
         if(hammerWood != null)
-            addShapedOreRecipe(new ItemStack(SHItems.getItemById("hammer_wood")), " x ", " s ", " s ", 'x', SHItems.hammerHeadWood, 's', "plankWood");
+            addShapedOreRecipe(new ItemStack(SHItems.hammerWood), " x ", " s ", " s ", 'x', SHItems.hammerHeadWood, 's', "plankWood");
 
         //Wooden Excavator
         if(SHItems.excavatorHeadWood != null)
         {
             addShapedOreRecipe(new ItemStack(SHItems.excavatorHeadWood), " x ", "xxx", "   ", 'x', "logWood");
-            addShapedOreRecipe(new ItemStack(SHItems.getItemById("excavator_wood")), " x ", " s ", " s ", 'x', SHItems.excavatorHeadWood, 's', "plankWood");
+            addShapedOreRecipe(new ItemStack(SHItems.excavatorWood), " x ", " s ", " s ", 'x', SHItems.excavatorHeadWood, 's', "plankWood");
         }
 
         /*

@@ -37,7 +37,7 @@ public class SparksHammers
         @Override
         public ItemStack getTabIconItem()
         {
-            return new ItemStack(SHItems.getItemById("hammer_diamond"));
+            return new ItemStack(SHItems.hammerDiamond);
         }
 
         @Override

@@ -4,26 +4,25 @@ import brightspark.sparkshammers.block.BlockHammer;
 import brightspark.sparkshammers.block.BlockHammerCraft;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 
 public class SHBlocks
 {
-    public static Map<String, Block> BLOCKS = new HashMap<String, Block>();
-    public static Map<String, ItemBlock> ITEM_BLOCKS = new HashMap<String, ItemBlock>();
+    public static List<Block> BLOCKS = new ArrayList<>();
+    public static List<ItemBlock> ITEM_BLOCKS = new ArrayList<>();
 
     public static BlockHammer blockHammer = new BlockHammer();
     public static BlockHammerCraft blockHammerCraft = new BlockHammerCraft();
 
     public static void regBlock(Block block)
     {
-        BLOCKS.put(block.getRegistryName().getResourcePath(), block);
-        ITEM_BLOCKS.put(block.getRegistryName().getResourcePath(), (ItemBlock) new ItemBlock(block)
+        BLOCKS.add(block);
+        ITEM_BLOCKS.add((ItemBlock) new ItemBlock(block)
             {
                 @Override
                 public void onCreated(ItemStack stack, World worldIn, EntityPlayer player)
