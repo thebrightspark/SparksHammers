@@ -1,5 +1,6 @@
 package brightspark.sparkshammers.item;
 
+import brightspark.sparkshammers.SparksHammers;
 import brightspark.sparkshammers.customTools.Tool;
 import brightspark.sparkshammers.energy.SHEnergyStorage;
 import brightspark.sparkshammers.reference.Config;
@@ -25,6 +26,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+
 import java.util.List;
 
 @Optional.Interface(modid = "redstoneflux", iface = "cofh.redstoneflux.api.IEnergyContainerItem", striprefs = true)
@@ -43,7 +45,7 @@ public class ItemHammerEnergy extends ItemAOE implements IEnergyContainerItem
 
         ItemStack poweredStack = new ItemStack(this);
         SHEnergyStorage energy = ((SHEnergyStorage) poweredStack.getCapability(CapabilityEnergy.ENERGY, null));
-        if(energy != null)
+        if(tab == SparksHammers.SH_TAB && energy != null)
         {
             energy.setEnergyStored(energy.getMaxEnergyStored());
             subItems.add(poweredStack);
