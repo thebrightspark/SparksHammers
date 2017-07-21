@@ -54,10 +54,6 @@ public class SparksHammers
     {
         //Initialize item, blocks, textures/models and configs here
 
-        //TODO: Remove in a few versions (added 1.11.2-1.5)
-        if(event.getSuggestedConfigurationFile().exists() && event.getSuggestedConfigurationFile().delete())
-            LogHelper.info("Removed old config file from main config directory. Configs are now being saved in config/" + Reference.MOD_ID + "/");
-
         ConfigurationHandler.init(new File(Reference.CONFIG_DIR, "config.cfg"));
     }
 

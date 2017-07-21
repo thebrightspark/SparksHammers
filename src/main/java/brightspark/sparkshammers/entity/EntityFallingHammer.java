@@ -147,11 +147,6 @@ public class EntityFallingHammer extends EntityFallingBlock
                 entity.attackEntityFrom(damagesource, (float)Math.min(MathHelper.floor((float)i * this.fallHurtAmount), this.fallHurtMax));
             }
         }
-        if(i > 10)
-        {
-            //TODO: Create hammer falling explosion
-            //Create explosion (no block damage) which scales with height
-        }
     }
 
     protected void writeEntityToNBT(NBTTagCompound tag)
