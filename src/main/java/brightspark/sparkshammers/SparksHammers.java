@@ -67,9 +67,6 @@ public class SparksHammers
 
         if(event.getSide() == Side.CLIENT)
             SHItems.regColours();
-        //TODO: Review for 1.12
-        SHRecipes.init();
-        SHTileEntities.init();
 
         NetworkRegistry.INSTANCE.registerGuiHandler(this, new GuiHandler());
 
@@ -102,6 +99,12 @@ public class SparksHammers
             }
             if(!found) LogHelper.warn("No hammer crafting recipe found for " + tool.getRegistryName() + "!");
         }
+
+        //Null all the lists so it's not taking up extra memory
+        SHItems.voidLists();
+        SHBlocks.BLOCKS = null;
+        SHBlocks.ITEM_BLOCKS = null;
+        SHRecipes.RECIPES = null;
 
         //Prints out all crafting recipes
         /*

@@ -4,7 +4,6 @@ import brightspark.sparkshammers.customTools.CustomTools;
 import brightspark.sparkshammers.customTools.Tool;
 import brightspark.sparkshammers.item.*;
 import brightspark.sparkshammers.reference.Config;
-import brightspark.sparkshammers.reference.Names;
 import com.google.common.collect.Lists;
 import net.minecraft.client.Minecraft;
 import net.minecraft.item.Item;
@@ -16,7 +15,7 @@ import java.util.*;
 public class SHItems
 {
     //Contains all items
-    public static List<Item> ITEMS = new ArrayList<>();
+    private static List<Item> ITEMS;
     //Contains all of the AOE tools
     public static List<ItemAOE> AOE_TOOLS = new ArrayList<>();
     //Contains all of the items which use a basic coloured texture
@@ -36,7 +35,7 @@ public class SHItems
     //Debug
     public static ItemDebug debug;
 
-    public static void regItem(Item item)
+    private static void addItem(Item item)
     {
         ITEMS.add(item);
         if(item instanceof IColourable && ((IColourable)item).getTextureColour() >= 0)
@@ -45,7 +44,7 @@ public class SHItems
             AOE_TOOLS.add((ItemAOE) item);
     }
 
-    public static void regTool(Tool tool)
+    private static void addTool(Tool tool)
     {
         String name = tool.name;
 
@@ -56,38 +55,38 @@ public class SHItems
         switch(name)
         {
             case "wood":
-                regItem(hammerHeadWood = new ItemResource(Names.Items.HAMMER_HEAD_WOOD));
-                regItem(excavatorHeadWood = new ItemResource(Names.Items.EXCAVATOR_HEAD_WOOD));
-                regItem(hammerWood = new ItemAOE(tool, false));
-                regItem(excavatorWood = new ItemAOE(tool, true));
+                addItem(hammerHeadWood = new ItemResource("hammer_head_wood"));
+                addItem(excavatorHeadWood = new ItemResource("excavator_head_wood"));
+                addItem(hammerWood = new ItemAOE(tool, false));
+                addItem(excavatorWood = new ItemAOE(tool, true));
                 break;
             case "stone":
-                regItem(hammerStone = new ItemAOE(tool, false));
-                regItem(new ItemAOE(tool, true));
+                addItem(hammerStone = new ItemAOE(tool, false));
+                addItem(new ItemAOE(tool, true));
                 break;
             case "diamond":
-                regItem(hammerDiamond = new ItemAOE(tool, false));
-                regItem(new ItemAOE(tool, true));
+                addItem(hammerDiamond = new ItemAOE(tool, false));
+                addItem(new ItemAOE(tool, true));
                 break;
             case "mjolnir":
                 if(Config.enableMjolnir)
-                    regItem(hammerMjolnir = new ItemHammerMjolnir(tool));
+                    addItem(hammerMjolnir = new ItemHammerMjolnir(tool));
                 break;
             case "mini":
                 if(Config.enableMiniHammer)
-                    regItem(hammerMini = new ItemAOE(tool, false).setMineWidth(0).setShiftRotating(true));
+                    addItem(hammerMini = new ItemAOE(tool, false).setMineWidth(0).setShiftRotating(true));
                 break;
             case "giant":
                 if(Config.enableGiantHammer)
-                    regItem(hammerGiant = new ItemAOE(tool, false).setMineWidth(4).setMineHeight(4));
+                    addItem(hammerGiant = new ItemAOE(tool, false).setMineWidth(4).setMineHeight(4));
                 break;
             case "netherstar":
                 if(Config.enableNetherStarHammer)
-                    regItem(hammerNetherStar = new ItemHammerNetherStar(tool));
+                    addItem(hammerNetherStar = new ItemHammerNetherStar(tool));
                 break;
             case "powered":
                 if(Config.enablePoweredHammer)
-                    regItem(hammerPowered = new ItemHammerEnergy(tool));
+                    addItem(hammerPowered = new ItemHammerEnergy(tool));
                 break;
             //TODO: Re-add Botania tools when the mod gets updated!
             /*
@@ -99,23 +98,41 @@ public class SHItems
                 break;
             */
             default:
-                regItem(new ItemAOE(tool, false));
-                regItem(new ItemAOE(tool, true));
+                addItem(new ItemAOE(tool, false));
+                addItem(new ItemAOE(tool, true));
         }
     }
 
-    public static void regItems()
+    private static void init()
     {
-        //Only register once
-        if(!ITEMS.isEmpty()) return;
+        ITEMS = new ArrayList<>();
 
         //Debug
-        regItem(debug = new ItemDebug());
+        addItem(debug = new ItemDebug());
 
         //Gets tools from json file
         List<Tool> tools = CustomTools.read();
         //Register tools from json
-        tools.forEach(SHItems::regTool);
+        tools.forEach(SHItems::addTool);
+    }
+
+    public static Item[] getItems()
+    {
+        if(ITEMS == null) init();
+        return ITEMS.toArray(new Item[ITEMS.size()]);
+    }
+
+    public static List<Item> getItemsList()
+    {
+        return ITEMS;
+    }
+
+    public static void voidLists()
+    {
+        ITEMS = null;
+        //AOE_TOOLS = null; <- Can't void this because it's used by the JEI plugin after preinit
+        COLOURED_ITEMS = null;
+        VANILLA_NAMES = null;
     }
 
     @SideOnly(Side.CLIENT)

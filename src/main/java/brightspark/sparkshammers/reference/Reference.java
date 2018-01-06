@@ -31,4 +31,23 @@ public class Reference
         public static final UUID BRIGHT_SPARK = UUID.fromString("4adad317-d08b-412d-a75b-c2834386b088");
         public static final UUID _8BRICKDMG = UUID.fromString("647c557d-b494-45cf-9be9-f9774348d4c1");
     }
+
+    public static class Items
+    {
+        public static final String HAMMER = "hammer";
+        public static final String EXCAVATOR = "excavator";
+    }
+
+    public static class Mods
+    {
+        public static final String BOTANIA = "botania";
+        public static final String EXTRA_UTILITIES = "extrautils2";
+        public static final String ENDERIO = "enderio";
+    }
+
+    public static class ModItemIds
+    {
+        public static final String COMPRESSED_COBBLE = Mods.EXTRA_UTILITIES + ":CompressedCobblestone";
+        public static final String CAPACITOR_BANK = Mods.ENDERIO + ":blockCapBank";
+    }
 }

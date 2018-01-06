@@ -2,9 +2,8 @@ package brightspark.sparkshammers.item;
 
 import brightspark.sparkshammers.SparksHammers;
 import brightspark.sparkshammers.customTools.Tool;
-import brightspark.sparkshammers.init.SHAchievements;
 import brightspark.sparkshammers.init.SHItems;
-import brightspark.sparkshammers.reference.Names;
+import brightspark.sparkshammers.reference.EnumMaterials;
 import brightspark.sparkshammers.reference.Reference;
 import brightspark.sparkshammers.util.CommonUtils;
 import brightspark.sparkshammers.util.NBTHelper;
@@ -15,7 +14,6 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemTool;
 import net.minecraft.util.math.BlockPos;
@@ -53,17 +51,17 @@ public class ItemAOE extends ItemTool implements IColourable
     //Used for the colour tint of the head of the tool texture
     protected int textureColour = -1;
 
-    public ItemAOE(Names.EnumMaterials name)
+    public ItemAOE(EnumMaterials name)
     {
         this(name, false);
     }
 
-    public ItemAOE(Names.EnumMaterials name, boolean isExcavator)
+    public ItemAOE(EnumMaterials name, boolean isExcavator)
     {
         this(name, isExcavator, false);
     }
 
-    public ItemAOE(Names.EnumMaterials name, boolean isExcavator, boolean isInfiniteUse)
+    public ItemAOE(EnumMaterials name, boolean isExcavator, boolean isInfiniteUse)
     {
         this(name.unlocToolName(isExcavator), name.material, isExcavator, isInfiniteUse);
         textureColour = name.colour;
@@ -116,7 +114,7 @@ public class ItemAOE extends ItemTool implements IColourable
 
     protected String getLocalName(ItemStack stack)
     {
-        return localName != null ? localName + " " + CommonUtils.capitaliseFirstLetter(isExcavator ? Names.Items.EXCAVATOR : Names.Items.HAMMER) : super.getItemStackDisplayName(stack);
+        return localName != null ? localName + " " + CommonUtils.capitaliseFirstLetter(isExcavator ? Reference.Items.EXCAVATOR : Reference.Items.HAMMER) : super.getItemStackDisplayName(stack);
     }
 
     @Override

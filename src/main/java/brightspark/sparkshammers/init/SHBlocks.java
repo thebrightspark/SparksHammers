@@ -13,13 +13,13 @@ import java.util.List;
 
 public class SHBlocks
 {
-    public static List<Block> BLOCKS = new ArrayList<>();
-    public static List<ItemBlock> ITEM_BLOCKS = new ArrayList<>();
+    public static List<Block> BLOCKS;
+    public static List<ItemBlock> ITEM_BLOCKS;
 
     public static BlockHammer blockHammer = new BlockHammer();
     public static BlockHammerCraft blockHammerCraft = new BlockHammerCraft();
 
-    public static void regBlock(Block block)
+    public static void addBlock(Block block)
     {
         BLOCKS.add(block);
         ITEM_BLOCKS.add((ItemBlock) new ItemBlock(block)
@@ -39,12 +39,24 @@ public class SHBlocks
             }.setRegistryName(block.getRegistryName()));
     }
 
-    public static void regBlocks()
+    private static void init()
     {
-        //Only register once
-        if(!BLOCKS.isEmpty()) return;
+        BLOCKS = new ArrayList<>();
+        ITEM_BLOCKS = new ArrayList<>();
 
-        regBlock(blockHammer);
-        regBlock(blockHammerCraft);
+        addBlock(blockHammer);
+        addBlock(blockHammerCraft);
+    }
+
+    public static Block[] getBlocks()
+    {
+        if(BLOCKS == null) init();
+        return BLOCKS.toArray(new Block[BLOCKS.size()]);
+    }
+
+    public static ItemBlock[] getItemBlocks()
+    {
+        if(ITEM_BLOCKS == null) init();
+        return ITEM_BLOCKS.toArray(new ItemBlock[ITEM_BLOCKS.size()]);
     }
 }

@@ -1,6 +1,7 @@
 package brightspark.sparkshammers.customTools;
 
-import brightspark.sparkshammers.reference.Names;
+import brightspark.sparkshammers.reference.EnumMaterials;
+import brightspark.sparkshammers.reference.Reference;
 import net.minecraft.item.Item.ToolMaterial;
 import net.minecraft.item.ItemStack;
 
@@ -33,7 +34,7 @@ public class Tool
             throw new IllegalArgumentException("Dependant Item must be a String (ore dictionary) or an ItemStack!");
     }
 
-    public Tool(Names.EnumMaterials enumMaterial)
+    public Tool(EnumMaterials enumMaterial)
     {
         this(enumMaterial.getMaterialName(), enumMaterial.material, enumMaterial.colour);
         if(enumMaterial.dependantOreDic != null)
@@ -44,6 +45,6 @@ public class Tool
 
     public String getToolName(boolean isExcavator)
     {
-        return (isExcavator ? Names.Items.EXCAVATOR : Names.Items.HAMMER) + "_" + name;
+        return (isExcavator ? Reference.Items.EXCAVATOR : Reference.Items.HAMMER) + "_" + name;
     }
 }

@@ -4,7 +4,6 @@ import brightspark.sparkshammers.init.SHBlocks;
 import brightspark.sparkshammers.init.SHItems;
 import brightspark.sparkshammers.item.ItemAOE;
 import brightspark.sparkshammers.util.ClientUtils;
-import net.minecraft.item.Item;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -17,13 +16,12 @@ public class ModelHandler
     public static void regModels(ModelRegistryEvent event)
     {
         //Register all item models
-        for(Item tool : SHItems.ITEMS)
-        {
-            if(tool instanceof ItemAOE && ((ItemAOE)tool).getTextureColour() >= 0)
-                ClientUtils.regTool((ItemAOE) tool);
+        SHItems.getItemsList().forEach(item -> {
+            if(item instanceof ItemAOE && ((ItemAOE) item).getTextureColour() >= 0)
+                ClientUtils.regTool((ItemAOE) item);
             else
-                ClientUtils.regModel(tool);
-        }
+                ClientUtils.regModel(item);
+        });
 
         //Register block models
         SHBlocks.BLOCKS.forEach(ClientUtils::regModel);

@@ -3,7 +3,7 @@ package brightspark.sparkshammers.init;
 import brightspark.sparkshammers.hammerCrafting.HammerCraftingManager;
 import brightspark.sparkshammers.item.ItemAOE;
 import brightspark.sparkshammers.reference.Config;
-import brightspark.sparkshammers.reference.Names;
+import brightspark.sparkshammers.reference.EnumMaterials;
 import brightspark.sparkshammers.reference.Reference;
 import brightspark.sparkshammers.util.CommonUtils;
 import brightspark.sparkshammers.util.LoaderHelper;
@@ -12,22 +12,26 @@ import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fml.common.registry.ForgeRegistries;
+import net.minecraft.item.crafting.IRecipe;
 import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class SHRecipes
 {
-    private static final ResourceLocation GROUP = new ResourceLocation(Reference.MOD_ID);
+    public static List<IRecipe> RECIPES;
 
     private static void addShapedOreRecipe(ItemStack output, Object... inputs)
     {
-        ForgeRegistries.RECIPES.register(new ShapedOreRecipe(GROUP, output, inputs).setRegistryName(Reference.MOD_ID, output.getItem().getRegistryName().getResourcePath()));
+        RECIPES.add(new ShapedOreRecipe(null, output, inputs).setRegistryName(Reference.MOD_ID, output.getItem().getRegistryName().getResourcePath()));
     }
 
-    public static void init()
+    private static void init()
     {
+        RECIPES = new ArrayList<>();
+
         //Wooden Hammer Head
         addShapedOreRecipe(new ItemStack(SHItems.hammerHeadWood), "xxx", "xxx", "   ", 'x', "logWood");
 
@@ -66,11 +70,11 @@ public class SHRecipes
         if(Config.enablePoweredHammer)
         {
             boolean enderioRecipeAdded = false;
-            if(LoaderHelper.isModLoaded(Names.Mods.ENDERIO))
+            if(LoaderHelper.isModLoaded(Reference.Mods.ENDERIO))
             {
-                Item capBank = Item.getByNameOrId(Names.ModItemIds.CAPACITOR_BANK);
+                Item capBank = Item.getByNameOrId(Reference.ModItemIds.CAPACITOR_BANK);
                 if(capBank == null)
-                    LogHelper.warn("Couldn't get " + Names.ModItemIds.CAPACITOR_BANK + " for Powered Hammer recipe! Resorting to normal recipe. Please report this to mod author!");
+                    LogHelper.warn("Couldn't get " + Reference.ModItemIds.CAPACITOR_BANK + " for Powered Hammer recipe! Resorting to normal recipe. Please report this to mod author!");
                 else
                 {
                     hammerCraft.addRecipe(new ItemStack(SHItems.hammerPowered), "IBDBI", "IDCDI", "SSSS ", 'I', Items.IRON_INGOT, 'B', Blocks.IRON_BLOCK, 'D', "blockDarkSteel", 'C', new ItemStack(capBank, 1, 1), 'S', "stickWood");
@@ -91,20 +95,26 @@ public class SHRecipes
                 continue;
             }
             String topRow = tool.isExcavator ? " HHH " : "HHHHH";
-            if(oreDic.equals(Names.EnumMaterials.STONE.dependantOreDic) && LoaderHelper.isModLoaded(Names.Mods.EXTRA_UTILITIES))
+            if(oreDic.equals(EnumMaterials.STONE.dependantOreDic) && LoaderHelper.isModLoaded(Reference.Mods.EXTRA_UTILITIES))
             {
                 //Swap out for compressed cobblestone
-                Item compressedCobble = CommonUtils.getRegisteredItem(Names.ModItemIds.COMPRESSED_COBBLE);
+                Item compressedCobble = CommonUtils.getRegisteredItem(Reference.ModItemIds.COMPRESSED_COBBLE);
                 if(compressedCobble != null)
                 {
-                    LogHelper.info("Compressed Cobblestone found in " + Names.Mods.EXTRA_UTILITIES + ". Using for " + tool.getRegistryName().getResourcePath() + " recipe.");
+                    LogHelper.info("Compressed Cobblestone found in " + Reference.Mods.EXTRA_UTILITIES + ". Using for " + tool.getRegistryName().getResourcePath() + " recipe.");
                     hammerCraft.addRecipe(new ItemStack(tool), topRow, "HHHHH", "SSSS ", 'H', new ItemStack(compressedCobble), 'S', "stickWood");
                     continue;
                 }
                 else
-                    LogHelper.warn("Compressed Cobblestone not found in " + Names.Mods.EXTRA_UTILITIES + ". Resorting to normal recipes. Please report this to mod author!");
+                    LogHelper.warn("Compressed Cobblestone not found in " + Reference.Mods.EXTRA_UTILITIES + ". Resorting to normal recipes. Please report this to mod author!");
             }
             hammerCraft.addRecipe(new ItemStack(tool), topRow, "HHHHH", "SSSS ", 'H', oreDic, 'S', "stickWood");
         }
+    }
+
+    public static IRecipe[] getRecipes()
+    {
+        if(RECIPES == null) init();
+        return RECIPES.toArray(new IRecipe[RECIPES.size()]);
     }
 }

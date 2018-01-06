@@ -1,6 +1,5 @@
 package brightspark.sparkshammers.item;
 
-import brightspark.sparkshammers.reference.Names;
 import brightspark.sparkshammers.worldgen.WorldGenMjolnirShrine;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -15,7 +14,7 @@ public class ItemDebug extends ItemResource
 {
     public ItemDebug()
     {
-        super(Names.Items.DEBUG);
+        super("debug");
     }
 
     /**

@@ -1,6 +1,6 @@
 package brightspark.sparkshammers.customTools;
 
-import brightspark.sparkshammers.reference.Names;
+import brightspark.sparkshammers.reference.EnumMaterials;
 import brightspark.sparkshammers.reference.Reference;
 import brightspark.sparkshammers.util.CommonUtils;
 import brightspark.sparkshammers.util.LogHelper;
@@ -197,7 +197,7 @@ public class CustomTools
         List<Tool> tools = new ArrayList<Tool>();
 
         //Populate tools array
-        for(Names.EnumMaterials material : Names.EnumMaterials.values())
+        for(EnumMaterials material : EnumMaterials.values())
             tools.add(new Tool(material));
 
         //Create file from tools array

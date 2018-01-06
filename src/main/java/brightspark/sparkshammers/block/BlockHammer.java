@@ -2,11 +2,8 @@ package brightspark.sparkshammers.block;
 
 import brightspark.sparkshammers.SparksHammers;
 import brightspark.sparkshammers.entity.EntityFallingHammer;
-import brightspark.sparkshammers.init.SHAchievements;
 import brightspark.sparkshammers.init.SHItems;
 import brightspark.sparkshammers.item.ItemHammerMjolnir;
-import brightspark.sparkshammers.reference.Config;
-import brightspark.sparkshammers.reference.Names;
 import brightspark.sparkshammers.tileentity.TileHammer;
 import brightspark.sparkshammers.util.CommonUtils;
 import brightspark.sparkshammers.util.LogHelper;
@@ -45,10 +42,10 @@ public class BlockHammer extends BlockContainer
     {
         super(Material.ANVIL);
         setCreativeTab(SparksHammers.SH_TAB);
-        setUnlocalizedName(Names.Blocks.HAMMER);
+        setUnlocalizedName("hammer_block");
         setBlockUnbreakable();
         setLightOpacity(0);
-        setRegistryName(Names.Blocks.HAMMER);
+        setRegistryName("hammer_block");
     }
 
     @Override
@@ -154,7 +151,7 @@ public class BlockHammer extends BlockContainer
     @Override
     public void onBlockAdded(World worldIn, BlockPos pos, IBlockState state)
     {
-        worldIn.scheduleUpdate(pos, this, this.tickRate(worldIn));
+        worldIn.scheduleUpdate(pos, this, tickRate(worldIn));
     }
 
     /**
@@ -165,40 +162,27 @@ public class BlockHammer extends BlockContainer
     @Override
     public void neighborChanged(IBlockState state, World worldIn, BlockPos pos, Block blockIn, BlockPos neighbourPos)
     {
-        worldIn.scheduleUpdate(pos, this, this.tickRate(worldIn));
+        worldIn.scheduleUpdate(pos, this, tickRate(worldIn));
     }
-
-    /*
-    /**
-     * Called when a tile entity on a side of this block changes is created or is destroyed.
-     * @param world The world
-     * @param pos Block position in world
-     * @param neighbor Block position of neighbor
-
-    public void onNeighborChange(IBlockAccess world, BlockPos pos, BlockPos neighbor)
-    {
-        ((World)world).scheduleUpdate(pos, this, this.tickRate((World) world));
-    }
-    */
 
     @Override
     public void updateTick(World worldIn, BlockPos pos, IBlockState state, Random rand)
     {
-        if (!worldIn.isRemote)
-            this.checkFallable(worldIn, pos);
+        if(!worldIn.isRemote)
+            checkFallable(worldIn, pos);
     }
 
     private void checkFallable(World worldIn, BlockPos pos)
     {
-        if (canFallInto(worldIn, pos.down()) && pos.getY() >= 0)
+        if(canFallInto(worldIn, pos.down()) && pos.getY() >= 0)
         {
             int i = 32;
 
-            if (worldIn.isAreaLoaded(pos.add(-i, -i, -i), pos.add(i, i, i)))
+            if(worldIn.isAreaLoaded(pos.add(-i, -i, -i), pos.add(i, i, i)))
             {
                 TileHammer teHammer = (TileHammer) worldIn.getTileEntity(pos);
                 EntityFallingHammer entityfallingblock = new EntityFallingHammer(worldIn, pos.getX() + 0.5d, pos.getY() + 0.5d, pos.getZ() + 0.5d, worldIn.getBlockState(pos), teHammer.getOwnerUUID());
-                this.onStartFalling(entityfallingblock);
+                onStartFalling(entityfallingblock);
                 worldIn.spawnEntity(entityfallingblock);
             }
             else
@@ -206,15 +190,12 @@ public class BlockHammer extends BlockContainer
                 worldIn.setBlockToAir(pos);
                 BlockPos blockpos;
 
-                for (blockpos = pos.down(); canFallInto(worldIn, blockpos) && blockpos.getY() > 0; blockpos = blockpos.down())
-                {
-                    ;
-                }
+                blockpos = pos.down();
+                while(canFallInto(worldIn, blockpos) && blockpos.getY() > 0)
+                    blockpos = blockpos.down();
 
-                if (blockpos.getY() > 0)
-                {
-                    worldIn.setBlockState(blockpos.up(), this.getDefaultState());
-                }
+                if(blockpos.getY() > 0)
+                    worldIn.setBlockState(blockpos.up(), getDefaultState());
             }
         }
     }
@@ -228,15 +209,15 @@ public class BlockHammer extends BlockContainer
         return 2;
     }
 
-    public static boolean canFallInto(World worldIn, BlockPos pos)
+    private static boolean canFallInto(World worldIn, BlockPos pos)
     {
-        if (worldIn.isAirBlock(pos)) return true;
+        if(worldIn.isAirBlock(pos)) return true;
         IBlockState block = worldIn.getBlockState(pos);
         Material material = block.getMaterial();
         return block == Blocks.FIRE || material == Material.AIR || material == Material.WATER || material == Material.LAVA;
     }
 
-    protected void onStartFalling(EntityFallingBlock fallingEntity)
+    private void onStartFalling(EntityFallingBlock fallingEntity)
     {
         fallingEntity.setHurtEntities(true);
     }

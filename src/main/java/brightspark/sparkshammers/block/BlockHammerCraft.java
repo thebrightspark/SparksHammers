@@ -1,7 +1,6 @@
 package brightspark.sparkshammers.block;
 
 import brightspark.sparkshammers.SparksHammers;
-import brightspark.sparkshammers.reference.Names;
 import brightspark.sparkshammers.util.CommonUtils;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -18,11 +17,11 @@ public class BlockHammerCraft extends Block
     public BlockHammerCraft()
     {
         super(Material.ROCK);
-        setUnlocalizedName(Names.Blocks.HAMMER_CRAFT);
+        setUnlocalizedName("hammer_craft");
         setCreativeTab(SparksHammers.SH_TAB);
         setHardness(2f);
         setResistance(10f);
-        setRegistryName(Names.Blocks.HAMMER_CRAFT);
+        setRegistryName("hammer_craft");
     }
 
     //Return 3 for standard block models
