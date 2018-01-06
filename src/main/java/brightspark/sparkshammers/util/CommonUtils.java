@@ -74,11 +74,6 @@ public class CommonUtils
         return id == null ? null : id.toString();
     }
 
-    public static boolean isStackEmptyOrNull(ItemStack stack)
-    {
-        return stack == null || stack.getItem() instanceof ItemAir;
-    }
-
     /**
      * Open a GUI for a block (Uses a guiID of -1).
      */

@@ -5,7 +5,6 @@ import brightspark.sparkshammers.entity.EntityFallingHammer;
 import brightspark.sparkshammers.init.SHItems;
 import brightspark.sparkshammers.item.ItemHammerMjolnir;
 import brightspark.sparkshammers.tileentity.TileHammer;
-import brightspark.sparkshammers.util.CommonUtils;
 import brightspark.sparkshammers.util.LogHelper;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
@@ -102,12 +101,9 @@ public class BlockHammer extends BlockContainer
 
         TileHammer hammer = (TileHammer) world.getTileEntity(pos);
         ItemStack heldStack = player.getHeldItem(hand);
-        LogHelper.info("Tile null? -> " + (hammer == null) + "    Hand -> " + hand.toString() + "    Hand empty? -> " + CommonUtils.isStackEmptyOrNull(heldStack));
-        if(heldStack != null)
-            LogHelper.info(heldStack.toString());
 
         //If no item in hand
-        if(hammer != null && hand == EnumHand.MAIN_HAND && CommonUtils.isStackEmptyOrNull(heldStack))
+        if(hammer != null && hand == EnumHand.MAIN_HAND && heldStack.isEmpty())
         {
             LogHelper.info("Player has empty main hand");
             //TODO: Sort out achievements

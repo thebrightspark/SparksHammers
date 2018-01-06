@@ -36,7 +36,7 @@ public class SparksHammersPlugin implements IModPlugin
     {
         LoaderHelper.reloadLocalOreDict();
         registry.handleRecipes(HammerShapedOreRecipe.class, HammerCraftingRecipeWrapper.FACTORY, Reference.JEI.HAMMER_CRAFTING_UID);
-        registry.addRecipes(HammerCraftingManager.getInstance().getValidRecipeList(), Reference.JEI.HAMMER_CRAFTING_UID);
+        registry.addRecipes(HammerCraftingManager.getValidRecipeList(), Reference.JEI.HAMMER_CRAFTING_UID);
         registry.addRecipeClickArea(GuiHammerCraft.class, 111, 69, 26, 19, Reference.JEI.HAMMER_CRAFTING_UID);
         registry.addRecipeCatalyst(new ItemStack(SHBlocks.blockHammerCraft), Reference.JEI.HAMMER_CRAFTING_UID);
 

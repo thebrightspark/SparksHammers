@@ -1,9 +1,7 @@
 package brightspark.sparkshammers.gui;
 
 import brightspark.sparkshammers.hammerCrafting.HammerCraftingManager;
-import brightspark.sparkshammers.hammerCrafting.SHSlotCrafting;
 import brightspark.sparkshammers.init.SHBlocks;
-import brightspark.sparkshammers.util.CommonUtils;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.init.Blocks;
@@ -52,7 +50,7 @@ public class ContainerHammerCraft extends Container
         pos = position;
 
         //Add the slots
-        addSlotToContainer(new SHSlotCrafting(invPlayer.player, craftMatrix, craftResult, 0, resultX, resultY));
+        addSlotToContainer(new SlotCrafting(invPlayer.player, craftMatrix, craftResult, 0, resultX, resultY));
 
         int handleXStart = gridStartX + 18 * 2;
         int handleYStart = gridStartY + 18 * 2;
@@ -77,7 +75,7 @@ public class ContainerHammerCraft extends Container
 
     public void onCraftMatrixChanged(IInventory inventory)
     {
-        ItemStack stack = HammerCraftingManager.getInstance().findMatchingRecipe(craftMatrix, worldObj);
+        ItemStack stack = HammerCraftingManager.findMatchingRecipe(craftMatrix);
         craftResult.setInventorySlotContents(0, stack);
     }
 
@@ -108,7 +106,7 @@ public class ContainerHammerCraft extends Container
             {
                 ItemStack itemstack = craftMatrix.removeStackFromSlot(i); //Used to be .getStackInSlotOnClosing(i)
 
-                if(!CommonUtils.isStackEmptyOrNull(itemstack))
+                if(!itemstack.isEmpty())
                     player.dropItem(itemstack, false);
             }
         }

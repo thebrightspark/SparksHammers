@@ -83,7 +83,7 @@ public class SparksHammers
         //Run stuff after mods have initialized here
 
         //Make sure all tools have recipes
-        List<HammerShapedOreRecipe> recipes = HammerCraftingManager.getInstance().getRecipeList();
+        List<HammerShapedOreRecipe> recipes = HammerCraftingManager.getRecipes();
         for(ItemAOE tool : SHItems.AOE_TOOLS)
         {
             if(tool.equals(SHItems.hammerMjolnir))
@@ -104,7 +104,6 @@ public class SparksHammers
         SHItems.voidLists();
         SHBlocks.BLOCKS = null;
         SHBlocks.ITEM_BLOCKS = null;
-        SHRecipes.RECIPES = null;
 
         //Prints out all crafting recipes
         /*
