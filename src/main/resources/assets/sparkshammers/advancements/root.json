@@ -4,14 +4,14 @@
             "item": "sparkshammers:hammer_wood"
         },
         "title": {
-            "translate": "sparkshammers.achievement.root.title"
+            "translate": "sparkshammers.advancement.root.title"
         },
         "description": {
-            "translate": "sparkshammers.achievement.root.desc"
+            "translate": "sparkshammers.advancement.root.desc"
         },
         "background": "minecraft:textures/blocks/stonebrick.png",
-        "show_toast": true,
-        "announce_to_chat": true
+        "show_toast": false,
+        "announce_to_chat": false
     },
     "criteria": {
         "crafting_table": {

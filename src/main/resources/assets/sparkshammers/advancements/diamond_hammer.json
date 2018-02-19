@@ -4,13 +4,13 @@
             "item": "sparkshammers:hammer_diamond"
         },
         "title": {
-            "translate": "sparkshammers.achievement.diamond_hammer.title"
+            "translate": "sparkshammers.advancement.diamond_hammer.title"
         },
         "description": {
-            "translate": "sparkshammers.achievement.diamond_hammer.desc"
-        },
-        "parent": "crafting_table"
+            "translate": "sparkshammers.advancement.diamond_hammer.desc"
+        }
     },
+    "parent": "sparkshammers:crafting_table",
     "criteria": {
         "craft": {
             "trigger": "minecraft:inventory_changed",

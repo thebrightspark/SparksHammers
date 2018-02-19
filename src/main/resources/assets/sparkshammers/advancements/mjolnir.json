@@ -4,13 +4,13 @@
             "item": "sparkshammers:hammer_mjolnir"
         },
         "title": {
-            "translate": "sparkshammers.achievement.mjolnir_nope.title"
+            "translate": "sparkshammers.advancement.mjolnir.title"
         },
         "description": {
-            "translate": "sparkshammers.achievement.mjolnir_nope.desc"
-        },
-        "parent": "root"
+            "translate": "sparkshammers.advancement.mjolnir.desc"
+        }
     },
+    "parent": "sparkshammers:root",
     "criteria": {
         "craft": {
             "trigger": "minecraft:inventory_changed",

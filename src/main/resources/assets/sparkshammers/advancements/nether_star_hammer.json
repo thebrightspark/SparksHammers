@@ -4,13 +4,13 @@
             "item": "sparkshammers:hammer_netherstar"
         },
         "title": {
-            "translate": "sparkshammers.achievement.nether_star_hammer.title"
+            "translate": "sparkshammers.advancement.nether_star_hammer.title"
         },
         "description": {
-            "translate": "sparkshammers.achievement.nether_star_hammer.desc"
-        },
-        "parent": "diamond_hammer"
+            "translate": "sparkshammers.advancement.nether_star_hammer.desc"
+        }
     },
+    "parent": "sparkshammers:diamond_hammer",
     "criteria": {
         "craft": {
             "trigger": "minecraft:inventory_changed",

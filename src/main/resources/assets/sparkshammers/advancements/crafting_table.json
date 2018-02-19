@@ -4,13 +4,13 @@
             "item": "sparkshammers:hammer_craft"
         },
         "title": {
-            "translate": "sparkshammers.achievement.crafting_table.title"
+            "translate": "sparkshammers.advancement.crafting_table.title"
         },
         "description": {
-            "translate": "sparkshammers.achievement.crafting_table.desc"
-        },
-        "parent": "wood_hammer"
+            "translate": "sparkshammers.advancement.crafting_table.desc"
+        }
     },
+    "parent": "sparkshammers:wood_hammer",
     "criteria": {
         "craft": {
             "trigger": "minecraft:inventory_changed",
