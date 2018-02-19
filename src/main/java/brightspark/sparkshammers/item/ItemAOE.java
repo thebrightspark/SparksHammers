@@ -143,12 +143,12 @@ public class ItemAOE extends ItemTool implements IColourable
      * Used in vanilla code for the pickaxe, but not the shovel
      */
     @Override
-    public float getStrVsBlock(ItemStack stack, IBlockState state)
+    public float getDestroySpeed(ItemStack stack, IBlockState state)
     {
         if(!isExcavator)
-            return state.getMaterial() != Material.IRON && state.getMaterial() != Material.ANVIL && state.getMaterial() != Material.ROCK ? super.getStrVsBlock(stack, state) : this.efficiencyOnProperMaterial;
+            return state.getMaterial() != Material.IRON && state.getMaterial() != Material.ANVIL && state.getMaterial() != Material.ROCK ? super.getDestroySpeed(stack, state) : efficiency;
         else
-            return super.getStrVsBlock(stack, state);
+            return super.getDestroySpeed(stack, state);
     }
 
     /**
@@ -208,7 +208,7 @@ public class ItemAOE extends ItemTool implements IColourable
 
     // <<<< Also made with some help from Tinkers Construct >>>>
     @Override
-    public boolean onBlockStartBreak (ItemStack stack, BlockPos pos, EntityPlayer player)
+    public boolean onBlockStartBreak(ItemStack stack, BlockPos pos, EntityPlayer player)
     {
         //Block being mined
         RayTraceResult ray = rayTrace(player.world, player, false);
@@ -264,12 +264,6 @@ public class ItemAOE extends ItemTool implements IColourable
         return shiftRotating;
     }
 
-    public ItemAOE setItemColour(int colour)
-    {
-        textureColour = colour;
-        return this;
-    }
-
     /**
      * Called when item is crafted/smelted. Used only by maps so far.
      */
@@ -284,18 +278,6 @@ public class ItemAOE extends ItemTool implements IColourable
             NBTHelper.setString(stack, KEY_CUSTOM_NAME, "8brickdmg");
             NBTHelper.setString(stack, KEY_CUSTOM_FORMATTING, TextFormatting.LIGHT_PURPLE.toString());
         }
-
-        //Handle achievements
-        //TODO: Review for 1.12
-        /*
-        Item item = stack.getItem();
-        if(item.equals(SHItems.getItemById("hammer_wood")))
-            player.addStat(SHAchievements.woodHammer);
-        else if(item.equals(SHItems.getItemById("hammer_diamond")))
-            player.addStat(SHAchievements.diamondHammer);
-        else if(item.equals(SHItems.hammerNetherStar))
-            player.addStat(SHAchievements.netherStarHammer);
-        */
     }
 
     @Override

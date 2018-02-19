@@ -1,0 +1,26 @@
+{
+    "display": {
+        "icon": {
+            "item": "sparkshammers:hammer_diamond"
+        },
+        "title": {
+            "translate": "sparkshammers.achievement.diamond_hammer.title"
+        },
+        "description": {
+            "translate": "sparkshammers.achievement.diamond_hammer.desc"
+        },
+        "parent": "crafting_table"
+    },
+    "criteria": {
+        "craft": {
+            "trigger": "minecraft:inventory_changed",
+            "conditions": {
+                "items": [
+                    {
+                        "item": "sparkshammers:hammer_diamond"
+                    }
+                ]
+            }
+        }
+    }
+}

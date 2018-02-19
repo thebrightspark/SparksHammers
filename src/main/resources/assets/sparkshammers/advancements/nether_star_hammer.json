@@ -1,0 +1,26 @@
+{
+    "display": {
+        "icon": {
+            "item": "sparkshammers:hammer_netherstar"
+        },
+        "title": {
+            "translate": "sparkshammers.achievement.nether_star_hammer.title"
+        },
+        "description": {
+            "translate": "sparkshammers.achievement.nether_star_hammer.desc"
+        },
+        "parent": "diamond_hammer"
+    },
+    "criteria": {
+        "craft": {
+            "trigger": "minecraft:inventory_changed",
+            "conditions": {
+                "items": [
+                    {
+                        "item": "sparkshammers:hammer_netherstar"
+                    }
+                ]
+            }
+        }
+    }
+}

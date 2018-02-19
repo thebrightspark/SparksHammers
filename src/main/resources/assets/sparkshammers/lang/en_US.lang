@@ -1,9 +1,9 @@
-// <<<< Vanilla Style Tools >>>>
+# <<<< Vanilla Style Tools >>>>
 
-//Hammer Heads
+#Hammer Heads
 item.hammer_head_wood.name=Wooden Hammer Head
 
-//Hammers
+#Hammers
 item.hammer_mjolnir.tooltip=Owner:
 item.hammer_mjolnir.chat.wrongPlayer.1=You are not worthy to wield me!
 item.hammer_mjolnir.chat.wrongPlayer.2=is my true Master!
@@ -13,36 +13,39 @@ item.hammer_giant.8brickdmg.name=8BrickDMG's BFH
 
 item.hammer_powered.tooltip=Energy
 
-//Excavator Heads
+#Excavator Heads
 item.excavator_head_wood.name=Wooden Excavator Head
 
-// <<<< Achievements >>>>
+# <<<< Achievements >>>>
 
-achievement.woodHammer=It's Hammer Time!
-achievement.woodHammer.desc=Make a Wooden Hammer.
-achievement.craftingTable=Bigger And Better
-achievement.craftingTable.desc=Make a Hammer Crafting Table.
-achievement.diamondHammer=Dig Big Holes In All The Things!
-achievement.diamondHammer.desc=Make a Diamond Hammer.
-achievement.netherStarHammer=Focusing Energy
-achievement.netherStarHammer.desc=Make a Nether Star Hammer.
-achievement.mjolnir=Odin Will Not Be Pleased About This...
-achievement.mjolnir.desc=Find yourself the legendary Mjolnir.
-achievement.mjolnirNope=You Are Not Worthy!
-achievement.mjolnirNope.desc=Try to pickup a Mjolnir when it does not belong to you.
-achievement.mjolnirFallDeath=Crushed By Unworthyness
-achievement.mjolnirFallDeath.desc=Die from being hit by a falling Mjolnir.
+sparkshammers.achievement.root.title=Sparks Hammers
+sparkshammers.achievement.root.desc=Mine all the things!
+sparkshammers.achievement.wood_hammer.title=It's Hammer Time!
+sparkshammers.achievement.wood_hammer.desc=Make a Wooden Hammer.
+sparkshammers.achievement.crafting_table.title=Bigger And Better
+sparkshammers.achievement.crafting_table.desc=Make a Hammer Crafting Table.
+sparkshammers.achievement.diamond_hammer.title=Dig Big Holes In All The Things!
+sparkshammers.achievement.diamond_hammer.desc=Make a Diamond Hammer.
+sparkshammers.achievement.nether_star_hammer.title=Focusing Energy
+sparkshammers.achievement.nether_star_hammer.desc=Make a Nether Star Hammer.
+sparkshammers.achievement.mjolnir.title=Odin Will Not Be Pleased About This...
+sparkshammers.achievement.mjolnir.desc=Find yourself the legendary Mjolnir.
+sparkshammers.achievement.mjolnir_death.title=Crushed By Unworthyness
+sparkshammers.achievement.mjolnir_death.desc=Die from being hit by a falling Mjolnir.
+# This one isn't implemented yet due to no available triggers
+sparkshammers.achievement.mjolnir_nope.title=You Are Not Worthy!
+sparkshammers.achievement.mjolnir_nope.desc=Try to pickup a Mjolnir when it does not belong to you.
 
-// <<<< Misc Names >>>>
+# <<<< Misc Names >>>>
 
-//Debug Tool
+#Debug Tool
 item.debug.name=Super Secret Wand Of Magical Things
 
-//Hammer Crafting Table
+#Hammer Crafting Table
 tile.hammer_craft.name=Hammer Crafting Table
 tile.hammer_craft.nei=Hammer Crafting
 jei.recipe.hammerCraftingTable=Hammer Crafting Table
 
-//Hammer Block
+#Hammer Block
 tile.hammer_block.name=Mjolnir
 death.attack.fallingHammer=%1$s was crushed by Mjolnir

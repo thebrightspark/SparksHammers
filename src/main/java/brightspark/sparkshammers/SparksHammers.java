@@ -70,8 +70,6 @@ public class SparksHammers
 
         NetworkRegistry.INSTANCE.registerGuiHandler(this, new GuiHandler());
 
-        SHAchievements.init(); //Adds achievements
-
         //Register world generation for Mjolnir Shrine
         if(Config.shouldGenerateMjolnirShrines && Config.enableMjolnir)
             GameRegistry.registerWorldGenerator(new WorldGenMjolnirShrine(), 10);

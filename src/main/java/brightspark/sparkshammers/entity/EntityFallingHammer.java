@@ -31,6 +31,11 @@ public class EntityFallingHammer extends EntityFallingBlock
 
     private UUID playerUUID;
 
+    public EntityFallingHammer(World world)
+    {
+        super(world);
+    }
+
     public EntityFallingHammer(World worldIn, double x, double y, double z, IBlockState state, UUID playerUUID)
     {
         super(worldIn, x, y, z, state);

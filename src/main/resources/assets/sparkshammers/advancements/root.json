@@ -1,0 +1,28 @@
+{
+    "display": {
+        "icon": {
+            "item": "sparkshammers:hammer_wood"
+        },
+        "title": {
+            "translate": "sparkshammers.achievement.root.title"
+        },
+        "description": {
+            "translate": "sparkshammers.achievement.root.desc"
+        },
+        "background": "minecraft:textures/blocks/stonebrick.png",
+        "show_toast": true,
+        "announce_to_chat": true
+    },
+    "criteria": {
+        "crafting_table": {
+            "trigger": "minecraft:inventory_changed",
+            "conditions": {
+                "items": [
+                    {
+                        "item": "minecraft:crafting_table"
+                    }
+                ]
+            }
+        }
+    }
+}

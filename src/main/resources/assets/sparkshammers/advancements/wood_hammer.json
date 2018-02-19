@@ -1,0 +1,26 @@
+{
+    "display": {
+        "icon": {
+            "item": "sparkshammers:hammer_wood"
+        },
+        "title": {
+            "translate": "sparkshammers.achievement.wood_hammer.title"
+        },
+        "description": {
+            "translate": "sparkshammers.achievement.wood_hammer.desc"
+        },
+        "parent": "sparkshammers:root"
+    },
+    "criteria": {
+        "craft": {
+            "trigger": "minecraft:inventory_changed",
+            "conditions": {
+                "items": [
+                    {
+                        "item": "sparkshammers:hammer_wood"
+                    }
+                ]
+            }
+        }
+    }
+}

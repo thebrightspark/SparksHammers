@@ -1,0 +1,26 @@
+{
+    "display": {
+        "icon": {
+            "item": "sparkshammers:hammer_mjolnir"
+        },
+        "title": {
+            "translate": "sparkshammers.achievement.mjolnir_nope.title"
+        },
+        "description": {
+            "translate": "sparkshammers.achievement.mjolnir_nope.desc"
+        },
+        "parent": "root"
+    },
+    "criteria": {
+        "craft": {
+            "trigger": "minecraft:inventory_changed",
+            "conditions": {
+                "items": [
+                    {
+                        "item": "sparkshammers:hammer_mjolnir"
+                    }
+                ]
+            }
+        }
+    }
+}

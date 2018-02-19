@@ -213,8 +213,8 @@ public class CustomTools
                 writer.name("LocalisedName").value(tool.localName);
                 writer.name("HarvestLevel").value(tool.material.getHarvestLevel());
                 writer.name("Durability").value(tool.material.getMaxUses());
-                writer.name("Efficiency").value(tool.material.getEfficiencyOnProperMaterial());
-                writer.name("AttackDamage").value(tool.material.getDamageVsEntity());
+                writer.name("Efficiency").value(tool.material.getEfficiency());
+                writer.name("AttackDamage").value(tool.material.getAttackDamage());
                 writer.name("Enchantability").value(tool.material.getEnchantability());
                 if(tool.toolColour >= 0)
                     writer.name("TextureColour").value(tool.toolColour);

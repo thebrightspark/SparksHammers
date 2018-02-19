@@ -1,5 +1,6 @@
 package brightspark.sparkshammers.handlers;
 
+import brightspark.sparkshammers.entity.EntityFallingHammer;
 import brightspark.sparkshammers.hammerCrafting.HammerCraftingManager;
 import brightspark.sparkshammers.hammerCrafting.HammerShapedOreRecipe;
 import brightspark.sparkshammers.init.SHBlocks;
@@ -14,6 +15,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.registry.EntityEntry;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.registries.IForgeRegistry;
 import net.minecraftforge.registries.RegistryBuilder;
@@ -52,6 +54,13 @@ public class RegistrationHandler
         registry.registerAll(SHBlocks.getBlocks());
 
         GameRegistry.registerTileEntity(TileHammer.class, SHBlocks.blockHammer.getRegistryName().getResourcePath());
+    }
+
+    @SubscribeEvent
+    public static void regEntities(RegistryEvent.Register<EntityEntry> event)
+    {
+        //Register all entities
+        event.getRegistry().register(new EntityEntry(EntityFallingHammer.class, "falling_hammer").setRegistryName("falling_hammer"));
     }
 
     @SubscribeEvent
