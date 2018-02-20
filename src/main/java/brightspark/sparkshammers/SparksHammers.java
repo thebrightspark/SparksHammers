@@ -11,9 +11,12 @@ import brightspark.sparkshammers.reference.Reference;
 import brightspark.sparkshammers.util.LoaderHelper;
 import brightspark.sparkshammers.util.LogHelper;
 import brightspark.sparkshammers.worldgen.WorldGenMjolnirShrine;
+import net.minecraft.advancements.Advancement;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
@@ -48,6 +51,7 @@ public class SparksHammers
     };
 
     public static DamageSource fallingHammer = new DamageSource("fallingHammer");
+    private static Advancement killDragonAdvancement;
 
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent event)
@@ -150,5 +154,12 @@ public class SparksHammers
             LogHelper.info(m.getHarvestLevel()+","+m.getMaxUses()+","+m.getEfficiencyOnProperMaterial()+","+m.getDamageVsEntity()+","+m.getEnchantability());
         }
         */
+    }
+
+    public static boolean hasKillDragonAdvancement(EntityPlayerMP player)
+    {
+        if(killDragonAdvancement == null)
+            killDragonAdvancement = player.getServer().getAdvancementManager().getAdvancement(new ResourceLocation("minecraft", "end/kill_dragon"));
+        return killDragonAdvancement != null && player.getAdvancements().getProgress(killDragonAdvancement).isDone();
     }
 }

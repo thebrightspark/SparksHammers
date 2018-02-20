@@ -4,8 +4,8 @@ import brightspark.sparkshammers.SparksHammers;
 import brightspark.sparkshammers.entity.EntityFallingHammer;
 import brightspark.sparkshammers.init.SHItems;
 import brightspark.sparkshammers.item.ItemHammerMjolnir;
+import brightspark.sparkshammers.reference.Config;
 import brightspark.sparkshammers.tileentity.TileHammer;
-import brightspark.sparkshammers.util.LogHelper;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
@@ -14,6 +14,7 @@ import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityFallingBlock;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.MobEffects;
 import net.minecraft.item.Item;
@@ -105,13 +106,9 @@ public class BlockHammer extends BlockContainer
         //If no item in hand
         if(hammer != null && hand == EnumHand.MAIN_HAND && heldStack.isEmpty())
         {
-            LogHelper.info("Player has empty main hand");
-            //TODO: Sort out achievements
-            //if(!hammer.hasOwner())
-            //    player.addStat(SHAchievements.mjolnir);
             //Player needs to have killed the dragon to be worthy
-            //TODO: Sort out achievements
-            if((!hammer.hasOwner() || hammer.isOwner(player))) //&& (!Config.mjolnirPickupNeedsDragonAchieve || player.hasAchievement(AchievementList.THE_END2)))
+            if((!hammer.hasOwner() || hammer.isOwner(player)) &&
+                    (!Config.mjolnirPickupNeedsDragonAchieve || SparksHammers.hasKillDragonAdvancement((EntityPlayerMP) player)))
             {
                 //Player is worthy
                 ItemStack givenHammer = new ItemStack(SHItems.hammerMjolnir);
@@ -123,18 +120,15 @@ public class BlockHammer extends BlockContainer
             else
             {
                 //Player is not worthy
-                //TODO: Sort out achievements
-                //player.addStat(SHAchievements.mjolnirNope);
                 player.addPotionEffect(new PotionEffect(MobEffects.WEAKNESS, 200, 1));
-                //TODO: Sort out achievements
-                //if(player.hasAchievement(AchievementList.THE_END2))
-                //{
+                if(SparksHammers.hasKillDragonAdvancement((EntityPlayerMP) player))
+                {
                     player.sendMessage(new TextComponentTranslation("item.hammer_mjolnir.chat.wrongPlayer.1"));
                     player.sendMessage(new TextComponentString(TextFormatting.GOLD + hammer.getOwnerName() + TextFormatting.RESET + " " + I18n.format("item.hammer_mjolnir.chat.wrongPlayer.2")));
-                //}
-                //else
+                }
+                else
                     //Player has not killed ender dragon
-                    //player.sendMessage(new TextComponentTranslation("item.hammer_mjolnir.chat.noAchieve"));
+                    player.sendMessage(new TextComponentTranslation("item.hammer_mjolnir.chat.noAchieve"));
             }
             return true;
         }
