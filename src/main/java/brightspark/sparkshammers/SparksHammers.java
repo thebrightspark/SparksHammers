@@ -5,6 +5,7 @@ import brightspark.sparkshammers.hammerCrafting.HammerCraftingManager;
 import brightspark.sparkshammers.hammerCrafting.HammerShapedOreRecipe;
 import brightspark.sparkshammers.handlers.ConfigurationHandler;
 import brightspark.sparkshammers.init.*;
+import brightspark.sparkshammers.integration.crafttweaker.CraftTweakerIntegration;
 import brightspark.sparkshammers.item.ItemAOE;
 import brightspark.sparkshammers.reference.Config;
 import brightspark.sparkshammers.reference.Reference;
@@ -17,6 +18,7 @@ import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
@@ -59,6 +61,8 @@ public class SparksHammers
         //Initialize item, blocks, textures/models and configs here
 
         ConfigurationHandler.init(new File(Reference.CONFIG_DIR, "config.cfg"));
+        if(Loader.isModLoaded("crafttweaker"))
+        	CraftTweakerIntegration.init();
     }
 
     @Mod.EventHandler
