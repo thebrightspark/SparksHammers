@@ -12,7 +12,7 @@ import java.util.List;
 
 public class HammerCraftingManager
 {
-    private static IForgeRegistry<HammerShapedOreRecipe> REGISTRY;
+    public static IForgeRegistry<HammerShapedOreRecipe> REGISTRY;
 
     /**
      * Returns the static instance of this class
