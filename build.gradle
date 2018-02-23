@@ -53,6 +53,11 @@ repositories {
         name = "CoFH Maven"
         url = "http://maven.covers1624.net"
     }
+    maven {
+        // host for craft tweaker 2
+        name 'jared'
+        url "http://maven.blamejared.com/"
+    }
 }
 
 dependencies {
@@ -63,6 +68,10 @@ dependencies {
 
     //RF API
     deobfCompile "cofh:RedstoneFlux:${project.rf_api_version}:universal"
+
+    //CraftTweaker2
+    deobfCompile "CraftTweaker2:CraftTweaker2-API:${project.crafttweaker_version}"
+    deobfCompile "CraftTweaker2:CraftTweaker2-MC1120-Main:1.12-${project.crafttweaker_version}"
 
     // you may put jars on which you depend on in ./libs
     // or you may define them like so..
