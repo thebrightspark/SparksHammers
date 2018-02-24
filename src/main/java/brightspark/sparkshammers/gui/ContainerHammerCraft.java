@@ -50,7 +50,7 @@ public class ContainerHammerCraft extends Container
         pos = position;
 
         //Add the slots
-        addSlotToContainer(new SlotCrafting(invPlayer.player, craftMatrix, craftResult, 0, resultX, resultY));
+        addSlotToContainer(new SlotSHCrafting(invPlayer.player, craftMatrix, craftResult, 0, resultX, resultY));
 
         int handleXStart = gridStartX + 18 * 2;
         int handleYStart = gridStartY + 18 * 2;

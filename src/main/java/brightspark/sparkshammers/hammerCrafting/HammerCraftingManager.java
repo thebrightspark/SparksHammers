@@ -6,6 +6,7 @@ import com.google.common.collect.Lists;
 import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
+import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.registries.IForgeRegistry;
 
 import java.util.List;
@@ -43,13 +44,7 @@ public class HammerCraftingManager
         for (HammerShapedOreRecipe recipe : REGISTRY)
             if (recipe.matches(inv))
                 return recipe.getRemainingItems(inv);
-
-        NonNullList<ItemStack> list = NonNullList.withSize(inv.getSizeInventory(), ItemStack.EMPTY);
-
-        for(int i = 0; i < list.size(); ++i)
-            list.set(i, inv.getStackInSlot(i));
-
-        return list;
+        return ForgeHooks.defaultRecipeGetRemainingItems(inv);
     }
 
     /**

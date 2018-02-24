@@ -15,8 +15,6 @@ import java.util.List;
 /*
 This class is made mostly from the Forge code for ShapedOreRecipe.
 I have just adapted it to work for my uses of hammer recipes.
-
-The mirroring has been commented out so that it can't be used.
  */
 
 public class HammerShapedOreRecipe extends IForgeRegistryEntry.Impl<HammerShapedOreRecipe>
@@ -29,7 +27,6 @@ public class HammerShapedOreRecipe extends IForgeRegistryEntry.Impl<HammerShaped
     private NonNullList<Ingredient> input = null;
     public int width = 0;
     public int height = 0;
-    //private boolean mirrored = true;
 
     public HammerShapedOreRecipe(Block result, Object... recipe){ this(new ItemStack(result), recipe); }
     public HammerShapedOreRecipe(Item result, Object... recipe){ this(new ItemStack(result), recipe); }
@@ -43,7 +40,7 @@ public class HammerShapedOreRecipe extends IForgeRegistryEntry.Impl<HammerShaped
         setRegistryName(result.getItem().getRegistryName());
     }
 
-    public ItemStack getRecipeOutput(){ return output; }
+    public ItemStack getRecipeOutput(){ return output.copy(); }
 
     public NonNullList<ItemStack> getRemainingItems(InventoryCrafting inv)
     {
