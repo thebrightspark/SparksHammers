@@ -3,7 +3,6 @@ package brightspark.sparkshammers.init;
 import brightspark.sparkshammers.customTools.CustomTools;
 import brightspark.sparkshammers.customTools.Tool;
 import brightspark.sparkshammers.item.*;
-import brightspark.sparkshammers.reference.Config;
 import com.google.common.collect.Lists;
 import net.minecraft.client.Minecraft;
 import net.minecraft.item.Item;
@@ -49,7 +48,7 @@ public class SHItems
         String name = tool.name;
 
         //Don't register if tool is made from other mod materials and respective config is disabled
-        if(!Config.enableOtherModItems && !VANILLA_NAMES.contains(name))
+        if(!VANILLA_NAMES.contains(name))
             return;
 
         switch(name)
@@ -69,24 +68,19 @@ public class SHItems
                 addItem(new ItemAOE(tool, true));
                 break;
             case "mjolnir":
-                if(Config.enableMjolnir)
-                    addItem(hammerMjolnir = new ItemHammerMjolnir(tool));
+                addItem(hammerMjolnir = new ItemHammerMjolnir(tool));
                 break;
             case "mini":
-                if(Config.enableMiniHammer)
-                    addItem(hammerMini = new ItemAOE(tool, false).setMineWidth(0).setShiftRotating(true));
+                addItem(hammerMini = new ItemAOE(tool, false).setMineWidth(0).setShiftRotating(true));
                 break;
             case "giant":
-                if(Config.enableGiantHammer)
-                    addItem(hammerGiant = new ItemAOE(tool, false).setMineWidth(4).setMineHeight(4));
+                addItem(hammerGiant = new ItemAOE(tool, false).setMineWidth(4).setMineHeight(4));
                 break;
             case "netherstar":
-                if(Config.enableNetherStarHammer)
-                    addItem(hammerNetherStar = new ItemHammerNetherStar(tool));
+                addItem(hammerNetherStar = new ItemHammerNetherStar(tool));
                 break;
             case "powered":
-                if(Config.enablePoweredHammer)
-                    addItem(hammerPowered = new ItemHammerEnergy(tool));
+                addItem(hammerPowered = new ItemHammerEnergy(tool));
                 break;
             //TODO: Re-add Botania tools when the mod gets updated!
             /*

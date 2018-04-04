@@ -1,7 +1,7 @@
 package brightspark.sparkshammers.handlers;
 
 import brightspark.sparkshammers.item.ItemHammerNetherStar;
-import brightspark.sparkshammers.reference.Config;
+import brightspark.sparkshammers.reference.SHConfig;
 import brightspark.sparkshammers.util.CommonUtils;
 import brightspark.sparkshammers.util.NBTHelper;
 import net.minecraft.entity.player.EntityPlayer;
@@ -93,7 +93,7 @@ public class BlockEventHandler
                 //Break the blocks
                 CommonUtils.breakArea(o.stackCopy, o.world, o.player, o.blockStrength, positions[0], centerPos, positions[1]);
 
-                if(++o.iteration > Config.netherStarHammerDistance)
+                if(++o.iteration > SHConfig.netherStarHammerDistance)
                 {
                     //If reached end of mining, then remove from mining schedule
                     if(!o.stackActual.isEmpty())

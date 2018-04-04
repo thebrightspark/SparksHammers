@@ -3,7 +3,7 @@ package brightspark.sparkshammers.item;
 import brightspark.sparkshammers.SparksHammers;
 import brightspark.sparkshammers.customTools.Tool;
 import brightspark.sparkshammers.energy.SHEnergyStorage;
-import brightspark.sparkshammers.reference.Config;
+import brightspark.sparkshammers.reference.SHConfig;
 import cofh.redstoneflux.api.IEnergyContainerItem;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.resources.I18n;
@@ -97,14 +97,14 @@ public class ItemHammerEnergy extends ItemAOE implements IEnergyContainerItem
     public boolean hitEntity(ItemStack stack, EntityLivingBase entityHit, EntityLivingBase player)
     {
         //Uses energy before damaging stack
-        return getEnergyStored(stack) < Config.poweredEnergyUsePerBlock * 2 ? super.hitEntity(stack, entityHit, player) : useEnergy(stack, Config.poweredEnergyUsePerBlock * 2);
+        return getEnergyStored(stack) < SHConfig.poweredEnergyUsePerBlock * 2 ? super.hitEntity(stack, entityHit, player) : useEnergy(stack, SHConfig.poweredEnergyUsePerBlock * 2);
     }
 
     @Override
     public boolean onBlockDestroyed(ItemStack stack, World worldIn, IBlockState state, BlockPos pos, EntityLivingBase entityLiving)
     {
         //Uses energy before damaging stack
-        return getEnergyStored(stack) < Config.poweredEnergyUsePerBlock ? super.onBlockDestroyed(stack, worldIn, state, pos, entityLiving) : useEnergy(stack, Config.poweredEnergyUsePerBlock);
+        return getEnergyStored(stack) < SHConfig.poweredEnergyUsePerBlock ? super.onBlockDestroyed(stack, worldIn, state, pos, entityLiving) : useEnergy(stack, SHConfig.poweredEnergyUsePerBlock);
     }
 
     @Override
@@ -112,7 +112,7 @@ public class ItemHammerEnergy extends ItemAOE implements IEnergyContainerItem
     {
         return new ICapabilitySerializable<NBTTagCompound>()
         {
-            SHEnergyStorage energy = new SHEnergyStorage(Config.poweredEnergyCapacity, Config.poweredEnergyInputRate, 0);
+            SHEnergyStorage energy = new SHEnergyStorage(SHConfig.poweredEnergyCapacity, SHConfig.poweredEnergyInputRate, 0);
 
             @Override
             public boolean hasCapability(@Nonnull Capability<?> capability, @Nullable EnumFacing facing)

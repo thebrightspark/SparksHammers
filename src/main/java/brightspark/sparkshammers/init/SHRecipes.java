@@ -2,17 +2,16 @@ package brightspark.sparkshammers.init;
 
 import brightspark.sparkshammers.hammerCrafting.HammerShapedOreRecipe;
 import brightspark.sparkshammers.item.ItemAOE;
-import brightspark.sparkshammers.reference.Config;
 import brightspark.sparkshammers.reference.EnumMaterials;
 import brightspark.sparkshammers.reference.Reference;
 import brightspark.sparkshammers.util.CommonUtils;
-import brightspark.sparkshammers.util.LoaderHelper;
 import brightspark.sparkshammers.util.LogHelper;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
+import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 
@@ -66,16 +65,16 @@ public class SHRecipes
          * Hammer Crafting Table Recipes
          */
 
-        if(Config.enableMiniHammer)
+        if(SHItems.hammerMini != null)
             addSHRecipe(new ItemStack(SHItems.hammerMini), " HHH ", " HHH ", "SSSS ", 'H', Items.IRON_INGOT, 'S', "stickWood");
-        if(Config.enableGiantHammer)
+        if(SHItems.hammerGiant != null)
             addSHRecipe(new ItemStack(SHItems.hammerGiant), "HHHHH", "HHDHH", "SSSS ", 'H', Blocks.IRON_BLOCK, 'S', "stickWood", 'D', new ItemStack(Items.DYE, 1, 5));
-        if(Config.enableNetherStarHammer)
+        if(SHItems.hammerNetherStar != null)
             addSHRecipe(new ItemStack(SHItems.hammerNetherStar), "HHBHH", "HBNBH", "SSSS ", 'H', Items.DIAMOND, 'B', Blocks.GOLD_BLOCK, 'N', Items.NETHER_STAR, 'S', "stickWood");
-        if(Config.enablePoweredHammer)
+        if(SHItems.hammerPowered != null)
         {
             boolean enderioRecipeAdded = false;
-            if(LoaderHelper.isModLoaded(Reference.Mods.ENDERIO))
+            if(Loader.isModLoaded(Reference.Mods.ENDERIO))
             {
                 Item capBank = Item.getByNameOrId(Reference.ModItemIds.CAPACITOR_BANK);
                 if(capBank == null)
@@ -100,7 +99,7 @@ public class SHRecipes
                 continue;
             }
             String topRow = tool.isExcavator ? " HHH " : "HHHHH";
-            if(oreDic.equals(EnumMaterials.STONE.dependantOreDic) && LoaderHelper.isModLoaded(Reference.Mods.EXTRA_UTILITIES))
+            if(oreDic.equals(EnumMaterials.STONE.dependantOreDic) && Loader.isModLoaded(Reference.Mods.EXTRA_UTILITIES))
             {
                 //Swap out for compressed cobblestone
                 Item compressedCobble = CommonUtils.getRegisteredItem(Reference.ModItemIds.COMPRESSED_COBBLE);

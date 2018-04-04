@@ -9,12 +9,12 @@ import brightspark.sparkshammers.integration.jei.HammerCraftingTable.HammerCraft
 import brightspark.sparkshammers.integration.jei.HammerCraftingTable.HammerCraftingRecipeWrapper;
 import brightspark.sparkshammers.item.ItemAOE;
 import brightspark.sparkshammers.reference.Reference;
-import brightspark.sparkshammers.util.LoaderHelper;
 import brightspark.sparkshammers.util.LogHelper;
 import mezz.jei.api.*;
 import mezz.jei.api.ingredients.IIngredientBlacklist;
 import mezz.jei.api.recipe.IRecipeCategoryRegistration;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.oredict.OreDictionary;
 
 import javax.annotation.Nonnull;
 
@@ -34,7 +34,6 @@ public class SparksHammersPlugin implements IModPlugin
     @Override
     public void register(@Nonnull IModRegistry registry)
     {
-        LoaderHelper.reloadLocalOreDict();
         registry.handleRecipes(HammerShapedOreRecipe.class, HammerCraftingRecipeWrapper.FACTORY, Reference.JEI.HAMMER_CRAFTING_UID);
         registry.addRecipes(HammerCraftingManager.getValidRecipeList(), Reference.JEI.HAMMER_CRAFTING_UID);
         registry.addRecipeClickArea(GuiHammerCraft.class, 111, 69, 26, 19, Reference.JEI.HAMMER_CRAFTING_UID);
@@ -46,7 +45,7 @@ public class SparksHammersPlugin implements IModPlugin
         for(ItemAOE tool : SHItems.AOE_TOOLS)
         {
             String oreDic = tool.getDependantOreDic();
-            if(oreDic != null && !LoaderHelper.doesOreExist(oreDic))
+            if(oreDic != null && OreDictionary.getOres(oreDic).isEmpty())
             {
                 blacklist.addIngredientToBlacklist(new ItemStack(tool));
                 count++;

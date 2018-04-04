@@ -1,12 +1,12 @@
 package brightspark.sparkshammers.hammerCrafting;
 
 import brightspark.sparkshammers.item.ItemAOE;
-import brightspark.sparkshammers.util.LoaderHelper;
 import com.google.common.collect.Lists;
 import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
 import net.minecraftforge.common.ForgeHooks;
+import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.registries.IForgeRegistry;
 
 import java.util.List;
@@ -57,7 +57,7 @@ public class HammerCraftingManager
         for(HammerShapedOreRecipe recipe : REGISTRY)
         {
             String oreDic = ((ItemAOE) recipe.getRecipeOutput().getItem()).getDependantOreDic();
-            if(oreDic == null || LoaderHelper.doesOreExist(oreDic))
+            if(oreDic == null || !OreDictionary.getOres(oreDic).isEmpty())
                 validRecipes.add(recipe);
         }
         return validRecipes;
