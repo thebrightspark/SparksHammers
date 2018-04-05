@@ -1,7 +1,7 @@
 package brightspark.sparkshammers.customTools;
 
-import brightspark.sparkshammers.reference.EnumMaterials;
-import brightspark.sparkshammers.reference.Reference;
+import brightspark.sparkshammers.EnumMaterials;
+import brightspark.sparkshammers.Reference;
 import brightspark.sparkshammers.util.CommonUtils;
 import brightspark.sparkshammers.util.LogHelper;
 import com.google.common.collect.Lists;

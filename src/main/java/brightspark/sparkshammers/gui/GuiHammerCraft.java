@@ -1,7 +1,7 @@
 package brightspark.sparkshammers.gui;
 
 import brightspark.sparkshammers.init.SHBlocks;
-import brightspark.sparkshammers.reference.Reference;
+import brightspark.sparkshammers.Reference;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.InventoryPlayer;

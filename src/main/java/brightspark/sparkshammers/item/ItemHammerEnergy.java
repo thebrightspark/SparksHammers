@@ -3,7 +3,7 @@ package brightspark.sparkshammers.item;
 import brightspark.sparkshammers.SparksHammers;
 import brightspark.sparkshammers.customTools.Tool;
 import brightspark.sparkshammers.energy.SHEnergyStorage;
-import brightspark.sparkshammers.reference.SHConfig;
+import brightspark.sparkshammers.SHConfig;
 import cofh.redstoneflux.api.IEnergyContainerItem;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.resources.I18n;

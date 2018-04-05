@@ -8,8 +8,6 @@ import brightspark.sparkshammers.hammerCrafting.HammerShapedOreRecipe;
 import brightspark.sparkshammers.init.SHBlocks;
 import brightspark.sparkshammers.init.SHItems;
 import brightspark.sparkshammers.item.ItemAOE;
-import brightspark.sparkshammers.reference.SHConfig;
-import brightspark.sparkshammers.reference.Reference;
 import brightspark.sparkshammers.util.LogHelper;
 import brightspark.sparkshammers.worldgen.WorldGenMjolnirShrine;
 import net.minecraft.advancements.Advancement;

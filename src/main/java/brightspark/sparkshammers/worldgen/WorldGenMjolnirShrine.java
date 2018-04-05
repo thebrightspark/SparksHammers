@@ -1,7 +1,7 @@
 package brightspark.sparkshammers.worldgen;
 
 import brightspark.sparkshammers.init.SHBlocks;
-import brightspark.sparkshammers.reference.SHConfig;
+import brightspark.sparkshammers.SHConfig;
 import brightspark.sparkshammers.util.LogHelper;
 import net.minecraft.block.*;
 import net.minecraft.block.state.IBlockState;

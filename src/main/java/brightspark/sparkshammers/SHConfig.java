@@ -1,4 +1,4 @@
-package brightspark.sparkshammers.reference;
+package brightspark.sparkshammers;
 
 import net.minecraftforge.common.config.Config;
 

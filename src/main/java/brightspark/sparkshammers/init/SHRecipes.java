@@ -2,8 +2,8 @@ package brightspark.sparkshammers.init;
 
 import brightspark.sparkshammers.hammerCrafting.HammerShapedOreRecipe;
 import brightspark.sparkshammers.item.ItemAOE;
-import brightspark.sparkshammers.reference.EnumMaterials;
-import brightspark.sparkshammers.reference.Reference;
+import brightspark.sparkshammers.EnumMaterials;
+import brightspark.sparkshammers.Reference;
 import brightspark.sparkshammers.util.CommonUtils;
 import brightspark.sparkshammers.util.LogHelper;
 import net.minecraft.init.Blocks;

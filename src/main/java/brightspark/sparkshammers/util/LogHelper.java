@@ -1,6 +1,6 @@
 package brightspark.sparkshammers.util;
 
-import brightspark.sparkshammers.reference.Reference;
+import brightspark.sparkshammers.Reference;
 import net.minecraftforge.fml.common.FMLLog;
 import org.apache.logging.log4j.Level;
 

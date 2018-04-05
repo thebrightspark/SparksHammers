@@ -8,7 +8,7 @@ import brightspark.sparkshammers.init.SHItems;
 import brightspark.sparkshammers.integration.jei.HammerCraftingTable.HammerCraftingRecipeCategory;
 import brightspark.sparkshammers.integration.jei.HammerCraftingTable.HammerCraftingRecipeWrapper;
 import brightspark.sparkshammers.item.ItemAOE;
-import brightspark.sparkshammers.reference.Reference;
+import brightspark.sparkshammers.Reference;
 import brightspark.sparkshammers.util.LogHelper;
 import mezz.jei.api.*;
 import mezz.jei.api.ingredients.IIngredientBlacklist;

@@ -73,6 +73,7 @@ public class ContainerHammerCraft extends Container
         bindPlayerInventory(invPlayer);
     }
 
+    @Override
     public void onCraftMatrixChanged(IInventory inventory)
     {
         ItemStack stack = HammerCraftingManager.findMatchingRecipe(craftMatrix);
@@ -96,6 +97,7 @@ public class ContainerHammerCraft extends Container
     }
 
     //Drops items in the crafting grid when gui is closed
+    @Override
     public void onContainerClosed(EntityPlayer player)
     {
         super.onContainerClosed(player);
@@ -112,6 +114,7 @@ public class ContainerHammerCraft extends Container
         }
     }
 
+    @Override
     public ItemStack transferStackInSlot(EntityPlayer player, int slot)
     {
         ItemStack stack = ItemStack.EMPTY;
@@ -166,6 +169,7 @@ public class ContainerHammerCraft extends Container
      * Called to determine if the current slot is valid for the stack merging (double-click) code. The stack passed in
      * is null for the initial slot that was double-clicked.
      */
+    @Override
     public boolean canMergeSlot(ItemStack stack, Slot slotIn)
     {
         return slotIn.inventory != this.craftResult && super.canMergeSlot(stack, slotIn);

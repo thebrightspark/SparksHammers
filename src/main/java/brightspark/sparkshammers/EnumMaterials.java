@@ -1,4 +1,4 @@
-package brightspark.sparkshammers.reference;
+package brightspark.sparkshammers;
 
 import brightspark.sparkshammers.util.CommonUtils;
 import net.minecraft.item.Item;

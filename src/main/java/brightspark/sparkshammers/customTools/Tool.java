@@ -1,7 +1,7 @@
 package brightspark.sparkshammers.customTools;
 
-import brightspark.sparkshammers.reference.EnumMaterials;
-import brightspark.sparkshammers.reference.Reference;
+import brightspark.sparkshammers.EnumMaterials;
+import brightspark.sparkshammers.Reference;
 import net.minecraft.item.Item.ToolMaterial;
 import net.minecraft.item.ItemStack;
 

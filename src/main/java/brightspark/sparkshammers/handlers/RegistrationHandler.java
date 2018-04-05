@@ -6,7 +6,7 @@ import brightspark.sparkshammers.hammerCrafting.HammerShapedOreRecipe;
 import brightspark.sparkshammers.init.SHBlocks;
 import brightspark.sparkshammers.init.SHItems;
 import brightspark.sparkshammers.init.SHRecipes;
-import brightspark.sparkshammers.reference.Reference;
+import brightspark.sparkshammers.Reference;
 import brightspark.sparkshammers.tileentity.TileHammer;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;

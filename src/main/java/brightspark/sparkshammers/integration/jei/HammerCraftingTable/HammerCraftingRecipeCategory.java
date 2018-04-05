@@ -1,6 +1,6 @@
 package brightspark.sparkshammers.integration.jei.HammerCraftingTable;
 
-import brightspark.sparkshammers.reference.Reference;
+import brightspark.sparkshammers.Reference;
 import mezz.jei.api.IGuiHelper;
 import mezz.jei.api.gui.IDrawable;
 import mezz.jei.api.gui.IGuiItemStackGroup;

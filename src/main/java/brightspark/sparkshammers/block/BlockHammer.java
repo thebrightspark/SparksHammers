@@ -4,7 +4,7 @@ import brightspark.sparkshammers.SparksHammers;
 import brightspark.sparkshammers.entity.EntityFallingHammer;
 import brightspark.sparkshammers.init.SHItems;
 import brightspark.sparkshammers.item.ItemHammerMjolnir;
-import brightspark.sparkshammers.reference.SHConfig;
+import brightspark.sparkshammers.SHConfig;
 import brightspark.sparkshammers.tileentity.TileHammer;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
