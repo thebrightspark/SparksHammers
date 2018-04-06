@@ -1,5 +1,6 @@
 package brightspark.sparkshammers.item;
 
+import brightspark.sparkshammers.SHConfig;
 import brightspark.sparkshammers.SparksHammers;
 import brightspark.sparkshammers.customTools.Tool;
 import brightspark.sparkshammers.init.SHItems;
@@ -9,6 +10,7 @@ import brightspark.sparkshammers.util.CommonUtils;
 import brightspark.sparkshammers.util.NBTHelper;
 import com.google.common.collect.Sets;
 import net.minecraft.block.Block;
+import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
@@ -16,6 +18,10 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemTool;
+import net.minecraft.util.EnumActionResult;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
+import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.text.TextFormatting;
@@ -224,6 +230,36 @@ public class ItemAOE extends ItemTool implements IColourable
         breakArea(stack, player, pos, start, end);
 
         return super.onBlockStartBreak(stack, pos, player);
+    }
+
+    @Override
+    public EnumActionResult onItemUse(EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ)
+    {
+        if(SHConfig.rightClickPlacesTorches && !world.isRemote && player.inventory.hasItemStack(SparksHammers.TORCH_STACK))
+        {
+            //Find torches in the player's inventory
+            ItemStack torchStack = CommonUtils.findItemInPlayerInv(player, SparksHammers.TORCH_ITEM);
+            if(torchStack != null)
+            {
+                //Place torch
+                BlockPos torchPos = world.getBlockState(pos).getBlock().isReplaceable(world, pos) ? pos : pos.offset(facing);
+                if(player.canPlayerEdit(pos, facing, torchStack) && world.mayPlace(Blocks.TORCH, torchPos, false, facing, null))
+                {
+                    IBlockState torchState = Blocks.TORCH.getStateForPlacement(world, torchPos, facing, hitX, hitY, hitZ, 0, player, hand);
+                    boolean success = SparksHammers.TORCH_ITEM.placeBlockAt(torchStack, player, world, torchPos, facing, hitX, hitY, hitZ, torchState);
+                    if(success)
+                    {
+                        torchState = world.getBlockState(torchPos);
+                        SoundType soundtype = torchState.getBlock().getSoundType(torchState, world, pos, player);
+                        world.playSound(null, pos, soundtype.getPlaceSound(), SoundCategory.BLOCKS, (soundtype.getVolume() + 1.0F) / 2.0F, soundtype.getPitch() * 0.8F);
+                        if(!player.isCreative())
+                            torchStack.shrink(1);
+                    }
+                    return success ? EnumActionResult.SUCCESS : EnumActionResult.PASS;
+                }
+            }
+        }
+        return super.onItemUse(player, world, pos, hand, facing, hitX, hitY, hitZ);
     }
 
     public ItemAOE setMineWidth(int width)

@@ -8,7 +8,6 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockSnow;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.multiplayer.WorldClient;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
@@ -117,7 +116,7 @@ public class ItemHammerMjolnir extends ItemAOE
             //noinspection all
             if(blockHit == Blocks.SNOW_LAYER && blockHitState.getValue(BlockSnow.LAYERS).intValue() < 1)
                 side = EnumFacing.UP;
-            else if(! blockHit.isReplaceable(world, pos))
+            else if(!blockHit.isReplaceable(world, pos))
                 pos = pos.offset(side);
 
             if(!player.canPlayerEdit(pos, side, stack))
@@ -186,7 +185,7 @@ public class ItemHammerMjolnir extends ItemAOE
             if(!player.capabilities.isCreativeMode)
                 setCooldownToMax(stack);
         }
-        return new ActionResult<ItemStack>(EnumActionResult.PASS, stack);
+        return new ActionResult<>(EnumActionResult.PASS, stack);
     }
 
     @Override

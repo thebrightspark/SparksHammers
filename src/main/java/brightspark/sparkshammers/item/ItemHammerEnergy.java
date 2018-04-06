@@ -97,14 +97,14 @@ public class ItemHammerEnergy extends ItemAOE implements IEnergyContainerItem
     public boolean hitEntity(ItemStack stack, EntityLivingBase entityHit, EntityLivingBase player)
     {
         //Uses energy before damaging stack
-        return getEnergyStored(stack) < SHConfig.poweredEnergyUsePerBlock * 2 ? super.hitEntity(stack, entityHit, player) : useEnergy(stack, SHConfig.poweredEnergyUsePerBlock * 2);
+        return getEnergyStored(stack) < SHConfig.POWERED.poweredEnergyUsePerBlock * 2 ? super.hitEntity(stack, entityHit, player) : useEnergy(stack, SHConfig.POWERED.poweredEnergyUsePerBlock * 2);
     }
 
     @Override
     public boolean onBlockDestroyed(ItemStack stack, World worldIn, IBlockState state, BlockPos pos, EntityLivingBase entityLiving)
     {
         //Uses energy before damaging stack
-        return getEnergyStored(stack) < SHConfig.poweredEnergyUsePerBlock ? super.onBlockDestroyed(stack, worldIn, state, pos, entityLiving) : useEnergy(stack, SHConfig.poweredEnergyUsePerBlock);
+        return getEnergyStored(stack) < SHConfig.POWERED.poweredEnergyUsePerBlock ? super.onBlockDestroyed(stack, worldIn, state, pos, entityLiving) : useEnergy(stack, SHConfig.POWERED.poweredEnergyUsePerBlock);
     }
 
     @Override
@@ -112,7 +112,7 @@ public class ItemHammerEnergy extends ItemAOE implements IEnergyContainerItem
     {
         return new ICapabilitySerializable<NBTTagCompound>()
         {
-            SHEnergyStorage energy = new SHEnergyStorage(SHConfig.poweredEnergyCapacity, SHConfig.poweredEnergyInputRate, 0);
+            SHEnergyStorage energy = new SHEnergyStorage(SHConfig.POWERED.poweredEnergyCapacity, SHConfig.POWERED.poweredEnergyInputRate, 0);
 
             @Override
             public boolean hasCapability(@Nonnull Capability<?> capability, @Nullable EnumFacing facing)

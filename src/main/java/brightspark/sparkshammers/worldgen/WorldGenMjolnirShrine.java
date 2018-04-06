@@ -28,7 +28,7 @@ public class WorldGenMjolnirShrine implements IWorldGenerator
             BlockPos pos = world.getTopSolidOrLiquidBlock(new BlockPos(chunkX * 16 + random.nextInt(5), 1, chunkZ * 16 + random.nextInt(5)));
             int posY = isValidSpawn(world, pos);
 
-            if(posY > 0 && random.nextInt(SHConfig.mjolnirShrineRarity) == 0)
+            if(posY > 0 && random.nextInt(SHConfig.MJOLNIR.mjolnirShrineRarity) == 0)
             {
                 //Clear the trees around the area if there are any
                 clearTrees(world, pos.add(5, 0, 5), 10);
@@ -36,7 +36,7 @@ public class WorldGenMjolnirShrine implements IWorldGenerator
                 //Generate the shrine
                 generateShrine(world, pos);
 
-                if(SHConfig.mjolnirShrineDebug)
+                if(SHConfig.MJOLNIR.mjolnirShrineDebug)
                     LogHelper.info("Mjolnir Shrine generated at: " + pos.add(5, 0, 5).toString());
             }
         }
@@ -90,7 +90,7 @@ public class WorldGenMjolnirShrine implements IWorldGenerator
     {
         //If the position isn't high enough, then don't spawn it.
         //If the biome's minimum height is less than 0 -> rules out any sort of water based biome
-        if(pos.getY() < SHConfig.mjolnirShrineMinY || world.getBiome(pos).getBaseHeight() < 0.0F)
+        if(pos.getY() < SHConfig.MJOLNIR.mjolnirShrineMinY || world.getBiome(pos).getBaseHeight() < 0.0F)
             return -1;
 
         //Checks to see if the ground is 'flat enough'

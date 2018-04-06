@@ -108,7 +108,7 @@ public class BlockHammer extends BlockContainer
         {
             //Player needs to have killed the dragon to be worthy
             if((!hammer.hasOwner() || hammer.isOwner(player)) &&
-                    (! SHConfig.mjolnirPickupNeedsDragonAchieve || SparksHammers.hasKillDragonAdvancement((EntityPlayerMP) player)))
+                    (!SHConfig.MJOLNIR.mjolnirPickupNeedsDragonAchieve || SparksHammers.hasKillDragonAdvancement((EntityPlayerMP) player)))
             {
                 //Player is worthy
                 ItemStack givenHammer = new ItemStack(SHItems.hammerMjolnir);

@@ -13,6 +13,8 @@ import brightspark.sparkshammers.worldgen.WorldGenMjolnirShrine;
 import net.minecraft.advancements.Advancement;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.init.Blocks;
+import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.ResourceLocation;
@@ -48,6 +50,9 @@ public class SparksHammers
     public static DamageSource fallingHammer = new DamageSource("fallingHammer");
     private static Advancement killDragonAdvancement;
 
+    public static ItemStack TORCH_STACK;
+    public static ItemBlock TORCH_ITEM;
+
     @Mod.EventHandler
     public void init(FMLInitializationEvent event)
     {
@@ -59,7 +64,7 @@ public class SparksHammers
         NetworkRegistry.INSTANCE.registerGuiHandler(this, new GuiHandler());
 
         //Register world generation for Mjolnir Shrine
-        if(SHConfig.shouldGenerateMjolnirShrines)
+        if(SHConfig.MJOLNIR.shouldGenerateMjolnirShrines)
             GameRegistry.registerWorldGenerator(new WorldGenMjolnirShrine(), 10);
     }
 
@@ -67,6 +72,9 @@ public class SparksHammers
     public void postInit(FMLPostInitializationEvent event)
     {
         //Run stuff after mods have initialized here
+
+        TORCH_STACK = new ItemStack(Blocks.TORCH);
+        TORCH_ITEM = (ItemBlock) TORCH_STACK.getItem();
 
         //Make sure all tools have recipes
         List<HammerShapedOreRecipe> recipes = HammerCraftingManager.getRecipes();

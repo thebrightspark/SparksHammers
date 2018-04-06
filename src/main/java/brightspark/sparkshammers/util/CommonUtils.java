@@ -82,6 +82,22 @@ public class CommonUtils
         player.openGui(SparksHammers.instance, -1, world, pos.getX(), pos.getY(), pos.getZ());
     }
 
+    public static ItemStack findItemInPlayerInv(EntityPlayer player, Item item)
+    {
+        for(EnumHand hand : EnumHand.values())
+        {
+            ItemStack heldStack = player.getHeldItem(hand);
+            if(heldStack.getItem() == item)
+                return heldStack;
+        }
+
+        for(ItemStack stack : player.inventory.mainInventory)
+            if(stack.getItem() == item)
+                return stack;
+
+        return null;
+    }
+
 
 
     // <<<< AOE STUFF >>>>
