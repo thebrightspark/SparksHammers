@@ -1,5 +1,6 @@
 package brightspark.sparkshammers.init;
 
+import brightspark.sparkshammers.item.upgrade.EnumUpgrades;
 import brightspark.sparkshammers.customTools.CustomTools;
 import brightspark.sparkshammers.customTools.Tool;
 import brightspark.sparkshammers.item.*;
@@ -30,6 +31,9 @@ public class SHItems
 
     //Special Hammers
     public static ItemAOE hammerMjolnir, hammerMini, hammerGiant, hammerNetherStar, hammerPowered;
+
+    //Powered Hammer Upgrades
+    public static ItemUpgrade upgradeSize, upgradeSpeed, upgradeAttack, upgradeHarvest, upgradeCapacity;
 
     //Debug
     public static ItemDebug debug;
@@ -108,6 +112,16 @@ public class SHItems
         List<Tool> tools = CustomTools.read();
         //Register tools from json
         tools.forEach(SHItems::addTool);
+
+        if(hammerPowered != null)
+        {
+            //Register upgrades
+            addItem(upgradeSize = new ItemUpgrade(EnumUpgrades.SIZE));
+            addItem(upgradeSpeed = new ItemUpgrade(EnumUpgrades.SPEED));
+            addItem(upgradeAttack = new ItemUpgrade(EnumUpgrades.ATTACK));
+            addItem(upgradeHarvest = new ItemUpgrade(EnumUpgrades.HARVEST));
+            addItem(upgradeCapacity = new ItemUpgrade(EnumUpgrades.CAPACITY));
+        }
     }
 
     public static Item[] getItems()

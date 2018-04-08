@@ -1,20 +1,28 @@
 package brightspark.sparkshammers.item;
 
-import brightspark.sparkshammers.SparksHammers;
+import brightspark.sparkshammers.item.upgrade.EnumUpgrades;
+import brightspark.sparkshammers.item.upgrade.Upgrade;
 import brightspark.sparkshammers.customTools.Tool;
 import brightspark.sparkshammers.energy.SHEnergyStorage;
 import brightspark.sparkshammers.SHConfig;
+import brightspark.sparkshammers.util.NBTHelper;
 import cofh.redstoneflux.api.IEnergyContainerItem;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
+import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ICapabilitySerializable;
@@ -27,11 +35,49 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Optional.Interface(modid = "redstoneflux", iface = "cofh.redstoneflux.api.IEnergyContainerItem", striprefs = true)
 public class ItemHammerEnergy extends ItemAOE implements IEnergyContainerItem
 {
+    private enum DigSize
+    {
+        THREE(1),
+        FIVE(2),
+        SEVEN(3);
+
+        private final String name;
+        private final int size;
+
+        DigSize(int size)
+        {
+            int width = size * 2 + 1;
+            this.name = width + "x" + width;
+            this.size = size;
+        }
+
+        public DigSize nextSize(Upgrade sizeUpgrade)
+        {
+            int i = ordinal() >= Math.min(values().length - 1, sizeUpgrade.getNum()) ? 0 : ordinal() + 1;
+            return values()[i];
+        }
+
+        public int getSize()
+        {
+            return size;
+        }
+
+        @Override
+        public String toString()
+        {
+            return name;
+        }
+    }
+
+    private static final String KEY_UPGRADES = "upgrades";
+    private static final String KEY_SIZE = "size";
+
     public ItemHammerEnergy(Tool tool)
     {
         super(tool, false);
@@ -43,12 +89,19 @@ public class ItemHammerEnergy extends ItemAOE implements IEnergyContainerItem
     {
         super.getSubItems(tab, subItems);
 
-        ItemStack poweredStack = new ItemStack(this);
-        SHEnergyStorage energy = ((SHEnergyStorage) poweredStack.getCapability(CapabilityEnergy.ENERGY, null));
-        if(tab == SparksHammers.SH_TAB && energy != null)
+        if(isInCreativeTab(tab))
         {
+            ItemStack poweredStack = new ItemStack(this);
+            SHEnergyStorage energy = ((SHEnergyStorage) poweredStack.getCapability(CapabilityEnergy.ENERGY, null));
             energy.setEnergyStored(energy.getMaxEnergyStored());
             subItems.add(poweredStack);
+
+            ItemStack upgradedStack = new ItemStack(this);
+            energy = ((SHEnergyStorage) upgradedStack.getCapability(CapabilityEnergy.ENERGY, null));
+            energy.setEnergyStored(energy.getMaxEnergyStored());
+            for(EnumUpgrades u : EnumUpgrades.values())
+                setUpgrade(upgradedStack, new Upgrade(u, u.getMaxUpgrades()));
+            subItems.add(upgradedStack);
         }
     }
 
@@ -147,8 +200,127 @@ public class ItemHammerEnergy extends ItemAOE implements IEnergyContainerItem
     @Override
     public void addInformation(ItemStack stack, @Nullable World world, List<String> tooltip, ITooltipFlag advanced)
     {
+        //Energy
         IEnergyStorage energy = getEnergyStorage(stack);
-        tooltip.add(I18n.format("item.hammer_powered.tooltip") + ":");
+        tooltip.add(I18n.format("item.hammer_powered.tooltip.energy"));
         tooltip.add(energy.getEnergyStored() + " / " + energy.getMaxEnergyStored());
+        tooltip.add("");
+
+        //Upgrades
+        List<Upgrade> upgrades = getUpgrades(stack);
+        if(upgrades.isEmpty())
+            tooltip.add(I18n.format("item.hammer_powered.tooltip.upgrades.none"));
+        else if(GuiScreen.isShiftKeyDown())
+        {
+            tooltip.add(I18n.format("item.hammer_powered.tooltip.upgrades.shift"));
+            upgrades.forEach(upgrade -> tooltip.add("  " + upgrade.getType().toLocal() + " (" + upgrade.getNum() + "/" + upgrade.getType().getMaxUpgrades() + ")"));
+        }
+        else
+            tooltip.add(I18n.format("item.hammer_powered.tooltip.upgrades.normal", upgrades.size()));
+    }
+
+    @Override
+    public EnumActionResult onItemUse(EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ)
+    {
+        if(hand == EnumHand.MAIN_HAND && player.isSneaking())
+        {
+            //Change dig size if upgrade is installed
+            ItemStack stack = player.getHeldItem(hand);
+            Upgrade upgrade = getUpgrade(stack, EnumUpgrades.SIZE);
+            if(upgrade != null)
+            {
+                DigSize size = DigSize.values()[NBTHelper.getByte(stack, KEY_SIZE)].nextSize(upgrade);
+                NBTHelper.setByte(stack, KEY_SIZE, (byte) size.ordinal());
+                if(world.isRemote)
+                    player.sendMessage(new TextComponentString("Set dig size to " + size));
+                return EnumActionResult.SUCCESS;
+            }
+        }
+        return super.onItemUse(player, world, pos, hand, facing, hitX, hitY, hitZ);
+    }
+
+    public static boolean addUpgrade(ItemStack hammer, ItemStack upgrade)
+    {
+        if(!(upgrade.getItem() instanceof ItemUpgrade)) return false;
+        EnumUpgrades upgradeToAdd = ((ItemUpgrade) upgrade.getItem()).getUpgrade();
+        return addUpgrade(hammer, upgradeToAdd);
+    }
+
+    public static boolean addUpgrade(ItemStack hammer, EnumUpgrades upgradeType)
+    {
+        NBTTagList tagList = NBTHelper.getList(hammer, KEY_UPGRADES);
+        for(int i = 0; i < tagList.tagCount(); i++)
+        {
+            Upgrade u = new Upgrade(tagList.getCompoundTagAt(i));
+            //If upgrade already exists, then increase its number
+            if(u.getType() == upgradeType)
+            {
+                boolean result = u.increaseNum();
+                if(result)
+                {
+                    tagList.set(i, u.serializeNBT());
+                    NBTHelper.setList(hammer, KEY_UPGRADES, tagList);
+                }
+                return result;
+            }
+        }
+
+        //If upgrade does not exist, then add it
+        tagList.appendTag(new Upgrade(upgradeType).serializeNBT());
+        NBTHelper.setList(hammer, KEY_UPGRADES, tagList);
+        return true;
+    }
+
+    private static void setUpgrade(ItemStack hammer, Upgrade upgrade)
+    {
+        NBTTagList tagList = NBTHelper.getList(hammer, KEY_UPGRADES);
+        for(int i = 0; i < tagList.tagCount(); i++)
+        {
+            Upgrade u = new Upgrade(tagList.getCompoundTagAt(i));
+            //If upgrade already exists, then change it
+            if(u.getType() == upgrade.getType())
+            {
+                tagList.set(i, upgrade.serializeNBT());
+                NBTHelper.setList(hammer, KEY_UPGRADES, tagList);
+            }
+        }
+
+        //If upgrade does not exist, then add it
+        tagList.appendTag(upgrade.serializeNBT());
+        NBTHelper.setList(hammer, KEY_UPGRADES, tagList);
+    }
+
+    public static List<Upgrade> getUpgrades(ItemStack hammer)
+    {
+        List<Upgrade> upgrades = new ArrayList<>();
+        NBTTagList upgradeList = NBTHelper.getList(hammer, KEY_UPGRADES);
+        for(int i = 0; i < upgradeList.tagCount(); i++)
+            upgrades.add(new Upgrade(upgradeList.getCompoundTagAt(i)));
+        upgrades.sort((o1, o2) -> o1.getType().name().compareToIgnoreCase(o2.getType().name()));
+        return upgrades;
+    }
+
+    public static Upgrade getUpgrade(ItemStack hammer, EnumUpgrades upgrade)
+    {
+        NBTTagList upgradeList = NBTHelper.getList(hammer, KEY_UPGRADES);
+        for(int i = 0; i < upgradeList.tagCount(); i++)
+        {
+            Upgrade u = new Upgrade(upgradeList.getCompoundTagAt(i));
+            if(u.getType() == upgrade)
+                return u;
+        }
+        return null;
+    }
+
+    @Override
+    public int getMineHeight(ItemStack stack)
+    {
+        return DigSize.values()[NBTHelper.getByte(stack, KEY_SIZE)].getSize();
+    }
+
+    @Override
+    public int getMineWidth(ItemStack stack)
+    {
+        return DigSize.values()[NBTHelper.getByte(stack, KEY_SIZE)].getSize();
     }
 }

@@ -5,6 +5,8 @@ package brightspark.sparkshammers.util;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
+import net.minecraftforge.common.util.Constants;
 
 import java.util.UUID;
 
@@ -212,4 +214,30 @@ public class NBTHelper
 		}
 		return null;
 	}
+
+    /*
+    The following methods are added by me so I can read and write tag lists to the NBT.
+     */
+
+    public static void setList(ItemStack stack, String keyName, NBTTagList list)
+    {
+        initNBTTagCompound(stack);
+
+        stack.getTagCompound().setTag(keyName, list);
+    }
+
+    /**
+     * Gets a tag list which type is of compound tags.
+     */
+    public static NBTTagList getList(ItemStack stack, String keyName)
+    {
+        return getList(stack, keyName, Constants.NBT.TAG_COMPOUND);
+    }
+
+    public static NBTTagList getList(ItemStack stack, String keyName, int tagType)
+    {
+        initNBTTagCompound(stack);
+
+        return stack.getTagCompound().getTagList(keyName, tagType);
+    }
 }

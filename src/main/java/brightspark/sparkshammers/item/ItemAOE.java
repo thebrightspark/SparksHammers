@@ -24,7 +24,6 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 
 import java.util.Set;
@@ -33,6 +32,7 @@ public class ItemAOE extends ItemTool implements IColourable
 {
     private static final Set<Block> PickaxeBlocks = Sets.newHashSet(Blocks.ACTIVATOR_RAIL, Blocks.COAL_ORE, Blocks.COBBLESTONE, Blocks.DETECTOR_RAIL, Blocks.DIAMOND_BLOCK, Blocks.DIAMOND_ORE, Blocks.DOUBLE_STONE_SLAB, Blocks.GOLDEN_RAIL, Blocks.GOLD_BLOCK, Blocks.GOLD_ORE, Blocks.ICE, Blocks.IRON_BLOCK, Blocks.IRON_ORE, Blocks.LAPIS_BLOCK, Blocks.LAPIS_ORE, Blocks.LIT_REDSTONE_ORE, Blocks.MOSSY_COBBLESTONE, Blocks.NETHERRACK, Blocks.PACKED_ICE, Blocks.RAIL, Blocks.REDSTONE_ORE, Blocks.SANDSTONE, Blocks.RED_SANDSTONE, Blocks.STONE, Blocks.STONE_SLAB, Blocks.STONE_BUTTON, Blocks.STONE_PRESSURE_PLATE);
     private static final Set<Material> PickaxeMats = Sets.newHashSet(Material.ANVIL, Material.GLASS, Material.ICE, Material.IRON, Material.PACKED_ICE, Material.PISTON, Material.ROCK);
+
     private static final Set<Block> ShovelBlocks = Sets.newHashSet(Blocks.CLAY, Blocks.DIRT, Blocks.FARMLAND, Blocks.GRASS, Blocks.GRAVEL, Blocks.MYCELIUM, Blocks.SAND, Blocks.SNOW, Blocks.SNOW_LAYER, Blocks.SOUL_SAND, Blocks.GRASS_PATH, Blocks.CONCRETE_POWDER);
     private static final Set<Material> ShovelMats = Sets.newHashSet(Material.GRASS, Material.GROUND, Material.SAND, Material.SNOW, Material.CRAFTED_SNOW, Material.CLAY);
 
@@ -47,12 +47,6 @@ public class ItemAOE extends ItemTool implements IColourable
     private String dependantOreDic;
     private ItemStack dependantStack;
     protected String localName;
-
-    protected static final String KEY_CUSTOM_NAME = "customName";
-    protected static final String KEY_CUSTOM_FORMATTING = "customFormatting";
-
-    //The material types which the tool can mine in AOE:
-    private Set<Material> materials;
 
     //Used for the colour tint of the head of the tool texture
     protected int textureColour = -1;
@@ -97,69 +91,17 @@ public class ItemAOE extends ItemTool implements IColourable
         setUnlocalizedName(name);
         setRegistryName(name);
         setCreativeTab(SparksHammers.SH_TAB);
-        materials = isExcavator ? ShovelMats : PickaxeMats;
-    }
-
-    @Override
-    public Set<String> getToolClasses(ItemStack stack)
-    {
-        return com.google.common.collect.ImmutableSet.of(isExcavator ? "shovel" : "pickaxe");
-    }
-
-    /**
-     * Returns the unlocalized name of this item. This version accepts an ItemStack so different stacks can have
-     * different names based on their damage or NBT.
-     */
-    @Override
-    public String getUnlocalizedName(ItemStack stack)
-    {
-        //Get custom name if there's one in the NBT
-        String customName = NBTHelper.getString(stack, KEY_CUSTOM_NAME);
-        return customName.equals("") ? super.getUnlocalizedName(stack) : getUnlocalizedName() + "." + customName;
-    }
-
-    protected String getLocalName(ItemStack stack)
-    {
-        return localName != null ? localName + " " + CommonUtils.capitaliseFirstLetter(isExcavator ? Reference.Items.EXCAVATOR : Reference.Items.HAMMER) : super.getItemStackDisplayName(stack);
+        setHarvestLevel(isExcavator ? "shovel" : "pickaxe", material.getHarvestLevel());
     }
 
     @Override
     public String getItemStackDisplayName(ItemStack stack)
     {
-        //Get custom colour formatting if there's one in the NBT
-        String customFormatting = NBTHelper.getString(stack, KEY_CUSTOM_FORMATTING);
-        return customFormatting.equals("") ? getLocalName(stack) : customFormatting + getLocalName(stack);
+        return localName != null ? localName + " " + CommonUtils.capitaliseFirstLetter(isExcavator ? Reference.Items.EXCAVATOR : Reference.Items.HAMMER) : super.getItemStackDisplayName(stack);
     }
 
     /**
-     * Check whether this Item can harvest the given Block
-     */
-    @Override
-    public boolean canHarvestBlock(IBlockState state)
-    {
-        Block block = state.getBlock();
-
-        if(!isExcavator)
-            return block == Blocks.OBSIDIAN ? this.toolMaterial.getHarvestLevel() == 3 : (block != Blocks.DIAMOND_BLOCK && block != Blocks.DIAMOND_ORE ? (block != Blocks.EMERALD_ORE && block != Blocks.EMERALD_BLOCK ? (block != Blocks.GOLD_BLOCK && block != Blocks.GOLD_ORE ? (block != Blocks.IRON_BLOCK && block != Blocks.IRON_ORE ? (block != Blocks.LAPIS_BLOCK && block != Blocks.LAPIS_ORE ? (block != Blocks.REDSTONE_ORE && block != Blocks.LIT_REDSTONE_ORE ? (state.getMaterial() == Material.ROCK || (state.getMaterial() == Material.IRON || state.getMaterial() == Material.ANVIL)) : this.toolMaterial.getHarvestLevel() >= 2) : this.toolMaterial.getHarvestLevel() >= 1) : this.toolMaterial.getHarvestLevel() >= 1) : this.toolMaterial.getHarvestLevel() >= 2) : this.toolMaterial.getHarvestLevel() >= 2) : this.toolMaterial.getHarvestLevel() >= 2);
-        else
-            return block == Blocks.SNOW_LAYER || block == Blocks.SNOW;
-    }
-
-    /**
-     * Used in vanilla code for the pickaxe, but not the shovel
-     */
-    @Override
-    public float getDestroySpeed(ItemStack stack, IBlockState state)
-    {
-        if(!isExcavator)
-            return state.getMaterial() != Material.IRON && state.getMaterial() != Material.ANVIL && state.getMaterial() != Material.ROCK ? super.getDestroySpeed(stack, state) : efficiency;
-        else
-            return super.getDestroySpeed(stack, state);
-    }
-
-    /**
-     * If true, then the tool will take do damage from digging or attacking.
-     * @param isInfinite Set to true for infinite use
+     * If true, then the tool will take no damage from digging or attacking.
      */
     public void setInfinite(boolean isInfinite)
     {
@@ -174,6 +116,7 @@ public class ItemAOE extends ItemTool implements IColourable
         return !infiniteUse && super.hitEntity(stack, entityHit, player);
     }
 
+    //Overriding this just to make it public
     @Override
     public RayTraceResult rayTrace(World worldIn, EntityPlayer playerIn, boolean useLiquids)
     {
@@ -188,10 +131,29 @@ public class ItemAOE extends ItemTool implements IColourable
         return !infiniteUse && super.onBlockDestroyed(stack, world, state, pos, player);
     }
 
-    // <<<< From Tinkers Construct: HarvestTool >>>>
-    public boolean isEffective(IBlockState state)
+    @Override
+    public boolean canHarvestBlock(IBlockState state, ItemStack stack)
     {
-        return materials.contains(state.getMaterial());
+        String tool = state.getBlock().getHarvestTool(state);
+        if(state.getMaterial().isToolNotRequired() || tool == null) return true;
+        return getHarvestLevel(stack, tool, null, state) >= state.getBlock().getHarvestLevel(state);
+    }
+
+    @Override
+    public float getDestroySpeed(ItemStack stack, IBlockState state)
+    {
+        return isEffective(stack, state) ? efficiency : 1F;
+    }
+
+    public boolean isEffective(ItemStack stack, IBlockState state)
+    {
+        for (String type : getToolClasses(stack))
+            if(state.getBlock().isToolEffective(type, state))
+                return true;
+
+        return isExcavator ?
+                ShovelMats.contains(state.getMaterial()) || ShovelBlocks.contains(state.getBlock()) :
+                PickaxeMats.contains(state.getMaterial()) || PickaxeBlocks.contains(state.getBlock());
     }
 
     /**
@@ -222,7 +184,7 @@ public class ItemAOE extends ItemTool implements IColourable
             return super.onBlockStartBreak(stack, pos, player);
 
         //Calculate area to break
-        BlockPos[] positions = CommonUtils.getBreakArea((ItemAOE) stack.getItem(), pos, ray.sideHit, player);
+        BlockPos[] positions = CommonUtils.getBreakArea(stack, pos, ray.sideHit, player);
         BlockPos start = positions[0];
         BlockPos end = positions[1];
 
@@ -235,7 +197,7 @@ public class ItemAOE extends ItemTool implements IColourable
     @Override
     public EnumActionResult onItemUse(EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ)
     {
-        if(SHConfig.rightClickPlacesTorches && !world.isRemote && player.inventory.hasItemStack(SparksHammers.TORCH_STACK))
+        if(SHConfig.rightClickPlacesTorches && !world.isRemote && !player.isSneaking() && player.inventory.hasItemStack(SparksHammers.TORCH_STACK))
         {
             //Find torches in the player's inventory
             ItemStack torchStack = CommonUtils.findItemInPlayerInv(player, SparksHammers.TORCH_ITEM);
@@ -259,6 +221,7 @@ public class ItemAOE extends ItemTool implements IColourable
                 }
             }
         }
+        //TODO: Make grass paths with excavators?
         return super.onItemUse(player, world, pos, hand, facing, hitX, hitY, hitZ);
     }
 
@@ -280,12 +243,12 @@ public class ItemAOE extends ItemTool implements IColourable
         return this;
     }
 
-    public int getMineWidth()
+    public int getMineWidth(ItemStack stack)
     {
         return mineWidth;
     }
 
-    public int getMineHeight()
+    public int getMineHeight(ItemStack stack)
     {
         return mineHeight;
     }
@@ -298,22 +261,6 @@ public class ItemAOE extends ItemTool implements IColourable
     public boolean getShiftRotating()
     {
         return shiftRotating;
-    }
-
-    /**
-     * Called when item is crafted/smelted. Used only by maps so far.
-     */
-    @Override
-    public void onCreated(ItemStack stack, World worldIn, EntityPlayer player)
-    {
-        super.onCreated(stack, worldIn, player);
-
-        //Sets the name to 8BrickDMG's custom name if he crafts the giant hammer.
-        if(!worldIn.isRemote && stack.getItem().equals(SHItems.hammerGiant) && player.getUniqueID().equals(Reference.UUIDs._8BRICKDMG))
-        {
-            NBTHelper.setString(stack, KEY_CUSTOM_NAME, "8brickdmg");
-            NBTHelper.setString(stack, KEY_CUSTOM_FORMATTING, TextFormatting.LIGHT_PURPLE.toString());
-        }
     }
 
     @Override

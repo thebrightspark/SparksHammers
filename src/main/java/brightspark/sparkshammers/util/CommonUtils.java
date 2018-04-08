@@ -77,7 +77,7 @@ public class CommonUtils
     /**
      * Open a GUI for a block (Uses a guiID of -1).
      */
-    public static void openGui(World world, EntityPlayer player, BlockPos pos)
+    public static void openGui(EntityPlayer player, World world, BlockPos pos)
     {
         player.openGui(SparksHammers.instance, -1, world, pos.getX(), pos.getY(), pos.getZ());
     }
@@ -102,18 +102,19 @@ public class CommonUtils
 
     // <<<< AOE STUFF >>>>
 
-    public static BlockPos[] getBreakArea(ItemAOE hammerItem, BlockPos pos, EnumFacing sideHit, EntityPlayer player)
+    public static BlockPos[] getBreakArea(ItemStack hammerStack, BlockPos pos, EnumFacing sideHit, EntityPlayer player)
     {
+        ItemAOE hammerItem = (ItemAOE) hammerStack.getItem();
         //Rotate if player is holding shift
         if(hammerItem.getShiftRotating() && player.isSneaking())
         {
-            int tempW = hammerItem.getMineWidth();
-            hammerItem.setMineWidth(hammerItem.getMineHeight());
+            int tempW = hammerItem.getMineWidth(hammerStack);
+            hammerItem.setMineWidth(hammerItem.getMineHeight(hammerStack));
             hammerItem.setMineHeight(tempW);
         }
 
-        int mineWidth = hammerItem.getMineWidth();
-        int mineHeight = hammerItem.getMineHeight();
+        int mineWidth = hammerItem.getMineWidth(hammerStack);
+        int mineHeight = hammerItem.getMineHeight(hammerStack);
 
         BlockPos start = pos.offset(sideHit, hammerItem.getMineDepth());
         BlockPos end = pos.offset(sideHit, hammerItem.getMineDepth());
@@ -162,8 +163,8 @@ public class CommonUtils
         //Rotate back to normal if player is holding shift
         if(hammerItem.getShiftRotating() && player.isSneaking())
         {
-            int tempW = hammerItem.getMineWidth();
-            hammerItem.setMineWidth(hammerItem.getMineHeight());
+            int tempW = hammerItem.getMineWidth(hammerStack);
+            hammerItem.setMineWidth(hammerItem.getMineHeight(hammerStack));
             hammerItem.setMineHeight(tempW);
         }
 
@@ -171,37 +172,25 @@ public class CommonUtils
     }
 
     /**
-     * Used mainly for Nether Star Hammer. Doesn't call stack.onBlockStartBreak()
+     * Used for Nether Star Hammer
      */
     public static void breakArea(ItemStack stack, World world, EntityPlayer player, float blockStrength, BlockPos posStart, BlockPos center, BlockPos posEnd)
     {
-        boolean brokeSomething = false;
         for (int xPos = posStart.getX(); xPos <= posEnd.getX(); xPos++)
             for (int yPos = posStart.getY(); yPos <= posEnd.getY(); yPos++)
                 for (int zPos = posStart.getZ(); zPos <= posEnd.getZ(); zPos++)
                 {
                     BlockPos pos = new BlockPos(xPos, yPos, zPos);
-                    if(breakBlock(stack, world, player, pos, blockStrength) && !brokeSomething)
+                    if(breakBlock(stack, world, player, pos, blockStrength) && pos.equals(center))
                     {
                         //Play break sound at center only once
-                        //LogHelper.info("Playing break sound");
-                        brokeSomething = true;
                         world.playEvent(2001, center, Block.getStateId(Blocks.STONE.getDefaultState()));
                     }
                 }
     }
 
-    public static void breakArea(ItemStack stack, EntityPlayer player, BlockPos posHit, BlockPos posStart, BlockPos posEnd)
-    {
-        for (int xPos = posStart.getX(); xPos <= posEnd.getX(); xPos++)
-            for (int yPos = posStart.getY(); yPos <= posEnd.getY(); yPos++)
-                for (int zPos = posStart.getZ(); zPos <= posEnd.getZ(); zPos++)
-                    if(!stack.getItem().onBlockStartBreak(stack, new BlockPos(xPos, yPos, zPos), player))
-                        breakBlock(stack, player.world, player, new BlockPos(xPos, yPos, zPos), posHit);
-    }
-
     /**
-     * Used mainly for the Nether Star hammer so I can pass a previously saved reference block strength to the method
+     * Used for the Nether Star hammer so I can pass a previously saved reference block strength to the method
      */
     public static boolean breakBlock(ItemStack stack, World world, EntityPlayer player, BlockPos blockPos, float refBlockStrength)
     {
@@ -246,7 +235,7 @@ public class CommonUtils
         // check if the block can be broken, since extra block breaks shouldn't instantly break stuff like obsidian
         // or precious ores you can't harvest while mining stone
         // only effective materials
-        if(!((ItemAOE)stack.getItem()).isEffective(block)) return false;
+        if(!((ItemAOE)stack.getItem()).isEffective(stack, block)) return false;
 
         return true;
     }
@@ -300,7 +289,7 @@ public class CommonUtils
             // the code above, executed on the server, sends a block-updates that give us the correct state of the block we destroy.
 
             // following code can be found in PlayerControllerMP.onPlayerDestroyBlock
-            world.playEvent(2001, blockPos, Block.getStateId(blockState));
+            //world.playEvent(2001, blockPos, Block.getStateId(blockState));
             if(block.removedByPlayer(blockState, world, blockPos, player, true))
                 block.onBlockDestroyedByPlayer(world, blockPos, blockState);
             // callback to the tool

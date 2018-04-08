@@ -42,9 +42,9 @@ public class ItemHammerMjolnir extends ItemAOE
     }
 
     @Override
-    protected String getLocalName(ItemStack stack)
+    public String getItemStackDisplayName(ItemStack stack)
     {
-        return localName != null ? localName : super.getItemStackDisplayName(stack);
+        return localName;
     }
 
     /**

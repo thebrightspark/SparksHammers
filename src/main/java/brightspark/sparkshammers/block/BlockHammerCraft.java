@@ -36,7 +36,7 @@ public class BlockHammerCraft extends Block
             return true;
         //Open crafting gui
         if(!player.isSneaking())
-            CommonUtils.openGui(world, player, pos);
+            CommonUtils.openGui(player, world, pos);
         return true;
     }
 }

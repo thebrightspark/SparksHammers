@@ -86,7 +86,7 @@ public class BlockEventHandler
             {
                 MiningObject o = miningIterator.next();
 
-                ItemHammerNetherStar hammer = (ItemHammerNetherStar) o.stackCopy.getItem();
+                ItemStack hammer = o.stackCopy;
                 BlockPos centerPos = o.getCenterPos();
                 BlockPos[] positions = CommonUtils.getBreakArea(hammer, centerPos, o.facing.getOpposite(), o.player);
 
