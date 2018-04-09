@@ -12,7 +12,7 @@ item.hammer_mjolnir.chat.noAchieve=You must prove you're worthy before you can w
 item.hammer_powered.tooltip.energy=Energy:
 item.hammer_powered.tooltip.upgrades.normal=Upgrades: %s (Hold SHIFT for more info)
 item.hammer_powered.tooltip.upgrades.shift=Upgrades:
-item.hammer_powered.tooltip.upgrades.none=No Upgrades
+item.hammer_powered.tooltip.upgrades.none=No Upgrades (Hold SHIFT for more info)
 
 item.upgrade_size.name=Size Upgrade
 item.upgrade_speed.name=Speed Upgrade

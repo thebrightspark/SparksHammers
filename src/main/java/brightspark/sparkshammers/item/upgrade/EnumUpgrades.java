@@ -10,7 +10,7 @@ public enum EnumUpgrades
     SPEED(3),
     ATTACK(3),
     HARVEST,
-    CAPACITY;
+    CAPACITY(4);
 
     private short maxUpgrades = 1;
 

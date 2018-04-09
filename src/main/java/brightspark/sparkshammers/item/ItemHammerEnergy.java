@@ -7,13 +7,17 @@ import brightspark.sparkshammers.energy.SHEnergyStorage;
 import brightspark.sparkshammers.SHConfig;
 import brightspark.sparkshammers.util.NBTHelper;
 import cofh.redstoneflux.api.IEnergyContainerItem;
+import com.google.common.collect.Multimap;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.SharedMonsterAttributes;
+import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
@@ -208,15 +212,18 @@ public class ItemHammerEnergy extends ItemAOE implements IEnergyContainerItem
 
         //Upgrades
         List<Upgrade> upgrades = getUpgrades(stack);
-        if(upgrades.isEmpty())
-            tooltip.add(I18n.format("item.hammer_powered.tooltip.upgrades.none"));
-        else if(GuiScreen.isShiftKeyDown())
+        if(GuiScreen.isShiftKeyDown())
         {
             tooltip.add(I18n.format("item.hammer_powered.tooltip.upgrades.shift"));
             upgrades.forEach(upgrade -> tooltip.add("  " + upgrade.getType().toLocal() + " (" + upgrade.getNum() + "/" + upgrade.getType().getMaxUpgrades() + ")"));
         }
         else
-            tooltip.add(I18n.format("item.hammer_powered.tooltip.upgrades.normal", upgrades.size()));
+        {
+            if(upgrades.isEmpty())
+                tooltip.add(I18n.format("item.hammer_powered.tooltip.upgrades.none"));
+            else
+                tooltip.add(I18n.format("item.hammer_powered.tooltip.upgrades.normal", upgrades.size()));
+        }
     }
 
     @Override
@@ -260,6 +267,8 @@ public class ItemHammerEnergy extends ItemAOE implements IEnergyContainerItem
                 {
                     tagList.set(i, u.serializeNBT());
                     NBTHelper.setList(hammer, KEY_UPGRADES, tagList);
+                    if(upgradeType == EnumUpgrades.CAPACITY)
+                        setEnergyUpgrade(hammer, u.getNum());
                 }
                 return result;
             }
@@ -268,6 +277,8 @@ public class ItemHammerEnergy extends ItemAOE implements IEnergyContainerItem
         //If upgrade does not exist, then add it
         tagList.appendTag(new Upgrade(upgradeType).serializeNBT());
         NBTHelper.setList(hammer, KEY_UPGRADES, tagList);
+        if(upgradeType == EnumUpgrades.CAPACITY)
+            setEnergyUpgrade(hammer, 1);
         return true;
     }
 
@@ -282,12 +293,17 @@ public class ItemHammerEnergy extends ItemAOE implements IEnergyContainerItem
             {
                 tagList.set(i, upgrade.serializeNBT());
                 NBTHelper.setList(hammer, KEY_UPGRADES, tagList);
+                if(upgrade.getType() == EnumUpgrades.CAPACITY)
+                    setEnergyUpgrade(hammer, upgrade.getNum());
+                return;
             }
         }
 
         //If upgrade does not exist, then add it
         tagList.appendTag(upgrade.serializeNBT());
         NBTHelper.setList(hammer, KEY_UPGRADES, tagList);
+        if(upgrade.getType() == EnumUpgrades.CAPACITY)
+            setEnergyUpgrade(hammer, upgrade.getNum());
     }
 
     public static List<Upgrade> getUpgrades(ItemStack hammer)
@@ -322,5 +338,49 @@ public class ItemHammerEnergy extends ItemAOE implements IEnergyContainerItem
     public int getMineWidth(ItemStack stack)
     {
         return DigSize.values()[NBTHelper.getByte(stack, KEY_SIZE)].getSize();
+    }
+
+    @Override
+    public float getDestroySpeed(ItemStack stack, IBlockState state)
+    {
+        //Speed upgrade effects
+        Upgrade upgrade = getUpgrade(stack, EnumUpgrades.SPEED);
+        return super.getDestroySpeed(stack, state) + (upgrade == null ? 0 : upgrade.getNum());
+    }
+
+    @Override
+    public Multimap<String, AttributeModifier> getAttributeModifiers(EntityEquipmentSlot slot, ItemStack stack)
+    {
+        Multimap<String, AttributeModifier> multimap = super.getItemAttributeModifiers(slot);
+
+        if(slot == EntityEquipmentSlot.MAINHAND)
+        {
+            //Attack upgrade effects
+            Upgrade upgrade = getUpgrade(stack, EnumUpgrades.ATTACK);
+            double damage = attackDamage + (upgrade == null ? 0F : upgrade.getNum());
+            multimap.put(SharedMonsterAttributes.ATTACK_DAMAGE.getName(), new AttributeModifier(ATTACK_DAMAGE_MODIFIER, "Weapon modifier", damage, 0));
+        }
+
+        return multimap;
+    }
+
+    @Override
+    public int getHarvestLevel(ItemStack stack, String toolClass, @Nullable EntityPlayer player, @Nullable IBlockState blockState)
+    {
+        int level = super.getHarvestLevel(stack, toolClass, player, blockState);
+        if(level >= 0)
+        {
+            //Harvest upgrade effects
+            Upgrade upgrade = getUpgrade(stack, EnumUpgrades.HARVEST);
+            if(upgrade != null) level += upgrade.getNum();
+        }
+        return level;
+    }
+
+    private static void setEnergyUpgrade(ItemStack stack, int upgradeNum)
+    {
+        SHEnergyStorage energy = getEnergyStorage(stack);
+        int capacity = SHConfig.POWERED.poweredEnergyCapacity;
+        energy.setCapacity(capacity + (upgradeNum * (capacity / 2)));
     }
 }

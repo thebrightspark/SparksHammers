@@ -25,7 +25,7 @@ public enum EnumMaterials
     MJOLNIR(EnumHelper.addToolMaterial("HammerMjolnir", Integer.MAX_VALUE, 1, 10f, 10f, 0)),
     //TODO: Add config for Nether Star Hammer attack damage
     NETHER_STAR(EnumHelper.addToolMaterial("HammerNetherStar", 3, 10, 5f, 40.0f, 0)),
-    POWERED(EnumHelper.addToolMaterial("HammerPowered", 3, 1500, 4.8f, 6f, 0)),
+    POWERED(EnumHelper.addToolMaterial("HammerPowered", 2, 1500, 3f, 3f, 0)),
 
     //Common Mod Metals
     COPPER(0xFF976E, "ingotCopper", EnumHelper.addToolMaterial("HammerCopper", 1, 768, 2.4f, 4f, 12)),

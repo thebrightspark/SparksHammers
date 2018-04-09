@@ -13,11 +13,13 @@ public class SHEnergyStorage extends EnergyStorage implements INBTSerializable<N
 
     public void setEnergyStored(int amount)
     {
-        energy = amount;
-        if(energy > capacity)
-            energy = capacity;
-        if(energy < 0)
-            energy = 0;
+        energy = Math.max(Math.min(amount, capacity), 0);
+    }
+
+    public void setCapacity(int amount)
+    {
+        capacity = amount;
+        if(energy > capacity) energy = capacity;
     }
 
     /**
