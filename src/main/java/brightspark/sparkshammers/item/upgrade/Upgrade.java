@@ -39,11 +39,12 @@ public class Upgrade implements INBTSerializable<NBTTagCompound>
         this.num = (short) Math.min(num, type.getMaxUpgrades());
     }
 
-    public boolean increaseNum()
+    /**
+     * Tries to increase the num and returns the new num or 0 if it couldn't be increased any more
+     */
+    public int increaseNum()
     {
-        boolean result = num < type.getMaxUpgrades();
-        if(result) num++;
-        return result;
+        return num < type.getMaxUpgrades() ? ++num : 0;
     }
 
     @Override

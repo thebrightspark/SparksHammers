@@ -246,14 +246,14 @@ public class ItemHammerEnergy extends ItemAOE implements IEnergyContainerItem
         return super.onItemUse(player, world, pos, hand, facing, hitX, hitY, hitZ);
     }
 
-    public static boolean addUpgrade(ItemStack hammer, ItemStack upgrade)
+    public static int addUpgrade(ItemStack hammer, ItemStack upgrade)
     {
-        if(!(upgrade.getItem() instanceof ItemUpgrade)) return false;
+        if(!(upgrade.getItem() instanceof ItemUpgrade)) return 0;
         EnumUpgrades upgradeToAdd = ((ItemUpgrade) upgrade.getItem()).getUpgrade();
         return addUpgrade(hammer, upgradeToAdd);
     }
 
-    public static boolean addUpgrade(ItemStack hammer, EnumUpgrades upgradeType)
+    public static int addUpgrade(ItemStack hammer, EnumUpgrades upgradeType)
     {
         NBTTagList tagList = NBTHelper.getList(hammer, KEY_UPGRADES);
         for(int i = 0; i < tagList.tagCount(); i++)
@@ -262,8 +262,8 @@ public class ItemHammerEnergy extends ItemAOE implements IEnergyContainerItem
             //If upgrade already exists, then increase its number
             if(u.getType() == upgradeType)
             {
-                boolean result = u.increaseNum();
-                if(result)
+                int result = u.increaseNum();
+                if(result > 0)
                 {
                     tagList.set(i, u.serializeNBT());
                     NBTHelper.setList(hammer, KEY_UPGRADES, tagList);
@@ -279,7 +279,7 @@ public class ItemHammerEnergy extends ItemAOE implements IEnergyContainerItem
         NBTHelper.setList(hammer, KEY_UPGRADES, tagList);
         if(upgradeType == EnumUpgrades.CAPACITY)
             setEnergyUpgrade(hammer, 1);
-        return true;
+        return 1;
     }
 
     private static void setUpgrade(ItemStack hammer, Upgrade upgrade)
