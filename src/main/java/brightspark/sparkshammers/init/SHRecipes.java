@@ -87,6 +87,13 @@ public class SHRecipes
             }
             if(!enderioRecipeAdded)
                 addSHRecipe(new ItemStack(SHItems.hammerPowered), "IBGBI", "IGRGI", "SSSS ", 'I', Items.IRON_INGOT, 'B', Blocks.IRON_BLOCK, 'G', Items.GOLD_INGOT, 'R', Blocks.REDSTONE_BLOCK, 'S', "stickWood");
+
+            addVanillaRecipe(new ItemStack(SHItems.upgradeBase), "IGI", "GDG", "IGI", 'I', "ingotIron", 'G', "ingotGold", 'D', "gemDiamond");
+            addVanillaRecipe(new ItemStack(SHItems.upgradeSize), " H ", "HBH", " H ", 'B', SHItems.upgradeBase, 'H', SHItems.hammerStone);
+            addVanillaRecipe(new ItemStack(SHItems.upgradeSpeed), "SCS", "CBC", "SCS", 'B', SHItems.upgradeBase, 'S', Items.SUGAR, 'C', Blocks.CAKE);
+            addVanillaRecipe(new ItemStack(SHItems.upgradeAttack), " S ", "SBS", " S ", 'B', SHItems.upgradeBase, 'S', Items.STONE_SWORD);
+            addVanillaRecipe(new ItemStack(SHItems.upgradeHarvest), " D ", "DBD", " D ", 'B', SHItems.upgradeBase, 'D', "gemDiamond");
+            addVanillaRecipe(new ItemStack(SHItems.upgradeCapacity), " R ", "RBR", " R ", 'B', SHItems.upgradeBase, 'R', Blocks.REDSTONE_BLOCK);
         }
 
         //Create recipes for all tools which have an ore dictionary ready for the item ingredient

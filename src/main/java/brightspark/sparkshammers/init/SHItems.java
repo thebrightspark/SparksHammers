@@ -33,6 +33,7 @@ public class SHItems
     public static ItemAOE hammerMjolnir, hammerMini, hammerGiant, hammerNetherStar, hammerPowered;
 
     //Powered Hammer Upgrades
+    public static Item upgradeBase;
     public static ItemUpgrade upgradeSize, upgradeSpeed, upgradeAttack, upgradeHarvest, upgradeCapacity;
 
     //Debug
@@ -116,6 +117,7 @@ public class SHItems
         if(hammerPowered != null)
         {
             //Register upgrades
+            addItem(upgradeBase = new ItemResource("upgrade_base"));
             addItem(upgradeSize = new ItemUpgrade(EnumUpgrades.SIZE));
             addItem(upgradeSpeed = new ItemUpgrade(EnumUpgrades.SPEED));
             addItem(upgradeAttack = new ItemUpgrade(EnumUpgrades.ATTACK));
