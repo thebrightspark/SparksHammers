@@ -91,7 +91,6 @@ public class EntityFallingHammer extends EntityFallingBlock
                     this.motionY *= -0.5D;
                     this.setDead();
 
-                    //func_190527_a -> canBlockBePlaced
                     if (this.world.mayPlace(block, blockpos1, true, EnumFacing.UP, null) && !BlockFalling.canFallThrough(this.world.getBlockState(blockpos1.down())) && this.world.setBlockState(blockpos1, this.fallTile))
                     {
                         if (block instanceof BlockHammer)
@@ -156,6 +155,9 @@ public class EntityFallingHammer extends EntityFallingBlock
 
     protected void writeEntityToNBT(NBTTagCompound tag)
     {
+        Block block = fallTile.getBlock();
+        tag.setString("block", block.getRegistryName().toString());
+        tag.setByte("data", (byte) block.getMetaFromState(fallTile));
         tag.setLong("uuidLeastSig", playerUUID.getLeastSignificantBits());
         tag.setLong("uuidMostSig", playerUUID.getMostSignificantBits());
         super.writeEntityToNBT(tag);
@@ -163,6 +165,8 @@ public class EntityFallingHammer extends EntityFallingBlock
 
     protected void readEntityFromNBT(NBTTagCompound tag)
     {
+        int data = tag.getByte("data") & 255;
+        fallTile = Block.getBlockFromName(tag.getString("block")).getStateFromMeta(data);
         if(tag.hasKey("uuidMostSig"))
             playerUUID = new UUID(tag.getLong("uuidMostSig"), tag.getLong("uuidLeastSig"));
         else
