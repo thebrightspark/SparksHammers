@@ -1,16 +1,17 @@
 package brightspark.sparkshammers.init;
 
-import brightspark.sparkshammers.item.upgrade.EnumUpgrades;
 import brightspark.sparkshammers.customTools.CustomTools;
 import brightspark.sparkshammers.customTools.Tool;
 import brightspark.sparkshammers.item.*;
+import brightspark.sparkshammers.item.upgrade.EnumUpgrades;
 import com.google.common.collect.Lists;
 import net.minecraft.client.Minecraft;
 import net.minecraft.item.Item;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class SHItems
 {

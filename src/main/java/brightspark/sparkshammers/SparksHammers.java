@@ -1,7 +1,5 @@
 package brightspark.sparkshammers;
 
-import java.util.List;
-
 import brightspark.sparkshammers.gui.GuiHandler;
 import brightspark.sparkshammers.hammerCrafting.HammerCraftingManager;
 import brightspark.sparkshammers.hammerCrafting.HammerShapedOreRecipe;
@@ -24,6 +22,8 @@ import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
+
+import java.util.List;
 
 @Mod(modid=Reference.MOD_ID, name=Reference.MOD_NAME, version=Reference.VERSION, dependencies=Reference.DEPENDENCIES)
 public class SparksHammers

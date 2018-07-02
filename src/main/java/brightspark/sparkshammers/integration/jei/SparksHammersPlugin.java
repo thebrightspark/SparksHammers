@@ -1,5 +1,6 @@
 package brightspark.sparkshammers.integration.jei;
 
+import brightspark.sparkshammers.Reference;
 import brightspark.sparkshammers.gui.GuiHammerCraft;
 import brightspark.sparkshammers.hammerCrafting.HammerCraftingManager;
 import brightspark.sparkshammers.hammerCrafting.HammerShapedOreRecipe;
@@ -8,9 +9,11 @@ import brightspark.sparkshammers.init.SHItems;
 import brightspark.sparkshammers.integration.jei.HammerCraftingTable.HammerCraftingRecipeCategory;
 import brightspark.sparkshammers.integration.jei.HammerCraftingTable.HammerCraftingRecipeWrapper;
 import brightspark.sparkshammers.item.ItemAOE;
-import brightspark.sparkshammers.Reference;
 import brightspark.sparkshammers.util.LogHelper;
-import mezz.jei.api.*;
+import mezz.jei.api.IJeiHelpers;
+import mezz.jei.api.IModPlugin;
+import mezz.jei.api.IModRegistry;
+import mezz.jei.api.JEIPlugin;
 import mezz.jei.api.ingredients.IIngredientBlacklist;
 import mezz.jei.api.recipe.IRecipeCategoryRegistration;
 import net.minecraft.item.ItemStack;

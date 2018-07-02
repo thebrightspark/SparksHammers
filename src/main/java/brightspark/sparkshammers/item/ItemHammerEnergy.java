@@ -1,10 +1,10 @@
 package brightspark.sparkshammers.item;
 
-import brightspark.sparkshammers.item.upgrade.EnumUpgrades;
-import brightspark.sparkshammers.item.upgrade.Upgrade;
+import brightspark.sparkshammers.SHConfig;
 import brightspark.sparkshammers.customTools.Tool;
 import brightspark.sparkshammers.energy.SHEnergyStorage;
-import brightspark.sparkshammers.SHConfig;
+import brightspark.sparkshammers.item.upgrade.EnumUpgrades;
+import brightspark.sparkshammers.item.upgrade.Upgrade;
 import brightspark.sparkshammers.util.NBTHelper;
 import cofh.redstoneflux.api.IEnergyContainerItem;
 import com.google.common.collect.Multimap;
@@ -38,7 +38,6 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-
 import java.util.ArrayList;
 import java.util.List;
 

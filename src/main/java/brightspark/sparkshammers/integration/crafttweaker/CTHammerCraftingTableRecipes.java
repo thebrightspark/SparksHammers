@@ -1,10 +1,5 @@
 package brightspark.sparkshammers.integration.crafttweaker;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.NoSuchElementException;
-
 import brightspark.sparkshammers.hammerCrafting.HammerCraftingManager;
 import brightspark.sparkshammers.hammerCrafting.HammerShapedOreRecipe;
 import crafttweaker.CraftTweakerAPI;
@@ -15,6 +10,11 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.registries.IForgeRegistryModifiable;
 import stanhebben.zenscript.annotations.ZenClass;
 import stanhebben.zenscript.annotations.ZenMethod;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.NoSuchElementException;
 
 @ZenRegister
 @ZenClass("mods.sparkshammers.HammerCrafting")

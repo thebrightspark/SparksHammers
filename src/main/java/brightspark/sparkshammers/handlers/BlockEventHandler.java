@@ -1,7 +1,7 @@
 package brightspark.sparkshammers.handlers;
 
-import brightspark.sparkshammers.item.ItemHammerNetherStar;
 import brightspark.sparkshammers.SHConfig;
+import brightspark.sparkshammers.item.ItemHammerNetherStar;
 import brightspark.sparkshammers.util.CommonUtils;
 import brightspark.sparkshammers.util.NBTHelper;
 import net.minecraft.entity.player.EntityPlayer;

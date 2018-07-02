@@ -39,8 +39,6 @@ public class Tool
         this(enumMaterial.getMaterialName(), enumMaterial.material, enumMaterial.colour);
         if(enumMaterial.dependantOreDic != null)
             dependantOreDic = enumMaterial.dependantOreDic;
-        else if(enumMaterial.dependantItem != null)
-            dependantStack = enumMaterial.dependantItem;
     }
 
     public String getToolName(boolean isExcavator)

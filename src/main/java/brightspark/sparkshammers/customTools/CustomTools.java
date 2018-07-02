@@ -83,8 +83,8 @@ public class CustomTools
             {
                 if((dependant = getJsonString(toolObj.get("DependantOreDic"), null)) == null)
                 {
-                    String id = getJsonString(toolObj.get("DependantItemId"), "");
-                    int meta = getJsonInt(toolObj.get("DependantItemMeta"), OreDictionary.WILDCARD_VALUE);
+                    String id = getJsonString(toolObj.get("DependantStackId"), "");
+                    int meta = getJsonInt(toolObj.get("DependantStackMeta"), OreDictionary.WILDCARD_VALUE);
                     if(!id.equals(""))
                         dependant = new ItemStack(CommonUtils.getRegisteredItem(id), 1, meta);
                     else

@@ -1,17 +1,13 @@
 package brightspark.sparkshammers.init;
 
+import brightspark.sparkshammers.Reference;
 import brightspark.sparkshammers.hammerCrafting.HammerShapedOreRecipe;
 import brightspark.sparkshammers.item.ItemAOE;
-import brightspark.sparkshammers.EnumMaterials;
-import brightspark.sparkshammers.Reference;
-import brightspark.sparkshammers.util.CommonUtils;
-import brightspark.sparkshammers.util.LogHelper;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
-import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 
@@ -87,9 +83,11 @@ public class SHRecipes
         //Create recipes for all tools which have an ore dictionary ready for the item ingredient
         for(ItemAOE tool : SHItems.AOE_TOOLS)
         {
-            String oreDic = tool.getDependantOreDic();
-            if(oreDic != null)
-                addSHRecipe(new ItemStack(tool), tool.isExcavator ? " HHH " : "HHHHH", "HHHHH", "SSSS ", 'H', oreDic, 'S', "stickWood");
+            Object dep = tool.getDependantOreDic();
+            if(dep == null)
+                dep = tool.getDependantStack();
+            if(dep != null)
+                addSHRecipe(new ItemStack(tool), tool.isExcavator ? " HHH " : "HHHHH", "HHHHH", "SSSS ", 'H', dep, 'S', "stickWood");
             //else
             //    LogHelper.warn("No dependant ore dictionary entry for tool " + tool.getRegistryName().getResourcePath());
         }
@@ -98,12 +96,12 @@ public class SHRecipes
     public static IRecipe[] getVanillaRecipes()
     {
         if(VANILLA_RECIPES == null) init();
-        return VANILLA_RECIPES.toArray(new IRecipe[VANILLA_RECIPES.size()]);
+        return VANILLA_RECIPES.toArray(new IRecipe[0]);
     }
 
     public static HammerShapedOreRecipe[] getSHRecipes()
     {
         if(SH_RECIPES == null) init();
-        return SH_RECIPES.toArray(new HammerShapedOreRecipe[SH_RECIPES.size()]);
+        return SH_RECIPES.toArray(new HammerShapedOreRecipe[0]);
     }
 }

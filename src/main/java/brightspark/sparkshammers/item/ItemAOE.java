@@ -1,13 +1,11 @@
 package brightspark.sparkshammers.item;
 
+import brightspark.sparkshammers.EnumMaterials;
+import brightspark.sparkshammers.Reference;
 import brightspark.sparkshammers.SHConfig;
 import brightspark.sparkshammers.SparksHammers;
 import brightspark.sparkshammers.customTools.Tool;
-import brightspark.sparkshammers.init.SHItems;
-import brightspark.sparkshammers.EnumMaterials;
-import brightspark.sparkshammers.Reference;
 import brightspark.sparkshammers.util.CommonUtils;
-import brightspark.sparkshammers.util.NBTHelper;
 import com.google.common.collect.Sets;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;

@@ -2,7 +2,6 @@ package brightspark.sparkshammers;
 
 import brightspark.sparkshammers.util.CommonUtils;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.util.EnumHelper;
 
 public enum EnumMaterials
@@ -73,7 +72,6 @@ public enum EnumMaterials
     public int colour = -1;
     public Item.ToolMaterial material;
     public String dependantOreDic = null;
-    public ItemStack dependantItem = null;
     public static EnumMaterials[] VANILLA;
 
     static
@@ -96,13 +94,6 @@ public enum EnumMaterials
     {
         this(colour, material);
         this.dependantOreDic = dependantOreDic;
-    }
-
-    //Currently not using this constructor or the dependant item!
-    EnumMaterials(int colour, ItemStack dependantItem, Item.ToolMaterial material)
-    {
-        this(colour, material);
-        this.dependantItem = dependantItem;
     }
 
     public String getMaterialName()
