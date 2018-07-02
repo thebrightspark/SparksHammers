@@ -73,21 +73,9 @@ public class SHRecipes
             addSHRecipe(new ItemStack(SHItems.hammerNetherStar), "HHBHH", "HBNBH", "SSSS ", 'H', Items.DIAMOND, 'B', Blocks.GOLD_BLOCK, 'N', Items.NETHER_STAR, 'S', "stickWood");
         if(SHItems.hammerPowered != null)
         {
-            boolean enderioRecipeAdded = false;
-            if(Loader.isModLoaded(Reference.Mods.ENDERIO))
-            {
-                Item capBank = Item.getByNameOrId(Reference.ModItemIds.CAPACITOR_BANK);
-                if(capBank == null)
-                    LogHelper.warn("Couldn't get " + Reference.ModItemIds.CAPACITOR_BANK + " for Powered Hammer recipe! Resorting to normal recipe. Please report this to mod author!");
-                else
-                {
-                    addSHRecipe(new ItemStack(SHItems.hammerPowered), "IBDBI", "IDCDI", "SSSS ", 'I', Items.IRON_INGOT, 'B', Blocks.IRON_BLOCK, 'D', "blockDarkSteel", 'C', new ItemStack(capBank, 1, 1), 'S', "stickWood");
-                    enderioRecipeAdded = true;
-                }
-            }
-            if(!enderioRecipeAdded)
-                addSHRecipe(new ItemStack(SHItems.hammerPowered), "IBGBI", "IGRGI", "SSSS ", 'I', Items.IRON_INGOT, 'B', Blocks.IRON_BLOCK, 'G', Items.GOLD_INGOT, 'R', Blocks.REDSTONE_BLOCK, 'S', "stickWood");
+            addSHRecipe(new ItemStack(SHItems.hammerPowered), "IBGBI", "IGRGI", "SSSS ", 'I', Items.IRON_INGOT, 'B', Blocks.IRON_BLOCK, 'G', Items.GOLD_INGOT, 'R', Blocks.REDSTONE_BLOCK, 'S', "stickWood");
 
+            //Upgrades
             addVanillaRecipe(new ItemStack(SHItems.upgradeBase), "IGI", "GDG", "IGI", 'I', "ingotIron", 'G', "ingotGold", 'D', "gemDiamond");
             addVanillaRecipe(new ItemStack(SHItems.upgradeSize), " H ", "HBH", " H ", 'B', SHItems.upgradeBase, 'H', SHItems.hammerStone);
             addVanillaRecipe(new ItemStack(SHItems.upgradeSpeed), "SCS", "CBC", "SCS", 'B', SHItems.upgradeBase, 'S', Items.SUGAR, 'C', Blocks.CAKE);
@@ -100,26 +88,10 @@ public class SHRecipes
         for(ItemAOE tool : SHItems.AOE_TOOLS)
         {
             String oreDic = tool.getDependantOreDic();
-            if(oreDic == null)
-            {
-                //LogHelper.warn("No dependant ore dictionary entry for tool " + tool.getRegistryName().getResourcePath());
-                continue;
-            }
-            String topRow = tool.isExcavator ? " HHH " : "HHHHH";
-            if(oreDic.equals(EnumMaterials.STONE.dependantOreDic) && Loader.isModLoaded(Reference.Mods.EXTRA_UTILITIES))
-            {
-                //Swap out for compressed cobblestone
-                Item compressedCobble = CommonUtils.getRegisteredItem(Reference.ModItemIds.COMPRESSED_COBBLE);
-                if(compressedCobble != null)
-                {
-                    LogHelper.info("Compressed Cobblestone found in " + Reference.Mods.EXTRA_UTILITIES + ". Using for " + tool.getRegistryName().getResourcePath() + " recipe.");
-                    addSHRecipe(new ItemStack(tool), topRow, "HHHHH", "SSSS ", 'H', new ItemStack(compressedCobble), 'S', "stickWood");
-                    continue;
-                }
-                else
-                    LogHelper.warn("Compressed Cobblestone not found in " + Reference.Mods.EXTRA_UTILITIES + ". Resorting to normal recipes. Please report this to mod author!");
-            }
-            addSHRecipe(new ItemStack(tool), topRow, "HHHHH", "SSSS ", 'H', oreDic, 'S', "stickWood");
+            if(oreDic != null)
+                addSHRecipe(new ItemStack(tool), tool.isExcavator ? " HHH " : "HHHHH", "HHHHH", "SSSS ", 'H', oreDic, 'S', "stickWood");
+            //else
+            //    LogHelper.warn("No dependant ore dictionary entry for tool " + tool.getRegistryName().getResourcePath());
         }
     }
 
