@@ -18,13 +18,13 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 @Mod.EventBusSubscriber
 public class EventHandler
 {
-    private void addLoot(LootPool pool, Item item, int weight)
+    private static void addLoot(LootPool pool, Item item, int weight)
     {
         pool.addEntry(new LootEntryItem(item, weight, 0, new LootFunction[0], new LootCondition[0], item.getRegistryName().toString()));
     }
 
     @SubscribeEvent
-    public void onLootLoad(LootTableLoadEvent event)
+    public static void onLootLoad(LootTableLoadEvent event)
     {
         if(event.getName().equals(LootTableList.CHESTS_ABANDONED_MINESHAFT))
         {
@@ -37,7 +37,7 @@ public class EventHandler
     }
 
     @SubscribeEvent
-    public void onAnvilRecipe(AnvilUpdateEvent event)
+    public static void onAnvilRecipe(AnvilUpdateEvent event)
     {
         //Powered Hammer upgrading
         if(event.getLeft().getItem() instanceof ItemHammerEnergy && event.getRight().getItem() instanceof ItemUpgrade)
