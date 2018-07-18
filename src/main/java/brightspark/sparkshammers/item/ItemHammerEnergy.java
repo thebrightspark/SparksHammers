@@ -355,6 +355,7 @@ public class ItemHammerEnergy extends ItemAOE implements IEnergyContainerItem
         if(slot == EntityEquipmentSlot.MAINHAND)
         {
             //Attack upgrade effects
+            multimap.removeAll(SharedMonsterAttributes.ATTACK_DAMAGE.getName());
             Upgrade upgrade = getUpgrade(stack, EnumUpgrades.ATTACK);
             double damage = attackDamage + (upgrade == null ? 0F : upgrade.getNum());
             multimap.put(SharedMonsterAttributes.ATTACK_DAMAGE.getName(), new AttributeModifier(ATTACK_DAMAGE_MODIFIER, "Weapon modifier", damage, 0));

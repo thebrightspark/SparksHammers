@@ -1,0 +1,6 @@
+{
+    "parent": "sparkshammers:item/item_default",
+    "textures": {
+        "layer0": "sparkshammers:items/upgrade_capacity"
+    }
+}

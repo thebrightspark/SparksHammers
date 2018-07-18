@@ -14,7 +14,7 @@ item.hammer_powered.tooltip.upgrades.normal=Upgrades: %s (Hold SHIFT for more in
 item.hammer_powered.tooltip.upgrades.shift=Upgrades:
 item.hammer_powered.tooltip.upgrades.none=No Upgrades (Hold SHIFT for more info)
 
-itme.upgrade_base.name=Upgrade Base
+item.upgrade_base.name=Upgrade Base
 item.upgrade_size.name=Size Upgrade
 item.upgrade_speed.name=Speed Upgrade
 item.upgrade_attack.name=Attack Upgrade
