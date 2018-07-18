@@ -21,7 +21,6 @@ import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.registry.GameRegistry;
-import net.minecraftforge.fml.relauncher.Side;
 
 import java.util.List;
 
@@ -57,9 +56,6 @@ public class SparksHammers
     public void init(FMLInitializationEvent event)
     {
         //Initialize GUIs, tile entities, recipies, event handlers here
-
-        if(event.getSide() == Side.CLIENT)
-            SHItems.regColours();
 
         NetworkRegistry.INSTANCE.registerGuiHandler(this, new GuiHandler());
 

@@ -10,11 +10,8 @@ import brightspark.sparkshammers.item.*;
 import brightspark.sparkshammers.item.upgrade.EnumUpgrades;
 import brightspark.sparkshammers.util.LogHelper;
 import com.google.common.collect.Lists;
-import net.minecraft.client.Minecraft;
 import net.minecraft.item.Item;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -26,7 +23,7 @@ public class SHItems
     //Contains all of the AOE tools
     public static List<ItemAOE> AOE_TOOLS = new LinkedList<>();
     //Contains all of the items which use a basic coloured texture
-    private static List<Item> COLOURED_ITEMS = new LinkedList<>();
+    public static List<Item> COLOURED_ITEMS = new LinkedList<>();
     //A list of material names of my tools which aren't made from other modded items
     private static List<String> VANILLA_NAMES = Lists.newArrayList("wood", "stone", "iron", "gold", "diamond", "mjolnir", "giant", "mini", "netherstar", "powered");
 
@@ -199,13 +196,5 @@ public class SHItems
         //AOE_TOOLS = null; <- Can't void this because it's used by the JEI plugin after preinit
         COLOURED_ITEMS = null;
         VANILLA_NAMES = null;
-    }
-
-    @SideOnly(Side.CLIENT)
-    public static void regColours()
-    {
-        //Register item colours
-        //TODO: Change this to use the ColorHandlerEvent
-        Minecraft.getMinecraft().getItemColors().registerItemColorHandler((stack, tintIndex) -> tintIndex == 0 ? ((ItemAOE) stack.getItem()).getTextureColour() : -1, COLOURED_ITEMS.toArray(new Item[0]));
     }
 }
