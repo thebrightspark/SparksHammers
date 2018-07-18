@@ -38,10 +38,9 @@ public class RegistrationHandler
     @SubscribeEvent
     public static void regItems(RegistryEvent.Register<Item> event)
     {
-        //Register all items
         IForgeRegistry<Item> registry = event.getRegistry();
+        //Register all items
         registry.registerAll(SHItems.getItems());
-
         //Register item blocks
         registry.registerAll(SHBlocks.getItemBlocks());
     }

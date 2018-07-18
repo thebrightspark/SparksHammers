@@ -34,12 +34,12 @@ public class SHBlocks
     public static Block[] getBlocks()
     {
         if(BLOCKS == null) init();
-        return BLOCKS.toArray(new Block[BLOCKS.size()]);
+        return BLOCKS.toArray(new Block[0]);
     }
 
     public static ItemBlock[] getItemBlocks()
     {
         if(ITEM_BLOCKS == null) init();
-        return ITEM_BLOCKS.toArray(new ItemBlock[ITEM_BLOCKS.size()]);
+        return ITEM_BLOCKS.toArray(new ItemBlock[0]);
     }
 }

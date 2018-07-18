@@ -19,9 +19,19 @@ public class SHRecipes
     public static List<IRecipe> VANILLA_RECIPES;
     public static List<HammerShapedOreRecipe> SH_RECIPES;
 
+    private static void addVanillaRecipe(Item output, Object... inputs)
+    {
+        addVanillaRecipe(new ItemStack(output), inputs);
+    }
+
     private static void addVanillaRecipe(ItemStack output, Object... inputs)
     {
         VANILLA_RECIPES.add(new ShapedOreRecipe(null, output, inputs).setRegistryName(Reference.MOD_ID, output.getItem().getRegistryName().getResourcePath()));
+    }
+
+    public static void addSHRecipe(Item output, Object... inputs)
+    {
+        addSHRecipe(new ItemStack(output), inputs);
     }
 
     private static void addSHRecipe(ItemStack output, Object...inputs)
@@ -35,7 +45,7 @@ public class SHRecipes
         SH_RECIPES = new ArrayList<>();
 
         //Wooden Hammer Head
-        addVanillaRecipe(new ItemStack(SHItems.hammerHeadWood), "xxx", "xxx", "   ", 'x', "logWood");
+        addVanillaRecipe(SHItems.hammerHeadWood, "xxx", "xxx", "   ", 'x', "logWood");
 
         //Hammer Crafting Table
         Item hammerWood = SHItems.hammerWood;
@@ -48,13 +58,13 @@ public class SHRecipes
 
         //Wooden Hammer
         if(hammerWood != null)
-            addVanillaRecipe(new ItemStack(SHItems.hammerWood), " x ", " s ", " s ", 'x', SHItems.hammerHeadWood, 's', "plankWood");
+            addVanillaRecipe(SHItems.hammerWood, " x ", " s ", " s ", 'x', SHItems.hammerHeadWood, 's', "plankWood");
 
         //Wooden Excavator
         if(SHItems.excavatorHeadWood != null)
         {
-            addVanillaRecipe(new ItemStack(SHItems.excavatorHeadWood), " x ", "xxx", "   ", 'x', "logWood");
-            addVanillaRecipe(new ItemStack(SHItems.excavatorWood), " x ", " s ", " s ", 'x', SHItems.excavatorHeadWood, 's', "plankWood");
+            addVanillaRecipe(SHItems.excavatorHeadWood, " x ", "xxx", "   ", 'x', "logWood");
+            addVanillaRecipe(SHItems.excavatorWood, " x ", " s ", " s ", 'x', SHItems.excavatorHeadWood, 's', "plankWood");
         }
 
         /*
@@ -62,22 +72,22 @@ public class SHRecipes
          */
 
         if(SHItems.hammerMini != null)
-            addSHRecipe(new ItemStack(SHItems.hammerMini), " HHH ", " HHH ", "SSSS ", 'H', Items.IRON_INGOT, 'S', "stickWood");
+            addSHRecipe(SHItems.hammerMini, " HHH ", " HHH ", "SSSS ", 'H', Items.IRON_INGOT, 'S', "stickWood");
         if(SHItems.hammerGiant != null)
-            addSHRecipe(new ItemStack(SHItems.hammerGiant), "HHHHH", "HHDHH", "SSSS ", 'H', Blocks.IRON_BLOCK, 'S', "stickWood", 'D', new ItemStack(Items.DYE, 1, 5));
+            addSHRecipe(SHItems.hammerGiant, "HHHHH", "HHDHH", "SSSS ", 'H', Blocks.IRON_BLOCK, 'S', "stickWood", 'D', new ItemStack(Items.DYE, 1, 5));
         if(SHItems.hammerNetherStar != null)
-            addSHRecipe(new ItemStack(SHItems.hammerNetherStar), "HHBHH", "HBNBH", "SSSS ", 'H', Items.DIAMOND, 'B', Blocks.GOLD_BLOCK, 'N', Items.NETHER_STAR, 'S', "stickWood");
+            addSHRecipe(SHItems.hammerNetherStar, "HHBHH", "HBNBH", "SSSS ", 'H', Items.DIAMOND, 'B', Blocks.GOLD_BLOCK, 'N', Items.NETHER_STAR, 'S', "stickWood");
         if(SHItems.hammerPowered != null)
         {
-            addSHRecipe(new ItemStack(SHItems.hammerPowered), "IBGBI", "IGRGI", "SSSS ", 'I', Items.IRON_INGOT, 'B', Blocks.IRON_BLOCK, 'G', Items.GOLD_INGOT, 'R', Blocks.REDSTONE_BLOCK, 'S', "stickWood");
+            addSHRecipe(SHItems.hammerPowered, "IBGBI", "IGRGI", "SSSS ", 'I', Items.IRON_INGOT, 'B', Blocks.IRON_BLOCK, 'G', Items.GOLD_INGOT, 'R', Blocks.REDSTONE_BLOCK, 'S', "stickWood");
 
             //Upgrades
-            addVanillaRecipe(new ItemStack(SHItems.upgradeBase), "IGI", "GDG", "IGI", 'I', "ingotIron", 'G', "ingotGold", 'D', "gemDiamond");
-            addVanillaRecipe(new ItemStack(SHItems.upgradeSize), " H ", "HBH", " H ", 'B', SHItems.upgradeBase, 'H', SHItems.hammerStone);
-            addVanillaRecipe(new ItemStack(SHItems.upgradeSpeed), "SCS", "CBC", "SCS", 'B', SHItems.upgradeBase, 'S', Items.SUGAR, 'C', Blocks.CAKE);
-            addVanillaRecipe(new ItemStack(SHItems.upgradeAttack), " S ", "SBS", " S ", 'B', SHItems.upgradeBase, 'S', Items.STONE_SWORD);
-            addVanillaRecipe(new ItemStack(SHItems.upgradeHarvest), " D ", "DBD", " D ", 'B', SHItems.upgradeBase, 'D', "gemDiamond");
-            addVanillaRecipe(new ItemStack(SHItems.upgradeCapacity), " R ", "RBR", " R ", 'B', SHItems.upgradeBase, 'R', Blocks.REDSTONE_BLOCK);
+            addVanillaRecipe(SHItems.upgradeBase, "IGI", "GDG", "IGI", 'I', "ingotIron", 'G', "ingotGold", 'D', "gemDiamond");
+            addVanillaRecipe(SHItems.upgradeSize, " H ", "HBH", " H ", 'B', SHItems.upgradeBase, 'H', SHItems.hammerStone);
+            addVanillaRecipe(SHItems.upgradeSpeed, "SCS", "CBC", "SCS", 'B', SHItems.upgradeBase, 'S', Items.SUGAR, 'C', Blocks.CAKE);
+            addVanillaRecipe(SHItems.upgradeAttack, " S ", "SBS", " S ", 'B', SHItems.upgradeBase, 'S', Items.STONE_SWORD);
+            addVanillaRecipe(SHItems.upgradeHarvest, " D ", "DBD", " D ", 'B', SHItems.upgradeBase, 'D', "gemDiamond");
+            addVanillaRecipe(SHItems.upgradeCapacity, " R ", "RBR", " R ", 'B', SHItems.upgradeBase, 'R', Blocks.REDSTONE_BLOCK);
         }
 
         //Create recipes for all tools which have an ore dictionary ready for the item ingredient
@@ -87,9 +97,7 @@ public class SHRecipes
             if(dep == null)
                 dep = tool.getDependantStack();
             if(dep != null)
-                addSHRecipe(new ItemStack(tool), tool.isExcavator ? " HHH " : "HHHHH", "HHHHH", "SSSS ", 'H', dep, 'S', "stickWood");
-            //else
-            //    LogHelper.warn("No dependant ore dictionary entry for tool " + tool.getRegistryName().getResourcePath());
+                addSHRecipe(tool, tool.isExcavator ? " HHH " : "HHHHH", "HHHHH", "SSSS ", 'H', dep, 'S', "stickWood");
         }
     }
 

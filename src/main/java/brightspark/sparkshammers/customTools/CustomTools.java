@@ -1,6 +1,5 @@
 package brightspark.sparkshammers.customTools;
 
-import brightspark.sparkshammers.EnumMaterials;
 import brightspark.sparkshammers.Reference;
 import brightspark.sparkshammers.util.CommonUtils;
 import brightspark.sparkshammers.util.LogHelper;
@@ -20,7 +19,7 @@ import net.minecraftforge.common.util.EnumHelper;
 import net.minecraftforge.oredict.OreDictionary;
 
 import java.io.*;
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 public class CustomTools
@@ -47,15 +46,13 @@ public class CustomTools
             }
             catch(FileNotFoundException e)
             {
-                return createDefault();
+                return null;
             }
         }
         else
-        {
-            return createDefault();
-        }
+            return null;
 
-        List<Tool> tools = new ArrayList<Tool>();
+        List<Tool> tools = new LinkedList<>();
 
         //Read json data and populate tools array
         for(JsonElement toolElement : jsonData)
@@ -190,17 +187,10 @@ public class CustomTools
     /**
      * Creates the default json file with all tools I've added
      */
-    private static List<Tool> createDefault()
+    public static void write(List<Tool> tools)
     {
-        LogHelper.info("File not found, creating default json file...");
+        LogHelper.info("Creating json file with " + tools.size() + " tools...");
 
-        List<Tool> tools = new ArrayList<Tool>();
-
-        //Populate tools array
-        for(EnumMaterials material : EnumMaterials.values())
-            tools.add(new Tool(material));
-
-        //Create file from tools array
         try
         {
             JsonWriter writer = new JsonWriter(new FileWriter(jsonFile));
@@ -238,11 +228,10 @@ public class CustomTools
         }
         catch(IOException e)
         {
-            LogHelper.error("Error creating default custom tool json file!");
+            LogHelper.error("Error creating custom tool json file!");
             e.printStackTrace();
         }
 
-        LogHelper.info("Finished creating default json file");
-        return tools;
+        LogHelper.info("Finished creating json file");
     }
 }

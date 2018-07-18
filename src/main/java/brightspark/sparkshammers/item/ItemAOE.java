@@ -1,6 +1,5 @@
 package brightspark.sparkshammers.item;
 
-import brightspark.sparkshammers.EnumMaterials;
 import brightspark.sparkshammers.Reference;
 import brightspark.sparkshammers.SHConfig;
 import brightspark.sparkshammers.SparksHammers;
@@ -26,7 +25,7 @@ import net.minecraft.world.World;
 
 import java.util.Set;
 
-public class ItemAOE extends ItemTool implements IColourable
+public class ItemAOE extends ItemTool
 {
     private static final Set<Block> PickaxeBlocks = Sets.newHashSet(Blocks.ACTIVATOR_RAIL, Blocks.COAL_ORE, Blocks.COBBLESTONE, Blocks.DETECTOR_RAIL, Blocks.DIAMOND_BLOCK, Blocks.DIAMOND_ORE, Blocks.DOUBLE_STONE_SLAB, Blocks.GOLDEN_RAIL, Blocks.GOLD_BLOCK, Blocks.GOLD_ORE, Blocks.ICE, Blocks.IRON_BLOCK, Blocks.IRON_ORE, Blocks.LAPIS_BLOCK, Blocks.LAPIS_ORE, Blocks.LIT_REDSTONE_ORE, Blocks.MOSSY_COBBLESTONE, Blocks.NETHERRACK, Blocks.PACKED_ICE, Blocks.RAIL, Blocks.REDSTONE_ORE, Blocks.SANDSTONE, Blocks.RED_SANDSTONE, Blocks.STONE, Blocks.STONE_SLAB, Blocks.STONE_BUTTON, Blocks.STONE_PRESSURE_PLATE);
     private static final Set<Material> PickaxeMats = Sets.newHashSet(Material.ANVIL, Material.GLASS, Material.ICE, Material.IRON, Material.PACKED_ICE, Material.PISTON, Material.ROCK);
@@ -39,57 +38,39 @@ public class ItemAOE extends ItemTool implements IColourable
     private int mineWidth = 1;
     private int mineHeight = 1;
     private int mineDepth = 0; //Depth (behind block)
-    private boolean infiniteUse;
+    private boolean infiniteUse = false;
     private boolean shiftRotating = false;
 
     private String dependantOreDic;
     private ItemStack dependantStack;
     protected String localName;
-
     //Used for the colour tint of the head of the tool texture
-    protected int textureColour = -1;
+    protected int textureColour;
 
-    public ItemAOE(EnumMaterials name)
-    {
-        this(name, false);
-    }
-
-    public ItemAOE(EnumMaterials name, boolean isExcavator)
-    {
-        this(name, isExcavator, false);
-    }
-
-    public ItemAOE(EnumMaterials name, boolean isExcavator, boolean isInfiniteUse)
-    {
-        this(name.unlocToolName(isExcavator), name.material, isExcavator, isInfiniteUse);
-        textureColour = name.colour;
-        dependantOreDic = name.dependantOreDic;
-    }
-
-    //This constructor is used when registering tools from the custom json file
     public ItemAOE(Tool tool, boolean isExcavator)
     {
-        this(tool.getToolName(isExcavator), tool.material, isExcavator, false);
+        super(isExcavator ? 0f : 2f, isExcavator ? -3f : -3.2f, tool.material, isExcavator ? ShovelBlocks : PickaxeBlocks);
+        String name = tool.getToolName(isExcavator);
+        setUnlocalizedName(name);
+        setRegistryName(name);
+        setCreativeTab(SparksHammers.SH_TAB);
+        setHarvestLevel(isExcavator ? "shovel" : "pickaxe", tool.material.getHarvestLevel());
+        this.isExcavator = isExcavator;
         localName = tool.localName;
         textureColour = tool.toolColour;
         dependantOreDic = tool.dependantOreDic;
         dependantStack = tool.dependantStack;
     }
 
-    public ItemAOE(String name, ToolMaterial material)
+    /**
+     * Gets just the material part of the registry name
+     * e.g. "hammer_gold" returns "gold"
+     */
+    public String getMaterialName()
     {
-        this(name, material, false, false);
-    }
-
-    public ItemAOE(String name, ToolMaterial material, boolean isExcavator, boolean isInfiniteUse)
-    {
-        super(isExcavator ? 0f : 2f, isExcavator ? -3f : -3.2f, material, isExcavator ? ShovelBlocks : PickaxeBlocks);
-        this.isExcavator = isExcavator;
-        infiniteUse = isInfiniteUse;
-        setUnlocalizedName(name);
-        setRegistryName(name);
-        setCreativeTab(SparksHammers.SH_TAB);
-        setHarvestLevel(isExcavator ? "shovel" : "pickaxe", material.getHarvestLevel());
+        String regPath = getRegistryName().getResourcePath();
+        int i = regPath.indexOf('_');
+        return regPath.substring(i + 1);
     }
 
     @Override
@@ -261,7 +242,10 @@ public class ItemAOE extends ItemTool implements IColourable
         return shiftRotating;
     }
 
-    @Override
+    /**
+     * Returns the hexadecimal colour to tint the grey-scale texture with.
+     * Return -1 for this item to be excluded from the item colour handler.
+     */
     public int getTextureColour()
     {
         return textureColour;

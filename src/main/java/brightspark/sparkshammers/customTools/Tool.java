@@ -13,7 +13,7 @@ public class Tool
     public String dependantOreDic;
     public ItemStack dependantStack;
 
-    private Tool(String name, ToolMaterial material, int toolColour)
+    protected Tool(String name, ToolMaterial material, int toolColour)
     {
         localName = name;
         this.name = name.toLowerCase().replaceAll("\\s", "");
