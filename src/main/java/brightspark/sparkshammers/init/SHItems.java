@@ -9,7 +9,6 @@ import brightspark.sparkshammers.customTools.Tool;
 import brightspark.sparkshammers.item.*;
 import brightspark.sparkshammers.item.upgrade.EnumUpgrades;
 import brightspark.sparkshammers.util.LogHelper;
-import com.google.common.collect.Lists;
 import net.minecraft.item.Item;
 import net.minecraftforge.common.MinecraftForge;
 
@@ -24,8 +23,6 @@ public class SHItems
     public static List<ItemAOE> AOE_TOOLS = new LinkedList<>();
     //Contains all of the items which use a basic coloured texture
     public static List<Item> COLOURED_ITEMS = new LinkedList<>();
-    //A list of material names of my tools which aren't made from other modded items
-    private static List<String> VANILLA_NAMES = Lists.newArrayList("wood", "stone", "iron", "gold", "diamond", "mjolnir", "giant", "mini", "netherstar", "powered");
 
     //Tool Heads
     public static ItemResource hammerHeadWood, excavatorHeadWood;
@@ -65,10 +62,6 @@ public class SHItems
 
         if(hasToolName(name))
             throw new RegisterToolException("A tool with the name %s has already been added!", name);
-
-        //Don't register if tool is made from other mod materials and respective config is disabled
-        if(!VANILLA_NAMES.contains(name))
-            return;
 
         switch(name)
         {
@@ -166,6 +159,7 @@ public class SHItems
         }
         //Add tools to be registered
         tools.forEach(SHItems::addTool);
+        LogHelper.info("Added " + tools.size() + " tools");
 
         if(hammerPowered != null)
         {
@@ -195,6 +189,5 @@ public class SHItems
         ITEMS = null;
         //AOE_TOOLS = null; <- Can't void this because it's used by the JEI plugin after preinit
         COLOURED_ITEMS = null;
-        VANILLA_NAMES = null;
     }
 }

@@ -1,6 +1,7 @@
 package brightspark.sparkshammers.integration.jei;
 
 import brightspark.sparkshammers.Reference;
+import brightspark.sparkshammers.SparksHammers;
 import brightspark.sparkshammers.gui.GuiHammerCraft;
 import brightspark.sparkshammers.hammerCrafting.HammerCraftingManager;
 import brightspark.sparkshammers.hammerCrafting.HammerShapedOreRecipe;
@@ -17,7 +18,6 @@ import mezz.jei.api.JEIPlugin;
 import mezz.jei.api.ingredients.IIngredientBlacklist;
 import mezz.jei.api.recipe.IRecipeCategoryRegistration;
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.oredict.OreDictionary;
 
 import javax.annotation.Nonnull;
 
@@ -47,8 +47,7 @@ public class SparksHammersPlugin implements IModPlugin
         int count = 0;
         for(ItemAOE tool : SHItems.AOE_TOOLS)
         {
-            String oreDic = tool.getDependantOreDic();
-            if(oreDic != null && OreDictionary.getOres(oreDic).isEmpty())
+            if(SparksHammers.shouldHideTool(tool))
             {
                 blacklist.addIngredientToBlacklist(new ItemStack(tool));
                 count++;

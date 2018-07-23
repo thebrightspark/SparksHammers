@@ -23,8 +23,8 @@ public class HammerShapedOreRecipe extends IForgeRegistryEntry.Impl<HammerShaped
     private static final int MAX_CRAFT_GRID_WIDTH = 5;
     private static final int MAX_CRAFT_GRID_HEIGHT = 3;
 
-    private ItemStack output = null;
-    private NonNullList<Ingredient> input = null;
+    private ItemStack output = ItemStack.EMPTY;
+    private NonNullList<Ingredient> input = NonNullList.create();
     public int width = 0;
     public int height = 0;
 

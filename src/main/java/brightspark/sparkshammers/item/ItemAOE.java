@@ -10,6 +10,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
@@ -23,6 +24,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
 
+import javax.annotation.Nullable;
 import java.util.Set;
 
 public class ItemAOE extends ItemTool
@@ -85,6 +87,14 @@ public class ItemAOE extends ItemTool
     public void setInfinite(boolean isInfinite)
     {
         infiniteUse = isInfinite;
+    }
+
+    //Don't show the item in creative tabs if it can't be created
+    @Nullable
+    @Override
+    public CreativeTabs getCreativeTab()
+    {
+        return dependantOreDic != null || dependantStack != null ? super.getCreativeTab() : null;
     }
 
     //Override method from ItemTool to stop durability loss
@@ -249,6 +259,12 @@ public class ItemAOE extends ItemTool
     public int getTextureColour()
     {
         return textureColour;
+    }
+
+    public void nullDependants()
+    {
+        dependantOreDic = null;
+        dependantStack = null;
     }
 
     public String getDependantOreDic()

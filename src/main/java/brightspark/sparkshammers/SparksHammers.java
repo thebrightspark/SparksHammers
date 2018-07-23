@@ -1,13 +1,12 @@
 package brightspark.sparkshammers;
 
 import brightspark.sparkshammers.gui.GuiHandler;
-import brightspark.sparkshammers.hammerCrafting.HammerCraftingManager;
-import brightspark.sparkshammers.hammerCrafting.HammerShapedOreRecipe;
 import brightspark.sparkshammers.init.SHBlocks;
 import brightspark.sparkshammers.init.SHItems;
 import brightspark.sparkshammers.item.ItemAOE;
 import brightspark.sparkshammers.util.LogHelper;
 import brightspark.sparkshammers.worldgen.WorldGenMjolnirShrine;
+import com.google.common.collect.Sets;
 import net.minecraft.advancements.Advancement;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -21,8 +20,9 @@ import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.registry.GameRegistry;
+import net.minecraftforge.oredict.OreDictionary;
 
-import java.util.List;
+import java.util.Set;
 
 @Mod(modid=Reference.MOD_ID, name=Reference.MOD_NAME, version=Reference.VERSION, dependencies=Reference.DEPENDENCIES)
 public class SparksHammers
@@ -52,6 +52,8 @@ public class SparksHammers
     public static ItemStack TORCH_STACK;
     public static ItemBlock TORCH_ITEM;
 
+    private static Set SPECIAL_NAMES = Sets.newHashSet("mjolnir", "giant", "mini", "netherstar", "powered");
+
     @Mod.EventHandler
     public void init(FMLInitializationEvent event)
     {
@@ -72,28 +74,31 @@ public class SparksHammers
         TORCH_STACK = new ItemStack(Blocks.TORCH);
         TORCH_ITEM = (ItemBlock) TORCH_STACK.getItem();
 
-        //Make sure all tools have recipes
-        List<HammerShapedOreRecipe> recipes = HammerCraftingManager.getRecipes();
+        //Set the dependants for a tool to null if they have no recipe
+        int count = 0;
         for(ItemAOE tool : SHItems.AOE_TOOLS)
         {
-            if(tool.equals(SHItems.hammerMjolnir))
-                continue;
-            boolean found = false;
-            for(HammerShapedOreRecipe r : recipes)
+            if(shouldHideTool(tool))
             {
-                if(r.getRecipeOutput() != null && r.getRecipeOutput().getItem().equals(tool))
-                {
-                    found = true;
-                    break;
-                }
+                tool.nullDependants();
+                count++;
             }
-            if(!found) LogHelper.warn("No hammer crafting recipe found for " + tool.getRegistryName() + "!");
         }
+        if(count > 0)
+            LogHelper.info("Removed " + count + " tools from creative menu due to missing ingredients");
 
         //Null all the lists so it's not taking up extra memory
         SHItems.voidLists();
         SHBlocks.BLOCKS = null;
         SHBlocks.ITEM_BLOCKS = null;
+    }
+
+    public static boolean shouldHideTool(ItemAOE tool)
+    {
+        if(SPECIAL_NAMES.contains(tool.getMaterialName()))
+            return false;
+        String ore = tool.getDependantOreDic();
+        return !OreDictionary.doesOreNameExist(ore) || OreDictionary.getOres(ore).isEmpty();
     }
 
     public static boolean hasKillDragonAdvancement(EntityPlayerMP player)

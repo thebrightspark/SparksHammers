@@ -32,9 +32,9 @@ public class HammerCraftingManager
 
     public static ItemStack findMatchingRecipe(InventoryCrafting invCrafting)
     {
-        for(HammerShapedOreRecipe irecipe : REGISTRY)
-            if(irecipe.matches(invCrafting))
-                return irecipe.getRecipeOutput();
+        for(HammerShapedOreRecipe recipe : REGISTRY)
+            if(recipe.matches(invCrafting))
+                return recipe.getRecipeOutput();
 
         return ItemStack.EMPTY;
     }
