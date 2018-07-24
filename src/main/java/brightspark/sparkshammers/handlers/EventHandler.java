@@ -20,7 +20,8 @@ public class EventHandler
 {
     private static void addLoot(LootPool pool, Item item, int weight)
     {
-        pool.addEntry(new LootEntryItem(item, weight, 0, new LootFunction[0], new LootCondition[0], item.getRegistryName().toString()));
+        if(item != null)
+            pool.addEntry(new LootEntryItem(item, weight, 0, new LootFunction[0], new LootCondition[0], item.getRegistryName().toString()));
     }
 
     @SubscribeEvent
@@ -31,8 +32,6 @@ public class EventHandler
             LootPool pool = event.getTable().getPool("main");
             addLoot(pool, SHItems.hammerWood, 1);
             addLoot(pool, SHItems.hammerStone, 1);
-            //addLoot(pool, SHItems.excavatorWood, 1);
-            //addLoot(pool, SHItems.excavatorStone, 1);
         }
     }
 

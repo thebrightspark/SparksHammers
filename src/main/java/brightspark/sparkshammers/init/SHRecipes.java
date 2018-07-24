@@ -83,7 +83,9 @@ public class SHRecipes
 
             //Upgrades
             addVanillaRecipe(SHItems.upgradeBase, "IGI", "GDG", "IGI", 'I', "ingotIron", 'G', "ingotGold", 'D', "gemDiamond");
-            addVanillaRecipe(SHItems.upgradeSize, " H ", "HBH", " H ", 'B', SHItems.upgradeBase, 'H', SHItems.hammerStone);
+            Object stone = SHItems.hammerStone;
+            if(stone == null) stone = Blocks.OBSIDIAN;
+            addVanillaRecipe(SHItems.upgradeSize, " H ", "HBH", " H ", 'B', SHItems.upgradeBase, 'H', stone);
             addVanillaRecipe(SHItems.upgradeSpeed, "SCS", "CBC", "SCS", 'B', SHItems.upgradeBase, 'S', Items.SUGAR, 'C', Blocks.CAKE);
             addVanillaRecipe(SHItems.upgradeAttack, " S ", "SBS", " S ", 'B', SHItems.upgradeBase, 'S', Items.STONE_SWORD);
             addVanillaRecipe(SHItems.upgradeHarvest, " D ", "DBD", " D ", 'B', SHItems.upgradeBase, 'D', "gemDiamond");
