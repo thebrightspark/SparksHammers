@@ -97,8 +97,9 @@ public class SparksHammers
     {
         if(SPECIAL_NAMES.contains(tool.getMaterialName()))
             return false;
+        ItemStack stack = tool.getDependantStack();
         String ore = tool.getDependantOreDic();
-        return !OreDictionary.doesOreNameExist(ore) || OreDictionary.getOres(ore).isEmpty();
+        return (stack == null || stack.isEmpty()) && (!OreDictionary.doesOreNameExist(ore) || OreDictionary.getOres(ore).isEmpty());
     }
 
     public static boolean hasKillDragonAdvancement(EntityPlayerMP player)

@@ -75,11 +75,14 @@ public class ModTool extends Tool
      * @see {@link ModTool#setHammerOnly()}
      * @see {@link ModTool#setExcavatorOnly()}
      */
+    //TODO: Removed until I find a way to save the custom recipe
+    /*
     public ModTool(@Nonnull String name, @Nonnull ToolMaterial material, int colour, @Nonnull Object... recipe)
     {
         super(name, material, colour);
         this.recipe = recipe;
     }
+    */
 
     /**
      * This will mean that only a hammer will be created for this tool
