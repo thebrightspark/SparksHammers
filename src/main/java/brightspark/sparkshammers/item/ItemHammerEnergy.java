@@ -3,6 +3,7 @@ package brightspark.sparkshammers.item;
 import brightspark.sparkshammers.SHConfig;
 import brightspark.sparkshammers.customTools.Tool;
 import brightspark.sparkshammers.energy.SHEnergyStorage;
+import brightspark.sparkshammers.item.upgrade.DigSize;
 import brightspark.sparkshammers.item.upgrade.EnumUpgrades;
 import brightspark.sparkshammers.item.upgrade.Upgrade;
 import brightspark.sparkshammers.util.NBTHelper;
@@ -44,40 +45,6 @@ import java.util.List;
 @Optional.Interface(modid = "redstoneflux", iface = "cofh.redstoneflux.api.IEnergyContainerItem", striprefs = true)
 public class ItemHammerEnergy extends ItemAOE implements IEnergyContainerItem
 {
-    private enum DigSize
-    {
-        THREE(1),
-        FIVE(2),
-        SEVEN(3);
-
-        private final String name;
-        private final int size;
-
-        DigSize(int size)
-        {
-            int width = size * 2 + 1;
-            this.name = width + "x" + width;
-            this.size = size;
-        }
-
-        public DigSize nextSize(Upgrade sizeUpgrade)
-        {
-            int i = ordinal() >= Math.min(values().length - 1, sizeUpgrade.getNum()) ? 0 : ordinal() + 1;
-            return values()[i];
-        }
-
-        public int getSize()
-        {
-            return size;
-        }
-
-        @Override
-        public String toString()
-        {
-            return name;
-        }
-    }
-
     private static final String KEY_UPGRADES = "upgrades";
     private static final String KEY_SIZE = "size";
 
@@ -235,8 +202,8 @@ public class ItemHammerEnergy extends ItemAOE implements IEnergyContainerItem
             Upgrade upgrade = getUpgrade(stack, EnumUpgrades.SIZE);
             if(upgrade != null)
             {
-                DigSize size = DigSize.values()[NBTHelper.getByte(stack, KEY_SIZE)].nextSize(upgrade);
-                NBTHelper.setByte(stack, KEY_SIZE, (byte) size.ordinal());
+                DigSize size = getDigSize(stack).nextSize(upgrade);
+                setDigSize(stack, (byte) size.ordinal());
                 if(world.isRemote)
                     player.sendMessage(new TextComponentString("Set dig size to " + size));
                 return EnumActionResult.SUCCESS;
@@ -327,16 +294,26 @@ public class ItemHammerEnergy extends ItemAOE implements IEnergyContainerItem
         return null;
     }
 
+    public static DigSize getDigSize(ItemStack hammer)
+    {
+        return DigSize.values()[NBTHelper.getByte(hammer, KEY_SIZE)];
+    }
+
+    public static void setDigSize(ItemStack hammer, byte size)
+    {
+        NBTHelper.setByte(hammer, KEY_SIZE, size);
+    }
+
     @Override
     public int getMineHeight(ItemStack stack)
     {
-        return DigSize.values()[NBTHelper.getByte(stack, KEY_SIZE)].getSize();
+        return getDigSize(stack).getSize();
     }
 
     @Override
     public int getMineWidth(ItemStack stack)
     {
-        return DigSize.values()[NBTHelper.getByte(stack, KEY_SIZE)].getSize();
+        return getDigSize(stack).getSize();
     }
 
     @Override
