@@ -89,12 +89,17 @@ public class ItemAOE extends ItemTool
         infiniteUse = isInfinite;
     }
 
+    protected boolean shouldShowInCreativeTabs()
+    {
+        return dependantOreDic != null || dependantStack != null;
+    }
+
     //Don't show the item in creative tabs if it can't be created
     @Nullable
     @Override
     public CreativeTabs getCreativeTab()
     {
-        return dependantOreDic != null || dependantStack != null ? super.getCreativeTab() : null;
+        return shouldShowInCreativeTabs() ? super.getCreativeTab() : null;
     }
 
     //Override method from ItemTool to stop durability loss

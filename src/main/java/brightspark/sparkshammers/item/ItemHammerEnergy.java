@@ -53,6 +53,12 @@ public class ItemHammerEnergy extends ItemAOE implements IEnergyContainerItem
         super(tool, false);
     }
 
+    @Override
+    protected boolean shouldShowInCreativeTabs()
+    {
+        return true;
+    }
+
     @SideOnly(Side.CLIENT)
     @Override
     public void getSubItems(CreativeTabs tab, NonNullList<ItemStack> subItems)
@@ -68,9 +74,9 @@ public class ItemHammerEnergy extends ItemAOE implements IEnergyContainerItem
 
             ItemStack upgradedStack = new ItemStack(this);
             energy = ((SHEnergyStorage) upgradedStack.getCapability(CapabilityEnergy.ENERGY, null));
-            energy.setEnergyStored(energy.getMaxEnergyStored());
             for(EnumUpgrades u : EnumUpgrades.values())
                 setUpgrade(upgradedStack, new Upgrade(u, u.getMaxUpgrades()));
+            energy.setEnergyStored(energy.getMaxEnergyStored());
             subItems.add(upgradedStack);
         }
     }

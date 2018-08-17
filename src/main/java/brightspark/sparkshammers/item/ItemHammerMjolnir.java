@@ -51,6 +51,12 @@ public class ItemHammerMjolnir extends ItemAOE
         return localName;
     }
 
+    @Override
+    protected boolean shouldShowInCreativeTabs()
+    {
+        return true;
+    }
+
     /**
      * Gets the item's lightning cooldown
      */

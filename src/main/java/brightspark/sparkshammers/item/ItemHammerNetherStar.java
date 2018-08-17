@@ -18,6 +18,12 @@ public class ItemHammerNetherStar extends ItemAOE
         super(tool, false);
     }
 
+    @Override
+    protected boolean shouldShowInCreativeTabs()
+    {
+        return true;
+    }
+
     @SideOnly(Side.CLIENT)
     @Override
     public boolean hasEffect(ItemStack stack)
